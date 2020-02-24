@@ -23,4 +23,7 @@ Things you may want to cover:
 
 - HI THIS IS JASON TESTING
 
-https://www.howtoforge.com/tutorial/ubuntu-ruby-on-rails/
+Configuring development environment: https://www.howtoforge.com/tutorial/ubuntu-ruby-on-rails/
+
+
+Data types for mongodb collection: https://www.tutorialspoint.com/mongodb/mongodb_datatype.htm

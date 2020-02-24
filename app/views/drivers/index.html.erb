@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Drivers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Middle initial</th>
+      <th>Last name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Approver</th>
+      <th>Car make</th>
+      <th>Car model</th>
+      <th>Car plate</th>
+      <th>Car year</th>
+      <th>Trained</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @drivers.each do |driver| %>
+      <tr>
+        <td><%= driver.first_name %></td>
+        <td><%= driver.middle_initial %></td>
+        <td><%= driver.last_name %></td>
+        <td><%= driver.phone %></td>
+        <td><%= driver.email %></td>
+        <td><%= driver.approver %></td>
+        <td><%= driver.car_make %></td>
+        <td><%= driver.car_model %></td>
+        <td><%= driver.car_plate %></td>
+        <td><%= driver.car_year %></td>
+        <td><%= driver.trained %></td>
+        <td><%= link_to 'Show', driver %></td>
+        <td><%= link_to 'Edit', edit_driver_path(driver) %></td>
+        <td><%= link_to 'Destroy', driver, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Driver', new_driver_path %>

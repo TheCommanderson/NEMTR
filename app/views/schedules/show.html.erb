@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Driver:</strong>
+  <%= @schedule.driver %>
+</p>
+
+<p>
+  <strong>Monday:</strong>
+  <%= @schedule.monday %>
+</p>
+
+<p>
+  <strong>Tuesday:</strong>
+  <%= @schedule.tuesday %>
+</p>
+
+<p>
+  <strong>Wednesday:</strong>
+  <%= @schedule.wednesday %>
+</p>
+
+<p>
+  <strong>Thursday:</strong>
+  <%= @schedule.thursday %>
+</p>
+
+<p>
+  <strong>Friday:</strong>
+  <%= @schedule.friday %>
+</p>
+
+<p>
+  <strong>Saturday:</strong>
+  <%= @schedule.saturday %>
+</p>
+
+<p>
+  <strong>Sunday:</strong>
+  <%= @schedule.sunday %>
+</p>
+
+<%= link_to 'Edit', edit_schedule_path(@schedule) %> |
+<%= link_to 'Back', schedules_path %>
