@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @admin.first_name %>
+</p>
+
+<p>
+  <strong>Middle initial:</strong>
+  <%= @admin.middle_initial %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @admin.last_name %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @admin.phone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @admin.email %>
+</p>
+
+<p>
+  <strong>Auth lvl:</strong>
+  <%= @admin.auth_lvl %>
+</p>
+
+<p>
+  <strong>Host org:</strong>
+  <%= @admin.host_org %>
+</p>
+
+<%= link_to 'Edit', edit_admin_path(@admin) %> |
+<%= link_to 'Back', admins_path %>
