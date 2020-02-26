@@ -2,6 +2,9 @@ class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
 
   # GET /patients
+  def pending
+    1/1
+  end
   # GET /patients.json
   def index
     @patients = Patient.all
