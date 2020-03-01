@@ -7,4 +7,7 @@ class Admin
   field :email, type: String
   field :auth_lvl, type: Integer
   field :host_org, type: String
+  
+  has_many :drivers
+  has_many :patients
 end
