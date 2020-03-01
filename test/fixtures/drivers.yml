@@ -6,8 +6,8 @@ one:
   last_name: MyString
   phone: 1
   email: MyString
-  auth_lvl: 1
-  host_org: MyString
+  trained: false
+  admin: one
 
 two:
   first_name: MyString
@@ -15,5 +15,5 @@ two:
   last_name: MyString
   phone: 1
   email: MyString
-  auth_lvl: 1
-  host_org: MyString
+  trained: false
+  admin: two
