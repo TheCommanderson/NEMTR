@@ -1,10 +1,10 @@
-<%= form_with(model: admin, local: true) do |form| %>
-  <% if admin.errors.any? %>
+<%= form_with(model: patient, local: true) do |form| %>
+  <% if patient.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(admin.errors.count, "error") %> prohibited this admin from being saved:</h2>
+      <h2><%= pluralize(patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
 
       <ul>
-      <% admin.errors.full_messages.each do |message| %>
+      <% patient.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -17,8 +17,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :middle_init %>
-    <%= form.text_field :middle_init %>
+    <%= form.label :middle_initial %>
+    <%= form.text_field :middle_initial %>
   </div>
 
   <div class="field">
@@ -37,13 +37,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :auth_lvl %>
-    <%= form.number_field :auth_lvl %>
-  </div>
-
-  <div class="field">
-    <%= form.label :host_org %>
-    <%= form.text_field :host_org %>
+    <%= form.label :admin_id %>
+    <%= form.text_field :admin_id %>
   </div>
 
   <div class="actions">

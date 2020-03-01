@@ -2,18 +2,16 @@
 
 one:
   first_name: MyString
-  middle_init: MyString
+  middle_initial: MyString
   last_name: MyString
   phone: 1
   email: MyString
-  auth_lvl: 1
-  host_org: MyString
+  admin: one
 
 two:
   first_name: MyString
-  middle_init: MyString
+  middle_initial: MyString
   last_name: MyString
   phone: 1
   email: MyString
-  auth_lvl: 1
-  host_org: MyString
+  admin: two

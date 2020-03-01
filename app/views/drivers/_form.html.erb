@@ -1,10 +1,10 @@
-<%= form_with(model: admin, local: true) do |form| %>
-  <% if admin.errors.any? %>
+<%= form_with(model: driver, local: true) do |form| %>
+  <% if driver.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(admin.errors.count, "error") %> prohibited this admin from being saved:</h2>
+      <h2><%= pluralize(driver.errors.count, "error") %> prohibited this driver from being saved:</h2>
 
       <ul>
-      <% admin.errors.full_messages.each do |message| %>
+      <% driver.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -37,13 +37,13 @@
   </div>
 
   <div class="field">
-    <%= form.label :auth_lvl %>
-    <%= form.number_field :auth_lvl %>
+    <%= form.label :trained %>
+    <%= form.check_box :trained %>
   </div>
 
   <div class="field">
-    <%= form.label :host_org %>
-    <%= form.text_field :host_org %>
+    <%= form.label :admin_id %>
+    <%= form.text_field :admin_id %>
   </div>
 
   <div class="actions">
