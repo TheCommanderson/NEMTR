@@ -6,9 +6,8 @@ class Driver
   field :phone, type: Integer
   field :email, type: String
   field :trained, type: Mongoid::Boolean
+  embeds_one :car, class_name: "Car"
   
   belongs_to :admin
-  
   has_many :appointments
-  has_many :patients, :through => :appointments
 end

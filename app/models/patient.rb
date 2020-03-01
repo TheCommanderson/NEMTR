@@ -7,7 +7,5 @@ class Patient
   field :email, type: String
   
   belongs_to :admin
-  
   has_many :appointments
-  has_many :drivers, :through => :appointments
 end

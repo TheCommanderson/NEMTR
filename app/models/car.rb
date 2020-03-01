@@ -5,5 +5,5 @@ class Car
   field :year, type: Integer
   field :color, type: String
   field :license, type: String
-  belongs_to :Driver
+  embedded_in :Driver, inverse_of: :car
 end
