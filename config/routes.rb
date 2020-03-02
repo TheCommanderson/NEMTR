@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root 'sessions#index'
   resources :appointments
   resources :drivers
+    get 'patients', to:'patients#pending'
+    get 'patients_home', to: 'patients#index'
   resources :patients
   resources :sessions
   resources :admins
