@@ -1,8 +1,9 @@
 class Appointment
   include Mongoid::Document
-  field :patient, type: String
-  field :driver, type: String
-  field :date_time, type: Time
-  field :location, type: String
-  field :status, type: String
+  field :datetime, type: String
+  field :status, type: Integer
+  embeds_one :location, class_name: "Location"
+  
+  belongs_to :driver
+  belongs_to :patient
 end
