@@ -14,11 +14,10 @@ class PatientsTest < ApplicationSystemTestCase
     visit patients_url
     click_on "New Patient"
 
-    fill_in "Approver", with: @patient.approver
+    fill_in "Admin", with: @patient.admin_id
     fill_in "Email", with: @patient.email
     fill_in "First name", with: @patient.first_name
     fill_in "Last name", with: @patient.last_name
-    fill_in "Location", with: @patient.location
     fill_in "Middle initial", with: @patient.middle_initial
     fill_in "Phone", with: @patient.phone
     click_on "Create Patient"
@@ -31,11 +30,10 @@ class PatientsTest < ApplicationSystemTestCase
     visit patients_url
     click_on "Edit", match: :first
 
-    fill_in "Approver", with: @patient.approver
+    fill_in "Admin", with: @patient.admin_id
     fill_in "Email", with: @patient.email
     fill_in "First name", with: @patient.first_name
     fill_in "Last name", with: @patient.last_name
-    fill_in "Location", with: @patient.location
     fill_in "Middle initial", with: @patient.middle_initial
     fill_in "Phone", with: @patient.phone
     click_on "Update Patient"

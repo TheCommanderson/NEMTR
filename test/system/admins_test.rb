@@ -19,7 +19,7 @@ class AdminsTest < ApplicationSystemTestCase
     fill_in "First name", with: @admin.first_name
     fill_in "Host org", with: @admin.host_org
     fill_in "Last name", with: @admin.last_name
-    fill_in "Middle initial", with: @admin.middle_initial
+    fill_in "Middle init", with: @admin.middle_init
     fill_in "Phone", with: @admin.phone
     click_on "Create Admin"
 
@@ -36,7 +36,7 @@ class AdminsTest < ApplicationSystemTestCase
     fill_in "First name", with: @admin.first_name
     fill_in "Host org", with: @admin.host_org
     fill_in "Last name", with: @admin.last_name
-    fill_in "Middle initial", with: @admin.middle_initial
+    fill_in "Middle init", with: @admin.middle_init
     fill_in "Phone", with: @admin.phone
     click_on "Update Admin"
 

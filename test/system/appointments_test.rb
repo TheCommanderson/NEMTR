@@ -14,10 +14,7 @@ class AppointmentsTest < ApplicationSystemTestCase
     visit appointments_url
     click_on "New Appointment"
 
-    fill_in "Date time", with: @appointment.date_time
-    fill_in "Driver", with: @appointment.driver
-    fill_in "Location", with: @appointment.location
-    fill_in "Patient", with: @appointment.patient
+    fill_in "Datetime", with: @appointment.datetime
     fill_in "Status", with: @appointment.status
     click_on "Create Appointment"
 
@@ -29,10 +26,7 @@ class AppointmentsTest < ApplicationSystemTestCase
     visit appointments_url
     click_on "Edit", match: :first
 
-    fill_in "Date time", with: @appointment.date_time
-    fill_in "Driver", with: @appointment.driver
-    fill_in "Location", with: @appointment.location
-    fill_in "Patient", with: @appointment.patient
+    fill_in "Datetime", with: @appointment.datetime
     fill_in "Status", with: @appointment.status
     click_on "Update Appointment"
 
