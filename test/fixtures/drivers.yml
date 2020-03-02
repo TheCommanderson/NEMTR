@@ -2,26 +2,18 @@
 
 one:
   first_name: MyString
-  middle_initial: MyString
+  middle_init: MyString
   last_name: MyString
   phone: 1
   email: MyString
-  approver: MyString
-  car_make: MyString
-  car_model: MyString
-  car_plate: MyString
-  car_year: 1
   trained: false
+  admin: one
 
 two:
   first_name: MyString
-  middle_initial: MyString
+  middle_init: MyString
   last_name: MyString
   phone: 1
   email: MyString
-  approver: MyString
-  car_make: MyString
-  car_model: MyString
-  car_plate: MyString
-  car_year: 1
   trained: false
+  admin: two

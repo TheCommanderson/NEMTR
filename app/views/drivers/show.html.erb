@@ -6,8 +6,8 @@
 </p>
 
 <p>
-  <strong>Middle initial:</strong>
-  <%= @driver.middle_initial %>
+  <strong>Middle init:</strong>
+  <%= @driver.middle_init %>
 </p>
 
 <p>
@@ -26,33 +26,13 @@
 </p>
 
 <p>
-  <strong>Approver:</strong>
-  <%= @driver.approver %>
-</p>
-
-<p>
-  <strong>Car make:</strong>
-  <%= @driver.car_make %>
-</p>
-
-<p>
-  <strong>Car model:</strong>
-  <%= @driver.car_model %>
-</p>
-
-<p>
-  <strong>Car plate:</strong>
-  <%= @driver.car_plate %>
-</p>
-
-<p>
-  <strong>Car year:</strong>
-  <%= @driver.car_year %>
-</p>
-
-<p>
   <strong>Trained:</strong>
   <%= @driver.trained %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @driver.admin %>
 </p>
 
 <%= link_to 'Edit', edit_driver_path(@driver) %> |

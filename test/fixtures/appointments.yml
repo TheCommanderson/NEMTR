@@ -1,15 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  patient: MyString
-  driver: MyString
-  date_time: 2020-02-24 16:30:35
-  location: MyString
-  status: MyString
+  datetime: MyString
+  status: 1
 
 two:
-  patient: MyString
-  driver: MyString
-  date_time: 2020-02-24 16:30:35
-  location: MyString
-  status: MyString
+  datetime: MyString
+  status: 1
