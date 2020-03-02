@@ -13,19 +13,23 @@
   </thead>
 
   <tbody>
-    <% @appointments.each do |app| %>
+    <% @appointments.each do |appointment| %>
     <tr>
-      <td><%= app.patient %></td>
-      <td><%= app.driver %></td>
-      <td><%= app.datetime %></td>
-      <td><%= app.status %></td>
-      <td><%= app.destination %></td>
+      <td><%= @patients.find(appointment.patient_id).first_name %> <%= @patients.find(appointment.patient_id).last_name %></td>
+      <td><%= @drivers.find(appointment.driver_id).first_name %> <%= @drivers.find(appointment.driver_id).last_name %></td>
+      <td><%= appointment.datetime %></td>
+      <td><%= appointment.status %></td>
+      <td><%= appointment.destination %></td>
+      <td><%= link_to 'Show', appointment %></td>
+      <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+      <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </td>
     </tr>
     <% end %>
   </tbody>
 </table>
-<%= link_to 'New Appointment', new_appointment_path %>
-
+<h3><%= link_to 'Create New Appointment', new_appointment_path %></h3>
+<!--
 <h1>Patients</h1>
 <table>
   <thead>
@@ -63,3 +67,4 @@
 <br />
 
 <%= link_to 'New Patient', new_patient_path %>
+-->
