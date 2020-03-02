@@ -69,6 +69,6 @@ class DriversController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def driver_params
-      params.require(:driver).permit(:first_name, :middle_initial, :last_name, :phone, :email, :approver, :car_make, :car_model, :car_plate, :car_year, :trained)
+      params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id)
     end
 end

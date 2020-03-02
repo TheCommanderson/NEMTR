@@ -2,7 +2,7 @@
 
 one:
   first_name: MyString
-  middle_initial: MyString
+  middle_init: MyString
   last_name: MyString
   phone: 1
   email: MyString
@@ -11,7 +11,7 @@ one:
 
 two:
   first_name: MyString
-  middle_initial: MyString
+  middle_init: MyString
   last_name: MyString
   phone: 1
   email: MyString
