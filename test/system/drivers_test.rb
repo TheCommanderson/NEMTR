@@ -14,15 +14,11 @@ class DriversTest < ApplicationSystemTestCase
     visit drivers_url
     click_on "New Driver"
 
-    fill_in "Approver", with: @driver.approver
-    fill_in "Car make", with: @driver.car_make
-    fill_in "Car model", with: @driver.car_model
-    fill_in "Car plate", with: @driver.car_plate
-    fill_in "Car year", with: @driver.car_year
+    fill_in "Admin", with: @driver.admin_id
     fill_in "Email", with: @driver.email
     fill_in "First name", with: @driver.first_name
     fill_in "Last name", with: @driver.last_name
-    fill_in "Middle initial", with: @driver.middle_initial
+    fill_in "Middle init", with: @driver.middle_init
     fill_in "Phone", with: @driver.phone
     check "Trained" if @driver.trained
     click_on "Create Driver"
@@ -35,15 +31,11 @@ class DriversTest < ApplicationSystemTestCase
     visit drivers_url
     click_on "Edit", match: :first
 
-    fill_in "Approver", with: @driver.approver
-    fill_in "Car make", with: @driver.car_make
-    fill_in "Car model", with: @driver.car_model
-    fill_in "Car plate", with: @driver.car_plate
-    fill_in "Car year", with: @driver.car_year
+    fill_in "Admin", with: @driver.admin_id
     fill_in "Email", with: @driver.email
     fill_in "First name", with: @driver.first_name
     fill_in "Last name", with: @driver.last_name
-    fill_in "Middle initial", with: @driver.middle_initial
+    fill_in "Middle init", with: @driver.middle_init
     fill_in "Phone", with: @driver.phone
     check "Trained" if @driver.trained
     click_on "Update Driver"

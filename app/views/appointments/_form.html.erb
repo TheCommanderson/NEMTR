@@ -12,28 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :patient %>
-    <%= form.text_field :patient %>
-  </div>
-
-  <div class="field">
-    <%= form.label :driver %>
-    <%= form.text_field :driver %>
-  </div>
-
-  <div class="field">
-    <%= form.label :date_time %>
-    <%= form.datetime_select :date_time %>
-  </div>
-
-  <div class="field">
-    <%= form.label :location %>
-    <%= form.text_field :location %>
+    <%= form.label :datetime %>
+    <%= form.text_field :datetime %>
   </div>
 
   <div class="field">
     <%= form.label :status %>
-    <%= form.text_field :status %>
+    <%= form.number_field :status %>
   </div>
 
   <div class="actions">

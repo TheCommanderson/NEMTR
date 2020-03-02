@@ -17,7 +17,7 @@ class DriversControllerTest < ActionDispatch::IntegrationTest
 
   test "should create driver" do
     assert_difference('Driver.count') do
-      post drivers_url, params: { driver: { approver: @driver.approver, car_make: @driver.car_make, car_model: @driver.car_model, car_plate: @driver.car_plate, car_year: @driver.car_year, email: @driver.email, first_name: @driver.first_name, last_name: @driver.last_name, middle_initial: @driver.middle_initial, phone: @driver.phone, trained: @driver.trained } }
+      post drivers_url, params: { driver: { admin_id: @driver.admin_id, email: @driver.email, first_name: @driver.first_name, last_name: @driver.last_name, middle_init: @driver.middle_init, phone: @driver.phone, trained: @driver.trained } }
     end
 
     assert_redirected_to driver_url(Driver.last)
@@ -34,7 +34,7 @@ class DriversControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update driver" do
-    patch driver_url(@driver), params: { driver: { approver: @driver.approver, car_make: @driver.car_make, car_model: @driver.car_model, car_plate: @driver.car_plate, car_year: @driver.car_year, email: @driver.email, first_name: @driver.first_name, last_name: @driver.last_name, middle_initial: @driver.middle_initial, phone: @driver.phone, trained: @driver.trained } }
+    patch driver_url(@driver), params: { driver: { admin_id: @driver.admin_id, email: @driver.email, first_name: @driver.first_name, last_name: @driver.last_name, middle_init: @driver.middle_init, phone: @driver.phone, trained: @driver.trained } }
     assert_redirected_to driver_url(@driver)
   end
 
