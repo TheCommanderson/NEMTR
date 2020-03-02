@@ -1,7 +1,32 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Patients</h1>
+<h1>Upcoming Rides</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Driver</th>
+      <th>Date & Time</th>
+      <th>Status</th>
+      <th>Destination</th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <% @appointments.each do |app| %>
+    <tr>
+      <td><%= app.patient %></td>
+      <td><%= app.driver %></td>
+      <td><%= app.datetime %></td>
+      <td><%= app.status %></td>
+      <td><%= app.destination %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'New Appointment', new_appointment_path %>
+
+<h1>Patients</h1>
 <table>
   <thead>
     <tr>
@@ -17,21 +42,24 @@
 
   <tbody>
     <% @patients.each do |patient| %>
-      <tr>
-        <td><%= patient.first_name %></td>
-        <td><%= patient.middle_initial %></td>
-        <td><%= patient.last_name %></td>
-        <td><%= patient.phone %></td>
-        <td><%= patient.email %></td>
-        <td><%= patient.admin %></td>
-        <td><%= link_to 'Show', patient %></td>
-        <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
-        <td><%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <tr>
+      <td><%= patient.first_name %></td>
+      <td><%= patient.middle_initial %></td>
+      <td><%= patient.last_name %></td>
+      <td><%= patient.phone %></td>
+      <td><%= patient.email %></td>
+      <td><%= patient.admin %></td>
+      <td><%= link_to 'Show', patient %></td>
+      <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
+      <td>
+        <%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are
+        you sure?' } %>
+      </td>
+    </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+<br />
 
 <%= link_to 'New Patient', new_patient_path %>

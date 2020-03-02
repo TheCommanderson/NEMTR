@@ -3,11 +3,11 @@ class PatientsController < ApplicationController
 
   # GET /patients
   def pending
-    1/1
   end
   # GET /patients.json
   def index
     @patients = Patient.all
+    @appointments = Appointment.all
   end
 
   # GET /patients/1
