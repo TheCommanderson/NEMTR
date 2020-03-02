@@ -2,9 +2,13 @@ class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
 
   # GET /patients
+  def pending
+  end
   # GET /patients.json
   def index
     @patients = Patient.all
+    @appointments = Appointment.all
+    @drivers = Driver.all
   end
 
   # GET /patients/1

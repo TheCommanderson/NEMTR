@@ -1,7 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Patients</h1>
+<h1>Upcoming Rides</h1>
+<p>You are logged in as a:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Driver</th>
+      <th>Date & Time</th>
+      <th>Status</th>
+      <th>Destination</th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <% @appointments.each do |appointment| %>
+    <tr>
+      <% @tempPatient = @patients.find(appointment.patient_id) %>
+      <% @tempDriver =  @drivers.find(appointment.driver_id) %>
+      <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
+      <td><%= @tempDriver.first_name %> <%= @tempDriver.last_name %></td>
+      <td><%= appointment.datetime %></td>
+      <td><%= appointment.status %></td>
+      <td><%= appointment.destination %></td>
+      <td><%= link_to 'Show', appointment %></td>
+      <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+      <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<h3><%= link_to 'Create New Appointment', new_appointment_path %></h3>
+<!--
+<h1>Patients</h1>
 <table>
   <thead>
     <tr>
@@ -17,21 +48,25 @@
 
   <tbody>
     <% @patients.each do |patient| %>
-      <tr>
-        <td><%= patient.first_name %></td>
-        <td><%= patient.middle_initial %></td>
-        <td><%= patient.last_name %></td>
-        <td><%= patient.phone %></td>
-        <td><%= patient.email %></td>
-        <td><%= patient.admin %></td>
-        <td><%= link_to 'Show', patient %></td>
-        <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
-        <td><%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <tr>
+      <td><%= patient.first_name %></td>
+      <td><%= patient.middle_initial %></td>
+      <td><%= patient.last_name %></td>
+      <td><%= patient.phone %></td>
+      <td><%= patient.email %></td>
+      <td><%= patient.admin %></td>
+      <td><%= link_to 'Show', patient %></td>
+      <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
+      <td>
+        <%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are
+        you sure?' } %>
+      </td>
+    </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+<br />
 
 <%= link_to 'New Patient', new_patient_path %>
+-->
