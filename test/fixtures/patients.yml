@@ -6,8 +6,7 @@ one:
   last_name: MyString
   phone: 1
   email: MyString
-  approver: MyString
-  location: MyString
+  admin: one
 
 two:
   first_name: MyString
@@ -15,5 +14,4 @@ two:
   last_name: MyString
   phone: 1
   email: MyString
-  approver: MyString
-  location: MyString
+  admin: two
