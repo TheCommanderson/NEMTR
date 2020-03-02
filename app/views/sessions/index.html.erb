@@ -11,7 +11,13 @@
     <%= text_field_tag :password %>
   </div>
 
-<%= button_to 'Admin Login', admins_path, method: "get" %><br>
-<%= button_to 'Patient Login', patients_path, method: "get" %><br>
-<%= button_to 'Driver Login', drivers_path, method: "get" %>
+<%= button_to 'Admin', admins_path, method: "get" %><br>
+<%= button_to 'Patient', patients_path, method: "get" %><br>
+<%= button_to 'Driver', drivers_path, method: "get" %>
+
+<h1>New User</h1>
+
+<%= button_to 'Admin', new_admin_path, method: "get" %><br>
+<%= button_to 'Patient', new_patient_path, method: "get" %><br>
+<%= button_to 'Driver', new_driver_path, method: "get" %>
 

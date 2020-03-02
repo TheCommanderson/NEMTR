@@ -5931,3 +5931,253 @@ MONGODB | [21] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.saslContinue
 MONGODB | [21] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
 MONGODB | [22] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.endSessions | STARTED | {"endSessions"=>[{"id"=><BSON::Binary:0x70283616751140 type=uuid data=0x0be55f02a1024790...>}], "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007fd84a0574c0 @seconds=1583125561, @increment=7>, "signature"=>{"hash"=><BSON::Binary:0x702834657673...
 MONGODB | [22] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.endSessions | SUCCEEDED | 0.001s
+Started GET "/" for 165.91.13.12 at 2020-03-02 15:41:03 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendering sessions/index.html.erb within layouts/application
+  Rendered sessions/index.html.erb within layouts/application (198.0ms)
+Completed 500 Internal Server Error in 210ms (MongoDB: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `admin_new_path' for #<#<Class:0x000055d58e9aba00>:0x000055d58e9b6cc0>
+Did you mean?  admin_path
+               admins_path):
+    17: 
+    18: <h1>New Users</h1>
+    19: 
+    20: <%= button_to 'Admin Sign Up', admin_new_path, method: "get" %><br>
+    21: <%= button_to 'Patient Sign Up', patient_new_path, method: "get" %><br>
+    22: <%= button_to 'Driver Sign Up', driver_new_path, method: "get" %>
+  
+app/views/sessions/index.html.erb:20:in `_app_views_sessions_index_html_erb__4447096631559915821_47187854531340'
+Started GET "/" for 165.91.13.12 at 2020-03-02 15:41:27 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendering sessions/index.html.erb within layouts/application
+  Rendered sessions/index.html.erb within layouts/application (163.1ms)
+Completed 500 Internal Server Error in 166ms (MongoDB: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `patient_new_path' for #<#<Class:0x000055d58e9aba00>:0x000055d58f89dbf8>
+Did you mean?  patient_path
+               patients_path):
+    18: <h1>New Users</h1>
+    19: 
+    20: <%= button_to 'Admin Sign Up', new_admin_path, method: "get" %><br>
+    21: <%= button_to 'Patient Sign Up', patient_new_path, method: "get" %><br>
+    22: <%= button_to 'Driver Sign Up', driver_new_path, method: "get" %>
+  
+app/views/sessions/index.html.erb:21:in `_app_views_sessions_index_html_erb__4447096631559915821_47187862289620'
+Started GET "/" for 165.91.13.12 at 2020-03-02 15:41:40 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendering sessions/index.html.erb within layouts/application
+  Rendered sessions/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 490ms (Views: 488.8ms | MongoDB: 0.0ms)
+
+
+Started GET "/admins/new" for 165.91.13.12 at 2020-03-02 15:41:42 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AdminsController#new as HTML
+  Rendering admins/new.html.erb within layouts/application
+  Rendered admins/_form.html.erb (22.6ms)
+  Rendered admins/new.html.erb within layouts/application (24.7ms)
+Completed 200 OK in 94ms (Views: 82.1ms | MongoDB: 0.0ms)
+
+
+Started GET "/patients/new" for 165.91.13.12 at 2020-03-02 15:41:47 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PatientsController#new as HTML
+  Rendering patients/new.html.erb within layouts/application
+  Rendered patients/_form.html.erb (17.6ms)
+  Rendered patients/new.html.erb within layouts/application (19.9ms)
+Completed 200 OK in 88ms (Views: 80.9ms | MongoDB: 0.0ms)
+
+
+Started GET "/drivers/new" for 165.91.13.12 at 2020-03-02 15:41:56 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by DriversController#new as HTML
+  Rendering drivers/new.html.erb within layouts/application
+  Rendered drivers/_form.html.erb (8.8ms)
+  Rendered drivers/new.html.erb within layouts/application (10.8ms)
+Completed 200 OK in 93ms (Views: 85.4ms | MongoDB: 0.0ms)
+
+
+Started GET "/" for 165.91.13.12 at 2020-03-02 15:42:42 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendering sessions/index.html.erb within layouts/application
+  Rendered sessions/index.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 78ms (Views: 77.0ms | MongoDB: 0.0ms)
+
+
+Started GET "/" for 165.91.13.12 at 2020-03-02 15:42:51 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendering sessions/index.html.erb within layouts/application
+  Rendered sessions/index.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 77ms (Views: 76.3ms | MongoDB: 0.0ms)
+
+
+Started GET "/admins/new" for 165.91.13.12 at 2020-03-02 15:43:09 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AdminsController#new as HTML
+  Rendering admins/new.html.erb within layouts/application
+  Rendered admins/_form.html.erb (3.5ms)
+  Rendered admins/new.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 63ms (Views: 61.8ms | MongoDB: 0.0ms)
+
+
+Started GET "/admins" for 165.91.13.12 at 2020-03-02 15:43:11 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+MONGODB | EVENT: #<TopologyOpening topology=Unknown[]>
+MONGODB | Topology type 'unknown' initializing.
+MONGODB | EVENT: #<TopologyChanged prev=Unknown[] new=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Topology type 'Unknown' changed to type 'ReplicaSetNoPrimary'.
+MONGODB | EVENT: #<ServerOpening address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 topology=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Server nemtr-shard-00-02-pbmpo.mongodb.net:27017 initializing.
+MONGODB | EVENT: #<ServerOpening address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 topology=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Server nemtr-shard-00-00-pbmpo.mongodb.net:27017 initializing.
+MONGODB | EVENT: #<ServerOpening address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 topology=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Server nemtr-shard-00-01-pbmpo.mongodb.net:27017 initializing.
+MONGODB | Waiting for up to 4.99 seconds for servers to be scanned: #<Cluster topology=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0] servers=[#<Server address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 UNKNOWN>,#<Server address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 UNKNOWN>,#<Server address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 UNKNOWN>]>
+MONGODB | EVENT: #<ServerDescriptionChanged address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 topology=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0] prev=#<Mongo::Server:Description:0x70355940244440 config={} average_round_trip_time=> new=#<Mongo::Server:Description:0x70355940164420 config={"hosts"=>["nemtr-shard-00-00-pbmpo.mongodb.net:27017", "nemtr-shard-00-01-pbmpo.mongodb.net:27017", "nemtr-shard-00-02-pbmpo.mongodb.net:27017"], "setName"=>"NEMTR-shard-0", "setVersion"=>1, "ismaster"=>false, "secondary"=>true, "primary"=>"nemtr-shard-00-02-pbmpo.mongodb.net:27017", "tags"=>{"provider"=>"AWS", "nodeType"=>"ELECTABLE", "region"=>"US_EAST_1"}, "me"=>"nemtr-shard-00-00-pbmpo.mongodb.net:27017", "lastWrite"=>{"opTime"=>{"ts"=>#<BSON::Timestamp:0x00007ffa09a48fc0 @seconds=1583163784, @increment=4>, "t"=>3}, "lastWriteDate"=>2020-03-02 15:43:04 UTC, "majorityOpTime"=>{"ts"=>#<BSON::Timestamp:0x00007ffa09a48e08 @seconds=1583163784, @increment=4>, "t"=>3}, "majorityWriteDate"=>2020-03-02 15:43:04 UTC}, "maxBsonObjectSize"=>16777216, "maxMessageSizeBytes"=>48000000, "maxWriteBatchSize"=>100000, "localTime"=>2020-03-02 15:43:11 UTC, "logicalSessionTimeoutMinutes"=>30, "connectionId"=>101701, "minWireVersion"=>0, "maxWireVersion"=>8, "readOnly"=>false, "ok"=>1.0, "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007ffa09a48980 @seconds=1583163784, @increment=4>, "signature"=>{"hash"=><BSON::Binary:0x70355940164660 type=generic data=0x0177da99c3a3ddc4...>, "keyId"=>6797146454453387266}}, "operationTime"=>#<BSON::Timestamp:0x00007ffa09a48778 @seconds=1583163784, @increment=4>} average_round_trip_time=0.049700687>>
+MONGODB | Server description for nemtr-shard-00-00-pbmpo.mongodb.net:27017 changed from 'unknown' to 'secondary'.
+MONGODB | EVENT: #<TopologyChanged prev=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0] new=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Topology type 'ReplicaSetNoPrimary' changed to type 'ReplicaSetNoPrimary'.
+MONGODB | Waiting for up to 4.94 seconds for servers to be scanned: #<Cluster topology=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0] servers=[#<Server address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 UNKNOWN>,#<Server address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 SECONDARY replica_set=NEMTR-shard-0 pool=#<ConnectionPool size=0 (0-5) used=0 avail=0 pending=0>>,#<Server address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 UNKNOWN>]>
+MONGODB | EVENT: #<ServerDescriptionChanged address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 topology=ReplicaSetWithPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] prev=#<Mongo::Server:Description:0x70355940245860 config={} average_round_trip_time=> new=#<Mongo::Server:Description:0x70355940063840 config={"hosts"=>["nemtr-shard-00-00-pbmpo.mongodb.net:27017", "nemtr-shard-00-01-pbmpo.mongodb.net:27017", "nemtr-shard-00-02-pbmpo.mongodb.net:27017"], "setName"=>"NEMTR-shard-0", "setVersion"=>1, "ismaster"=>true, "secondary"=>false, "primary"=>"nemtr-shard-00-02-pbmpo.mongodb.net:27017", "tags"=>{"nodeType"=>"ELECTABLE", "provider"=>"AWS", "region"=>"US_EAST_1"}, "me"=>"nemtr-shard-00-02-pbmpo.mongodb.net:27017", "electionId"=>BSON::ObjectId('7fffffff0000000000000003'), "lastWrite"=>{"opTime"=>{"ts"=>#<BSON::Timestamp:0x00007ffa09a17df8 @seconds=1583163784, @increment=4>, "t"=>3}, "lastWriteDate"=>2020-03-02 15:43:04 UTC, "majorityOpTime"=>{"ts"=>#<BSON::Timestamp:0x00007ffa09a17c40 @seconds=1583163784, @increment=4>, "t"=>3}, "majorityWriteDate"=>2020-03-02 15:43:04 UTC}, "maxBsonObjectSize"=>16777216, "maxMessageSizeBytes"=>48000000, "maxWriteBatchSize"=>100000, "localTime"=>2020-03-02 15:43:12 UTC, "logicalSessionTimeoutMinutes"=>30, "connectionId"=>107931, "minWireVersion"=>0, "maxWireVersion"=>8, "readOnly"=>false, "ok"=>1.0, "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007ffa09a177b8 @seconds=1583163784, @increment=4>, "signature"=>{"hash"=><BSON::Binary:0x70355940064080 type=generic data=0x0177da99c3a3ddc4...>, "keyId"=>6797146454453387266}}, "operationTime"=>#<BSON::Timestamp:0x00007ffa09a175b0 @seconds=1583163784, @increment=4>} average_round_trip_time=0.098734588>>
+MONGODB | Server description for nemtr-shard-00-02-pbmpo.mongodb.net:27017 changed from 'unknown' to 'primary'.
+MONGODB | EVENT: #<TopologyChanged prev=ReplicaSetNoPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0] new=ReplicaSetWithPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003]>
+MONGODB | Topology type 'ReplicaSetNoPrimary' changed to type 'ReplicaSetWithPrimary'.
+MONGODB | Waiting for up to 4.89 seconds for servers to be scanned: #<Cluster topology=ReplicaSetWithPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] servers=[#<Server address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 PRIMARY replica_set=NEMTR-shard-0 pool=#<ConnectionPool size=0 (0-5) used=0 avail=0 pending=0>>,#<Server address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 SECONDARY replica_set=NEMTR-shard-0 pool=#<ConnectionPool size=0 (0-5) used=0 avail=0 pending=0>>,#<Server address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 UNKNOWN>]>
+MONGODB | EVENT: #<ServerDescriptionChanged address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 topology=ReplicaSetWithPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] prev=#<Mongo::Server:Description:0x70355940243120 config={} average_round_trip_time=> new=#<Mongo::Server:Description:0x70355939998360 config={"hosts"=>["nemtr-shard-00-00-pbmpo.mongodb.net:27017", "nemtr-shard-00-01-pbmpo.mongodb.net:27017", "nemtr-shard-00-02-pbmpo.mongodb.net:27017"], "setName"=>"NEMTR-shard-0", "setVersion"=>1, "ismaster"=>false, "secondary"=>true, "primary"=>"nemtr-shard-00-02-pbmpo.mongodb.net:27017", "tags"=>{"nodeType"=>"ELECTABLE", "provider"=>"AWS", "region"=>"US_EAST_1"}, "me"=>"nemtr-shard-00-01-pbmpo.mongodb.net:27017", "lastWrite"=>{"opTime"=>{"ts"=>#<BSON::Timestamp:0x00007ffa099f7e68 @seconds=1583163784, @increment=4>, "t"=>3}, "lastWriteDate"=>2020-03-02 15:43:04 UTC, "majorityOpTime"=>{"ts"=>#<BSON::Timestamp:0x00007ffa099f7cb0 @seconds=1583163784, @increment=4>, "t"=>3}, "majorityWriteDate"=>2020-03-02 15:43:04 UTC}, "maxBsonObjectSize"=>16777216, "maxMessageSizeBytes"=>48000000, "maxWriteBatchSize"=>100000, "localTime"=>2020-03-02 15:43:12 UTC, "logicalSessionTimeoutMinutes"=>30, "connectionId"=>100933, "minWireVersion"=>0, "maxWireVersion"=>8, "readOnly"=>false, "ok"=>1.0, "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007ffa099f7828 @seconds=1583163784, @increment=4>, "signature"=>{"hash"=><BSON::Binary:0x70355939998600 type=generic data=0x0177da99c3a3ddc4...>, "keyId"=>6797146454453387266}}, "operationTime"=>#<BSON::Timestamp:0x00007ffa099f7620 @seconds=1583163784, @increment=4>} average_round_trip_time=0.105561518>>
+MONGODB | Server description for nemtr-shard-00-01-pbmpo.mongodb.net:27017 changed from 'unknown' to 'secondary'.
+MONGODB | EVENT: #<TopologyChanged prev=ReplicaSetWithPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] new=ReplicaSetWithPrimary[nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,nemtr-shard-00-01-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003]>
+MONGODB | Topology type 'ReplicaSetWithPrimary' changed to type 'ReplicaSetWithPrimary'.
+MONGODB | [9] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | admin.saslStart | STARTED | {}
+MONGODB | [9] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslStart | SUCCEEDED | 0.001s
+MONGODB | [10] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | admin.saslContinue | STARTED | {}
+MONGODB | [10] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
+MONGODB | [11] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | admin.saslContinue | STARTED | {}
+MONGODB | [11] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
+MONGODB | [12] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | test.find | STARTED | {"find"=>"admins", "filter"=>{}, "lsid"=>{"id"=><BSON::Binary:0x70355939971300 type=uuid data=0x17f39ed673024dea...>}}
+MONGODB | [12] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | test.find | SUCCEEDED | 0.001s
+  Rendered admins/index.html.erb within layouts/application (161.1ms)
+Completed 200 OK in 221ms (Views: 219.4ms | MongoDB: 0.0ms)
+
+
+Started GET "/" for 165.91.13.12 at 2020-03-02 15:43:15 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendering sessions/index.html.erb within layouts/application
+  Rendered sessions/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 68ms (Views: 67.1ms | MongoDB: 0.0ms)
+
+
+Started GET "/drivers/new" for 165.91.13.12 at 2020-03-02 15:43:17 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by DriversController#new as HTML
+  Rendering drivers/new.html.erb within layouts/application
+  Rendered drivers/_form.html.erb (3.6ms)
+  Rendered drivers/new.html.erb within layouts/application (4.9ms)
+Completed 200 OK in 63ms (Views: 62.0ms | MongoDB: 0.0ms)
+
+
+Started GET "/patients/new" for 165.91.13.12 at 2020-03-02 15:43:19 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PatientsController#new as HTML
+  Rendering patients/new.html.erb within layouts/application
+  Rendered patients/_form.html.erb (3.2ms)
+  Rendered patients/new.html.erb within layouts/application (4.6ms)
+Completed 200 OK in 67ms (Views: 65.9ms | MongoDB: 0.0ms)
+
+
+MONGODB | [13] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.saslStart | STARTED | {}
+MONGODB | [13] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslStart | SUCCEEDED | 0.001s
+MONGODB | [14] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.saslContinue | STARTED | {}
+MONGODB | [14] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
+MONGODB | [15] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.saslContinue | STARTED | {}
+MONGODB | [15] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
+MONGODB | [16] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.endSessions | STARTED | {"endSessions"=>[{"id"=><BSON::Binary:0x70355939971300 type=uuid data=0x17f39ed673024dea...>}], "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007ffa09951590 @seconds=1583163784, @increment=4>, "signature"=>{"hash"=><BSON::Binary:0x703559396583...
+MONGODB | [16] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.endSessions | SUCCEEDED | 0.001s
+Started GET "/" for 165.91.13.12 at 2020-03-02 15:44:53 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendering sessions/index.html.erb within layouts/application
+  Rendered sessions/index.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 483ms (Views: 478.1ms | MongoDB: 0.0ms)
+
+
+Started GET "/admins/new" for 165.91.13.12 at 2020-03-02 15:44:58 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by AdminsController#new as HTML
+  Rendering admins/new.html.erb within layouts/application
+  Rendered admins/_form.html.erb (21.9ms)
+  Rendered admins/new.html.erb within layouts/application (23.2ms)
+Completed 200 OK in 89ms (Views: 80.5ms | MongoDB: 0.0ms)
+
+
+Started GET "/patients/new" for 165.91.13.12 at 2020-03-02 15:45:02 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PatientsController#new as HTML
+  Rendering patients/new.html.erb within layouts/application
+  Rendered patients/_form.html.erb (3.6ms)
+  Rendered patients/new.html.erb within layouts/application (4.9ms)
+Completed 200 OK in 68ms (Views: 62.0ms | MongoDB: 0.0ms)
+
+
+Started GET "/patients" for 165.91.13.12 at 2020-03-02 15:45:05 +0000
+Cannot render console from 165.91.13.12! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PatientsController#index as HTML
+  Rendering patients/index.html.erb within layouts/application
+MONGODB | EVENT: #<TopologyOpening topology=Unknown[]>
+MONGODB | Topology type 'unknown' initializing.
+MONGODB | EVENT: #<TopologyChanged prev=Unknown[] new=ReplicaSetNoPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Topology type 'Unknown' changed to type 'ReplicaSetNoPrimary'.
+MONGODB | EVENT: #<ServerOpening address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 topology=ReplicaSetNoPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Server nemtr-shard-00-01-pbmpo.mongodb.net:27017 initializing.
+MONGODB | EVENT: #<ServerOpening address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 topology=ReplicaSetNoPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Server nemtr-shard-00-02-pbmpo.mongodb.net:27017 initializing.
+MONGODB | EVENT: #<ServerOpening address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 topology=ReplicaSetNoPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0]>
+MONGODB | Server nemtr-shard-00-00-pbmpo.mongodb.net:27017 initializing.
+MONGODB | Waiting for up to 5.00 seconds for servers to be scanned: #<Cluster topology=ReplicaSetNoPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0] servers=[#<Server address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 UNKNOWN>,#<Server address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 UNKNOWN>,#<Server address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 UNKNOWN>]>
+MONGODB | EVENT: #<ServerDescriptionChanged address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 topology=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] prev=#<Mongo::Server:Description:0x70296907231920 config={} average_round_trip_time=> new=#<Mongo::Server:Description:0x70296907108060 config={"hosts"=>["nemtr-shard-00-00-pbmpo.mongodb.net:27017", "nemtr-shard-00-01-pbmpo.mongodb.net:27017", "nemtr-shard-00-02-pbmpo.mongodb.net:27017"], "setName"=>"NEMTR-shard-0", "setVersion"=>1, "ismaster"=>true, "secondary"=>false, "primary"=>"nemtr-shard-00-02-pbmpo.mongodb.net:27017", "tags"=>{"nodeType"=>"ELECTABLE", "region"=>"US_EAST_1", "provider"=>"AWS"}, "me"=>"nemtr-shard-00-02-pbmpo.mongodb.net:27017", "electionId"=>BSON::ObjectId('7fffffff0000000000000003'), "lastWrite"=>{"opTime"=>{"ts"=>#<BSON::Timestamp:0x00007fde8c5aa740 @seconds=1583163904, @increment=4>, "t"=>3}, "lastWriteDate"=>2020-03-02 15:45:04 UTC, "majorityOpTime"=>{"ts"=>#<BSON::Timestamp:0x00007fde8c5aa588 @seconds=1583163904, @increment=4>, "t"=>3}, "majorityWriteDate"=>2020-03-02 15:45:04 UTC}, "maxBsonObjectSize"=>16777216, "maxMessageSizeBytes"=>48000000, "maxWriteBatchSize"=>100000, "localTime"=>2020-03-02 15:45:05 UTC, "logicalSessionTimeoutMinutes"=>30, "connectionId"=>108906, "minWireVersion"=>0, "maxWireVersion"=>8, "readOnly"=>false, "ok"=>1.0, "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007fde8c5aa0d8 @seconds=1583163904, @increment=4>, "signature"=>{"hash"=><BSON::Binary:0x70296907108320 type=generic data=0x929a06c05a7adbbc...>, "keyId"=>6797146454453387266}}, "operationTime"=>#<BSON::Timestamp:0x00007fde8c5a9ea8 @seconds=1583163904, @increment=4>} average_round_trip_time=0.106909489>>
+MONGODB | Server description for nemtr-shard-00-02-pbmpo.mongodb.net:27017 changed from 'unknown' to 'primary'.
+MONGODB | EVENT: #<TopologyChanged prev=ReplicaSetNoPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0] new=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003]>
+MONGODB | Topology type 'ReplicaSetNoPrimary' changed to type 'ReplicaSetWithPrimary'.
+MONGODB | Waiting for up to 4.88 seconds for servers to be scanned: #<Cluster topology=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] servers=[#<Server address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 UNKNOWN>,#<Server address=nemtr-shard-00-02-pbmpo.mongodb.net:27017 PRIMARY replica_set=NEMTR-shard-0 pool=#<ConnectionPool size=0 (0-5) used=0 avail=0 pending=0>>,#<Server address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 UNKNOWN>]>
+MONGODB | EVENT: #<ServerDescriptionChanged address=nemtr-shard-00-01-pbmpo.mongodb.net:27017 topology=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] prev=#<Mongo::Server:Description:0x70296907233260 config={} average_round_trip_time=> new=#<Mongo::Server:Description:0x70296906866360 config={"hosts"=>["nemtr-shard-00-00-pbmpo.mongodb.net:27017", "nemtr-shard-00-01-pbmpo.mongodb.net:27017", "nemtr-shard-00-02-pbmpo.mongodb.net:27017"], "setName"=>"NEMTR-shard-0", "setVersion"=>1, "ismaster"=>false, "secondary"=>true, "primary"=>"nemtr-shard-00-02-pbmpo.mongodb.net:27017", "tags"=>{"nodeType"=>"ELECTABLE", "provider"=>"AWS", "region"=>"US_EAST_1"}, "me"=>"nemtr-shard-00-01-pbmpo.mongodb.net:27017", "lastWrite"=>{"opTime"=>{"ts"=>#<BSON::Timestamp:0x00007fde8c540700 @seconds=1583163904, @increment=4>, "t"=>3}, "lastWriteDate"=>2020-03-02 15:45:04 UTC, "majorityOpTime"=>{"ts"=>#<BSON::Timestamp:0x00007fde8c540548 @seconds=1583163904, @increment=4>, "t"=>3}, "majorityWriteDate"=>2020-03-02 15:45:04 UTC}, "maxBsonObjectSize"=>16777216, "maxMessageSizeBytes"=>48000000, "maxWriteBatchSize"=>100000, "localTime"=>2020-03-02 15:45:05 UTC, "logicalSessionTimeoutMinutes"=>30, "connectionId"=>100938, "minWireVersion"=>0, "maxWireVersion"=>8, "readOnly"=>false, "ok"=>1.0, "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007fde8c5400c0 @seconds=1583163904, @increment=4>, "signature"=>{"hash"=><BSON::Binary:0x70296906866600 type=generic data=0x929a06c05a7adbbc...>, "keyId"=>6797146454453387266}}, "operationTime"=>#<BSON::Timestamp:0x00007fde8c533e60 @seconds=1583163904, @increment=4>} average_round_trip_time=0.115537711>>
+MONGODB | Server description for nemtr-shard-00-01-pbmpo.mongodb.net:27017 changed from 'unknown' to 'secondary'.
+MONGODB | EVENT: #<TopologyChanged prev=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] new=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003]>
+MONGODB | Topology type 'ReplicaSetWithPrimary' changed to type 'ReplicaSetWithPrimary'.
+MONGODB | EVENT: #<ServerDescriptionChanged address=nemtr-shard-00-00-pbmpo.mongodb.net:27017 topology=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] prev=#<Mongo::Server:Description:0x70296907230600 config={} average_round_trip_time=> new=#<Mongo::Server:Description:0x70296906859640 config={"hosts"=>["nemtr-shard-00-00-pbmpo.mongodb.net:27017", "nemtr-shard-00-01-pbmpo.mongodb.net:27017", "nemtr-shard-00-02-pbmpo.mongodb.net:27017"], "setName"=>"NEMTR-shard-0", "setVersion"=>1, "ismaster"=>false, "secondary"=>true, "primary"=>"nemtr-shard-00-02-pbmpo.mongodb.net:27017", "tags"=>{"provider"=>"AWS", "nodeType"=>"ELECTABLE", "region"=>"US_EAST_1"}, "me"=>"nemtr-shard-00-00-pbmpo.mongodb.net:27017", "lastWrite"=>{"opTime"=>{"ts"=>#<BSON::Timestamp:0x00007fde8c5312f0 @seconds=1583163904, @increment=4>, "t"=>3}, "lastWriteDate"=>2020-03-02 15:45:04 UTC, "majorityOpTime"=>{"ts"=>#<BSON::Timestamp:0x00007fde8c531138 @seconds=1583163904, @increment=4>, "t"=>3}, "majorityWriteDate"=>2020-03-02 15:45:04 UTC}, "maxBsonObjectSize"=>16777216, "maxMessageSizeBytes"=>48000000, "maxWriteBatchSize"=>100000, "localTime"=>2020-03-02 15:45:05 UTC, "logicalSessionTimeoutMinutes"=>30, "connectionId"=>101699, "minWireVersion"=>0, "maxWireVersion"=>8, "readOnly"=>false, "ok"=>1.0, "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007fde8c530c10 @seconds=1583163904, @increment=4>, "signature"=>{"hash"=><BSON::Binary:0x70296906859900 type=generic data=0x929a06c05a7adbbc...>, "keyId"=>6797146454453387266}}, "operationTime"=>#<BSON::Timestamp:0x00007fde8c530a08 @seconds=1583163904, @increment=4>} average_round_trip_time=0.117593988>>
+MONGODB | Server description for nemtr-shard-00-00-pbmpo.mongodb.net:27017 changed from 'unknown' to 'secondary'.
+MONGODB | EVENT: #<TopologyChanged prev=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003] new=ReplicaSetWithPrimary[nemtr-shard-00-01-pbmpo.mongodb.net:27017,nemtr-shard-00-02-pbmpo.mongodb.net:27017,nemtr-shard-00-00-pbmpo.mongodb.net:27017,name=NEMTR-shard-0,v=1,e=7fffffff0000000000000003]>
+MONGODB | Topology type 'ReplicaSetWithPrimary' changed to type 'ReplicaSetWithPrimary'.
+MONGODB | [9] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | admin.saslStart | STARTED | {}
+MONGODB | [9] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslStart | SUCCEEDED | 0.001s
+MONGODB | [10] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | admin.saslContinue | STARTED | {}
+MONGODB | [10] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
+MONGODB | [11] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | admin.saslContinue | STARTED | {}
+MONGODB | [11] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
+MONGODB | [12] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | test.find | STARTED | {"find"=>"patients", "filter"=>{}, "lsid"=>{"id"=><BSON::Binary:0x70296906712420 type=uuid data=0x72d0738091d148eb...>}}
+MONGODB | [12] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | test.find | SUCCEEDED | 0.002s
+MONGODB | [13] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #1 | test.find | STARTED | {"find"=>"admins", "filter"=>{"_id"=>BSON::ObjectId('5e5c4881952082967f21a22c')}, "sort"=>{"_id"=>1}, "limit"=>1, "singleBatch"=>true, "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007fde8c2e8340 @seconds=1583163904, @increment=4>, "signature"...
+MONGODB | [13] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | test.find | SUCCEEDED | 0.002s
+  Rendered patients/index.html.erb within layouts/application (197.7ms)
+Completed 200 OK in 260ms (Views: 257.9ms | MongoDB: 0.0ms)
+
+
+MONGODB | [14] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.saslStart | STARTED | {}
+MONGODB | [14] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslStart | SUCCEEDED | 0.001s
+MONGODB | [15] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.saslContinue | STARTED | {}
+MONGODB | [15] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
+MONGODB | [16] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.saslContinue | STARTED | {}
+MONGODB | [16] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.saslContinue | SUCCEEDED | 0.001s
+MONGODB | [17] nemtr-shard-00-02-pbmpo.mongodb.net:27017 #2 | admin.endSessions | STARTED | {"endSessions"=>[{"id"=><BSON::Binary:0x70296906712420 type=uuid data=0x72d0738091d148eb...>}], "$clusterTime"=>{"clusterTime"=>#<BSON::Timestamp:0x00007fde8c2e8340 @seconds=1583163904, @increment=4>, "signature"=>{"hash"=><BSON::Binary:0x702969056627...
+MONGODB | [17] nemtr-shard-00-02-pbmpo.mongodb.net:27017 | admin.endSessions | SUCCEEDED | 0.001s
