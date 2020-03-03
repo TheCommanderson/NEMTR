@@ -2,7 +2,7 @@
 
 <h1>Upcoming Rides</h1>
 <p>You are logged in as a:</p>
-<table>
+<table border="1"cellpadding="5"cellspacing="1">
   <thead>
     <tr>
       <th>Patient</th>
@@ -10,6 +10,7 @@
       <th>Date & Time</th>
       <th>Status</th>
       <th>Destination</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -23,9 +24,9 @@
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
       <td><%= appointment.destination %></td>
-      <td><%= link_to 'Show', appointment %></td>
-      <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
-      <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Show', appointment %>
+      <%= link_to 'Edit', edit_appointment_path(appointment) %>
+      <%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>
   </tbody>

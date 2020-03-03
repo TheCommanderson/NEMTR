@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Login</h1>
+
+ <div class="field">
+    <%= label_tag :email %>
+    <%= text_field_tag :email %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %>
+    <%= text_field_tag :password %>
+  </div>
+
+<%= button_to 'Admin', admins_path, method: "get" %><br>
+<%= button_to 'Patient', patients_path, method: "get" %><br>
+<%= button_to 'Driver', drivers_path, method: "get" %>
+
+<h1>Register</h1>
+
+<%= button_to 'Admin', new_admin_path, method: "get" %><br>
+<%= button_to 'Patient', new_patient_path, method: "get" %><br>
+<%= button_to 'Driver', new_driver_path, method: "get" %>
+

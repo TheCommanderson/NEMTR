@@ -1,5 +1,82 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Patients</h1>
+
+<%= form_tag patients_path, method: :approve do %>
+<table border="1"cellpadding="5"cellspacing="1">
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Middle initial</th>
+      <th>Last name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Admin</th>
+      <th>Approve</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @patients.each do |patient| %>
+    <tr>
+      <td><%= patient.first_name %></td>
+      <td><%= patient.middle_initial %></td>
+      <td><%= patient.last_name %></td>
+      <td><%= patient.phone %></td>
+      <td><%= patient.email %></td>
+      <td><%= patient.admin %></td>
+      <td><%= check_box_tag "patient_approvals[]", patient.approved, false, class: 'selectable' %></td>
+      <td><%= link_to 'Show', patient %>
+      <%= link_to 'Edit', edit_patient_path(patient) %>
+      <%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<br />
+<%= submit_tag "Approve", :class => 'btn btn-primary btn-xs' %>
+<% end %>
+
+<br /><br /><br />
+
+<h1>Upcoming Rides</h1>
+<p>You are logged in as a:</p>
+<table border="1"cellpadding="5"cellspacing="1">
+  <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Driver</th>
+      <th>Date & Time</th>
+      <th>Status</th>
+      <th>Destination</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @appointments.each do |appointment| %>
+    <tr>
+      <% @tempPatient = @patients.find(appointment.patient_id) %>
+      <% @tempDriver =  @drivers.find(appointment.driver_id) %>
+      <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
+      <td><%= @tempDriver.first_name %> <%= @tempDriver.last_name %></td>
+      <td><%= appointment.datetime %></td>
+      <td><%= appointment.status %></td>
+      <td><%= appointment.destination %></td>
+      <td><%= link_to 'Show', appointment %>
+      <%= link_to 'Edit', edit_appointment_path(appointment) %>
+      <%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<h3><%= link_to 'Create New Ride', new_appointment_path %></h3>
+
+<!--
+<p id="notice"><%= notice %></p>
+
 <h1>Admins</h1>
 
 <table>
@@ -37,3 +114,4 @@
 <br>
 
 <%= link_to 'New Admin', new_admin_path %>
+-->

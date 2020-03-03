@@ -5,6 +5,7 @@ class Patient
   field :last_name, type: String
   field :phone, type: Integer
   field :email, type: String
+  field :approved, type: Boolean
   
   belongs_to :admin
   has_many :appointments
