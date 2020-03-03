@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :appointments
+    get 'drivers', to: 'drivers#pending'
+    get 'drivers_home', to: 'drivers#index'
   resources :drivers
     get 'patients', to:'patients#pending'
     get 'patients_home', to: 'patients#index'
