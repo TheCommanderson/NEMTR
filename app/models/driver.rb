@@ -6,7 +6,7 @@ class Driver
   field :phone, type: Integer
   field :email, type: String
   field :trained, type: Mongoid::Boolean
-  # embeds_one :car, class_name: "Car", dependent: :delete
+  embeds_one :car, class_name: "Car"
   
   belongs_to :admin
   has_many :appointments
