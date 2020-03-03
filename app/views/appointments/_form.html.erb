@@ -31,6 +31,10 @@
     <%= form.text_field :dpatient_id %>
   </div>
 
+  <%= fields_for :location do |builder| %>
+    <%= render "location_form", :form => builder %>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
