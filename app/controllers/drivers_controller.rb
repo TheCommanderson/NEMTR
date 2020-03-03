@@ -4,9 +4,16 @@ class DriversController < ApplicationController
   # GET /drivers
   # GET /drivers.json
   def index
+    @logged_in_driver = Driver.first
     @drivers = Driver.all
+    @patients = Patient.all
+    @appointments = Appointment.all
   end
 
+ # GET /drivers
+  def pending
+  end
+  
   # GET /drivers/1
   # GET /drivers/1.json
   def show
