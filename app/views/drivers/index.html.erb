@@ -19,7 +19,7 @@
         <% @tempPatient = @patients.find(appointment.patient_id) %>
         <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
         <td><%= appointment.datetime %></td>
-        <td><%= appointment.destination %></td>
+        <td><%= appointment.location %></td>
         <td><%= link_to 'Show', appointment %></td>
         <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
         <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -52,7 +52,7 @@
       <td><%= @tempDriver.first_name %> <%= @tempDriver.last_name %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
-      <td><%= appointment.destination %></td>
+      <td><%= appointment.location %></td>
       <td><%= link_to 'Show', appointment %></td>
       <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
       <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
