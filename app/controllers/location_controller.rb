@@ -1,5 +1,5 @@
 class LocationController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+  before_action :set_appointment
     
   def new
     @appointment = Appointment.find(params[:appointment_id])
@@ -8,6 +8,12 @@ class LocationController < ApplicationController
   
   def create
     @appointment = Appointment.find(params[:appointment_id]) 
-    @location = @appointment.location.new(params[:location])
+    @location = @appointment.location.build(params[:location])
+    @appointment.save
+  end
+  
+  private
+  def set_appointment
+    @appointment = Appointment.find(params[:id])
   end
 end
