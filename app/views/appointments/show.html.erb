@@ -6,9 +6,22 @@
 </p>
 
 <p>
+  <strong>Pickup Location:</strong>
+  <%#= @appointment.pickup %>
+</p>
+<p>
+  <strong>Drop off Location:</strong>
+  <%#= @appointment.destination %>
+</p>
+
+<p>
   <strong>Status:</strong>
   <%= @appointment.status %>
 </p>
 
-<%= link_to 'Edit', edit_appointment_path(@appointment) %> |
-<%= link_to 'Back', appointments_path %>
+<p>
+  <strong>Map:</strong>
+  
+</p>
+
+<%= link_to 'Back', :back %>

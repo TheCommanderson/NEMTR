@@ -9,7 +9,7 @@
       <th>Patient</th>
       <th>Date & Time</th>
       <th>Destination</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -21,7 +21,6 @@
         <td><%= appointment.datetime %></td>
         <td><%= appointment.location %></td>
         <td><%= link_to 'Show', appointment %></td>
-        <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
         <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -31,31 +30,30 @@
 
 <br>
 
-<h1>All Upcoming Rides</h1>
-<table border="1"cellpadding="5"cellspacing="1">
-  <thead>
-    <tr>
-      <th>Patient</th>
-      <th>Driver</th>
-      <th>Date & Time</th>
-      <th>Status</th>
-      <th>Destination</th>
-    </tr>
-  </thead>
+<!--<h1>All Upcoming Rides</h1>-->
+<!--<table border="1"cellpadding="5"cellspacing="1">-->
+<!--  <thead>-->
+<!--    <tr>-->
+<!--      <th>Patient</th>-->
+<!--      <th>Driver</th>-->
+<!--      <th>Date & Time</th>-->
+<!--      <th>Status</th>-->
+<!--      <th>Destination</th>-->
+<!--      <th colspan="1"></th>-->
+<!--    </tr>-->
+<!--  </thead>-->
 
-  <tbody>
-    <% @appointments.each do |appointment| %>
-    <tr>
-      <% @tempPatient = @patients.find(appointment.patient_id) %>
-      <% @tempDriver =  @drivers.find(appointment.driver_id) %>
-      <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-      <td><%= @tempDriver.first_name %> <%= @tempDriver.last_name %></td>
-      <td><%= appointment.datetime %></td>
-      <td><%= appointment.status %></td>
-      <td><%= appointment.location %></td>
-      <td><%= link_to 'Show', appointment %></td>
-      <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
-      <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-    <% end %>
-  </tbody>
+<!--  <tbody>-->
+<!--    <%# @appointments.each do |appointment| %>-->
+<!--    <tr>-->
+<!--      <%# #tempPatient = @patients.find(appointment.patient_id) %>-->
+<!--      <%# @tempDriver =  @drivers.find(appointment.driver_id) %>-->
+<!--      <td><%#= @tempPatient.first_name %> <%#= @tempPatient.last_name %></td>-->
+<!--      <td><%#= @tempDriver.first_name %> <%#= @tempDriver.last_name %></td>-->
+<!--      <td><%#= appointment.datetime %></td>-->
+<!--      <td><%#= appointment.status %></td>-->
+<!--      <td><%#= appointment.location %></td>-->
+<!--      <td><%#= link_to 'Show', appointment %></td>-->
+<!--    </tr>-->
+<!--    <%# end %>-->
+<!--  </tbody>-->
