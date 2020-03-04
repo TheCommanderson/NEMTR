@@ -9,6 +9,6 @@ class Appointment
   
   accepts_nested_attributes_for :location
   
-  belongs_to :driver
+  belongs_to :driver, optional: true
   belongs_to :patient
 end
