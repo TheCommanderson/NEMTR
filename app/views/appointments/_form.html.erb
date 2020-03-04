@@ -28,10 +28,10 @@
   
   <div class="field">
     <%= form.label :patient_id %>
-    <%= form.text_field :dpatient_id %>
+    <%= form.text_field :patient_id %>
   </div>
 
-  <%= fields_for :location do |builder| %>
+  <%= form.fields_for :location do |builder| %>
     <%= render "location_form", :form => builder %>
   <% end %>
 

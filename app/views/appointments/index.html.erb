@@ -8,7 +8,7 @@
       <th>Driver</th>
       <th>Date & Time</th>
       <th>Status</th>
-      <th>Destination</th>
+      <th>Location</th>
     </tr>
   </thead>
 
@@ -21,7 +21,7 @@
       <td><%= @tempDriver.first_name %> <%= @tempDriver.last_name %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
-      <td><%= appointment.location %></td>
+      <td><%= appointment.location.addr1 %></td>
       <td><%= link_to 'Show', appointment %></td>
       <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
       <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
