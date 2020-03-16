@@ -1,73 +1,39 @@
-<p id="notice"><%= notice %></p>
+<% @currentFirstName = @patients.find(@currentPatient).first_name%>
+<% @currentLastName = @patients.find(@currentPatient).last_name%>
 
-<h1>Upcoming Rides</h1>
-<p>You are logged in as a:</p>
+<p id="notice"><%= notice %></p>
+<h2>Patient's Page(will delete this)</h2>
+<h1>Upcoming Rides:</h1>
+<p>Hi <%= @currentFirstName %> <%= @currentLastName%>!</p>
 <table border="1"cellpadding="5"cellspacing="1">
   <thead>
     <tr>
-      <th>Patient</th>
       <th>Driver</th>
       <th>Date & Time</th>
       <th>Status</th>
       <th>Destination</th>
+      <th>Address</th>
       <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @appointments.each do |appointment| %>
+  <%#TODO: find current patient using session %>
+    <% @appointments.where('patient_id' => @currentPatient).each do |appointment| %>
     <tr>
-      <% @tempPatient = @patients.find(appointment.patient_id) %>
       <% @tempDriver =  @drivers.find(appointment.driver_id) %>
-      <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
       <td><%= @tempDriver.first_name %> <%= @tempDriver.last_name %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
-      <td><%= appointment.location %></td>
-      <td><%= link_to 'Show', appointment %>
+      <td><%= appointment.location %></td> <%#TODO:should change it to location.name%>
+      <td><%= appointment.location %></td> <%#TODO:should change it to location.address or something that shows address%>
+      <%#TODO: show correct fields by rendering correct form %>
+      <td><%= link_to 'More Info', appointment %>
+      <%#TODO: edit page should follow UI mockup %>
       <%= link_to 'Edit', edit_appointment_path(appointment) %>
-      <%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <%= link_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>
   </tbody>
 </table>
 <h3><%= link_to 'Create New Appointment', new_appointment_path %></h3>
-<!--
-<h1>Patients</h1>
-<table>
-  <thead>
-    <tr>
-      <th>First name</th>
-      <th>Middle initial</th>
-      <th>Last name</th>
-      <th>Phone</th>
-      <th>Email</th>
-      <th>Admin</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @patients.each do |patient| %>
-    <tr>
-      <td><%= patient.first_name %></td>
-      <td><%= patient.middle_initial %></td>
-      <td><%= patient.last_name %></td>
-      <td><%= patient.phone %></td>
-      <td><%= patient.email %></td>
-      <td><%= patient.admin %></td>
-      <td><%= link_to 'Show', patient %></td>
-      <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
-      <td>
-        <%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are
-        you sure?' } %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br />
-
-<%= link_to 'New Patient', new_patient_path %>
--->
