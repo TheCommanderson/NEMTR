@@ -17,6 +17,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new
+    @appointment.build_location
   end
 
   # GET /appointments/1/edit
@@ -27,7 +28,6 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
@@ -71,6 +71,6 @@ class AppointmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def appointment_params
-      params.require(:appointment).permit(:patient_id, :driver_id, :datetime, :status, :destination)
+      params.require(:appointment).permit(:patient_id, :driver_id, :datetime, :status, location_attributes: [:addr1, :addr2, :city, :state, :zip])
     end
 end

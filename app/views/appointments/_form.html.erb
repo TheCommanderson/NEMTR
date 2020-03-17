@@ -20,6 +20,20 @@
     <%= form.label :status %>
     <%= form.number_field :status %>
   </div>
+  
+  <div class="field">
+    <%= form.label :driver_id %>
+    <%= form.text_field :driver_id %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :patient_id %>
+    <%= form.text_field :patient_id %>
+  </div>
+
+  <%= form.fields_for :location do |builder| %>
+    <%= render "location_form", :form => builder %>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
