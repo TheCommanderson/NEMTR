@@ -16,10 +16,14 @@
     <% @appointments.each do |appointment| %>
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
-      <% appointment.driver_id.nil? ? @driver = "none" : @driver = @drivers.find(appointment.driver_id).first_name + " " + @drivers.find(appointment.driver_id).first_name%>
+      <% if appointment.driver_id.nil? %>
+        <% @tempDriver = "None"  %>
+      <% else %>
+        <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
+      <% end %>
       <% @locString = appointment.location.addr1 + appointment.location.addr2 + ", " + appointment.location.city %>
       <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-      <td><%= @driver %></td>
+      <td><%= @tempDriver %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
       <td><%= @locString %></td>
