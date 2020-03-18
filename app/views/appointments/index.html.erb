@@ -8,7 +8,7 @@
       <th>Driver</th>
       <th>Date & Time</th>
       <th>Status</th>
-      <th>Destination</th>
+      <th>Location</th>
     </tr>
   </thead>
 
@@ -16,12 +16,17 @@
     <% @appointments.each do |appointment| %>
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
-      <% @tempDriver =  @drivers.find(appointment.driver_id) %>
+      <% if appointment.driver_id.nil? %>
+        <% @tempDriver = "None"  %>
+      <% else %>
+        <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
+      <% end %>
+      <% @locString = appointment.location.addr1 + appointment.location.addr2 + ", " + appointment.location.city %>
       <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-      <td><%= @tempDriver.first_name %> <%= @tempDriver.last_name %></td>
+      <td><%= @tempDriver %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
-      <td><%= appointment.location %></td>
+      <td><%= @locString %></td>
       <td><%= link_to 'Show', appointment %></td>
       <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
       <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
