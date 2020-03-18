@@ -6,6 +6,7 @@ class PatientsController < ApplicationController
   end
   # GET /patients.json
   def index
+    @currentPatient = Patient.first
     @patients = Patient.all
     @appointments = Appointment.all
     @drivers = Driver.all
