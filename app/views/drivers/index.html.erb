@@ -47,9 +47,13 @@
     <% @appointments.each do |appointment| %>
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
-      <% @tempDriver =  @drivers.find(appointment.driver_id) %>
+      <% if appointment.driver_id.nil? %>
+        <% @tempDriver = "None"  %>
+      <% else %>
+        <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
+      <% end %>
       <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-      <td><%= @tempDriver.first_name %> <%= @tempDriver.last_name %></td>
+      <td><%= @tempDriver %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
       <td><%= appointment.location %></td>
