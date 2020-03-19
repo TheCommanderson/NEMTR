@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     get 'patients_home', to: 'patients#index'
   resources :patients
   resources :sessions
+    post 'create_session', to: 'sessions#create'
   resources :admins
+    get 'admins_home', to: 'admins#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
