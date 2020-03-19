@@ -1,2 +1,21 @@
-<h1><%= params[:login] %> Login Page</h1>
-<%= render 'login_form', login_type: params[:login_type] %>
+<% @login_type = params[:login] %>
+<h1><%= @login_type %> Login Page</h1>
+<%= form_with(url: create_session_url, local: true) do |form| %>
+
+  <div class="field">
+    <%= label_tag :email %>
+    <%= text_field_tag :email %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %>
+    <%= text_field_tag :password %>
+  </div>
+  
+  <div class="field">
+    <%= hidden_field_tag :login_type, @login_type %>
+  </div>
+  
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

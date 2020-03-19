@@ -4,7 +4,7 @@
 <p id="notice"><%= notice %></p>
 <h2>Patient's Page(will delete this)</h2>
 <h1>Upcoming Rides:</h1>
-<p>Hi <%= @currentFirstName %> <%= @currentLastName%>!</p>
+<p>Hi <%= session[:user_id] %> <%= @currentLastName%>!</p>
 <table border="1"cellpadding="5"cellspacing="1">
   <thead>
     <tr>

@@ -6,12 +6,11 @@ class ApplicationController < ActionController::Base
     def current_user
         case session[:login_type]
         when "P"
-            _user = Patient.find(id: session[:user_id])
+            _user = Patient.find(session[:user_id])
         when "D"
-            _user = Driver.find(id: session[:user_id])
+            _user = Driver.find(session[:user_id])
         when "A"
-            _user = Admin.find(id: session[:user_id])
-        else
+            _user = Admin.find(session[:user_id])
             _user = nil
         end
     end
