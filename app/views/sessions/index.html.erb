@@ -1,19 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<% if logged_in? %>
-    <% case session[:login_type] %>
-    <% when "P" %>
-        <% redirect_to patients_home %>
-    <% when "D" %>
-        <% redirect_to drivers_home %>
-    <% when "A" %>
-        <% redirect_to admins_home %>
-    <% end %>
-<% end %>
-
 <h1>Login</h1>
 
-
+<%= session[:user_id] %>
+<%= session[:login_type] %>
 
 <%= button_to 'Admin', new_session_path, method: "get", params: {login: "Admin"} %><br>
 <%= button_to 'Patient', new_session_path, method: "get", params: {login: "Patient"} %><br>
