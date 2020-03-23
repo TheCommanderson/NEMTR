@@ -3,8 +3,7 @@
 
 <p id="notice"><%= notice %></p>
 <h2>Patient's Page(will delete this)</h2>
-<h1>Upcoming Rides:</h1>
-<p>Hi <%= @currentFirstName %> <%= @currentLastName%>!</p>
+<h1>Upcoming Rides for <%= @currentFirstName %> <%= @currentLastName%>:</h1>
 <table border="1"cellpadding="5"cellspacing="1">
   <thead>
     <tr>
@@ -22,24 +21,22 @@
     <% @appointments.where('patient_id' => @currentPatient).each do |appointment| %>
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
-      <% if appointment.driver_id.nil? %>
+
+      <% if !@drivers.find(appointment.driver_id) %>
         <% @tempDriver = "None"  %>
       <% else %>
         <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
       <% end %>
-      <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
       <td><%= @tempDriver %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
-      <td><%= appointment.location %></td> <%#TODO:should change it to location.name%>
-      <td><%= appointment.location %></td> <%#TODO:should change it to location.address or something that shows address%>
-      <%#TODO: show correct fields by rendering correct form %>
-      <td><%= link_to 'More Info', appointment %>
+      <td><%= appointment.location.name %></td>
+      <td><%= appointment.location.addr1 %></td>
       <%#TODO: edit page should follow UI mockup %>
-      <%= link_to 'Edit', edit_appointment_path(appointment) %>
-      <%= link_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Update Ride', edit_appointment_path(appointment) %>
+      <%= link_to 'Cancel Ride', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>
   </tbody>
 </table>
-<h3><%= link_to 'Create New Appointment', new_appointment_path %></h3>
+<h3><%= link_to 'Request a Ride', new_appointment_path %></h3>
