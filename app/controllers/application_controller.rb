@@ -18,4 +18,9 @@ class ApplicationController < ActionController::Base
     def logged_in?
         !session[:login_type].nil?
     end
+    def logout
+        session.delete(:login_type)
+        session.delete(:user_id)
+        redirect_to root_url
+    end
 end
