@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'sessions#index'
+  post :logout, controller:"application"
   resources :appointments
     get 'drivers', to: 'drivers#pending'
     get 'drivers_home', to: 'drivers#index'

@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
   end
   # GET /patients.json
   def index
-    @currentPatient = Patient.first
+    @currentPatient = Patient.find(session[:user_id])
     @patients = Patient.all
     @appointments = Appointment.all
     @drivers = Driver.all
