@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :authorized, only: [:new, :create]
   # GET /patients
   def pending
   end

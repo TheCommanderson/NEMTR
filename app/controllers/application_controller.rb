@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     def logout
         session.delete(:login_type)
         session.delete(:user_id)
-        redirect_to root_url
+        redirect_to root_url, notice: "Successfully Logged Out"
     end
     
     def authorized

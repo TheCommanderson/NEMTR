@@ -24,15 +24,17 @@ class SessionsController < ApplicationController
         
         case @login_type
         when "Admin"
-            @user = Admin.find(email: params[:email])
+            @user = Admin.where(email: params[:email])[0]
         when "Patient"
             @user = Patient.where(email: params[:email])[0]
         when "Driver"
-            @user = Driver.find(email: params[:email])
+            @user = Driver.where(email: params[:email])[0]
         end
         if @user && @user.authenticate(params[:password])
             session[:user_id] = @user._id
             session[:login_type] = @login_type[0]
+        else
+            flash.notice = "Incorrect Email or Password."
         end
         redirect_to root_url
     end
