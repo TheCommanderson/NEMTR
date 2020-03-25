@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
         when "Driver"
             @user = Driver.find(email: params[:email])
         end
-        if @user
+        if @user && @user.authenticate(params[:password])
             session[:user_id] = @user._id
             session[:login_type] = @login_type[0]
         end
