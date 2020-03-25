@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
     helper_method :current_user
     helper_method :logged_in?
-    
+    before_action :authorized
     # Should return the current user or nil if not logged in
     def current_user
         case session[:login_type]
@@ -18,9 +18,14 @@ class ApplicationController < ActionController::Base
     def logged_in?
         !session[:login_type].nil?
     end
+    
     def logout
         session.delete(:login_type)
         session.delete(:user_id)
         redirect_to root_url
+    end
+    
+    def authorized
+        redirect_to root_url, notice: "Please Log In." unless logged_in?
     end
 end
