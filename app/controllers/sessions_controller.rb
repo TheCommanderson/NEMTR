@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+    
+    skip_before_action :authorized, only: [:index, :create, :new]
+    
     def index
         if logged_in?
           case session[:login_type]
