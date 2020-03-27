@@ -10,8 +10,8 @@
       <th>Driver</th>
       <th>Date & Time</th>
       <th>Status</th>
-      <th>Destination</th>
-      <th>Address</th>
+      <th>Pick-up Location</th>
+      <th>Drop-off Location</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -30,8 +30,8 @@
       <td><%= @tempDriver %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
-      <td><%= appointment.location.name %></td>
-      <td><%= appointment.location.addr1 %></td>
+      <td><%= appointment.location[0].name%></td>
+      <td><%= appointment.location[1].name%></td>
       <%#TODO: edit page should follow UI mockup %>
       <td><%= link_to 'Update Ride', edit_appointment_path(appointment) %>
       <%= link_to 'Cancel Ride', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
