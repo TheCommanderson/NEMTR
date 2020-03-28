@@ -5,6 +5,7 @@ class AdminsController < ApplicationController
   # GET /admins
   # GET /admins.json
   def index
+    @currentAdmin = Admin.find(session[:user_id])
     @admins = Admin.all
     @patients = Patient.all
     @drivers = Driver.all
