@@ -1,3 +1,11 @@
+# <% provide :head_tags do %>
+#   <script>
+#   document.addEventListener("DOMContentLoaded", function(){
+#       initMap(<%=@place.latitude%>, <%=@place.longitude%>)
+#   });
+#   </script>
+# <% end %>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -12,3 +20,11 @@
 
 <%= link_to 'Edit', edit_appointment_path(@appointment) %> |
 <%= link_to 'Back', url_for(:back) %>
+
+<p>
+  <div id="map"></div>
+</p>
+# <p> 
+#   <%= Rails.application.credentials.dig(:gmap_api_key)%>
+#   <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=400x300&center=51.501564,-0.141944&key=#{Rails.application.credentials.dig(:gmap_api_key)}", alt: "Map" %>
+# </p>
