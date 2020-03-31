@@ -1,6 +1,4 @@
-class ScheduleController < ApplicationController
-  before_action :set_appointment
-  
+class SchedulesController < ApplicationController
   def index
     
   end
@@ -11,7 +9,7 @@ class ScheduleController < ApplicationController
   end
   
   def create
-    @driver = Appointment.find(params[:driver_id]) 
+    @driver = Driver.find(params[:driver_id]) 
     @schedule = @driver.schedule.build(params[:schedule])
     @schedule.save
   end
@@ -21,7 +19,4 @@ class ScheduleController < ApplicationController
   end
   
   private
-  def set_appointment
-    @appointment = Appointment.find(params[:id])
-  end
 end
