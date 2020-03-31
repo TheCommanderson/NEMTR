@@ -11,6 +11,8 @@ class Driver
   field :password_digest, type: String
   
   embeds_many :schedule
+  accepts_nested_attributes_for :schedule
+  
   embeds_one :car, class_name: "Car"
   
   has_secure_password

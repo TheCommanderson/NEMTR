@@ -7,6 +7,6 @@ class Schedule
   field :Friday, type: String
   field :Saturday, type: String
   field :Sunday, type: String
-  field :Current, type: Boolean
+  field :current, type: Boolean
   embedded_in :Driver
 end
