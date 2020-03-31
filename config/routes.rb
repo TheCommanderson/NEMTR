@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   
   get 'drivers', to: 'drivers#pending'
   get 'drivers_home', to: 'drivers#index'
-  get 'driver_schedule', to: 'drivers#schedule'
   resources :drivers do
     resources :schedules
   end
