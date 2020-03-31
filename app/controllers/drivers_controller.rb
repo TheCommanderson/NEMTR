@@ -1,10 +1,11 @@
 class DriversController < ApplicationController
   before_action :set_driver, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authorized, only: [:new, :create]
 
   # GET /drivers
   # GET /drivers.json
   def index
-    @logged_in_driver = Driver.first
+    @logged_in_driver = Driver.find(session[:user_id])
     @drivers = Driver.all
     @patients = Patient.all
     @appointments = Appointment.all
@@ -75,6 +76,6 @@ class DriversController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def driver_params
-      params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id)
+      params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id, :password)
     end
 end

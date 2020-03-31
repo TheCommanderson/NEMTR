@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<h3>Logged in as <%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h3>
 <h1>Patients</h1>
 
 <%= form_tag patients_path, method: :approve do %>
@@ -77,6 +77,7 @@
   </tbody>
 </table>
 <h3><%= link_to 'Create New Ride', new_appointment_path %></h3>
+<h3><%= button_to 'Log Out', logout_path %></h3>
 
 <!--
 <p id="notice"><%= notice %></p>
