@@ -13,6 +13,10 @@ class DriversController < ApplicationController
 
  # GET /drivers
   def pending
+    @logged_in_driver = Driver.find(session[:user_id])
+    @drivers = Driver.all
+    @patients = Patient.all
+    @appointments = Appointment.all
   end
   
   # GET /drivers/1
@@ -32,7 +36,12 @@ class DriversController < ApplicationController
   # POST /drivers
   # POST /drivers.json
   def create
+    sch1 = {Monday: '0000 0000', Tuesday: '0000 0000', Wednesday: '0000 0000', Thursday: '0000 0000', Friday: '0000 0000', Saturday: '0000 0000', Sunday: '0000 0000', current: true}
+    sch2 = {Monday: '0000 0000', Tuesday: '0000 0000', Wednesday: '0000 0000', Thursday: '0000 0000', Friday: '0000 0000', Saturday: '0000 0000', Sunday: '0000 0000', current: false}
+
     @driver = Driver.new(driver_params)
+    @sch1 = @driver.schedule.build(sch1)
+    @sch2 = @driver.schedule.build(sch2)
     respond_to do |format|
       if @driver.save
         format.html { redirect_to @driver, notice: 'Driver was successfully created.' }
@@ -76,6 +85,6 @@ class DriversController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def driver_params
-      params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id, :password)
+      params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id, :password, schedule_attributes: [:Monday, :Tuesday, :Wednesday, :Thursday, :Friday, :Saturday, :Sunday, :current])
     end
 end
