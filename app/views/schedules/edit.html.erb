@@ -1,0 +1,41 @@
+<%= form_with(model: @schedule, local: true, url: driver_schedule_path) do |form| %>
+  
+  <div class="field">
+    <%= form.label :Monday %>
+    <%= form.text_field :Monday %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Tuesday %>
+    <%= form.text_field :Tuesday %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :Wednesday %>
+    <%= form.text_field :Wednesday %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :Tuesday %>
+    <%= form.text_field :Tuesday %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :Friday %>
+    <%= form.text_field :Friday %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :Saturday %>
+    <%= form.text_field :Saturday %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :Sunday %>
+    <%= form.text_field :Sunday %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>
