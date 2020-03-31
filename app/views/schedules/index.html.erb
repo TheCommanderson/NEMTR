@@ -1,1 +1,21 @@
-<h1>test</h1>
+<h1>Current Schedule</h1>
+Monday <%= @current_schedule.Monday %>
+Tuesday <%= @current_schedule.Tuesday %>
+Wednesday <%= @current_schedule.Wednesday %>
+Thursday <%= @current_schedule.Thursday %>
+Friday <%= @current_schedule.Friday %>
+Saturday <%= @current_schedule.Saturday %>
+Sunday <%= @current_schedule.Sunday %>
+<%= link_to 'Edit', edit_driver_schedule_path(:id => @current_schedule[:id]) %>
+
+
+<h1>Next Schedule</h1>
+Monday <%= @next_schedule.Monday %>
+Tuesday <%= @next_schedule.Tuesday %>
+Wednesday <%= @next_schedule.Wednesday %>
+Thursday <%= @next_schedule.Thursday %>
+Friday <%= @next_schedule.Friday %>
+Saturday <%= @next_schedule.Saturday %>
+Sunday <%= @next_schedule.Sunday %>
+
+<%= link_to 'Back', drivers_path %>
