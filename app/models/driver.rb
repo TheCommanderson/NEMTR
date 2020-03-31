@@ -10,6 +10,7 @@ class Driver
   field :trained, type: Mongoid::Boolean
   field :password_digest, type: String
   
+  embeds_many :schedule
   embeds_one :car, class_name: "Car"
   
   has_secure_password

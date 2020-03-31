@@ -67,7 +67,7 @@ class DriversController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_driver
