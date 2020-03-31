@@ -1,12 +1,12 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :authorized, only: [:new, :create]
   # GET /patients
   def pending
   end
   # GET /patients.json
   def index
-    @currentPatient = Patient.first
+    @currentPatient = Patient.find(session[:user_id])
     @patients = Patient.all
     @appointments = Appointment.all
     @drivers = Driver.all
@@ -74,6 +74,6 @@ class PatientsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def patient_params
-      params.require(:patient).permit(:first_name, :middle_initial, :last_name, :phone, :email, :admin_id)
+      params.require(:patient).permit(:first_name, :middle_initial, :last_name, :phone, :email, :admin_id, :password)
     end
 end

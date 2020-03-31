@@ -4,7 +4,7 @@
 <p id="notice"><%= notice %></p>
 <h2>Patient's Page(will delete this)</h2>
 <h1>Upcoming Rides:</h1>
-<p>Hi <%= @currentFirstName %> <%= @currentLastName%>!</p>
+<p>Hi <%= @currentFirstName %> <%= @currentLastName %>!</p>
 <table border="1"cellpadding="5"cellspacing="1">
   <thead>
     <tr>
@@ -43,3 +43,4 @@
   </tbody>
 </table>
 <h3><%= link_to 'Create New Appointment', new_appointment_path %></h3>
+<h3><%= button_to 'Log Out', logout_path %></h3>
