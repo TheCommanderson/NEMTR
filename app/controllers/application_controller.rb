@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
     helper_method :current_user
     helper_method :logged_in?
+    helper_method :sign
     before_action :authorized
     # Should return the current user or nil if not logged in
     def current_user
@@ -27,5 +28,9 @@ class ApplicationController < ActionController::Base
     
     def authorized
         redirect_to root_url, notice: "Please Log In." unless logged_in?
+    end
+    
+    def sign(x)
+        "++-"[x <=> 0]
     end
 end
