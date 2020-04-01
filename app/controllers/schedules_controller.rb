@@ -1,8 +1,8 @@
 class SchedulesController < ApplicationController
   def index
     @driver = Driver.find(session[:user_id])
-    @current_schedule = @driver.schedule[0]
-    @next_schedule = @driver.schedule[1]
+    @current_schedule = @driver.schedule.where(:current => true).first
+    @next_schedule = @driver.schedule.where(:current => false).first
   end
   
   def new
