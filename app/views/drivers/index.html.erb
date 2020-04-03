@@ -9,7 +9,7 @@
       <th>Patient</th>
       <th>Date & Time</th>
       <th>Destination</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -21,8 +21,7 @@
         <td><%= appointment.datetime %></td>
         <td><%= appointment.location %></td>
         <td><%= link_to 'Show', appointment %></td>
-        <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
-        <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -40,6 +39,7 @@
       <th>Date & Time</th>
       <th>Status</th>
       <th>Destination</th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
@@ -58,8 +58,6 @@
       <td><%= appointment.status %></td>
       <td><%= appointment.location %></td>
       <td><%= link_to 'Show', appointment %></td>
-      <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
-      <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>
   </tbody>
