@@ -8,7 +8,8 @@
     <tr>
       <th>Patient</th>
       <th>Date & Time</th>
-      <th>Destination</th>
+      <th>Patient Address</th>
+      <th>Destination Address</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -19,7 +20,16 @@
         <% @tempPatient = @patients.find(appointment.patient_id) %>
         <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
         <td><%= appointment.datetime %></td>
-        <td><%= appointment.location %></td>
+        <td>
+          <p><%= appointment.location[0][:name] %></p>
+          <p><%= appointment.location[0][:addr1] %> <%= appointment.location[0][:addr2] %></p>
+          <p><%= appointment.location[0][:city] %>, <%= appointment.location[0][:state] %> <%= appointment.location[0][:zip] %></p>
+        </td>
+        <td>
+          <p><%= appointment.location[1][:name] %></p>
+          <p><%= appointment.location[1][:addr1] %> <%= appointment.location[1][:addr2] %></p>
+          <p><%= appointment.location[1][:city] %>, <%= appointment.location[1][:state] %> <%= appointment.location[1][:zip] %></p>
+        </td>
         <td><%= link_to 'Show', appointment %></td>
         <td><%= link_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -38,7 +48,8 @@
       <th>Driver</th>
       <th>Date & Time</th>
       <th>Status</th>
-      <th>Destination</th>
+      <th>Patient Address</th>
+      <th>Destination Address</th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -56,7 +67,16 @@
       <td><%= @tempDriver %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
-      <td><%= appointment.location %></td>
+      <td>
+        <p><%= appointment.location[0][:name] %></p>
+        <p><%= appointment.location[0][:addr1] %> <%= appointment.location[0][:addr2] %></p>
+        <p><%= appointment.location[0][:city] %>, <%= appointment.location[0][:state] %> <%= appointment.location[0][:zip] %></p>
+      </td>
+      <td>
+        <p><%= appointment.location[1][:name] %></p>
+        <p><%= appointment.location[1][:addr1] %> <%= appointment.location[1][:addr2] %></p>
+        <p><%= appointment.location[1][:city] %>, <%= appointment.location[1][:state] %> <%= appointment.location[1][:zip] %></p>
+      </td>
       <td><%= link_to 'Show', appointment %></td>
     </tr>
     <% end %>
