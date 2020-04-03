@@ -18,6 +18,7 @@ class DriversController < ApplicationController
   # GET /drivers/1
   # GET /drivers/1.json
   def show
+    
   end
 
   # GET /drivers/new
