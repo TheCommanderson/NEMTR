@@ -1,3 +1,8 @@
-<h1>Update Your Ride</h1>
-
-<%= render 'form', appointment: @appointment %>
+<h1>Update Date</h1>
+<%= form_with(model: @appointment, local: true) do |form| %>
+    <h3><%= form.label "Datetime" %></h3>
+    <%= form.text_field :datetime %>
+    <br><br>
+    <%= form.submit "Submit" %>
+<% end %>
+<%-# render 'form', appointment: @appointment -%>
