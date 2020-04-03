@@ -2,9 +2,23 @@ class SchedulesController < ApplicationController
   def index
     @driver = Driver.find(session[:user_id])
     @current_schedule = @driver.schedule.where(:current => true).first
-    @current_json = @current_schedule.to_json
     @next_schedule = @driver.schedule.where(:current => false).first
-    @next_json = @next_schedule.to_json
+    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    @current_sch_readable = {}
+    @next_sch_readable = {}
+    
+    @current_schedule.attributes.each do |name, val|
+      next if not days.include? name
+      day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
+      @current_sch_readable[name] = day_str
+    end
+    
+    @next_schedule.attributes.each do |name, val|
+      next if not days.include? name
+      day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
+      @next_sch_readable[name] = day_str
+    end
+    
   end
   
   def new

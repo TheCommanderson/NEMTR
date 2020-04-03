@@ -1,22 +1,69 @@
 <h1>Current Schedule</h1>
-Monday <%= @current_schedule.Monday %>
-Tuesday <%= @current_schedule.Tuesday %>
-Wednesday <%= @current_schedule.Wednesday %>
-Thursday <%= @current_schedule.Thursday %>
-Friday <%= @current_schedule.Friday %>
-Saturday <%= @current_schedule.Saturday %>
-Sunday <%= @current_schedule.Sunday %>
+
+<table id="vertical-1">
+    <tr>
+        <th>Monday</th>
+        <td><%= @current_sch_readable['Monday'] %>
+    </tr>
+    <tr>
+        <th>Tuesday</th>
+        <td><%= @current_sch_readable['Tuesday'] %>
+    </tr>
+    <tr>
+        <th>Wednesday</th>
+        <td><%= @current_sch_readable['Wednesday'] %>
+    </tr>
+    <tr>
+        <th>Thursday</th>
+        <td><%= @current_sch_readable['Thursday'] %>
+    </tr>
+    <tr>
+        <th>Friday</th>
+        <td><%= @current_sch_readable['Friday'] %>
+    </tr>
+    <tr>
+        <th>Saturday</th>
+        <td><%= @current_sch_readable['Saturday'] %>
+    </tr>
+    <tr>
+        <th>Sunday</th>
+        <td><%= @current_sch_readable['Sunday'] %>
+    </tr>
+</table>
 <%= link_to 'Edit', edit_driver_schedule_path(:id => @current_schedule[:id]) %>
 
 
 <h1>Next Schedule</h1>
-Monday <%= @next_schedule.Monday %>
-Tuesday <%= @next_schedule.Tuesday %>
-Wednesday <%= @next_schedule.Wednesday %>
-Thursday <%= @next_schedule.Thursday %>
-Friday <%= @next_schedule.Friday %>
-Saturday <%= @next_schedule.Saturday %>
-Sunday <%= @next_schedule.Sunday %>
+<table id="vertical-1">
+    <tr>
+        <th>Monday</th>
+        <td><%= @next_sch_readable['Monday'] %>
+    </tr>
+    <tr>
+        <th>Tuesday</th>
+        <td><%= @next_sch_readable['Tuesday'] %>
+    </tr>
+    <tr>
+        <th>Wednesday</th>
+        <td><%= @next_sch_readable['Wednesday'] %>
+    </tr>
+    <tr>
+        <th>Thursday</th>
+        <td><%= @next_sch_readable['Thursday'] %>
+    </tr>
+    <tr>
+        <th>Friday</th>
+        <td><%= @next_sch_readable['Friday'] %>
+    </tr>
+    <tr>
+        <th>Saturday</th>
+        <td><%= @next_sch_readable['Saturday'] %>
+    </tr>
+    <tr>
+        <th>Sunday</th>
+        <td><%= @next_sch_readable['Sunday'] %>
+    </tr>
+</table>
 <%= link_to 'Edit', edit_driver_schedule_path(:id => @next_schedule[:id]) %>
 <p><%= link_to 'Back', drivers_path %></p>
 
