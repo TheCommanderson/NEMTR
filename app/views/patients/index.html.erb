@@ -2,7 +2,6 @@
 <% @currentLastName = @patients.find(@currentPatient).last_name%>
 
 <p id="notice"><%= notice %></p>
-<h2>Patient's Page(will delete this)</h2>
 <h1>Upcoming Rides for <%= @currentFirstName %> <%= @currentLastName%>:</h1>
 <table border="1"cellpadding="5"cellspacing="1">
   <thead>
@@ -22,9 +21,10 @@
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
 
-      <% if !@drivers.find(appointment.driver_id) %>
+      <% if !appointment.driver_id %>
         <% @tempDriver = "None"  %>
       <% else %>
+        <% @drivers.find(appointment.driver_id) %>
         <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
       <% end %>
       <td><%= @tempDriver %></td>
@@ -32,9 +32,11 @@
       <td><%= appointment.status %></td>
       <td><%= appointment.location[0].name%></td>
       <td><%= appointment.location[1].name%></td>
-      <%#TODO: edit page should follow UI mockup %>
-      <td><%= link_to 'Update Ride', edit_appointment_path(appointment) %>
-      <%= link_to 'Cancel Ride', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= button_to 'Update Date', edit_appointment_path(appointment) %>
+      <%= button_to 'Update Pick-up', edit_appointment_path(appointment) %>
+      <%= button_to 'Update Destination', edit_appointment_path(appointment) %>
+      <%= button_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
     </tr>
     <% end %>
   </tbody>

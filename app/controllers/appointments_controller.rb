@@ -17,7 +17,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new
-    @appointment.build_location
+    # @appointment.build_location
   end
 
   # GET /appointments/1/edit
@@ -30,7 +30,8 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new(appointment_params)
     respond_to do |format|
       if @appointment.save
-        format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
+        format.html { redirect_to "/patients_home"}
+        # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :created, location: @appointment }
       else
         format.html { render :new }
@@ -42,15 +43,25 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
-    respond_to do |format|
-      if @appointment.update(appointment_params)
-        format.html { redirect_to @appointment, notice: 'Appointment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @appointment }
-      else
-        format.html { render :edit }
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
-      end
-    end
+    @appointment = Appointment.find(params[:id])    
+    # @appointment.update_attributes(appointment_params)
+    @appointment.update_attribute("datetime",appointment_params["datetime"])
+    @appointment.update_attribute("status",appointment_params["status"])
+    # @appointment.delete("location_attributes[0]")
+    puts("==============================================================================================================")
+    puts(appointment_params["location_attributes"]["0"])
+    # puts(@appointment[:status]=location[0///////////])
+    redirect_to "/patients_home"
+    # respond_to do |format|
+    #   if @appointment.update(appointment_params)
+    #     format.html { redirect_to "/patients_home", notice: 'Appointment was successfully created.'}
+    #     # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
+    #     format.json { render :show, status: :ok, location: @appointment }
+    #   else
+    #     format.html { render :edit }
+    #     format.json { render json: @appointment.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # DELETE /appointments/1
@@ -58,7 +69,7 @@ class AppointmentsController < ApplicationController
   def destroy
     @appointment.destroy
     respond_to do |format|
-      format.html { redirect_to appointments_url, notice: 'Appointment was successfully destroyed.' }
+      format.html { redirect_to "/patients_home", notice: 'Appointment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -71,6 +82,11 @@ class AppointmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def appointment_params
-      params.require(:appointment).permit(:patient_id, :driver_id, :datetime, :status, location_attributes: [:addr1, :addr2, :city, :state, :zip])
+      params.require(:appointment).permit(
+        :patient_id, 
+        :driver_id, 
+        :datetime, 
+        :status,
+        location_attributes: [:name, :addr1, :addr2, :city, :state, :zip])
     end
 end
