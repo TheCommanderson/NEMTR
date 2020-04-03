@@ -1,4 +1,4 @@
-class LocationController < ApplicationController
+class LocationsController < ApplicationController
   before_action :set_appointment
     
   def new
@@ -12,6 +12,9 @@ class LocationController < ApplicationController
     @appointment.save
   end
   
+  def update
+  end
+
   private
   def set_appointment
     @appointment = Appointment.find(params[:id])
