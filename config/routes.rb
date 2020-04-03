@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   
   get 'drivers', to: 'drivers#pending'
   get 'drivers_home', to: 'drivers#index'
-  
+
   resources :drivers do
     resources :schedules
   end

@@ -2,9 +2,13 @@ class SchedulesController < ApplicationController
   def index
     @driver = Driver.find(session[:user_id])
     @current_schedule = @driver.schedule.where(:current => true).first
+<<<<<<< HEAD
     @current_json = @current_schedule.to_json
     @next_schedule = @driver.schedule.where(:current => false).first
     @next_json = @next_schedule.to_json
+=======
+    @next_schedule = @driver.schedule.where(:current => false).first
+>>>>>>> b7d60fb321e2cb7e46ce3227b3330758e91d8013
   end
   
   def new
@@ -26,7 +30,7 @@ class SchedulesController < ApplicationController
   def update
     @driver = Driver.find(params[:driver_id])
     @schedule = @driver.schedule.where(:id => params[:id]).first
-    monday1 = (params[:schedule]["Monday1(4i)"]).to_s + (params[:schedule]["Monday1(5i)"]).to_s
+    
     new_sch = {}
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     days.each do |day|
@@ -34,6 +38,7 @@ class SchedulesController < ApplicationController
       day2 = (params[:schedule][day+"2(4i)"]).to_s + (params[:schedule][day+"2(5i)"]).to_s
       new_sch[day] = day1 + ' ' + day2
     end
+    
     @schedule.update_attributes(new_sch)
     redirect_to drivers_home_url
   end
