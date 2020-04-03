@@ -31,7 +31,7 @@
           <p><%= appointment.location[1][:city] %>, <%= appointment.location[1][:state] %> <%= appointment.location[1][:zip] %></p>
         </td>
         <td><%= link_to 'Show', appointment %></td>
-        <td><%= link_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }%></td>
       </tr>
     <% end %>
   </tbody>

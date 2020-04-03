@@ -58,7 +58,7 @@ class DriversController < ApplicationController
       end
     end
   end
-
+  
   # DELETE /drivers/1
   # DELETE /drivers/1.json
   def destroy

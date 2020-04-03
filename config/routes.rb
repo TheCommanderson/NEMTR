@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'sessions#index'
   post :logout, controller:"application"
-  resources :appointments
+  resources :appointments do
+    patch :cancel, on: :member
+  end
     get 'drivers', to: 'drivers#pending'
     get 'drivers_home', to: 'drivers#index'
   resources :drivers
