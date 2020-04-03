@@ -2,7 +2,7 @@
 <% @currentLastName = @patients.find(@currentPatient).last_name%>
 
 <p id="notice"><%= notice %></p>
-<h1>Upcoming Rides for <%= @currentFirstName %> <%= @currentLastName%>:</h1>
+<h1>Upcoming Appointments for <%= @currentFirstName %> <%= @currentLastName%>:</h1>
 <table border="1"cellpadding="5"cellspacing="1">
   <thead>
     <tr>
@@ -20,7 +20,7 @@
     <% @appointments.where('patient_id' => @currentPatient).each do |appointment| %>
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
-
+      <% @pickUpLocationid = appointment.location[0]["_id"] %>
       <% if !appointment.driver_id %>
         <% @tempDriver = "None"  %>
       <% else %>
@@ -32,10 +32,13 @@
       <td><%= appointment.status %></td>
       <td><%= appointment.location[0].name%></td>
       <td><%= appointment.location[1].name%></td>
-      <td><%= button_to 'Update Date', edit_appointment_path(appointment) %>
-      <%= button_to 'Update Pick-up', edit_appointment_path(appointment) %>
-      <%= button_to 'Update Destination', edit_appointment_path(appointment) %>
-      <%= button_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <td><%= link_to 'Update Date', edit_appointment_path(appointment) %>
+      <br>
+      <%= link_to 'Update Pick-up Location', edit_patient_location_path(@tempPatient, @pickUpLocationid)%>
+      <br>
+      <%= link_to 'Update Destination', edit_appointment_path(appointment) %>
+      <br>
+      <%= link_to 'Cancel Appointment', appointment, method: :delete, data: { confirm: 'Are you sure?' } %>
       </td>
     </tr>
     <% end %>

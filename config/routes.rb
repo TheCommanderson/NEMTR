@@ -11,5 +11,8 @@ Rails.application.routes.draw do
   end
   resources :sessions
   resources :admins
+
+  get 'location/:id/edit', to: 'locations#edit'
+  patch 'location/:id/edit', to: 'locations#update'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
