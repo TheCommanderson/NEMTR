@@ -1,39 +1,40 @@
 <%= form_with(model: @schedule, local: true, url: driver_schedule_path) do |form| %>
   
   <div class="field">
-    <%= form.label :Monday %>
-    <%= form.text_field :Monday %>
+    Monday
+    <%= form.time_select :Monday1 %> to <%= form.time_select :Monday2 %>
   </div>
 
   <div class="field">
-    <%= form.label :Tuesday %>
-    <%= form.text_field :Tuesday %>
+    Monday
+    <%= form.time_select :Tuesday1 %> to <%= form.time_select :Tuesday2 %>
   </div>
   
   <div class="field">
-    <%= form.label :Wednesday %>
-    <%= form.text_field :Wednesday %>
+    Monday
+    <%= form.time_select :Wednesday1 %> to <%= form.time_select :Wednesday2 %>
   </div>
   
   <div class="field">
-    <%= form.label :Tuesday %>
-    <%= form.text_field :Tuesday %>
+    Monday
+    <%= form.time_select :Thursday1 %> to <%= form.time_select :Thursday2 %>
   </div>
   
   <div class="field">
-    <%= form.label :Friday %>
-    <%= form.text_field :Friday %>
+    Monday
+    <%= form.time_select :Friday1 %> to <%= form.time_select :Friday2 %>
   </div>
   
   <div class="field">
-    <%= form.label :Saturday %>
-    <%= form.text_field :Saturday %>
+    Monday
+    <%= form.time_select :Saturday1 %> to <%= form.time_select :Saturday2 %>
   </div>
   
   <div class="field">
-    <%= form.label :Sunday %>
-    <%= form.text_field :Sunday %>
+    Monday
+    <%= form.time_select :Sunday1 %> to <%= form.time_select :Sunday2 %>
   </div>
+  
   <div class="actions">
     <%= form.submit %>
   </div>
