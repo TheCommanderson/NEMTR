@@ -2,13 +2,9 @@ class SchedulesController < ApplicationController
   def index
     @driver = Driver.find(session[:user_id])
     @current_schedule = @driver.schedule.where(:current => true).first
-<<<<<<< HEAD
     @current_json = @current_schedule.to_json
     @next_schedule = @driver.schedule.where(:current => false).first
     @next_json = @next_schedule.to_json
-=======
-    @next_schedule = @driver.schedule.where(:current => false).first
->>>>>>> b7d60fb321e2cb7e46ce3227b3330758e91d8013
   end
   
   def new
