@@ -1,6 +1,7 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorized, only: [:new, :create]
+  before_action :patient_authorized, except: [:new, :create, :edit, :update, :destroy]
   # GET /patients
   def pending
   end
@@ -75,5 +76,9 @@ class PatientsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def patient_params
       params.require(:patient).permit(:first_name, :middle_initial, :last_name, :phone, :email, :admin_id, :password)
+    end
+    
+    def patient_authorized
+      redirect_to root_url unless session[:login_type] == 'P'
     end
 end
