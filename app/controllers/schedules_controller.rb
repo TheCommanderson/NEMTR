@@ -18,7 +18,6 @@ class SchedulesController < ApplicationController
       day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
       @next_sch_readable[name] = day_str
     end
-    
   end
   
   def new

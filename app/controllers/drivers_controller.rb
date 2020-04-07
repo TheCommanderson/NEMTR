@@ -1,7 +1,7 @@
 class DriversController < ApplicationController
   before_action :set_driver, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorized, only: [:new, :create]
-
+  before_action :driver_authorized, except: [:new, :create]
   # GET /drivers
   # GET /drivers.json
   def index
@@ -87,5 +87,9 @@ class DriversController < ApplicationController
     # Only allow a list of trusted parameters through.
     def driver_params
       params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id, :password, schedule_attributes: [:Monday, :Tuesday, :Wednesday, :Thursday, :Friday, :Saturday, :Sunday, :current])
+    end
+    
+    def driver_authorized
+      redirect_to root_url unless session[:login_type] == 'D'
     end
 end
