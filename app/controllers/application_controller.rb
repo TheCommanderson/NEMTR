@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
             _user = Driver.find(session[:user_id])
         when "A"
             _user = Admin.find(session[:user_id])
+        else
             _user = nil
         end
     end
