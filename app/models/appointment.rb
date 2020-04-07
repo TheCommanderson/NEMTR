@@ -2,6 +2,7 @@ class Appointment
   include Mongoid::Document
   field :datetime, type: String
   field :status, type: Integer
+  field :est_time, type: Integer
   
   embeds_many :location
   
