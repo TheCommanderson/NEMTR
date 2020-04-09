@@ -10,7 +10,6 @@ class Admin
   field :auth_lvl, type: Integer
   field :host_org, type: String
   field :password_digest, type: String
-  field :ip_address, type: Integer
   
   has_secure_password
   has_many :drivers
