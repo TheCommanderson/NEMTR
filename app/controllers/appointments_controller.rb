@@ -17,7 +17,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new
-    @appointment.build_location
+    @appointment.location.build
   end
 
   # GET /appointments/1/edit
