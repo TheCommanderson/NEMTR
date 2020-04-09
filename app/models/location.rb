@@ -27,11 +27,4 @@ class Location
     self.address = Geocoder.search(coordinates).first.address
   end
 
-  def call_after_validation
-    puts "After validation callback fired."
-  end
-
-  def call_before_create
-    puts "Before create callback fired."
-  end
 end
