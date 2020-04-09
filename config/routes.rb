@@ -12,5 +12,6 @@ Rails.application.routes.draw do
     post 'create_session', to: 'sessions#create'
   resources :admins
     get 'admins_home', to: 'admins#index'
+    post 'admins_home', to: 'admins#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

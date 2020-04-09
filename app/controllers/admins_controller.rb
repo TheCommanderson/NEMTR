@@ -2,6 +2,12 @@ class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorized, only: [:new, :create]
 
+  def approve
+    #admin_approvals.each do |admin|
+      #admin = Admin.find(params[:id])
+    #end
+   end
+  
   # GET /admins
   # GET /admins.json
   def index
@@ -10,6 +16,14 @@ class AdminsController < ApplicationController
     @patients = Patient.all
     @drivers = Driver.all
     @appointments = Appointment.all
+    
+    if request.post?
+      params[:approvals].each do |id|
+        #@admin = Admin.find(params[:id])
+        #@admin.approved = true
+      end
+    end
+    
   end
 
   # GET /admins/1
@@ -76,4 +90,5 @@ class AdminsController < ApplicationController
     def admin_params
       params.require(:admin).permit(:first_name, :middle_init, :last_name, :phone, :email, :auth_lvl, :host_org, :password)
     end
+  
 end
