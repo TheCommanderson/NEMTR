@@ -8,18 +8,30 @@ class Location
   field :state, type: String
   field :zip, type: Integer
 
-  field :full_street_address, type: String
-  field :latitude, type: Float
-  field :longitude, type: Float
+  field :address, type: String
+  # field :latitude, type: Float
+  # field :longitude, type: Float
+  field :coordinates, type: Array
 
-  geocoded_by :full_street_address
-  after_validation :geocode    
   embedded_in :Appointment
+  # not working for me for some reason, made a hack solution 
+  # geocoded_by :address, coordinates: :coords 
+  # after_validation :geocode
   before_create :generate_full_address
 
   protected
   def generate_full_address
-    self.full_street_address = "#{addr1} #{addr2}, #{city}, #{state} #{zip}"
-    puts self.full_street_address
+    temp_address = "#{addr1} #{addr2}, #{city}, #{state} #{zip}"
+    # very hacky solution but after 3 hrs this auto geocode is still not working...
+    self.coordinates = Geocoder.search(temp_address).first.coordinates
+    self.address = Geocoder.search(coordinates).first.address
+  end
+
+  def call_after_validation
+    puts "After validation callback fired."
+  end
+
+  def call_before_create
+    puts "Before create callback fired."
   end
 end

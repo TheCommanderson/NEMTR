@@ -11,7 +11,8 @@
 </p>
 
 <p>
-  <%= @appointment.location[0].full_street_address %>
+  <%= @appointment.location[0].address %>
+  <%= @appointment.location[0].coordinates %>
 </p>
 
 <%= link_to 'Edit', edit_appointment_path(@appointment) %> |

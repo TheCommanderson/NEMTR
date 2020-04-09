@@ -3,7 +3,7 @@ class Appointment
   field :datetime, type: String
   field :status, type: Integer
   
-  embeds_many :location
+  embeds_many :location, cascade_callbacks: true
   
   validates_associated :location
   
