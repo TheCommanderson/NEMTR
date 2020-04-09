@@ -17,7 +17,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new
-    @appointment.build_location
+    @appointment.location.build
   end
 
   # GET /appointments/1/edit
@@ -38,7 +38,14 @@ class AppointmentsController < ApplicationController
       end
     end
   end
-
+  
+  def cancel
+   appointmemt = Appointment.find(params[:id])
+   appointmemt.update_attribute(:status, -1)
+   appointmemt.update_attribute(:driver_id, nil)
+   redirect_back(fallback_location: root_path)
+  end
+  
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
@@ -52,7 +59,7 @@ class AppointmentsController < ApplicationController
       end
     end
   end
-
+  
   # DELETE /appointments/1
   # DELETE /appointments/1.json
   def destroy

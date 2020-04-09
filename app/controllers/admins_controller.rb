@@ -1,6 +1,7 @@
 class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorized, only: [:new, :create]
+  before_action :admin_authorized, except: [:new, :create]
 
   def approve
     #admin_approvals.each do |admin|
@@ -90,5 +91,8 @@ class AdminsController < ApplicationController
     def admin_params
       params.require(:admin).permit(:first_name, :middle_init, :last_name, :phone, :email, :auth_lvl, :host_org, :password)
     end
-  
+    
+    def admin_authorized
+      redirect_to root_url unless session[:login_type] == 'A'
+    end
 end
