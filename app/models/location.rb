@@ -15,9 +15,11 @@ class Location
   geocoded_by :full_street_address
   after_validation :geocode    
   embedded_in :Appointment
+  before_create :generate_full_address
 
-
-  # def generate_full_address
-  #   "#{addr1} #{addr2}, #{city}, #{state} #{zip}"
-  # end
+  protected
+  def generate_full_address
+    self.full_street_address = "#{addr1} #{addr2}, #{city}, #{state} #{zip}"
+    puts self.full_street_address
+  end
 end

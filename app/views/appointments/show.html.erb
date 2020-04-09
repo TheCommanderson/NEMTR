@@ -10,5 +10,9 @@
   <%= @appointment.status %>
 </p>
 
+<p>
+  <%= @appointment.location[0].full_street_address %>
+</p>
+
 <%= link_to 'Edit', edit_appointment_path(@appointment) %> |
 <%= link_to 'Back', url_for(:back) %>

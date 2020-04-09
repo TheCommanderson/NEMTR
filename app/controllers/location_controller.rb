@@ -1,6 +1,5 @@
 class LocationController < ApplicationController
-  before_action :set_appointment 
-  before_save :generate_address
+  before_action :set_appointment
     
   def new
     @appointment = Appointment.find(params[:appointment_id])
