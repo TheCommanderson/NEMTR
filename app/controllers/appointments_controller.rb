@@ -17,13 +17,9 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new
-<<<<<<< HEAD
-    @appointment.location.build
-=======
     #TODO: Change this patient to real current patient using session
     @currPatient = Patient.first
     # @appointment.build_location
->>>>>>> e1527e2ab73735094f9d19748e4d1fe3b1b921b6
   end
 
   # GET /appointments/1/edit

@@ -21,8 +21,6 @@ class LocationController < ApplicationController
     @appointment.save
   end
 
-<<<<<<< HEAD
-=======
   def update
     # @appointment = Appointment.find(params[:appointment_id])
     # # Find out if the passed location is pick-up or destination
@@ -45,7 +43,6 @@ class LocationController < ApplicationController
     end
   end
 
->>>>>>> e1527e2ab73735094f9d19748e4d1fe3b1b921b6
   private
   def set_location
     @appointment = Appointment.find(params[:appointment_id])
