@@ -1,8 +1,28 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Patient:</strong>
+  <% @patient = Patient.find(@appointment.patient_id) %>
+  <%= @patient.first_name %> <%= @patient.last_name %>
+</p>
+
+<p>
   <strong>Datetime:</strong>
   <%= @appointment.datetime %>
+</p>
+
+<p>
+  <strong>Destination Address:</strong> 
+  <p><%= @appointment.location[0][:name] %></p>
+  <p><%= @appointment.location[0][:addr1] %> <%= @appointment.location[0][:addr2] %></p>
+  <p><%= @appointment.location[0][:city] %>, <%= @appointment.location[0][:state] %> <%= @appointment.location[0][:zip] %></p>
+</p>
+  
+<p>
+  <strong>Destination Address:</strong>
+  <p><%= @appointment.location[1][:name] %></p>
+  <p><%= @appointment.location[1][:addr1] %> <%= @appointment.location[1][:addr2] %></p>
+  <p><%= @appointment.location[1][:city] %>, <%= @appointment.location[1][:state] %> <%= @appointment.location[1][:zip] %></p>
 </p>
 
 <p>
@@ -11,8 +31,12 @@
 </p>
 
 <p>
+<<<<<<< HEAD
   <%= @appointment.location[0].address %>
   <%= @appointment.location[0].coordinates %>
+=======
+  <strong>Map:</strong>
+>>>>>>> e1527e2ab73735094f9d19748e4d1fe3b1b921b6
 </p>
 
 <%= link_to 'Edit', edit_appointment_path(@appointment) %> |

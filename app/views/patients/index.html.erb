@@ -2,17 +2,15 @@
 <% @currentLastName = @patients.find(@currentPatient).last_name%>
 
 <p id="notice"><%= notice %></p>
-<h2>Patient's Page(will delete this)</h2>
-<h1>Upcoming Rides:</h1>
-<p>Hi <%= @currentFirstName %> <%= @currentLastName %>!</p>
+<h1>Upcoming Appointments for <%= @currentFirstName %> <%= @currentLastName%>:</h1>
 <table border="1"cellpadding="5"cellspacing="1">
   <thead>
     <tr>
       <th>Driver</th>
       <th>Date & Time</th>
       <th>Status</th>
+      <th>Pick-up Location</th>
       <th>Destination</th>
-      <th>Address</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -22,22 +20,27 @@
     <% @appointments.where('patient_id' => @currentPatient).each do |appointment| %>
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
-      <% if appointment.driver_id.nil? %>
+      <% @pickUpLocationid = appointment.location[0]["_id"] %>
+      <% @destinationid = appointment.location[1]["_id"] %>
+      <% if !appointment.driver_id %>
         <% @tempDriver = "None"  %>
       <% else %>
+        <% @drivers.find(appointment.driver_id) %>
         <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
       <% end %>
-      <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
       <td><%= @tempDriver %></td>
       <td><%= appointment.datetime %></td>
       <td><%= appointment.status %></td>
-      <td><%= appointment.location %></td> <%#TODO:should change it to location.name%>
-      <td><%= appointment.location %></td> <%#TODO:should change it to location.address or something that shows address%>
-      <%#TODO: show correct fields by rendering correct form %>
-      <td><%= link_to 'More Info', appointment %>
-      <%#TODO: edit page should follow UI mockup %>
-      <%= link_to 'Edit', edit_appointment_path(appointment) %>
-      <%= link_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= appointment.location[0].name%></td>
+      <td><%= appointment.location[1].name%></td>
+      <td><%= link_to 'Update Date', edit_appointment_path(appointment) %>
+      <br>
+      <%= link_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid) %>
+      <br>
+      <%= link_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid) %>
+      <br>
+      <%= link_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }%>
+      </td>
     </tr>
     <% end %>
   </tbody>

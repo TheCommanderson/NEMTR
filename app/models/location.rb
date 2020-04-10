@@ -1,7 +1,11 @@
 class Location
   include Mongoid::Document
+<<<<<<< HEAD
   include Geocoder::Model::Mongoid
 
+=======
+  field :name, type: String
+>>>>>>> e1527e2ab73735094f9d19748e4d1fe3b1b921b6
   field :addr1, type: String
   field :addr2, type: String
   field :city, type: String
