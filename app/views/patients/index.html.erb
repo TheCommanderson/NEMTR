@@ -16,10 +16,8 @@
   </thead>
 
   <tbody>
-  <%#TODO: find current patient using session %>
     <% @appointments.where('patient_id' => @currentPatient).each do |appointment| %>
     <tr>
-      <% @tempPatient = @patients.find(appointment.patient_id) %>
       <% @pickUpLocationid = appointment.location[0]["_id"] %>
       <% @destinationid = appointment.location[1]["_id"] %>
       <% if !appointment.driver_id %>
