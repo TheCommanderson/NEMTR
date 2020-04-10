@@ -215,11 +215,8 @@ DEPENDENCIES
   capybara (>= 2.15, < 4.0)
   chromedriver-helper
   coffee-rails (~> 4.2)
-<<<<<<< HEAD
   geocoder
-=======
   delayed_job_mongoid
->>>>>>> e1527e2ab73735094f9d19748e4d1fe3b1b921b6
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   mongoid (~> 6.0)
