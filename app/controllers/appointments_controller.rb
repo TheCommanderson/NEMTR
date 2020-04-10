@@ -43,15 +43,6 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
-    # @appointment = Appointment.find(params[:id])    
-    # @appointment.update_attributes(appointment_params)
-    # @appointment.update_attribute("datetime",appointment_params["datetime"])
-    # @appointment.update_attribute("status",appointment_params["status"])
-    # @appointment.delete("location_attributes[0]")
-    # puts("==============================================================================================================")
-    # puts(appointment_params["location_attributes"]["0"])
-    # puts(@appointment[:status]=location[0///////////])
-    # redirect_to "/patients_home"
     respond_to do |format|
       if @appointment.update(appointment_params)
         format.html { redirect_to "/patients_home", notice: 'Appointment was successfully updated.'}
