@@ -17,11 +17,14 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new
+    #TODO: Change this patient to real current patient using session
+    @currPatient = Patient.first
     # @appointment.build_location
   end
 
   # GET /appointments/1/edit
   def edit
+    
   end
 
   # POST /appointments
