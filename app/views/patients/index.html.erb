@@ -21,6 +21,7 @@
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
       <% @pickUpLocationid = appointment.location[0]["_id"] %>
+      <% @destinationid = appointment.location[1]["_id"] %>
       <% if !appointment.driver_id %>
         <% @tempDriver = "None"  %>
       <% else %>
@@ -34,11 +35,11 @@
       <td><%= appointment.location[1].name%></td>
       <td><%= link_to 'Update Date', edit_appointment_path(appointment) %>
       <br>
-      <%= link_to 'Update Pick-up Location', edit_patient_location_path(@tempPatient, @pickUpLocationid)%>
+      <%= link_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid) %>
       <br>
-      <%= link_to 'Update Destination', edit_appointment_path(appointment) %>
+      <%= link_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid) %>
       <br>
-      <%= link_to 'Cancel Appointment', appointment, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }%>
       </td>
     </tr>
     <% end %>
