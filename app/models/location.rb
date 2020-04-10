@@ -6,6 +6,5 @@ class Location
   field :city, type: String
   field :state, type: String
   field :zip, type: Integer
-  
-  embedded_in :appointment, inverse_of: :location
+  embedded_in :Appointment
 end

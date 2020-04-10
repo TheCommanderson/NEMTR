@@ -8,10 +8,9 @@ class Patient
   field :phone, type: Integer
   field :email, type: String
   field :approved, type: Boolean
-  field :password_digest
+  field :password_digest, type: String
   
   has_secure_password
-  
   belongs_to :admin
   has_many :appointments
 end
