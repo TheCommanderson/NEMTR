@@ -35,18 +35,24 @@
     <%= form.label :email %>
     <%= form.text_field :email %>
   </div>
-
+  
   <div class="field">
-    <%= form.label :auth_lvl %>
-    <%= form.number_field :auth_lvl %>
+    <%= form.label :password %>
+    <%= form.password_field :password %>
   </div>
 
   <div class="field">
-    <%= form.label :host_org %>
-    <%= form.text_field :host_org %>
+    <%= form.label :auth_lvl, 'Who you are' %>
+    <%= form.select :auth_lvl, options_for_select([["Healthcare Provider", 2], ["211 Call Center", 3], ["System Administrator", 1]]) %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :host_org, 'If healthcare provider, please choose your organization' %>
+    <%= form.select :host_org, options_for_select(["N/A","TAMU","United Way"]) %>
   </div>
 
   <div class="actions">
     <%= form.submit %>
   </div>
+  
 <% end %>
