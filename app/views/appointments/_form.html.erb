@@ -14,8 +14,11 @@
 	<h3><%= form.label "Datetime" %></h3>
 	<%= form.text_field :datetime %>
 	<!-- TODO: can use form.datetime_select -->
-	<h3><%= form.label "Patient(will try to bypass this field)" %></h3>
-	<%= form.text_field :patient_id %>
+  <%= form.hidden_field :patient_id, :value => @currPatient.id%>
+  <%= form.hidden_field :status, :value => 0 %>
+
+	<!--<h3><%= form.label "Patient(will try to bypass this field)" %></h3>
+	<%= form.text_field :patient_id %>-->
 	<!-- TODO: can use form.collection_select :patient, Patient.all, :id, :first_name -->
 	<h3>Pick-up Location</h3>
 	<%= form.fields_for :location, appointment.location.build do |f| %>
@@ -50,44 +53,3 @@
   <br><br>
 	<%= form.submit %>
 <% end %>
-<!--
-<%= form_with(model: appointment, local: true) do |form| %>
-  <% if appointment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
-
-      <ul>
-      <% appointment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :datetime %>
-    <%= form.text_field :datetime %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.number_field :status %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :driver_id %>
-    <%= form.text_field :driver_id %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :patient_id %>
-    <%= form.text_field :patient_id %>
-  </div>
-
- 
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
--->
