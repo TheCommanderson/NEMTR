@@ -30,6 +30,9 @@ class DriversController < ApplicationController
     @driver = Driver.new
   end
 
+  def test
+    @testing = matching_alg
+  end
   # GET /drivers/1/edit
   def edit
   end
@@ -43,7 +46,6 @@ class DriversController < ApplicationController
     @driver = Driver.new(driver_params)
     @sch1 = @driver.schedule.build(sch1)
     @sch2 = @driver.schedule.build(sch2)
-    @driver.blacklist.build
     respond_to do |format|
       if @driver.save
         format.html { redirect_to @driver, notice: 'Driver was successfully created.' }
