@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     end
     
     def logged_in?
-        !session[:login_type].nil?
+        !current_user.nil?
     end
     
     def logout
