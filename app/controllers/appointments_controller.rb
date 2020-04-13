@@ -41,7 +41,7 @@ class AppointmentsController < ApplicationController
   
   def cancel
    appointmemt = Appointment.find(params[:id])
-   appointmemt.update_attribute(:status, -1)
+   appointmemt.update_attribute(:status, 0)
    appointmemt.update_attribute(:driver_id, nil)
    redirect_back(fallback_location: root_path)
   end
