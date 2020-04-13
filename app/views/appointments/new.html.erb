@@ -13,7 +13,7 @@
   <% end %>
 
 	<h3><%= form.label "Datetime" %></h3>
-	<%= form.text_field :datetime %>
+  <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
 	<!-- TODO: can use form.datetime_select -->
   <%= form.hidden_field :patient_id, :value => @currPatient.id%>
   <%= form.hidden_field :status, :value => 0 %>

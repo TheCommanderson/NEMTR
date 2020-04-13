@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get 'drivers', to: 'drivers#pending'
   get 'drivers_home', to: 'drivers#index'
+  get 'drivers_test', to: 'drivers#test'
 
   #TODO: am i using these?
   post '/appointments/:appointment_id/location/:id/edit', to: 'location#update'

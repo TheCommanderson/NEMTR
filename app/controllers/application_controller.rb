@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     end
     
     def dt_format
-       return '%Y-%m-%d %k:%l:%M' 
+       return '%Y-%m-%d %H:%M' 
     end
     
     def getMonday(date)
@@ -58,7 +58,9 @@ class ApplicationController < ActionController::Base
         Driver.all.each do |driver|
             
             # Is this appointment on the driver blacklist?
-            if driver.blacklist.where(appointment_id: appt[:id]).exists?
+            if driver.blacklist.empty?
+                next
+            elsif driver.blacklist.where(appointment_id: appt[:id]).exists?
                 next
             end
             
@@ -103,18 +105,20 @@ class ApplicationController < ActionController::Base
     def matching_alg
         this_monday = getMonday(DateTime.now)
         next_monday = getMonday((Time.now + 7.days).to_datetime)
-        @matchable_apps = Appointment.where(status: -1)
-        
+        @matchable_apps = Appointment.where(status: 0)
+        str = this_monday.to_s + ", " + next_monday.to_s + "\n"
         if !@matchable_apps.exists?
             return
         end
-        
+
         @matchable_apps.each do |appt|
-            if ![this_monday, next_monday].include? getMonday(DateTime.strptime(appt.datetime, dt_format))
+            if ![this_monday.to_s[0..10], next_monday.to_s[0..10]].include? getMonday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10]
                 next
             end
+            # TESTED TO HERE
             cur = getMonday(DateTime.strptime(appt.datetime, dt_format)) == this_monday
             poss_drivers = valid_drivers(appt, cur)
+            str = poss_drivers
             len = poss_drivers.to_a.length
             if len == 0
                 # HANDLE FAILURE
@@ -128,5 +132,6 @@ class ApplicationController < ActionController::Base
             new_atts = {status: 1, driver_id: driver[:id]}
             appt.update_attributes(new_atts)
         end
+        return str
     end
 end

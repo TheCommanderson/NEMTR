@@ -30,7 +30,9 @@ class AppointmentsController < ApplicationController
   # POST /appointments
   # POST /appointments.json
   def create
-    @appointment = Appointment.new(appointment_params)
+    @appt_parms = appointment_params
+    @appt_parms['datetime'] =params[:appointment]['dt(1i)'] + '-' + params[:appointment]['dt(2i)'] + '-' + params[:appointment]['dt(3i)'] + ' ' + params[:appointment]['dt(4i)'] + ':' + params[:appointment]['dt(5i)']
+    @appointment = Appointment.new(@appt_parms)
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to "/patients_home"}
@@ -54,7 +56,9 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1.json
   def update
     respond_to do |format|
-      if @appointment.update(appointment_params)
+      @appt_parms = appointment_params
+      @appt_parms['datetime'] = params[:appointment]['dt(1i)'] + '-' + params[:appointment]['dt(2i)'] + '-' + params[:appointment]['dt(3i)'] + ' ' + params[:appointment]['dt(4i)'] + ':' + params[:appointment]['dt(5i)']
+      if @appointment.update(@appt_parms)
         format.html { redirect_to "/patients_home", notice: 'Appointment was successfully updated.'}
         # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :ok, location: @appointment }
