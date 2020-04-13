@@ -106,7 +106,6 @@ class ApplicationController < ActionController::Base
         this_monday = getMonday(DateTime.now)
         next_monday = getMonday((Time.now + 7.days).to_datetime)
         @matchable_apps = Appointment.where(status: 0)
-        str = this_monday.to_s + ", " + next_monday.to_s + "\n"
         if !@matchable_apps.exists?
             return
         end
