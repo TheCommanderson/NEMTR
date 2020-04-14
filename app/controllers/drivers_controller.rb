@@ -4,6 +4,13 @@ class DriversController < ApplicationController
   before_action :driver_authorized, except: [:new, :create]
   # GET /drivers
   # GET /drivers.json
+  def train
+   @driver = Driver.find(params[:id])
+   @driver.update(trained: true)
+   @driver.save
+   redirect_to admins_home_path
+  end
+  
   def index
     @logged_in_driver = Driver.find(session[:user_id])
     @drivers = Driver.all

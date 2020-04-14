@@ -15,9 +15,6 @@
 <% if @currentAdmin.approved %>
   <% if @currentAdmin.auth_lvl == 1 %>
     <h1>Admins</h1>
-    <%#= form_tag admins_path, method: :approve do %>
-    <%= form_tag admins_home_path, method: "post" do %>
-    <%#= form_for(Admin.approve) do |f| %>
     <table border="1"cellpadding="5"cellspacing="1">
       <thead>
         <tr>
@@ -29,7 +26,6 @@
           <th>Auth lvl</th>
           <th>Host org</th>
           <th>Approved?</th>
-          <th>Approve</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -46,22 +42,21 @@
               <td><%= admin.auth_lvl %></td>
               <td><%= admin.host_org %></td>
               <td><%= admin.approved %></td>
-              <td><%= check_box_tag 'approvals[]', admin.id, false, :name => "approvals[]" %></td>
-              <td><%#= check_box_tag "approvals[#{admin.id}]", admin.id, false, :name => "approvals[]" %></td>
-              <td><%#= check_box_tag "admin_approvals[]", admin.approved, false, class: 'selectable' %></td>
-              <td><%#= link_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }%></td>
-              <%#= check_box "Approve", "yes" %>
-              <td><%= link_to 'Edit', edit_admin_path(admin) %>
-              <%= link_to 'Destroy', admin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              
+              <% if admin.approved %>
+                <td><%= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
+              <% else %>
+                <td><%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
+              <% end %>
+              
+              <%= button_to 'Edit', edit_admin_path(admin) %>
+              <%= button_to 'Destroy', admin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
           <% end %>
         <% end %>
       </tbody>
     </table>
     <br>
-    <%#= f.submit %>
-    <%= submit_tag "Approve", :class => 'btn btn-primary btn-xs' %>
-    <% end %>
     <h3><%= link_to 'New Admin', new_admin_path %></h3>
     <br>
   <% end %>
@@ -69,7 +64,6 @@
   
   <% if @currentAdmin.auth_lvl == 1 %>
     <h1>Drivers</h1>
-    <%= form_tag drivers_path, method: :approve do %>
     <table border="1"cellpadding="5"cellspacing="1">
       <thead>
         <tr>
@@ -91,16 +85,19 @@
             <td><%= driver.last_name %></td>
             <td><%= driver.phone %></td>
             <td><%= driver.email %></td>
-            <td><%= check_box_tag "trained_drivers[]", driver.trained, false, class: 'selectable' %></td>
-            <td><%= link_to 'Edit', edit_driver_path(driver) %>
-            <%= link_to 'Destroy', driver, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= driver.trained %></td>
+            
+            <% if !driver.trained %>
+              <td><%= button_to "Approve", train_driver_path(driver.id), method: :post, data: { confirm: "Are you sure?" } %>
+            <% end %>
+            
+            <%= button_to 'Edit', edit_driver_path(driver) %>
+            <%= button_to 'Destroy', driver, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
     <br>
-    <%= submit_tag "Approve", :class => 'btn btn-primary btn-xs' %>
-    <% end %>
     <br>
   <% end %>
   
@@ -132,8 +129,8 @@
           <td><%= patient.email %></td>
           <td><%= patient.admin %></td>
           <td><%= check_box_tag "patient_approvals[]", patient.approved, false, class: 'selectable' %></td>
-          <td><%= link_to 'Edit', edit_patient_path(patient) %>
-          <%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <td><%= button_to 'Edit', edit_patient_path(patient) %>
+          <%= button_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %>
           </td>
         </tr>
         <% end %>
@@ -174,13 +171,13 @@
           <td><%= appointment.datetime %></td>
           <td><%= appointment.status %></td>
           <td><%= appointment.location %></td>
-          <td><%= link_to 'Edit', edit_appointment_path(appointment) %>
-          <%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= button_to 'Edit', edit_appointment_path(appointment) %>
+          <%= button_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
         <% end %>
       </tbody>
     </table>
-    <h3><%= link_to 'Create New Ride', new_appointment_path %></h3>
+    <h3><%= button_to 'Create New Ride', new_appointment_path %></h3>
   <% end %>
 <% else %>
 <br><h1>Pending approval</h1><br>

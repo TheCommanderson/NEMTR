@@ -2,12 +2,20 @@ class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorized, only: [:new, :create]
   before_action :admin_authorized, except: [:new, :create]
-
+   
   def approve
-    #admin_approvals.each do |admin|
-      #admin = Admin.find(params[:id])
-    #end
-   end
+   @admin = Admin.find(params[:id])
+   @admin.update(approved: true)
+   @admin.save
+   redirect_to admins_home_path
+  end
+  
+  def unapprove
+   @admin = Admin.find(params[:id])
+   @admin.update(approved: false)
+   @admin.save
+   redirect_to admins_home_path
+  end
   
   # GET /admins
   # GET /admins.json
