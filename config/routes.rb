@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
   resources :drivers do
     resources :schedules
-    post :train, on: :member
   end
 
   get 'patients', to:'patients#pending'
@@ -37,6 +36,8 @@ Rails.application.routes.draw do
   resources :admins do
     post :approve, on: :member
     post :unapprove, on: :member
+    post :train, on: :member
+    post :approve_patient, on: :member
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
