@@ -88,7 +88,9 @@
             <td><%= driver.trained %></td>
             
             <% if !driver.trained %>
-              <td><%= button_to "Approve", train_driver_path(driver.id), method: :post, data: { confirm: "Are you sure?" } %>
+              <td><%= button_to "Approve", { action: "train", id: driver.id }, method: :post %>
+            <% else %>
+              <td>
             <% end %>
             
             <%= button_to 'Edit', edit_driver_path(driver) %>
@@ -102,9 +104,8 @@
   <% end %>
   
   
-  <% if @currentAdmin.auth_lvl == 2 %>
+  <% if @currentAdmin.auth_lvl == 2 %> 
     <h1>Patients</h1>
-    <%= form_tag patients_path, method: :approve do %>
     <table border="1"cellpadding="5"cellspacing="1">
       <thead>
         <tr>
@@ -114,7 +115,7 @@
           <th>Phone</th>
           <th>Email</th>
           <th>Admin</th>
-          <th>Approve</th>
+          <th>Approved?</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -128,17 +129,21 @@
           <td><%= patient.phone %></td>
           <td><%= patient.email %></td>
           <td><%= patient.admin %></td>
-          <td><%= check_box_tag "patient_approvals[]", patient.approved, false, class: 'selectable' %></td>
-          <td><%= button_to 'Edit', edit_patient_path(patient) %>
-          <%= button_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
+          <td><%= patient.approved %></td>
+          
+          <% if !patient.approved %>
+            <td><%= button_to "Approve", { action: "approve_patient", id: patient.id }, method: :post %>
+          <% else %>
+            <td>
+          <% end %>
+          
+          <%= button_to 'Edit', edit_patient_path(patient) %>
+          <%= button_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
         <% end %>
       </tbody>
     </table>
     <br />
-    <%= submit_tag "Approve", :class => 'btn btn-primary btn-xs' %>
-    <% end %>
     <br>
   <% end %>
   

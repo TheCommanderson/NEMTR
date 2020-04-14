@@ -3,6 +3,20 @@ class AdminsController < ApplicationController
   skip_before_action :authorized, only: [:new, :create]
   before_action :admin_authorized, except: [:new, :create]
    
+  def train
+   @driver = Driver.find(params[:id])
+   @driver.update(trained: true)
+   @driver.save
+   redirect_to admins_home_path
+  end
+  
+  def approve_patient
+   @patient = Patient.find(params[:id])
+   @patient.update(approved: true)
+   @patient.save
+   redirect_to admins_home_path
+  end
+  
   def approve
    @admin = Admin.find(params[:id])
    @admin.update(approved: true)
