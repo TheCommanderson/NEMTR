@@ -1,6 +1,7 @@
-<h1>Editing Appointment</h1>
-
-<%= render 'form', appointment: @appointment %>
-
-<%= link_to 'Show', @appointment %> |
-<%= link_to 'Back', url_for(:back) %>
+<h1>Update Date</h1>
+<%= form_with(model: @appointment, local: true) do |form| %>
+    <h3><%= form.label "Datetime" %></h3>
+    <%= form.text_field :datetime %>
+    <br><br>
+    <%= form.submit "Submit" %>
+<% end %>
