@@ -1,21 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  monday: MyString
-  tuesday: MyString
-  wednesday: MyString
-  thursday: MyString
-  friday: MyString
-  saturday: MyString
-  sunday: MyString
-  Driver: one
+  Monday: MyString
+  Tuesday: MyString
+  Wednesday: MyString
+  Thursday: MyString
+  Friday: MyString
+  Saturday: MyString
+  Sunday: MyString
 
 two:
-  monday: MyString
-  tuesday: MyString
-  wednesday: MyString
-  thursday: MyString
-  friday: MyString
-  saturday: MyString
-  sunday: MyString
-  Driver: two
+  Monday: MyString
+  Tuesday: MyString
+  Wednesday: MyString
+  Thursday: MyString
+  Friday: MyString
+  Saturday: MyString
+  Sunday: MyString

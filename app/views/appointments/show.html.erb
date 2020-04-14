@@ -41,6 +41,8 @@
 </p>
 
 <p>
+  <%= @appointment.location[0].address %>
+  <%= @appointment.location[0].coordinates %>
   <strong>Map:</strong>
   <%= @appointment.location[0][:address] %>
   <%= @appointment.location[0][:coordinates] %>
