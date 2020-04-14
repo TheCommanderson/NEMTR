@@ -9,6 +9,7 @@
     211 Call Center
   <% end %>
 </h3>
+<br>
 
 <% #AUTH LEVEL: 1-clients, 2-healthcare provider, 3-call center %>
 
@@ -57,7 +58,6 @@
       </tbody>
     </table>
     <br>
-    <h3><%= link_to 'New Admin', new_admin_path %></h3>
     <br>
   <% end %>
   
@@ -149,7 +149,6 @@
   
   <% if (@currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 3) %>
     <h1>Upcoming Rides</h1>
-    <p>You are logged in as a:</p>
     <table border="1"cellpadding="5"cellspacing="1">
       <thead>
         <tr>

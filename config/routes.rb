@@ -21,10 +21,7 @@ Rails.application.routes.draw do
 
   get 'patients', to:'patients#pending'
   get 'patients_home', to: 'patients#index'
-  resources :patients do
-    post :approve, on: :member
-    post :unapprove, on: :member
-  end
+  resources :patients
 
   post 'create_session', to: 'sessions#create'
   resources :sessions
