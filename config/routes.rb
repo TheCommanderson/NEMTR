@@ -17,11 +17,15 @@ Rails.application.routes.draw do
 
   resources :drivers do
     resources :schedules
+    post :train, on: :member
   end
 
   get 'patients', to:'patients#pending'
   get 'patients_home', to: 'patients#index'
-  resources :patients
+  resources :patients do
+    post :approve, on: :member
+    post :unapprove, on: :member
+  end
 
   post 'create_session', to: 'sessions#create'
   resources :sessions
@@ -30,6 +34,9 @@ Rails.application.routes.draw do
   
   get 'admins_home', to: 'admins#index'
   post 'admins_home', to: 'admins#index'
-  resources :admins
+  resources :admins do
+    post :approve, on: :member
+    post :unapprove, on: :member
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
