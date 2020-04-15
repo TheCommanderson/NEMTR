@@ -24,15 +24,13 @@
 <p>
   <strong>Patient Address:</strong> 
   <p><%= @appointment.location[0][:name] %></p>
-  <p><%= @appointment.location[0][:addr1] %> <%= @appointment.location[0][:addr2] %></p>
-  <p><%= @appointment.location[0][:city] %>, <%= @appointment.location[0][:state] %> <%= @appointment.location[0][:zip] %></p>
+  <p><%= @appointment.location[0][:address] %></p>
 </p>
   
 <p>
   <strong>Destination Address:</strong>
   <p><%= @appointment.location[1][:name] %></p>
-  <p><%= @appointment.location[1][:addr1] %> <%= @appointment.location[1][:addr2] %></p>
-  <p><%= @appointment.location[1][:city] %>, <%= @appointment.location[1][:state] %> <%= @appointment.location[1][:zip] %></p>
+  <p><%= @appointment.location[1][:address] %></p>
 </p>
 
 <p>
@@ -41,11 +39,9 @@
 </p>
 
 <p>
-  <%= @appointment.location[0].address %>
-  <%= @appointment.location[0].coordinates %>
   <strong>Map:</strong>
-  <%= @appointment.location[0][:address] %>
-  <%= @appointment.location[0][:coordinates] %>
+  <p>Pick-Up Coordinates: <%= @appointment.location[0][:coordinates] %></p>
+  <p>Destination Coordinates: <%= @appointment.location[1][:coordinates] %></p>
 </p>
 
 <%= link_to 'Back', url_for(:back) %>

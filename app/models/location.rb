@@ -18,7 +18,7 @@ class Location
   # not working for me for some reason, made a hack solution 
   # geocoded_by :address, coordinates: :coords 
   # after_validation :geocode
-  before_create :generate_full_address
+  before_save :generate_full_address
 
   protected
   def generate_full_address
