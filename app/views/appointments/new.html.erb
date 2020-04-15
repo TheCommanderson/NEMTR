@@ -17,6 +17,7 @@
 	<!-- TODO: can use form.datetime_select -->
   <%= form.hidden_field :patient_id, :value => @currPatient.id%>
   <%= form.hidden_field :status, :value => 0 %>
+  <%= form.hidden_field :est_time, :value => 60 %>
 
 	<!--<h3><%= form.label "Patient(will try to bypass this field)" %></h3>
 	<%= form.text_field :patient_id %>-->
