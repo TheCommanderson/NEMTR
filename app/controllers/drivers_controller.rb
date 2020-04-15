@@ -31,7 +31,7 @@ class DriversController < ApplicationController
   end
 
   def test
-    @testing = matching_alg
+    @debug_log = matching_alg
   end
   # GET /drivers/1/edit
   def edit
