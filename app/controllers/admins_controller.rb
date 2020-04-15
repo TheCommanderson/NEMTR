@@ -36,17 +36,21 @@ class AdminsController < ApplicationController
   def index
     @currentAdmin = Admin.find(session[:user_id])
     @admins = Admin.all
-    @patients = Patient.all
+    @patients = self.search
     @drivers = Driver.all
     @appointments = Appointment.all
     
-    if request.post?
-      params[:approvals].each do |id|
-        #@admin = Admin.find(params[:id])
-        #@admin.approved = true
-      end
+    @search = self.search
+  end
+  
+  def search
+    if params[:search]
+      #@patients = Patient.all.where(first_name: /#{params[:search]}/)
+      @parameter = /#{params[:search]}/i
+      @patients = Patient.all.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}])
+    else
+      @patients = Patient.all
     end
-    
   end
 
   # GET /admins/1
