@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     post :unapprove, on: :member
     post :train, on: :member
     post :approve_patient, on: :member
+    get :search, on: :member
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

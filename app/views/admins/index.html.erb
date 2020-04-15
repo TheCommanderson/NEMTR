@@ -105,6 +105,12 @@
   
   
   <% if @currentAdmin.auth_lvl == 2 %> 
+  Find a patient
+  <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Enter name", class: "form-control" %>
+    <%= submit_tag("Submit") %>  
+  <% end %>
+
     <h1>Patients</h1>
     <table border="1"cellpadding="5"cellspacing="1">
       <thead>
@@ -137,6 +143,7 @@
             <td>
           <% end %>
           
+          <%= button_to 'Create New Ride', new_appointment_path %>
           <%= button_to 'Edit', edit_patient_path(patient) %>
           <%= button_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
@@ -164,7 +171,7 @@
       <tbody>
         <% @appointments.each do |appointment| %>
         <tr>
-          <% @tempPatient = @patients.find(appointment.patient_id) %>
+          <% @tempPatient = Patient.all.find(appointment.patient_id) %>
           <% if appointment.driver_id.nil? %>
             <% @tempDriver = "None"  %>
           <% else %>
