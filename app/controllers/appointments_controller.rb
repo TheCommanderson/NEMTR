@@ -30,7 +30,10 @@ class AppointmentsController < ApplicationController
   # POST /appointments
   # POST /appointments.json
   def create
-    @appointment = Appointment.new(appointment_params)
+    @appt_parms = appointment_params
+    @appt_parms['datetime'] =params[:appointment]['dt(1i)'] + '-' + params[:appointment]['dt(2i)'] + '-' + params[:appointment]['dt(3i)'] + ' ' + params[:appointment]['dt(4i)'] + ':' + params[:appointment]['dt(5i)']
+    @appointment = Appointment.new(@appt_parms)
+    @debug_log = matching_alg
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to "/patients_home"}
@@ -44,17 +47,21 @@ class AppointmentsController < ApplicationController
   end
   
   def cancel
-   appointmemt = Appointment.find(params[:id])
-   appointmemt.update_attribute(:status, 0)
-   appointmemt.update_attribute(:driver_id, nil)
+   appointment = Appointment.find(params[:id])
+   appointment.update_attribute(:status, 0)
+   appointment.update_attribute(:driver_id, nil)
    redirect_back(fallback_location: root_path)
+   current_user.add_to_set(blacklist: appointment._id)
+   current_user.save
   end
   
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
     respond_to do |format|
-      if @appointment.update(appointment_params)
+      @appt_parms = appointment_params
+      @appt_parms['datetime'] = params[:appointment]['dt(1i)'] + '-' + params[:appointment]['dt(2i)'] + '-' + params[:appointment]['dt(3i)'] + ' ' + params[:appointment]['dt(4i)'] + ':' + params[:appointment]['dt(5i)']
+      if @appointment.update(@appt_parms)
         format.html { redirect_to "/patients_home", notice: 'Appointment was successfully updated.'}
         # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :ok, location: @appointment }
