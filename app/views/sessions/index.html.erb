@@ -1,17 +1,25 @@
 <p id="notice"><%= notice %></p>
+<div class="text-center">
+    <h1>NEMTR</h1>
+    <h5>Non-Emergency Medical Transportation</h5>
+</div>
+<br><br>
+<div class="container">
+    <div>
+        <h3>LOG IN</h3>
 
-<h1>Login</h1>
+        <%= session[:user_id] %>
+        <%= session[:login_type] %>
 
-<%= session[:user_id] %>
-<%= session[:login_type] %>
+        <%= button_to 'Admin', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-primary" %><br>
+        <%= button_to 'Patient', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-primary" %><br>
+        <%= button_to 'Driver', new_session_path, method: "get", params: {login: "Driver"}, class:"btn btn-primary" %>
+    </div>
+    <div>
+        <h3>SIGN UP</h3>
 
-<%= button_to 'Admin', new_session_path, method: "get", params: {login: "Admin"} %><br>
-<%= button_to 'Patient', new_session_path, method: "get", params: {login: "Patient"} %><br>
-<%= button_to 'Driver', new_session_path, method: "get", params: {login: "Driver"} %>
-
-<h1>Register</h1>
-
-<%= button_to 'Admin', new_admin_path, method: "get" %><br>
-<%= button_to 'Patient', new_patient_path, method: "get" %><br>
-<%= button_to 'Driver', new_driver_path, method: "get" %>
-
+        <%= button_to 'Admin', new_admin_path, method: "get", class:"btn btn-primary" %><br>
+        <%= button_to 'Patient', new_patient_path, method: "get", class:"btn btn-primary" %><br>
+        <%= button_to 'Driver', new_driver_path, method: "get", class:"btn btn-primary" %>
+    </div>
+</div>
