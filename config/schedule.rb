@@ -9,8 +9,15 @@ set :output, 'log/cron.log'
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
-every :sunday, at: '12:01 am' do
-    runner "ScheduleUpdater.new.rollover"
+every :sunday, at: "12:01 am" do
+    runner "Schedule.rollover"
+end
+every :sunday, at: "12:01 am" do
+    runner "Driver.blacklist_reset"
+end
+
+every 1.days do
+    runner "Appointment.clean_past_appointments"
 end
 
 # Learn more: http://github.com/javan/whenever

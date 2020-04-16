@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
             # Is this appointment on the driver blacklist?
             blacklisted = false
             driver.blacklist.each do |bl_appt|
-                if bl_appt._id == appt._id
+                if bl_appt == appt._id
                     blacklisted = true
                     break
                 end
