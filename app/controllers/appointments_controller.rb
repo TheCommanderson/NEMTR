@@ -18,7 +18,7 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
     #TODO: Change this patient to real current patient using session
-    @currPatient = Patient.find(session[:user_id])
+    #@currPatient = Patient.find(session[:user_id])
     # @appointment.build_location
   end
 

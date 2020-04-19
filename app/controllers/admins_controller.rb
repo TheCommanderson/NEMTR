@@ -2,6 +2,8 @@ class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorized, only: [:new, :create]
   before_action :admin_authorized, except: [:new, :create]
+  
+  HOSTS = ['N/A','A&M','United Way']
    
   def train
    @driver = Driver.find(params[:id])
@@ -40,16 +42,26 @@ class AdminsController < ApplicationController
     @drivers = Driver.all
     @appointments = Appointment.all
     
-    @search = self.search
+    @admins = @admins.sort_by {|admin| admin.approved ? 1 : 0}
+    @patients = @patients.sort_by {|patient| patient.approved ? 1 : 0}
+    @drivers = @drivers.sort_by {|driver| driver.trained ? 1 : 0}
+    
   end
   
   def search
     if params[:search]
-      #@patients = Patient.all.where(first_name: /#{params[:search]}/)
       @parameter = /#{params[:search]}/i
-      @patients = Patient.all.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}])
+      if @currentAdmin.auth_lvl == 2
+        @patients = Patient.all.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}]).and({host_org: @currentAdmin.host_org},{approved: false})
+      else
+        @patients = Patient.all.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}])
+      end
     else
-      @patients = Patient.all
+      if @currentAdmin.auth_lvl == 2
+        @patients = Patient.all.where('$and' => [{approved: false}, {host_org: @currentAdmin.host_org}])
+      else
+        @patients = Patient.all
+      end
     end
   end
 
