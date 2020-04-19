@@ -8,9 +8,9 @@
     <tr>
       <th>Patient</th>
       <th>Date & Time</th>
-      <th>Patient Address</th>
-      <th>Destination Address</th>
-      <th colspan="2"></th>
+      <th>Pick-Up Location</th>
+      <th>Destination</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -22,16 +22,17 @@
         <td><%= appointment.datetime %></td>
         <td>
           <p><%= appointment.location[0][:name] %></p>
-          <p><%= appointment.location[0][:addr1] %> <%= appointment.location[0][:addr2] %></p>
-          <p><%= appointment.location[0][:city] %>, <%= appointment.location[0][:state] %> <%= appointment.location[0][:zip] %></p>
+          <p><%= appointment.location[0][:address] %></p>
         </td>
         <td>
           <p><%= appointment.location[1][:name] %></p>
-          <p><%= appointment.location[1][:addr1] %> <%= appointment.location[1][:addr2] %></p>
-          <p><%= appointment.location[1][:city] %>, <%= appointment.location[1][:state] %> <%= appointment.location[1][:zip] %></p>
+          <p><%= appointment.location[1][:address] %></p>
         </td>
-        <td><%= link_to 'Show', appointment %></td>
-        <td><%= link_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }%></td>
+        <td>
+          <p><%= link_to 'Show', appointment %></p>
+          <p><%= link_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }%></p>
+        </td>
+        
       </tr>
     <% end %>
   </tbody>
@@ -47,10 +48,9 @@
       <th>Patient</th>
       <th>Driver</th>
       <th>Date & Time</th>
-      <th>Status</th>
-      <th>Patient Address</th>
-      <th>Destination Address</th>
-      <th colspan="1"></th>
+      <th>Pick-Up Location</th>
+      <th>Destination</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -58,24 +58,20 @@
     <% @appointments.each do |appointment| %>
     <tr>
       <% @tempPatient = @patients.find(appointment.patient_id) %>
-      <% if appointment.driver_id.nil? %>
-        <% @tempDriver = "None"  %>
-      <% else %>
-        <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
-      <% end %>
       <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-      <td><%= @tempDriver %></td>
+      <% if appointment.status == 0 %>
+        <td style="color:red">unassigned</td>
+      <% else %>
+        <td><%= @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %></td>
+      <% end %>
       <td><%= appointment.datetime %></td>
-      <td><%= appointment.status %></td>
       <td>
         <p><%= appointment.location[0][:name] %></p>
-        <p><%= appointment.location[0][:addr1] %> <%= appointment.location[0][:addr2] %></p>
-        <p><%= appointment.location[0][:city] %>, <%= appointment.location[0][:state] %> <%= appointment.location[0][:zip] %></p>
+        <p><%= appointment.location[0][:address] %></p>
       </td>
       <td>
         <p><%= appointment.location[1][:name] %></p>
-        <p><%= appointment.location[1][:addr1] %> <%= appointment.location[1][:addr2] %></p>
-        <p><%= appointment.location[1][:city] %>, <%= appointment.location[1][:state] %> <%= appointment.location[1][:zip] %></p>
+        <p><%= appointment.location[1][:address] %></p>
       </td>
       <td><%= link_to 'Show', appointment %></td>
     </tr>

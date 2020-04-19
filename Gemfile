@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 
 # For delayed jobs
+gem 'whenever'
 gem 'delayed_job_mongoid'
 
 # Use Capistrano for deployment
