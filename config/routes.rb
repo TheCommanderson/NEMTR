@@ -28,8 +28,7 @@ Rails.application.routes.draw do
 
   resources :locations
   
-  get 'admins_home', to: 'admins#index'
-  post 'admins_home', to: 'admins#index'
+  match 'admins_home', to: 'admins#index', via: [:get, :post]
   resources :admins do
     post :approve, on: :member
     post :unapprove, on: :member
