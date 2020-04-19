@@ -13,10 +13,11 @@
   <% end %>
 
 	<h3><%= form.label "Datetime" %></h3>
-	<%= form.text_field :datetime %>
+  <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
 	<!-- TODO: can use form.datetime_select -->
   <%= form.hidden_field :patient_id, :value => :patient_id%>
   <%= form.hidden_field :status, :value => 0 %>
+  <%= form.hidden_field :est_time, :value => 60 %>
 
 	<!--<h3><%= form.label "Patient(will try to bypass this field)" %></h3>
 	<%= form.text_field :patient_id %>-->
