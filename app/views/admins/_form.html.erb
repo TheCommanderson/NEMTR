@@ -48,8 +48,10 @@
   
   <div class="field">
     <%= form.label :host_org, 'If healthcare provider, please choose your organization' %>
-    <%= form.select :host_org, options_for_select(["N/A","TAMU","United Way"]) %>
+    <%= form.select :host_org, options_for_select(AdminsController::HOSTS) %>
   </div>
+  
+  <%= hidden_field_tag :approved, false %>
 
   <div class="actions">
     <%= form.submit %>

@@ -48,5 +48,5 @@
     <% end %>
   </tbody>
 </table>
-<h3><%= link_to 'Create New Appointment', new_appointment_path %></h3>
+<h3><%= button_to 'Create New Appointment',{action: :new, controller: :appointments, patient_id: @patients.find(@currentPatient).id}, method: :get %></h3>
 <h3><%= button_to 'Log Out', logout_path %></h3>
