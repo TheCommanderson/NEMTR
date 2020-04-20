@@ -18,14 +18,15 @@ class Location
   # not working for me for some reason, made a hack solution 
   # geocoded_by :address, coordinates: :coords 
   # after_validation :geocode
-  before_create :generate_full_address
+  before_save :generate_full_address
 
   protected
   def generate_full_address
     temp_address = "#{addr1} #{addr2}, #{city}, #{state} #{zip}"
     # very hacky solution but after 3 hrs this auto geocode is still not working...
-    self.coordinates = Geocoder.search(temp_address).first.coordinates
-    self.address = Geocoder.search(coordinates).first.address
+    result = Geocoder.search(temp_address)
+    self.coordinates = result.first.coordinates
+    self.address = result.first.address
   end
 
 end
