@@ -9,13 +9,36 @@
     211 Call Center
   <% end %>
 </h3>
-<br>
 
-<%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get %><br>
+<p><%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get %></p><br>
 
 <% #AUTH LEVEL: 1-clients, 2-healthcare provider, 3-call center %>
 
 <% if @currentAdmin.approved %>
+  Add an organization
+  <%= form_tag(admins_home_path, :method => :get) do %>
+    <%= text_field_tag :add_host, params[:host_org], placeholder: "Enter name" %>
+    <%= submit_tag("Submit") %>  
+  <% end %> <br>
+  
+  <table border="1"cellpadding="5"cellspacing="1">
+      <thead>
+        <tr>
+          <th>Organization</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% AdminsController::HOSTS.drop(1).each do |host| %>
+          <tr>
+            <td><%= host %></td>
+            <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+
   <% if @currentAdmin.auth_lvl == 1 %>
     <h1>Admins</h1>
     <table border="1"cellpadding="5"cellspacing="1">
