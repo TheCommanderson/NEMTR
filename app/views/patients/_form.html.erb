@@ -35,15 +35,15 @@
     <%= form.label :email %>
     <%= form.text_field :email %>
   </div>
-
-  <div class="field">
-    <%= form.label :admin_id %>
-    <%= form.text_field :admin_id %>
-  </div>
   
   <div class="field">
     <%= form.label :password %>
     <%= form.password_field :password %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :host_org, 'Please choose your healthcare provider' %>
+    <%= form.select :host_org, options_for_select(AdminsController::HOSTS.drop(1)) %>
   </div>
   
   <div class="actions">

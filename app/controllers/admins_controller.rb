@@ -8,6 +8,7 @@ class AdminsController < ApplicationController
   def train
    @driver = Driver.find(params[:id])
    @driver.update(trained: true)
+   @driver.update(admin: Admin.find(session[:user_id]))
    @driver.save
    redirect_to admins_home_path
   end
@@ -15,6 +16,7 @@ class AdminsController < ApplicationController
   def approve_patient
    @patient = Patient.find(params[:id])
    @patient.update(approved: true)
+   @patient.update(admin: Admin.find(session[:user_id]))
    @patient.save
    redirect_to admins_home_path
   end

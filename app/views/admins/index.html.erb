@@ -73,6 +73,7 @@
           <th>Last name</th>
           <th>Phone</th>
           <th>Email</th>
+          <th>Admin</th>
           <th>Trained</th>
           <th>Actions</th>
         </tr>
@@ -85,7 +86,13 @@
             <td><%= driver.middle_init %></td>
             <td><%= driver.last_name %></td>
             <td><%= driver.phone %></td>
-            <td><%= driver.email %></td>
+            <td><%= driver.email %></td><td>
+            
+            <% if driver.admin %>
+              <p><%= driver.admin.first_name + ' ' + driver.admin.last_name %></p>
+              <p><%= driver.admin.email %></p>
+            <% end %></td>
+            
             <td><%= driver.trained %></td>
             
             <td>
@@ -136,8 +143,14 @@
         <td><%= patient.last_name %></td>
         <td><%= patient.phone %></td>
         <td><%= patient.email %></td>
-        <td><%= patient.host_org %></td>
-        <td><%= patient.admin %></td>
+        <td><%= patient.host_org %></td><td>
+        
+        <% if patient.admin %>
+          <p><%= patient.admin.first_name + ' ' + patient.admin.last_name %></p>
+          <p><%= patient.admin.email %></p>
+        <% end %></td>
+        
+        
         <td><%= patient.approved %></td>
         
         <td>
@@ -164,14 +177,14 @@
   <br>
   
   <% if (@currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 3) %>
-    <h1>Upcoming Rides</h1>
+    <h1>All Upcoming Rides</h1>
     <table border="1"cellpadding="5"cellspacing="1">
       <thead>
         <tr>
           <th>Patient</th>
           <th>Driver</th>
           <th>Date & Time</th>
-          <th>Status</th>
+          <th>Pick-Up Location</th>
           <th>Destination</th>
           <th>Actions</th>
         </tr>
@@ -181,23 +194,31 @@
         <% @appointments.each do |appointment| %>
         <tr>
           <% @tempPatient = Patient.all.find(appointment.patient_id) %>
-          <% if appointment.driver_id.nil? %>
-            <% @tempDriver = "None"  %>
+          <td><p><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></p>
+          <p><%= @tempPatient.email %></p></td>
+          <% if appointment.status == 0 %>
+            <td style="color:red">unassigned</td>
           <% else %>
-            <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(Driver.all.find(appointment.driver_id)) %>
+            <td><% @tempDriver = Driver.all.find(appointment.driver_id) %>
+            <p><%= @tempDriver.first_name + ' ' + @tempDriver.last_name %></p>
+            <p><%=  @tempDriver.email %></p></td>
           <% end %>
-          <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-          <td><%= @temp %></td>
           <td><%= appointment.datetime %></td>
-          <td><%= appointment.status %></td>
-          <td><%= appointment.location %></td>
-          <td><%= button_to 'Edit', edit_appointment_path(appointment), method: :get %>
-          <%= button_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td>
+            <p><%= appointment.location[0][:name] %></p>
+            <p><%= appointment.location[0][:address] %></p>
+          </td>
+          <td>
+            <p><%= appointment.location[1][:name] %></p>
+            <p><%= appointment.location[1][:address] %></p>
+          </td>
+          <td><%= button_to 'Show', appointment, method: :get %></td>
         </tr>
         <% end %>
       </tbody>
-    </table>
+      </table>
   <% end %>
+  
 <% else %>
 <br><h1>Pending approval</h1><br>
 <% end %>
