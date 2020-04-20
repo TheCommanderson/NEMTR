@@ -3,20 +3,27 @@ class SchedulesController < ApplicationController
     @driver = Driver.find(session[:user_id])
     @current_schedule = @driver.schedule.where(:current => true).first
     @next_schedule = @driver.schedule.where(:current => false).first
-    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     @current_sch_readable = {}
     @next_sch_readable = {}
     
     @current_schedule.attributes.each do |name, val|
       next if not days.include? name
-      day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
-      @current_sch_readable[name] = day_str
+      if val[0..3] == val[5..8]
+        @current_sch_readable[name] = "None"
+      else
+        day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
+        @current_sch_readable[name] = day_str
+      end
     end
     
     @next_schedule.attributes.each do |name, val|
       next if not days.include? name
-      day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
-      @next_sch_readable[name] = day_str
+      if val[0..3] == val[5..8]
+        @next_sch_readable[name] = "None"
+      else
+        day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
+        @next_sch_readable[name] = day_str
+      end
     end
   end
   
@@ -34,6 +41,16 @@ class SchedulesController < ApplicationController
   def edit
     @driver = Driver.find(params[:driver_id])
     @schedule = @driver.schedule.where(:id => params[:id]).first
+    if @schedule.current
+      @monday_date = getMonday(DateTime.now).to_date
+    else
+      @monday_date = getMonday((Time.now + 7.days).to_datetime)
+    end
+    @default_vals = {}
+    @schedule.attributes.each do |name, val|
+      next if not days.include? name
+      @default_vals[name] = [val[0..1], val[2..3], val[5..6], val[7..8]]
+    end
   end
   
   def update
@@ -56,5 +73,8 @@ class SchedulesController < ApplicationController
   private
   def schedule_params
     params.require(:schedule).permit(:Monday, :Tuesday, :Wednesday, :Thursday, :Friday, :Saturday, :Sunday)
+  end
+  def days
+    _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   end
 end
