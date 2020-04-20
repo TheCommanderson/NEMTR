@@ -7,6 +7,7 @@ class Patient
   field :last_name, type: String
   field :phone, type: Integer
   field :email, type: String
+  field :host_org, type: String
   field :approved, type: Boolean
   field :password_digest, type: String
   

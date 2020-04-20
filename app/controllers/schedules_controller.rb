@@ -49,6 +49,7 @@ class SchedulesController < ApplicationController
     end
     
     @schedule.update_attributes(new_sch)
+    @debug_log = matching_alg
     redirect_to drivers_home_url
   end
   

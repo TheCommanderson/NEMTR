@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get 'drivers', to: 'drivers#pending'
   get 'drivers_home', to: 'drivers#index'
+  get 'drivers_test', to: 'drivers#test'
 
   #TODO: am i using these?
   post '/appointments/:appointment_id/location/:id/edit', to: 'location#update'
@@ -28,8 +29,13 @@ Rails.application.routes.draw do
 
   resources :locations
   
-  get 'admins_home', to: 'admins#index'
-  post 'admins_home', to: 'admins#index'
-  resources :admins
+  match 'admins_home', to: 'admins#index', via: [:get, :post]
+  resources :admins do
+    post :approve, on: :member
+    post :unapprove, on: :member
+    post :train, on: :member
+    post :approve_patient, on: :member
+    get :search, on: :member
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
