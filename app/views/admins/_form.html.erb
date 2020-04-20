@@ -51,8 +51,10 @@
     <%= form.select :host_org, options_for_select(AdminsController::HOSTS) %>
   </div>
   
-  <%= hidden_field_tag :approved, false %>
-
+  <div class="field">
+    <%= form.text_field :approved, value: false, hidden: true %>
+  </div>
+  
   <div class="actions">
     <%= form.submit %>
   </div>
