@@ -56,12 +56,16 @@ class SchedulesController < ApplicationController
   def update
     @driver = Driver.find(params[:driver_id])
     @schedule = @driver.schedule.where(:id => params[:id]).first
-    
+    flash[:notice] = ""
     new_sch = {}
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     days.each do |day|
       day1 = (params[:schedule][day+"1(4i)"]).to_s + (params[:schedule][day+"1(5i)"]).to_s
       day2 = (params[:schedule][day+"2(4i)"]).to_s + (params[:schedule][day+"2(5i)"]).to_s
+      if day1.to_i > day2.to_i
+        flash[:notice] += day + " was not updated, invalid time given.  "
+        next
+      end
       new_sch[day] = day1 + ' ' + day2
     end
     
