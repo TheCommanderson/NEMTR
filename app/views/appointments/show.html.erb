@@ -50,8 +50,11 @@
   <strong>Map:</strong>
   <p>Pick-Up Coordinates: <%= @appointment.location[0][:coordinates] %></p>
   <p>Destination Coordinates: <%= @appointment.location[1][:coordinates] %></p>
-  <div id="right-panel"></div>
-  <div id="map"></div>
 </p>
+
+<div class='parent'> 
+  <div class='child float-left-child' id="map"></div>
+  <div class='child float-left-child' id="right-panel"></div>
+</div>
 
 <%= link_to 'Back', url_for(:back) %>
