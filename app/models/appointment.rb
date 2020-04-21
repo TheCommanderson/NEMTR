@@ -12,6 +12,8 @@ class Appointment
   
   belongs_to :driver, optional: true
   belongs_to :patient, optional: true
+
+  before_save :get_est_time
   
   def self.clean_past_appointments
     Appointment.each do |appt|
@@ -19,5 +21,11 @@ class Appointment
         appt.destroy
       end
     end
+  end
+
+  def get_est_time
+    url="https://maps.googleapis.com/maps/api/directions/json?origin=" + self.location[0].coordinates[0].to_s + "," + self.location[0].coordinates[1].to_s + "&destination=" + self.location[1].coordinates[0].to_s + "," + self.location[1].coordinates[1].to_s + "&key=" + Rails.application.credentials.gmap_geocode_api_kep
+    response = HTTParty.get(url).parsed_response
+    self.est_time = ((response['routes'].first['legs'].first['duration']['value'])/60).round + 15 # BUFFER TIME
   end
 end
