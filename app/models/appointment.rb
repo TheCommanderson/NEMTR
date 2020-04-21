@@ -24,8 +24,8 @@ class Appointment
   end
 
   def get_est_time
-    url="http://maps.googleapis.com/maps/api/directions/json?origin=" + self.location[0].coordinates[0] + "," + self.location[0].coordinates[1] + "&destination=" + self.location[1].coordinates[0] + "," + self.location[1].coordinates[1] + "&key=" + Rails.application.credentials.gmap_geocode_api_kep
-    response = HTTParty.get(url)
-    self.est_time = 60
+    url="https://maps.googleapis.com/maps/api/directions/json?origin=" + self.location[0].coordinates[0].to_s + "," + self.location[0].coordinates[1].to_s + "&destination=" + self.location[1].coordinates[0].to_s + "," + self.location[1].coordinates[1].to_s + "&key=" + Rails.application.credentials.gmap_geocode_api_kep
+    response = HTTParty.get(url).parsed_response
+    self.est_time = ((response['routes'].first['legs'].first['duration']['value'])/60).round + 15 # BUFFER TIME
   end
 end
