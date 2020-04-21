@@ -15,11 +15,14 @@
 <% #AUTH LEVEL: 1-clients, 2-healthcare provider, 3-call center %>
 
 <% if @currentAdmin.approved %>
-  Add an organization
-  <%= form_tag(admins_home_path, :method => :get) do %>
-    <%= text_field_tag :add_host, params[:host_org], placeholder: "Enter name" %>
-    <%= submit_tag("Submit") %>  
-  <% end %> <br>
+  <% if @currentAdmin.auth_lvl == 1 %>
+  
+    <%= form_tag(:controller => "admins", :action => "add_host") %>
+    <div class = "field">
+      <%= label_tag "Add an organization" %>
+      <%= text_field_tag :host_org, params[:host_org], placeholder: "Enter name" %>
+      <%= submit_tag("Submit") %>  
+    </div>
   
   <table border="1"cellpadding="5"cellspacing="1">
       <thead>
@@ -37,9 +40,8 @@
         <% end %>
       </tbody>
     </table>
-
-
-  <% if @currentAdmin.auth_lvl == 1 %>
+  
+  
     <h1>Admins</h1>
     <table border="1"cellpadding="5"cellspacing="1">
       <thead>
