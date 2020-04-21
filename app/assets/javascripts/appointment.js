@@ -37,6 +37,8 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   }, function(response, status) {
     if (status === 'OK') {
       console.log(response)
+      // this is duration in seconds
+      console.log(response.routes[0].legs[0].duration.value)
       directionsRenderer.setDirections(response);
     } else {
       window.alert('Directions request failed due to ' + status);

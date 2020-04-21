@@ -3,9 +3,24 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #map {
-  float:left;
-  width:100%; 
-  height:400px;
-  border: solid black 2px; 
-  display: inline;
+  height: 100%;
+  width: 49%;
+  float: left;
+  margin-right: 10px;
+}
+
+#right-panel {
+  height: 100%;
+  float: right;
+  width: 50%;
+  overflow: auto;
+}
+
+.parent {
+  display: flex;
+  height: 400px;
+}
+
+.float-left-child { 
+  flex: 1;
 }
