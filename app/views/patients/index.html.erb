@@ -48,7 +48,7 @@
       <% end %>
     </tbody>
   </table>
-  <h3><%= button_to 'Create New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get %></h3>
+  <h3><%= link_to 'Create New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get %></h3>
 <% else %>
   <br><h1>Pending approval</h1><br>
 <% end %>
