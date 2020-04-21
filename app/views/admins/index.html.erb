@@ -77,8 +77,7 @@
               <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
             <% end %>
             
-            <%= button_to 'Edit', edit_admin_path(admin), method: :get %>
-            <%= button_to 'Destroy', admin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
@@ -125,8 +124,7 @@
               <%= button_to "Approve", { action: "train", id: driver.id }, method: :post %>
             <% end %>
             
-            <%= button_to 'Edit', edit_driver_path(driver), method: :get %>
-            <%= button_to 'Destroy', driver, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
@@ -186,12 +184,11 @@
         <% end %>
         
         <% if @currentAdmin.auth_lvl == 1  %> 
-          <%= button_to 'Edit', edit_patient_path(patient), method: :get %>
-          <%= button_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' } %>
         <% end  %>
         
         <% if (@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3)%> 
-          <%= button_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get %>
+          <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get %>
         <% end %>
         </td>
       </tr>
