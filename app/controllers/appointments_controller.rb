@@ -92,6 +92,7 @@ class AppointmentsController < ApplicationController
         :driver_id, 
         :datetime, 
         :status,
+        :est_time,
         location_attributes: [:name, :addr1, :addr2, :city, :state, :zip])
     end
 end

@@ -4,10 +4,21 @@ class AdminsController < ApplicationController
   before_action :admin_authorized, except: [:new, :create]
   
   HOSTS = ['N/A','A&M','United Way']
+  
+  def add_host
+    HOSTS.push(params[:host_org])
+    redirect_to admins_home_path
+  end
+  
+  def delete_host
+    HOSTS.delete(params[:id])
+    redirect_to admins_home_path
+  end
    
   def train
    @driver = Driver.find(params[:id])
    @driver.update(trained: true)
+   @driver.update(admin: Admin.find(session[:user_id]))
    @driver.save
    redirect_to admins_home_path
   end
@@ -15,6 +26,7 @@ class AdminsController < ApplicationController
   def approve_patient
    @patient = Patient.find(params[:id])
    @patient.update(approved: true)
+   @patient.update(admin: Admin.find(session[:user_id]))
    @patient.save
    redirect_to admins_home_path
   end
@@ -83,6 +95,9 @@ class AdminsController < ApplicationController
   # POST /admins.json
   def create
     @admin = Admin.new(admin_params)
+    if (!@admin.approved)
+      @admin.approved = false
+    end
 
     respond_to do |format|
       if @admin.save
