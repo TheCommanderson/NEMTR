@@ -1,60 +1,129 @@
-<%= form_with(model: admin, local: true) do |form| %>
-  <% if admin.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(admin.errors.count, "error") %> prohibited this admin from being saved:</h2>
+<head>
+  <style>
+    body{
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    .btn-primary{
+      background-color: navy
+    }
+  </style>
+</head>
+<body>
+  <%= form_with(model: admin, local: true) do |form| %> <% if admin.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(admin.errors.count, "error") %> prohibited this admin from
+      being saved:
+    </h2>
 
-      <ul>
+    <ul>
       <% admin.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+      <li><%= message %></li>
       <% end %>
-      </ul>
-    </div>
+    </ul>
+  </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
+  <div class="row">
+    <div class="col">
+      <div class="text-right">
+        <%= form.label :first_name %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.text_field :first_name %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :middle_init %>
-    <%= form.text_field :middle_init %>
+  <div class="row">
+    <div class="col">
+      <div class="text-right">
+        <%= form.label :middle_init %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.text_field :middle_init %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
+  <div class="row">
+    <div class="col">
+      <div class="text-right">
+        <%= form.label :last_name %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.text_field :last_name %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.number_field :phone %>
+  <div class="row">
+    <div class="col">
+      <div class="text-right">
+        <%= form.label :phone %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.number_field :phone %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
+  <div class="row">
+    <div class="col">
+      <div class="text-right">
+        <%= form.label :email %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.text_field :email %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :auth_lvl, 'Who you are' %>
-    <%= form.select :auth_lvl, options_for_select([["Healthcare Provider", 2], ["211 Call Center", 3], ["System Administrator", 1]]) %>
+  <div class="row">
+    <div class="col">
+      <div class="text-right">
+        <%= form.label :password %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.password_field :password %>
+    </div>
   </div>
-  
-  <div class="field">
-    <%= form.label :host_org, 'If healthcare provider, please choose your organization' %>
-    <%= form.select :host_org, options_for_select(AdminsController::HOSTS) %>
+
+  <div class="row">
+    <div class="col">
+      <div class="text-right">
+        <%= form.label :auth_lvl, 'Who you are' %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.select :auth_lvl, options_for_select([["Healthcare Provider", 2],
+      ["211 Call Center", 3], ["System Administrator", 1]]) %>
+    </div>
   </div>
-  
+
+  <div class="row">
+    <div class="col">
+      <div class="text-right">
+        <%= form.label :host_org, 'If healthcare provider, please choose your
+        organization' %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.select :host_org, options_for_select(AdminsController::HOSTS) %>
+    </div>
+  </div>
+
   <%= hidden_field_tag :approved, false %>
 
-  <div class="actions">
-    <%= form.submit %>
+  <br />
+  <div class="row">
+    <div class="col">
+      <div class="text-center">
+        <%= form.submit "Submit",class:"btn btn-primary" %>
+      </div>
+    </div>
   </div>
-  
-<% end %>
+
+  <% end %>
+</body>

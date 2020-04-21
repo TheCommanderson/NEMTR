@@ -1,206 +1,262 @@
-<p id="notice"><%= notice %></p>
-<h2>Logged in as <%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h2>
-<h3>Status: 
-  <% if @currentAdmin.auth_lvl == 1 %>
-    System Administrator
-  <% elsif @currentAdmin.auth_lvl == 2 %>
-    Healthcare Provider
-  <% else %>
-    211 Call Center
-  <% end %>
-</h3>
-<br>
+<html>
+<head>
+  <style>
+    body{
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    h1{
+      color: navy;
+    }
+    table{
+      margin-left: 20px;
+      width: 100%;
+    }
+    table,td,th{
+      border: none;
+    }
+    .btn-primary{
+      background-color: navy
+    }
+    .btn-secondary{
+      font-size:15px; 
+    }
+    #header{
+      font-family: 'Lato', sans-serif;
+      background-color: navy;
+      color:white;
+    }
+  </style>
+</head>
+<body>
+  <p id="notice"><%= notice %></p>
+  <div id="header">
+    <h2 style="font-weight: 600; padding-left:20px;">Logged in as <%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h2>
+    <div class="row" style="padding-left:20px;">
+      <div class="col col-lg-10">
+        <h4>Status: 
+          <% if @currentAdmin.auth_lvl == 1 %>
+            System Administrator
+          <% elsif @currentAdmin.auth_lvl == 2 %>
+            Healthcare Provider
+          <% else %>
+            211 Call Center
+          <% end %>
+        </h4>
+      </div>
+      <div class="col"><%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get %></div>
+      <div class="col"><%= button_to 'Log Out', logout_path %></div>
+    </div>
+  </div>
+  <br>
 
-<%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get %><br>
+  <br>
 
-<% #AUTH LEVEL: 1-clients, 2-healthcare provider, 3-call center %>
-
-<% if @currentAdmin.approved %>
-  <% if @currentAdmin.auth_lvl == 1 %>
-    <h1>Admins</h1>
-    <table border="1"cellpadding="5"cellspacing="1">
+  <% #AUTH LEVEL: 1-clients, 2-healthcare provider, 3-call center %>
+  <div style="padding-left:20px;">
+  <% if @currentAdmin.approved %>
+    <% if @currentAdmin.auth_lvl == 1 %>
+      <h1>Admins</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Middle init</th>
+            <th>Last name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Auth lvl</th>
+            <th>Host org</th>
+            <th>Approved?</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <% @admins.each do |admin| %>
+            <tr>
+              <td><%= admin.first_name %></td>
+              <td><%= admin.middle_init %></td>
+              <td><%= admin.last_name %></td>
+              <td><%= admin.phone %></td>
+              <td><%= admin.email %></td>
+              <td><%= admin.auth_lvl %></td>
+              <td><%= admin.host_org %></td>
+              <td><%= admin.approved %></td>
+              <td>
+                <div class="row">
+                  <% if admin.approved %>
+                    <%#= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
+                  <% else %>
+                    <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                  <% end %>
+                  
+                  <%= button_to 'Edit', edit_admin_path(admin), method: :get , class: "btn btn-secondary"%>
+                  <%= button_to 'Destroy', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <br>
+    <% end %>
+    
+    
+    <% if @currentAdmin.auth_lvl == 1 %>
+      <h1>Drivers</h1>
+      <table border="1"cellpadding="5"cellspacing="1">
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Middle init</th>
+            <th>Last name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Trained</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <% @drivers.each do |driver| %>
+            <tr>
+              <td><%= driver.first_name %></td>
+              <td><%= driver.middle_init %></td>
+              <td><%= driver.last_name %></td>
+              <td><%= driver.phone %></td>
+              <td><%= driver.email %></td>
+              <td><%= driver.trained %></td>
+              
+              <td>
+                <div class="row">
+                  <% if !driver.trained %>
+                    <%= button_to "Approve", { action: "train", id: driver.id }, method: :post,class: "btn btn-secondary" %>
+                  <% end %>
+                  
+                  <%= button_to 'Edit', edit_driver_path(driver), method: :get,class: "btn btn-secondary" %>
+                  <%= button_to 'Destroy', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <br>
+    <% end %>
+    
+    
+  
+    <h1>Patients</h1>
+    <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
+      <div class="row">
+        <div class="col">
+        <%= text_field_tag :search, params[:search], placeholder: "Search patient name", class: "form-control" %>
+        </div>
+        <div class="col">
+        <%= submit_tag "Submit", class: "btn btn-primary" %>  
+        </div>
+      </div>
+    <% end %> 
+    <br>
+    
+    <table border="1" cellpadding="5" cellspacing="1">
       <thead>
         <tr>
           <th>First name</th>
-          <th>Middle init</th>
+          <th>Middle initial</th>
           <th>Last name</th>
           <th>Phone</th>
           <th>Email</th>
-          <th>Auth lvl</th>
-          <th>Host org</th>
+          <th>Host</th>
+          <th>Admin</th>
           <th>Approved?</th>
           <th>Actions</th>
         </tr>
       </thead>
     
       <tbody>
-        <% @admins.each do |admin| %>
+        <% @patients.each do |patient| %>
+        <tr>
+          <td><%= patient.first_name %></td>
+          <td><%= patient.middle_initial %></td>
+          <td><%= patient.last_name %></td>
+          <td><%= patient.phone %></td>
+          <td><%= patient.email %></td>
+          <td><%= patient.host_org %></td>
+          <td><%= patient.admin %></td>
+          <td><%= patient.approved %></td>
+          
+          <td>
+            <div class="row">
+              <% if @currentAdmin.auth_lvl == 2  %> 
+                <% if !patient.approved %>
+                  <%= button_to "Approve", { action: "approve_patient", id: patient.id }, method: :post,class: "btn btn-secondary" %>
+                <% end %>
+              <% end %>
+              
+              <% if @currentAdmin.auth_lvl == 1  %> 
+                <%= button_to 'Edit', edit_patient_path(patient), method: :get,class: "btn btn-secondary" %>
+                <%= button_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
+              <% end  %>
+              
+              <% if (@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3)%> 
+                <%= button_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary" %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br />
+    <br>
+    
+    <% if (@currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 3) %>
+      <h1>Upcoming Rides</h1>
+      <table border="1"cellpadding="5"cellspacing="1">
+        <thead>
           <tr>
-            <td><%= admin.first_name %></td>
-            <td><%= admin.middle_init %></td>
-            <td><%= admin.last_name %></td>
-            <td><%= admin.phone %></td>
-            <td><%= admin.email %></td>
-            <td><%= admin.auth_lvl %></td>
-            <td><%= admin.host_org %></td>
-            <td><%= admin.approved %></td>
-            
-            <td>
-            <% if admin.approved %>
-              <%#= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
+            <th>Patient</th>
+            <th>Driver</th>
+            <th>Date & Time</th>
+            <th>Status</th>
+            <th>Destination</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <% @appointments.each do |appointment| %>
+          <tr>
+            <% @tempPatient = Patient.all.find(appointment.patient_id) %>
+            <% if appointment.driver_id.nil? %>
+              <% @tempDriver = "None"  %>
             <% else %>
-              <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
+              <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(Driver.all.find(appointment.driver_id)) %>
             <% end %>
-            
-            <%= button_to 'Edit', edit_admin_path(admin), method: :get %>
-            <%= button_to 'Destroy', admin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <br>
-    <br>
-  <% end %>
-  
-  
-  <% if @currentAdmin.auth_lvl == 1 %>
-    <h1>Drivers</h1>
-    <table border="1"cellpadding="5"cellspacing="1">
-      <thead>
-        <tr>
-          <th>First name</th>
-          <th>Middle init</th>
-          <th>Last name</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Trained</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-    
-      <tbody>
-        <% @drivers.each do |driver| %>
-          <tr>
-            <td><%= driver.first_name %></td>
-            <td><%= driver.middle_init %></td>
-            <td><%= driver.last_name %></td>
-            <td><%= driver.phone %></td>
-            <td><%= driver.email %></td>
-            <td><%= driver.trained %></td>
-            
+            <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
+            <td><%= @temp %></td>
+            <td><%= appointment.datetime %></td>
+            <td><%= appointment.status %></td>
+            <td><%= appointment.location[1] %></td>
             <td>
-            <% if !driver.trained %>
-              <%= button_to "Approve", { action: "train", id: driver.id }, method: :post %>
-            <% end %>
-            
-            <%= button_to 'Edit', edit_driver_path(driver), method: :get %>
-            <%= button_to 'Destroy', driver, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <div class="row">
+                <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary" %>
+                <%= button_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
+              </div>
+            </td>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <br>
-    <br>
-  <% end %>
-  
-  
- 
-  <h1>Patients</h1>
-  
-  Find a patient
-  <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Enter name", class: "form-control" %>
-    <%= submit_tag("Submit") %>  
-  <% end %> <br>
-  
-  <table border="1"cellpadding="5"cellspacing="1">
-    <thead>
-      <tr>
-        <th>First name</th>
-        <th>Middle initial</th>
-        <th>Last name</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Host</th>
-        <th>Admin</th>
-        <th>Approved?</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-  
-    <tbody>
-      <% @patients.each do |patient| %>
-      <tr>
-        <td><%= patient.first_name %></td>
-        <td><%= patient.middle_initial %></td>
-        <td><%= patient.last_name %></td>
-        <td><%= patient.phone %></td>
-        <td><%= patient.email %></td>
-        <td><%= patient.host_org %></td>
-        <td><%= patient.admin %></td>
-        <td><%= patient.approved %></td>
-        
-        <td>
-        <% if @currentAdmin.auth_lvl == 2  %> 
-          <% if !patient.approved %>
-            <%= button_to "Approve", { action: "approve_patient", id: patient.id }, method: :post %>
           <% end %>
-        <% end %>
-        
-        <% if @currentAdmin.auth_lvl == 1  %> 
-          <%= button_to 'Edit', edit_patient_path(patient), method: :get %>
-          <%= button_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% end  %>
-        
-        <% if (@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3)%> 
-          <%= button_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get %>
-        <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <br />
+        </tbody>
+      </table>
+    <% end %>
+  <% else %>
+  <br><h1>Pending approval</h1><br>
+  <% end %>
+
   <br>
-  
-  <% if (@currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 3) %>
-    <h1>Upcoming Rides</h1>
-    <table border="1"cellpadding="5"cellspacing="1">
-      <thead>
-        <tr>
-          <th>Patient</th>
-          <th>Driver</th>
-          <th>Date & Time</th>
-          <th>Status</th>
-          <th>Destination</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-    
-      <tbody>
-        <% @appointments.each do |appointment| %>
-        <tr>
-          <% @tempPatient = Patient.all.find(appointment.patient_id) %>
-          <% if appointment.driver_id.nil? %>
-            <% @tempDriver = "None"  %>
-          <% else %>
-            <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(Driver.all.find(appointment.driver_id)) %>
-          <% end %>
-          <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-          <td><%= @temp %></td>
-          <td><%= appointment.datetime %></td>
-          <td><%= appointment.status %></td>
-          <td><%= appointment.location %></td>
-          <td><%= button_to 'Edit', edit_appointment_path(appointment), method: :get %>
-          <%= button_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-<% else %>
-<br><h1>Pending approval</h1><br>
-<% end %>
-
-<br><h><%= button_to 'Log Out', logout_path %></h3>
-
+</div>
+</body>
+</html>
