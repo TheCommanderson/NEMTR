@@ -24,8 +24,9 @@ class Location
   def generate_full_address
     temp_address = "#{addr1} #{addr2}, #{city}, #{state} #{zip}"
     # very hacky solution but after 3 hrs this auto geocode is still not working...
-    self.coordinates = Geocoder.search(temp_address).first.coordinates
-    self.address = Geocoder.search(coordinates).first.address
+    result = Geocoder.search(temp_address)
+    self.coordinates = result.first.coordinates
+    self.address = result.first.address
   end
 
 end

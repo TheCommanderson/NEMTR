@@ -2,9 +2,6 @@
 
 <h1>Login</h1>
 
-<%= session[:user_id] %>
-<%= session[:login_type] %>
-
 <%= button_to 'Admin', new_session_path, method: "get", params: {login: "Admin"} %><br>
 <%= button_to 'Patient', new_session_path, method: "get", params: {login: "Patient"} %><br>
 <%= button_to 'Driver', new_session_path, method: "get", params: {login: "Driver"} %>

@@ -7,10 +7,12 @@ class Patient
   field :last_name, type: String
   field :phone, type: Integer
   field :email, type: String
+  field :host_org, type: String
+  field :admin_id, type: String
   field :approved, type: Boolean
   field :password_digest, type: String
   
   has_secure_password
-  belongs_to :admin
+  belongs_to :admin, :optional => true
   has_many :appointments
 end
