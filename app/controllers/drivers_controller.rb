@@ -48,8 +48,8 @@ class DriversController < ApplicationController
     @sch1 = @driver.schedule.build(sch1)
     @sch2 = @driver.schedule.build(sch2)
     
-    if (!@driver.approved)
-      @driver.approved = false
+    if (!@driver.trained)
+      @driver.trained = false
     end
     
     respond_to do |format|
