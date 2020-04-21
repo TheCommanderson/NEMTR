@@ -65,7 +65,7 @@
     </tr>
 </table>
 <%= link_to 'Edit', edit_driver_schedule_path(:id => @next_schedule[:id]) %>
-<p><%= link_to 'Back', drivers_path %></p>
+<p><%= link_to 'Back', url_for(:back) %></p>
 
 <script>
     function getThisWeek(){

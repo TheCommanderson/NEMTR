@@ -4,6 +4,7 @@ class DriversController < ApplicationController
   before_action :driver_authorized, except: [:new, :create]
   # GET /drivers
   # GET /drivers.json
+  
   def index
     @logged_in_driver = Driver.find(session[:user_id])
     @drivers = Driver.all
@@ -30,6 +31,9 @@ class DriversController < ApplicationController
     @driver = Driver.new
   end
 
+  def test
+    @debug_log = matching_alg
+  end
   # GET /drivers/1/edit
   def edit
   end
@@ -43,6 +47,11 @@ class DriversController < ApplicationController
     @driver = Driver.new(driver_params)
     @sch1 = @driver.schedule.build(sch1)
     @sch2 = @driver.schedule.build(sch2)
+    
+    if (!@driver.approved)
+      @driver.approved = false
+    end
+    
     respond_to do |format|
       if @driver.save
         format.html { redirect_to @driver, notice: 'Driver was successfully created.' }

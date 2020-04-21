@@ -31,6 +31,9 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
+    if (!@patient.approved)
+      @patient.approved = false
+    end
 
     respond_to do |format|
       if @patient.save
@@ -75,7 +78,7 @@ class PatientsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def patient_params
-      params.require(:patient).permit(:first_name, :middle_initial, :last_name, :phone, :email, :admin_id, :password)
+      params.require(:patient).permit(:first_name, :middle_initial, :last_name, :phone, :email, :host_org, :admin_id, :password, :search)
     end
     
     def patient_authorized
