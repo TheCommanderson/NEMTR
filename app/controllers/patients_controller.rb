@@ -31,6 +31,9 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
+    if (!@patient.approved)
+      @patient.approved = false
+    end
 
     respond_to do |format|
       if @patient.save
