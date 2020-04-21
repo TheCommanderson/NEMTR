@@ -1,9 +1,9 @@
-var pos1, pos2
+var pos1, pos2, est
 
 function initMap(start, dest) {
   // make sure the coords is received!
-  console.log(start)
-  console.log(dest)
+  // console.log(start)
+  // console.log(dest)
 
   var directionsService = new google.maps.DirectionsService();
   var directionsRenderer = new google.maps.DirectionsRenderer();
@@ -14,14 +14,6 @@ function initMap(start, dest) {
     center: pos1
   }
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  var marker = new google.maps.Marker({
-    position: pos1,
-    map: map,
-  });
-  var marker2 = new google.maps.Marker({
-    position: pos2,
-    map: map,
-  });
   directionsRenderer.setMap(map);
   directionsRenderer.setPanel(document.getElementById('right-panel'));
   calculateAndDisplayRoute(directionsService, directionsRenderer);
@@ -36,9 +28,10 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     travelMode: 'DRIVING'
   }, function(response, status) {
     if (status === 'OK') {
-      console.log(response)
+      // console.log(response)
       // this is duration in seconds
       console.log(response.routes[0].legs[0].duration.value)
+      est = response.routes[0].legs[0].duration.value
       directionsRenderer.setDirections(response);
     } else {
       window.alert('Directions request failed due to ' + status);

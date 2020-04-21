@@ -1,7 +1,7 @@
 <% provide :head_tags do %>
   <script>
   document.addEventListener("DOMContentLoaded", function(){
-      initMap(<%=@appointment.location[0][:coordinates]%>, <%=@appointment.location[1][:coordinates]%>)
+    var est = initMap(<%=@appointment.location[0][:coordinates]%>, <%=@appointment.location[1][:coordinates]%>)
   });
   </script>
 <% end %>
