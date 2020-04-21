@@ -7,7 +7,6 @@ class AdminsController < ApplicationController
   
   def add_host
     HOSTS.push(params[:host_org])
-    HOSTS.push("test")
     redirect_to admins_home_path
   end
   

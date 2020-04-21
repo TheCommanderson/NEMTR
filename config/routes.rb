@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   resources :locations
   
   match 'admins_home', to: 'admins#index', via: [:get, :post]
+  post 'admins/add_host'
   resources :admins do
     post :approve, on: :member
     post :unapprove, on: :member
