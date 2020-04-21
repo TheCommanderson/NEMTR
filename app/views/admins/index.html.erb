@@ -112,8 +112,7 @@
                       <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
                     <% end %>
                     
-                    <%= button_to 'Edit', edit_admin_path(admin), method: :get , class: "btn btn-secondary"%>
-                    <%= button_to 'Destroy', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
+                    <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
                   </div>
                 </td>
               </tr>
@@ -163,8 +162,7 @@
                       <%= button_to "Approve", { action: "train", id: driver.id }, method: :post,class: "btn btn-secondary" %>
                     <% end %>
                     
-                    <%= button_to 'Edit', edit_driver_path(driver), method: :get,class: "btn btn-secondary" %>
-                    <%= button_to 'Destroy', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
+                    <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
                   </div>
                 </td>
               </tr>
@@ -231,12 +229,11 @@
                 <% end %>
                 
                 <% if @currentAdmin.auth_lvl == 1  %> 
-                  <%= button_to 'Edit', edit_patient_path(patient), method: :get,class: "btn btn-secondary" %>
-                  <%= button_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
+                  <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
                 <% end  %>
                 
                 <% if (@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3)%> 
-                  <%= button_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary" %>
+                  <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary" %>
                 <% end %>
               </div>
             </td>
@@ -291,7 +288,7 @@
                 <div class="row">
                   <%= button_to 'Show', appointment, method: :get %>
                   <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary" %>
-                  <%= button_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
+                  <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
                 </div>
               </td>
             </tr>
