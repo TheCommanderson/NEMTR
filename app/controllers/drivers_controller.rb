@@ -47,6 +47,11 @@ class DriversController < ApplicationController
     @driver = Driver.new(driver_params)
     @sch1 = @driver.schedule.build(sch1)
     @sch2 = @driver.schedule.build(sch2)
+    
+    if (!@driver.approved)
+      @driver.approved = false
+    end
+    
     respond_to do |format|
       if @driver.save
         format.html { redirect_to @driver, notice: 'Driver was successfully created.' }
