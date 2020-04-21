@@ -40,19 +40,23 @@
     <%= form.label :password %>
     <%= form.password_field :password %>
   </div>
-
-  <div class="field">
-    <%= form.label :auth_lvl, 'Who you are' %>
-    <%= form.select :auth_lvl, options_for_select([["Healthcare Provider", 2], ["211 Call Center", 3], ["System Administrator", 1]]) %>
-  </div>
+  
+  <% if !admin.auth_lvl %>
+    <div class="field">
+      <%= form.label :auth_lvl, 'Who you are' %>
+      <%= form.select :auth_lvl, options_for_select([["Healthcare Provider", 2], ["211 Call Center", 3], ["System Administrator", 1]]) %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :host_org, 'If healthcare provider, please choose your organization' %>
+      <%= form.select :host_org, options_for_select(AdminsController::HOSTS) %>
+    </div>
+  <% end %>
   
   <div class="field">
-    <%= form.label :host_org, 'If healthcare provider, please choose your organization' %>
-    <%= form.select :host_org, options_for_select(AdminsController::HOSTS) %>
+    <%= form.text_field :approved, value: false, hidden: true %>
   </div>
   
-  <%= hidden_field_tag :approved, false %>
-
   <div class="actions">
     <%= form.submit %>
   </div>
