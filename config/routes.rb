@@ -30,11 +30,14 @@ Rails.application.routes.draw do
   resources :locations
   
   match 'admins_home', to: 'admins#index', via: [:get, :post]
+  post 'admins/add_host'
   resources :admins do
     post :approve, on: :member
     post :unapprove, on: :member
     post :train, on: :member
     post :approve_patient, on: :member
+    post :delete_host, on: :member
+    get :add_host, on: :member
     get :search, on: :member
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

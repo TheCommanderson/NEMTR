@@ -1,52 +1,56 @@
 <% @currentFirstName = @patients.find(@currentPatient).first_name%>
 <% @currentLastName = @patients.find(@currentPatient).last_name%>
 
-<p id="notice"><%= notice %></p>
-<h1>Upcoming Appointments for <%= @currentFirstName %> <%= @currentLastName%>:</h1>
-<table border="1"cellpadding="5"cellspacing="1">
-  <thead>
-    <tr>
-      <th>Driver</th>
-      <th>Date & Time</th>
-      <th>Pick-up Location</th>
-      <th>Destination</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @appointments.where('patient_id' => @currentPatient).each do |appointment| %>
-    <tr>
-      <% @pickUpLocationid = appointment.location[0]["_id"] %>
-      <% @destinationid = appointment.location[1]["_id"] %>
-      <% if appointment.status == 0 %>
-        <td style="color:red">unassigned</td>
-      <% else %>
-        <% @drivers.find(appointment.driver_id) %>
-        <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
-        <td><%= @tempDriver %></td>
+<% if @currentPatient.approved %>
+  <p id="notice"><%= notice %></p>
+  <h1>Upcoming Appointments for <%= @currentFirstName %> <%= @currentLastName%>:</h1>
+  <table border="1"cellpadding="5"cellspacing="1">
+    <thead>
+      <tr>
+        <th>Driver</th>
+        <th>Date & Time</th>
+        <th>Pick-up Location</th>
+        <th>Destination</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @appointments.where('patient_id' => @currentPatient).each do |appointment| %>
+      <tr>
+        <% @pickUpLocationid = appointment.location[0]["_id"] %>
+        <% @destinationid = appointment.location[1]["_id"] %>
+        <% if appointment.status == 0 %>
+          <td style="color:red">unassigned</td>
+        <% else %>
+          <% @drivers.find(appointment.driver_id) %>
+          <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
+          <td><%= @tempDriver %></td>
+        <% end %>
+        <td><%= appointment.datetime %></td>
+        <td>
+          <p><%= appointment.location[0].name %></p>
+          <p><%= appointment.location[0].address %></p>
+        </td>
+        
+        <td>
+          <p><%= appointment.location[1].name %></p>
+          <p><%= appointment.location[1].address %></p>
+        </td>
+        <td>
+        <%= button_to 'Show', appointment, method: :get %>
+        <%= button_to 'Update Date', edit_appointment_path(appointment), method: :get %>
+        <%= button_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid), method: :get %>
+        <%= button_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid), method: :get %>
+        <%= button_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }%>
+        </td>
+      </tr>
       <% end %>
-      <td><%= appointment.datetime %></td>
-      <td>
-        <p><%= appointment.location[0].name %></p>
-        <p><%= appointment.location[0].address %></p>
-      </td>
-      
-      <td>
-        <p><%= appointment.location[1].name %></p>
-        <p><%= appointment.location[1].address %></p>
-      </td>
-      <td><%= link_to 'Update Date', edit_appointment_path(appointment) %>
-      <br>
-      <%= link_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid) %>
-      <br>
-      <%= link_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid) %>
-      <br>
-      <%= link_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }%>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-<h3><%= button_to 'Create New Appointment',{action: :new, controller: :appointments, patient_id: @patients.find(@currentPatient).id}, method: :get %></h3>
+    </tbody>
+  </table>
+  <h3><%= button_to 'Create New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get %></h3>
+<% else %>
+  <br><h1>Pending approval</h1><br>
+<% end %>
+
 <h3><%= button_to 'Log Out', logout_path %></h3>

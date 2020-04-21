@@ -1,24 +1,71 @@
 <p id="notice"><%= notice %></p>
 
 <p>You are logged in as: <%= @logged_in_driver.first_name %> <%= @logged_in_driver.last_name %></p>
-<h1>Your Upcoming Rides</h1>
 
-<table border="1"cellpadding="5"cellspacing="1">
-  <thead>
-    <tr>
-      <th>Patient</th>
-      <th>Date & Time</th>
-      <th>Pick-Up Location</th>
-      <th>Destination</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% Appointment.where('driver_id' => @logged_in_driver).each do |appointment| %>
+<% if @logged_in_driver.trained %>
+  <h1>Your Upcoming Rides</h1>
+  
+  <table border="1"cellpadding="5"cellspacing="1">
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Date & Time</th>
+        <th>Pick-Up Location</th>
+        <th>Destination</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% Appointment.where('driver_id' => @logged_in_driver).each do |appointment| %>
+        <tr>
+          <% @tempPatient = @patients.find(appointment.patient_id) %>
+          <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
+          <td><%= appointment.datetime %></td>
+          <td>
+            <p><%= appointment.location[0][:name] %></p>
+            <p><%= appointment.location[0][:address] %></p>
+          </td>
+          <td>
+            <p><%= appointment.location[1][:name] %></p>
+            <p><%= appointment.location[1][:address] %></p>
+          </td>
+          <td>
+            <p><%= button_to 'Show', appointment, method: :get %></p>
+            <p><%= button_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }%></p>
+          </td>
+          
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+  
+  <br>
+  
+  <h1>All Upcoming Rides</h1>
+  <table border="1"cellpadding="5"cellspacing="1">
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Driver</th>
+        <th>Date & Time</th>
+        <th>Pick-Up Location</th>
+        <th>Destination</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @appointments.each do |appointment| %>
       <tr>
         <% @tempPatient = @patients.find(appointment.patient_id) %>
         <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
+        <% if appointment.status == 0 %>
+          <td style="color:red">unassigned</td>
+        <% else %>
+          <td><%= @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %></td>
+        <% end %>
         <td><%= appointment.datetime %></td>
         <td>
           <p><%= appointment.location[0][:name] %></p>
@@ -28,56 +75,14 @@
           <p><%= appointment.location[1][:name] %></p>
           <p><%= appointment.location[1][:address] %></p>
         </td>
-        <td>
-          <p><%= link_to 'Show', appointment %></p>
-          <p><%= link_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }%></p>
-        </td>
-        
+        <td><%= button_to 'Show', appointment, method: :get %></td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<br>
-
-<br>
-
-<h1>All Upcoming Rides</h1>
-<table border="1"cellpadding="5"cellspacing="1">
-  <thead>
-    <tr>
-      <th>Patient</th>
-      <th>Driver</th>
-      <th>Date & Time</th>
-      <th>Pick-Up Location</th>
-      <th>Destination</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @appointments.each do |appointment| %>
-    <tr>
-      <% @tempPatient = @patients.find(appointment.patient_id) %>
-      <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-      <% if appointment.status == 0 %>
-        <td style="color:red">unassigned</td>
-      <% else %>
-        <td><%= @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %></td>
       <% end %>
-      <td><%= appointment.datetime %></td>
-      <td>
-        <p><%= appointment.location[0][:name] %></p>
-        <p><%= appointment.location[0][:address] %></p>
-      </td>
-      <td>
-        <p><%= appointment.location[1][:name] %></p>
-        <p><%= appointment.location[1][:address] %></p>
-      </td>
-      <td><%= link_to 'Show', appointment %></td>
-    </tr>
-    <% end %>
-  </tbody>
-  
-  
-<h3><%= button_to 'My Schedule', driver_schedules_url(@logged_in_driver), :method => 'get' %></h3>
+    </tbody>
+  </table>
+  <h3><%= button_to 'My Schedule', driver_schedules_url(@logged_in_driver), :method => 'get' %></h3>
+
+<% else %>
+  <br><h1>Pending approval</h1><br>
+<% end %>
 <h3><%= button_to 'Log Out', logout_path %></h3>

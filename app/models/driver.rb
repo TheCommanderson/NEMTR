@@ -8,6 +8,7 @@ class Driver
   field :phone, type: Integer
   field :email, type: String
   field :trained, type: Mongoid::Boolean
+  field :admin_id, type: String
   field :blacklist, type: Array, default: []
   field :password_digest, type: String
   
@@ -15,7 +16,7 @@ class Driver
   accepts_nested_attributes_for :schedule
   
   has_secure_password
-  belongs_to :admin
+  belongs_to :admin, :optional => true
   has_many :appointments
   
   def self.blacklist_reset
