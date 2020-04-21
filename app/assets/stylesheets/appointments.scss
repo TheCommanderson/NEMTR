@@ -1,3 +1,26 @@
 // Place all the styles related to the Appointments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#map {
+  height: 100%;
+  width: 49%;
+  float: left;
+  margin-right: 10px;
+}
+
+#right-panel {
+  height: 100%;
+  float: right;
+  width: 50%;
+  overflow: auto;
+}
+
+.parent {
+  display: flex;
+  height: 400px;
+}
+
+.float-left-child { 
+  flex: 1;
+}
