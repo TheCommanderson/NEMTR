@@ -1,26 +1,43 @@
-<br><br><br><br><br><br>
-<p id="notice"><%= notice %></p>
-<div class="text-center">
-    <h1>NEMTR</h1>
-    <h5>Non-Emergency Medical Transportation</h5>
-</div>
-<br>
-<div class="row justify-content-md-center">
-    <div class="col col-md-2" align="center">
-        <h3>LOG IN</h3>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet"><head>
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        h1,h3,h5{
+            color: navy;
+        }
+        h1{
+            font-family: 'Lato', sans-serif;
 
-        <%= session[:user_id] %>
-        <%= session[:login_type] %>
-
-        <%= button_to 'Admin', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-primary" %><br>
-        <%= button_to 'Patient', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-primary" %><br>
-        <%= button_to 'Driver', new_session_path, method: "get", params: {login: "Driver"}, class:"btn btn-primary" %>
+        }
+        .btn-primary{
+            background-color: navy;
+            border-style: none;
+            width: 90px; !important
+        }
+    </style>
+</head>
+<body>
+    <br/><br/><br/><br/><br/><br/>
+    <p id="notice"><%= notice %><p>
+    <div class="text-center">
+        <h1>NEMTR</h1>
+        <h5>Non-Emergency Medical Transportation</h5>
     </div>
-    <div class="col col-md-2" align="center">
-        <h3>SIGN UP</h3>
-
-        <%= button_to 'Admin', new_admin_path, method: "get", class:"btn btn-primary" %><br>
-        <%= button_to 'Patient', new_patient_path, method: "get", class:"btn btn-primary" %><br>
-        <%= button_to 'Driver', new_driver_path, method: "get", class:"btn btn-primary" %>
+    <br/>
+    <div class="row justify-content-md-center">
+        <div class="col col-md-2" align="center">
+            <h3>LOG IN</h3>
+            <%= session[:user_id] %> <%= session[:login_type] %> 
+            <%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-primary " %><br/>
+            <%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-primary" %><br/>
+            <%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-primary" %>
+        </div>
+        <div class="col col-md-2" align="center">
+            <h3>SIGN UP</h3>
+            <%= button_to 'ADMIN', new_admin_path, method: "get", class:"btn btn-primary" %><br/>
+            <%= button_to 'PATIENT', new_patient_path, method: "get", class:"btn btn-primary" %><br/>
+            <%= button_to 'DRIVER', new_driver_path, method: "get", class:"btn btn-primary" %>
+        </div>
     </div>
-</div>
+<body>
