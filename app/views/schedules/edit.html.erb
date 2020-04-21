@@ -1,38 +1,52 @@
 <%= form_with(model: @schedule, local: true, url: driver_schedule_path) do |form| %>
   
   <div class="field">
-    Monday
-    <%= form.time_select :Monday1 %> to <%= form.time_select :Monday2 %>
+    Monday <%= @monday_date.strftime("%b %e, %Y") %>
+    <%= form.time_select :Monday1, {minute_step: 15, ampm: true, default: {hour: @default_vals['Monday'][0], min: @default_vals['Monday'][1]}} %>
+    to 
+    <%= form.time_select :Monday2, {minute_step: 15, ampm: true, default: {hour: @default_vals['Monday'][2], min: @default_vals['Monday'][3]}} %>
   </div>
 
   <div class="field">
-    Tuesday
-    <%= form.time_select :Tuesday1 %> to <%= form.time_select :Tuesday2 %>
+    Tuesday <%= (@monday_date + 1).strftime("%b %e, %Y") %>
+    <%= form.time_select :Tuesday1, {minute_step: 15, ampm: true, default: {hour: @default_vals['Tuesday'][0], min: @default_vals['Tuesday'][1]}} %>
+    to
+    <%= form.time_select :Tuesday2, {minute_step: 15, ampm: true, default: {hour: @default_vals['Tuesday'][2], min: @default_vals['Tuesday'][3]}} %>
   </div>
   
   <div class="field">
-    Wednesday
-    <%= form.time_select :Wednesday1 %> to <%= form.time_select :Wednesday2 %>
+    Wednesday <%= (@monday_date + 2).strftime("%b %e, %Y") %>
+    <%= form.time_select :Wednesday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Wednesday'][0], min: @default_vals['Wednesday'][1]}} %>
+    to
+    <%= form.time_select :Wednesday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Wednesday'][2], min: @default_vals['Wednesday'][3]}} %>
   </div>
   
   <div class="field">
-    Thursday
-    <%= form.time_select :Thursday1 %> to <%= form.time_select :Thursday2 %>
+    Thursday <%= (@monday_date + 3).strftime("%b %e, %Y") %>
+    <%= form.time_select :Thursday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Thursday'][0], min: @default_vals['Thursday'][1]}} %>
+    to
+    <%= form.time_select :Thursday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Thursday'][2], min: @default_vals['Thursday'][3]}} %>
   </div>
   
   <div class="field">
-    Friday
-    <%= form.time_select :Friday1 %> to <%= form.time_select :Friday2 %>
+    Friday <%= (@monday_date + 4).strftime("%b %e, %Y") %>
+    <%= form.time_select :Friday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Friday'][0], min: @default_vals['Friday'][1]}} %>
+    to
+    <%= form.time_select :Friday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Friday'][2], min: @default_vals['Friday'][3]}} %>
   </div>
   
   <div class="field">
-    Saturday
-    <%= form.time_select :Saturday1 %> to <%= form.time_select :Saturday2 %>
+    Saturday <%= (@monday_date + 5).strftime("%b %e, %Y") %>
+    <%= form.time_select :Saturday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Saturday'][0], min: @default_vals['Saturday'][1]}} %>
+    to
+    <%= form.time_select :Saturday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Saturday'][2], min: @default_vals['Saturday'][3]}} %>
   </div>
   
   <div class="field">
-    Sunday
-    <%= form.time_select :Sunday1 %> to <%= form.time_select :Sunday2 %>
+    Sunday <%= (@monday_date + 6).strftime("%b %e, %Y") %>
+    <%= form.time_select :Sunday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Sunday'][0], min: @default_vals['Sunday'][1]}} %>
+    to
+    <%= form.time_select :Sunday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Sunday'][2], min: @default_vals['Sunday'][3]}} %>
   </div>
 
   <div class="actions">
