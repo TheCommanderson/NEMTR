@@ -1,3 +1,14 @@
+<% provide :head_tags do %>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        initMap(<%=@appointment.location[0][:coordinates]%>, <%=@appointment.location[1][:coordinates]%>)
+    });
+    if (location.href.indexOf('re')==-1) {
+        location.href=location.href+'?re';
+    }
+  </script>
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -43,5 +54,10 @@
   <p>Pick-Up Coordinates: <%= @appointment.location[0][:coordinates] %></p>
   <p>Destination Coordinates: <%= @appointment.location[1][:coordinates] %></p>
 </p>
+
+<div class='parent'> 
+  <div class='child float-left-child' id="map"></div>
+  <div class='child float-left-child' id="right-panel"></div>
+</div>
 
 <%= link_to 'Back', url_for(:back) %>
