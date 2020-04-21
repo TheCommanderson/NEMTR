@@ -31,8 +31,8 @@
             <p><%= appointment.location[1][:address] %></p>
           </td>
           <td>
-            <p><%= link_to 'Show', appointment %></p>
-            <p><%= link_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }%></p>
+            <p><%= button_to 'Show', appointment, method: :get %></p>
+            <p><%= button_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }%></p>
           </td>
           
         </tr>
@@ -75,11 +75,11 @@
           <p><%= appointment.location[1][:name] %></p>
           <p><%= appointment.location[1][:address] %></p>
         </td>
-        <td><%= link_to 'Show', appointment %></td>
+        <td><%= button_to 'Show', appointment, method: :get %></td>
       </tr>
       <% end %>
     </tbody>
-    
+  </table>
   <h3><%= button_to 'My Schedule', driver_schedules_url(@logged_in_driver), :method => 'get' %></h3>
 
 <% else %>

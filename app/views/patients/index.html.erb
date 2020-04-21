@@ -37,19 +37,18 @@
           <p><%= appointment.location[1].name %></p>
           <p><%= appointment.location[1].address %></p>
         </td>
-        <td><%= link_to 'Update Date', edit_appointment_path(appointment) %>
-        <br>
-        <%= link_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid) %>
-        <br>
-        <%= link_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid) %>
-        <br>
-        <%= link_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }%>
+        <td>
+        <%= button_to 'Show', appointment, method: :get %>
+        <%= button_to 'Update Date', edit_appointment_path(appointment), method: :get %>
+        <%= button_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid), method: :get %>
+        <%= button_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid), method: :get %>
+        <%= button_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }%>
         </td>
       </tr>
       <% end %>
     </tbody>
   </table>
-  <h3><%= button_to 'Create New Appointment',{action: :new, controller: :appointments, patient_id: @patients.find(@currentPatient).id}, method: :get %></h3>
+  <h3><%= button_to 'Create New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get %></h3>
 <% else %>
   <br><h1>Pending approval</h1><br>
 <% end %>
