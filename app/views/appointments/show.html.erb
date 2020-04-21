@@ -1,8 +1,18 @@
 <% provide :head_tags do %>
   <script>
-  document.addEventListener("DOMContentLoaded", function(){
-    var est = initMap(<%=@appointment.location[0][:coordinates]%>, <%=@appointment.location[1][:coordinates]%>)
-  });
+    document.addEventListener("DOMContentLoaded", function(){
+      setTimeout(function() {
+        initMap(<%=@appointment.location[0][:coordinates]%>, <%=@appointment.location[1][:coordinates]%>)
+      }, 1000)
+    });
+
+    // ultra hacky, but this force a refresh after page load, so gmap shows up
+    function reloadIt() {
+    if (window.location.href.substr(-2) !== "?r") {
+        window.location = window.location.href + "?r";
+      }
+    }
+    setTimeout('reloadIt()', 10)();
   </script>
 <% end %>
 
