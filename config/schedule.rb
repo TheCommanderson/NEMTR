@@ -16,7 +16,7 @@ every :sunday, at: "12:01 am" do
     runner "Driver.blacklist_reset"
 end
 
-every 1.days do
+every 1.day, at: "12:01 am" do
     runner "Appointment.clean_past_appointments"
 end
 
