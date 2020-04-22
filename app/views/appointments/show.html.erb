@@ -53,4 +53,12 @@
   <div class='child float-left-child' id="right-panel"></div>
 </div>
 
-<%= link_to 'Back', url_for(:back) %>
+<% if session[:login_type] == "D" %>
+  <%= link_to 'Back', drivers_home_path %>
+<% elsif session[:login_type] == "P" %>
+  <%= link_to 'Back', patients_home_path %>
+<% else %>
+  <%= link_to 'Back', admins_home_path %>
+<% end %>
+
+

@@ -4,6 +4,7 @@
 <% if @currentPatient.approved %>
   <p id="notice"><%= notice %></p>
   <h1>Upcoming Appointments for <%= @currentFirstName %> <%= @currentLastName%>:</h1>
+  <p><%= button_to 'Edit Account', edit_patient_path(@currentPatient), method: :get %></p>
   <table border="1"cellpadding="5"cellspacing="1">
     <thead>
       <tr>
