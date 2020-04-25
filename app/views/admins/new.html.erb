@@ -1,17 +1,21 @@
 <br><br>
-<style>
-    h3{
-        font-family: 'Lato', sans-serif;
-        font-weight: 500;
+<head>
+  <style>
+    body{
+      background-color: #fceae8;
     }
-</style>
-<div class="text-center" >
+    h3{
+      color: #003354;
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="text-center" >
     <h3>New Admin</h3>
-</div>
-
-<br>
-
-<%= render 'form', admin: @admin %>
-
-
-<div class="text-center"><%= link_to 'Back', admins_path %></div>
+  </div>
+  <br>
+  <%= render 'form', admin: @admin %>
+  <div class="text-center"><%= link_to 'Back', admins_path %></div>
+</body>

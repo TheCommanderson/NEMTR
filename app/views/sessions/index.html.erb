@@ -1,43 +1,68 @@
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet"><head>
-    <style>
-        body {
-            font-family: 'Source Sans Pro', sans-serif;
-        }
-        h1,h3,h5{
-            color: navy;
-        }
-        h1{
-            font-family: 'Lato', sans-serif;
-
-        }
-        .btn-primary{
-            background-color: navy;
-            border-style: none;
-            width: 90px; !important
-        }
-    </style>
+<!--
+pink: 
+  #fceae8 (95%)(background)
+  #f6bfbb (85%)
+  #ee847d (71%)(pinkoi salmon)
+navy:
+  #33adff(60%)
+  #005c99(30%)
+  #003354(16%)(pinkoi navy)
+gray: 
+  #f2f2f3(95%)(secondary sm hover color)
+  #e5e5e6(90%)(pinkoi gray)
+yellow: 
+  #fcedcf (90%)(secondary btn hover color)
+  #fbe4b6 (85%)
+  #f9d58c (76%)(pinkoi yellow)
+  
+-->
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">    
+<style>
+		body {
+			font-family: 'Source Sans Pro', sans-serif;
+			background-color: #fceae8;
+		}
+		h3{
+			font-size: 26px;
+		}
+		h1,h3,h5{
+			color: navy;
+		}
+		h1{
+			font-family: 'Lato', sans-serif;
+		}
+		.btn-primary{
+			background-color: navy;
+			font-size: 17px;
+			border-style: none;
+			width: 90px; !important
+		}
+	</style>
 </head>
 <body>
-    <br/><br/><br/><br/><br/><br/>
-    <p id="notice"><%= notice %><p>
-    <div class="text-center">
-        <h1>NEMTR</h1>
-        <h5>Non-Emergency Medical Transportation</h5>
-    </div>
-    <br/>
-    <div class="row justify-content-md-center">
-        <div class="col col-md-2" align="center">
-            <h3>LOG IN</h3>
-            <%= session[:user_id] %> <%= session[:login_type] %> 
-            <%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-primary " %><br/>
-            <%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-primary" %><br/>
-            <%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-primary" %>
-        </div>
-        <div class="col col-md-2" align="center">
-            <h3>SIGN UP</h3>
-            <%= button_to 'ADMIN', new_admin_path, method: "get", class:"btn btn-primary" %><br/>
-            <%= button_to 'PATIENT', new_patient_path, method: "get", class:"btn btn-primary" %><br/>
-            <%= button_to 'DRIVER', new_driver_path, method: "get", class:"btn btn-primary" %>
-        </div>
-    </div>
+	<br><br><br><br><br><br><br><br>
+	<!-- ============= NOTICE ============= -->
+	<p class="text-center" style="color: red;"><%= notice %><p>
+	<!-- ============= MAIN STUFF ============= -->
+	<div class="text-center">
+		<h1>NEMTR</h1>
+		<h5>Non-Emergency Medical Transportation</h5>
+	</div>
+	<br>
+	
+	<div class="row justify-content-md-center">
+		<div class="col col-sm-1" style="width: 5%" align="center">
+				<h3>LOG IN  </h3>
+				<%= session[:user_id] %> <%= session[:login_type] %> 
+				<%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-primary " %><br/>
+				<%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-primary" %><br/>
+				<%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-primary" %>
+		</div>
+		<div class="col col-sm-1" align="center">
+			<h3 style="font-size: 26px">SIGN UP</h3>
+			<%= button_to 'ADMIN', new_admin_path, method: "get", class:"btn btn-primary" %><br/>
+			<%= button_to 'PATIENT', new_patient_path, method: "get", class:"btn btn-primary" %><br/>
+			<%= button_to 'DRIVER', new_driver_path, method: "get", class:"btn btn-primary" %>
+		</div>
+	</div>
 <body>
