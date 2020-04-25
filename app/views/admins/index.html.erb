@@ -1,10 +1,14 @@
-<link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Lato:ital,wght@0,700;1,400&family=Montserrat+Subrayada:wght@400;700&family=Scada:ital,wght@0,700;1,700&family=Source+Sans+Pro:wght@400;600&family=Timmana&display=swap" rel="stylesheet"><head>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+<head>
+
   <style>
+  
     body{
       font-family: 'Source Sans Pro', sans-serif;
+      background-color: #fceae8;
     }
     h1{
-      color: navy;
+      color: #003354;
       font-family: 'Lato', sans-serif;
       font-style: italic;
     }
@@ -13,22 +17,40 @@
       width: 100%;
     }
     table,td,th{
-      border: 1px solid gray;
+      border: 1px solid #a6a6a6;
     }
     .btn-primary{
-      background-color: navy
+      background-color: #003354
     }
-    .btn-secondary{
+    .btn-secondary{ 
+      color: #003354;
+      background-color: #f9d58c;
       font-size:15px; 
+      font-weight: 400;
+      padding: 3px 5px
+    }
+    .btn-secondary:hover{
+      background-color: #fcedcf;
+      color: #33adff;
+    }
+    .btn-secondary.btn-sm{
+      color: #003354;
+      background-color: #e5e5e6;
+      font-size:15px; 
+      padding: 3px 5px
+    }
+    .btn-secondary:hover.btn-sm{
+      background-color: #f2f2f3;
     }
     #header{
       font-family: 'Lato', sans-serif;
-      background-color: navy;
+      background-color: #003354;
       color:white;
     }
   </style>
 </head>
 <body>
+
   <p id="notice"><%= notice %></p>
   <!-- ======================== HEADER ======================== -->
   <div id="header">
@@ -45,7 +67,7 @@
           <% end %>
         </h4>
       </div>
-      <div class="col"><%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary" %></div>
+      <div class="col"><%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary " %></div>
       <div class="col"><%= button_to 'Log Out', logout_path, class: "btn btn-secondary" %></div>
     </div>
   </div>
@@ -54,38 +76,37 @@
   
   <br>
   <% #AUTH LEVEL: 1-clients, 2-healthcare provider, 3-call center %>
-  <% if @currentAdmin.approved %>
-    <% if @currentAdmin.auth_lvl == 1 %>
-      <div class="col" style="padding-left:20px;">
-      <!-- ======================== ORGNIZATION ======================== -->
-      <%= form_tag(:controller => "admins", :action => "add_host") %>
-      <h1>Organization</h1>
-      <div class = "field" style="padding-left:20px; padding-bottom:5px;">
-        <%= label_tag "Add an organization" %>
-        <%= text_field_tag :host_org, params[:host_org], placeholder: "Enter name" %>
-        <%= submit_tag "Submit" , class: "btn btn-primary" %>  
-      </div>
-      <table cellpadding="5">
-        <thead>
-          <tr>
-            <th>Organization</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% AdminsController::HOSTS.drop(1).each do |host| %>
+  <div class="col" style="padding-left:20px;">
+    <% if @currentAdmin.approved %>
+      <% if @currentAdmin.auth_lvl == 1 %>
+        <!-- ======================== ORGNIZATION ======================== -->
+        <%= form_tag(:controller => "admins", :action => "add_host") %>
+        <h1>Organization</h1>
+        <div class="row" style="padding-left:20px; padding-bottom:5px; overflow: hidden;">
+          <div class="col"><%= text_field_tag :host_org, params[:host_org], placeholder: "Add an organization", class:"form-control" %></div>
+          <div class="col"><%= submit_tag "Submit" , class: "btn btn-primary" %></div>
+        </div>
+        <table cellpadding="5">
+          <thead>
             <tr>
-              <td><%= host %></td>
-              <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary" %></td>
+              <th>Organization</th>
+              <th>Actions</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% AdminsController::HOSTS.drop(1).each do |host| %>
+              <tr>
+                <td><%= host %></td>
+                <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary btn-sm" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
 
-      <!-- ========================ADMINS======================== -->
+        <!-- ========================ADMINS======================== -->
       
         <h1>Admins</h1>
-        <table>
+        <table cellpadding=5px>
           <thead>
             <tr>
               <th>First name</th>
@@ -112,14 +133,12 @@
                 <td><%= admin.host_org %></td>
                 <td><%= admin.approved %></td>
                 <td>
-                  <div class="row">
-                    <% if admin.approved %>
-                      <%#= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
-                    <% else %>
-                      <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
-                    <% end %>
-                    <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
-                  </div>
+                  <% if admin.approved %>
+                    <%#= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
+                  <% else %>
+                    <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                  <% end %>
+                  <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
                 </td>
               </tr>
             <% end %>
@@ -127,12 +146,10 @@
         </table>
         <br>
         <br>
-      <% end %>
       
-      <!-- ========================DRIVERS======================== -->
-      <% if @currentAdmin.auth_lvl == 1 %>
+        <!-- ========================DRIVERS======================== -->
         <h1>Drivers</h1>
-        <table border="1"cellpadding="5"cellspacing="1">
+        <table cellpadding="5">
           <thead>
             <tr>
               <th>First name</th>
@@ -163,13 +180,11 @@
                 <td><%= driver.trained %></td>
                 
                 <td>
-                  <div class="row">
                     <% if !driver.trained %>
-                      <%= button_to "Approve", { action: "train", id: driver.id }, method: :post,class: "btn btn-secondary" %>
+                      <%= button_to "Approve", { action: "train", id: driver.id }, method: :post,class: "btn btn-secondary btn-sm" %>
                     <% end %>
                     
-                    <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
-                  </div>
+                    <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
                 </td>
               </tr>
             <% end %>
@@ -178,7 +193,6 @@
         <br>
         <br>
       <% end %>
-      
       
       <!-- ======================== PATIENTS ======================== -->
       <h1>Patients</h1>
@@ -194,7 +208,7 @@
       <% end %> 
       <br>
       
-      <table border="1" cellpadding="5" cellspacing="1">
+      <table cellpadding="5">
         <thead>
           <tr>
             <th>First name</th>
@@ -227,33 +241,30 @@
             <td><%= patient.approved %></td>
             
             <td>
-              <div class="row">
-                <% if @currentAdmin.auth_lvl == 2  %> 
-                  <% if !patient.approved %>
-                    <%= button_to "Approve", { action: "approve_patient", id: patient.id }, method: :post,class: "btn btn-secondary" %>
-                  <% end %>
+              <% if @currentAdmin.auth_lvl == 2  %> 
+                <% if !patient.approved %>
+                  <%= button_to "Approve", { action: "approve_patient", id: patient.id }, method: :post,class: "btn btn-secondary btn-sm" %>
                 <% end %>
-                
-                <% if @currentAdmin.auth_lvl == 1  %> 
-                  <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
-                <% end  %>
-                
-                <% if (@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3)%> 
-                  <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary" %>
-                <% end %>
-              </div>
+              <% end %>
+              
+              <% if @currentAdmin.auth_lvl == 1  %> 
+                <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
+              <% end  %>
+              
+              <% if (@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3)%> 
+                <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary btn-sm" %>
+              <% end %>
             </td>
           </tr>
           <% end %>
         </tbody>
       </table>
-      <br />
-      <br>
+      <br><br>
       
       <!-- ======================== UPCOMING RIDES ======================== -->
       <% if (@currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 3) %>
         <h1>Upcoming Rides</h1>
-        <table border="1"cellpadding="5"cellspacing="1">
+        <table cellpadding="5">
           <thead>
             <tr>
               <th>Patient</th>
@@ -274,7 +285,7 @@
                 <p><%= @tempPatient.email %></p>
               </td>
               <% if appointment.status == 0 %>
-                <td style="color:red">unassigned</td>
+                <td style="color:red">Unassigned</td>
               <% else %>
                 <td>
                   <% @tempDriver = Driver.all.find(appointment.driver_id) %>
@@ -292,25 +303,22 @@
                 <p><%= appointment.location[1][:address] %></p>
               </td>
               <td>
-                <div class="row">
-                  <%= button_to 'Show', appointment, method: :get %>
-                  <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary" %>
-                  <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
-                </div>
+                <%= button_to 'Details', appointment, method: :get,class: "btn btn-secondary btn-sm" %>
+                <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary btn-sm" %>
+                <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
               </td>
             </tr>
             <% end %>
           </tbody>
         </table>
       <% end %>
-  <% else %>
-    <br>
-    <h3>Pending approval</h3>
-    <p>Please contact a system administrator.</p>
-    <br>
-  <% end %>
+    <% else %>
+      <br>
+      <h3>Pending approval</h3>
+      <p>Please contact a system administrator.</p>
+      <br>
+    <% end %>
   
-  <br>
   </div>
 </body>
 </html>
