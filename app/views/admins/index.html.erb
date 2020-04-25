@@ -1,18 +1,19 @@
-<html>
-<head>
+<link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Lato:ital,wght@0,700;1,400&family=Montserrat+Subrayada:wght@400;700&family=Scada:ital,wght@0,700;1,700&family=Source+Sans+Pro:wght@400;600&family=Timmana&display=swap" rel="stylesheet"><head>
   <style>
     body{
       font-family: 'Source Sans Pro', sans-serif;
     }
     h1{
       color: navy;
+      font-family: 'Lato', sans-serif;
+      font-style: italic;
     }
     table{
       margin-left: 20px;
       width: 100%;
     }
     table,td,th{
-      border: none;
+      border: 1px solid gray;
     }
     .btn-primary{
       background-color: navy
@@ -29,10 +30,11 @@
 </head>
 <body>
   <p id="notice"><%= notice %></p>
+  <!-- ======================== HEADER ======================== -->
   <div id="header">
-    <h2 style="font-weight: 600; padding-left:20px;">Logged in as <%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h2>
-    <div class="row" style="padding-left:20px;">
-      <div class="col col-lg-10">
+    <h2 style="font-weight: 600; padding-left:20px; ">Logged in as <%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h2>
+    <div class="row" style="padding-left:20px; font-weight: 400; font-style: italic; ">
+      <div class="col col-lg-8">
         <h4>Status: 
           <% if @currentAdmin.auth_lvl == 1 %>
             System Administrator
@@ -43,24 +45,27 @@
           <% end %>
         </h4>
       </div>
-      <div class="col"><%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get %></div>
-      <div class="col"><%= button_to 'Log Out', logout_path %></div>
+      <div class="col"><%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary" %></div>
+      <div class="col"><%= button_to 'Log Out', logout_path, class: "btn btn-secondary" %></div>
     </div>
   </div>
   <br>
 
+  
   <br>
   <% #AUTH LEVEL: 1-clients, 2-healthcare provider, 3-call center %>
   <% if @currentAdmin.approved %>
     <% if @currentAdmin.auth_lvl == 1 %>
+      <div class="col" style="padding-left:20px;">
+      <!-- ======================== ORGNIZATION ======================== -->
       <%= form_tag(:controller => "admins", :action => "add_host") %>
-      <div class = "field">
+      <h1>Organization</h1>
+      <div class = "field" style="padding-left:20px; padding-bottom:5px;">
         <%= label_tag "Add an organization" %>
         <%= text_field_tag :host_org, params[:host_org], placeholder: "Enter name" %>
-        <%= submit_tag("Submit") %>  
+        <%= submit_tag "Submit" , class: "btn btn-primary" %>  
       </div>
-    
-      <table border="1"cellpadding="5"cellspacing="1">
+      <table cellpadding="5">
         <thead>
           <tr>
             <th>Organization</th>
@@ -71,12 +76,14 @@
           <% AdminsController::HOSTS.drop(1).each do |host| %>
             <tr>
               <td><%= host %></td>
-              <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post %></td>
+              <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary" %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <div style="padding-left:20px;">
+
+      <!-- ========================ADMINS======================== -->
+      
         <h1>Admins</h1>
         <table>
           <thead>
@@ -111,7 +118,6 @@
                     <% else %>
                       <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
                     <% end %>
-                    
                     <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary" %>
                   </div>
                 </td>
@@ -123,7 +129,7 @@
         <br>
       <% end %>
       
-      
+      <!-- ========================DRIVERS======================== -->
       <% if @currentAdmin.auth_lvl == 1 %>
         <h1>Drivers</h1>
         <table border="1"cellpadding="5"cellspacing="1">
@@ -174,7 +180,7 @@
       <% end %>
       
       
-    
+      <!-- ======================== PATIENTS ======================== -->
       <h1>Patients</h1>
       <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
         <div class="row">
@@ -244,6 +250,7 @@
       <br />
       <br>
       
+      <!-- ======================== UPCOMING RIDES ======================== -->
       <% if (@currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 3) %>
         <h1>Upcoming Rides</h1>
         <table border="1"cellpadding="5"cellspacing="1">
@@ -297,9 +304,9 @@
         </table>
       <% end %>
   <% else %>
-  
     <br>
-    <h1>Pending approval</h1>
+    <h3>Pending approval</h3>
+    <p>Please contact a system administrator.</p>
     <br>
   <% end %>
   
