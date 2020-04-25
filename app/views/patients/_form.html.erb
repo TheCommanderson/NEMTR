@@ -1,52 +1,112 @@
-<%= form_with(model: patient, local: true) do |form| %>
-  <% if patient.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
-
-      <ul>
-      <% patient.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<head>
+  <style>
+    body{
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    .btn-primary{
+      background-color: navy
+    }
+  </style>
+</head>
+<body>
+  <%= form_with(model: patient, local: true) do |form| %>
+    <% if patient.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
+  
+        <ul>
+        <% patient.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :first_name %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.text_field :first_name %>
+      </div>
     </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :middle_init %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.text_field :middle_init %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :last_name %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.text_field :last_name %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :phone %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.number_field :phone %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :email %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.text_field :email %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :password %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.password_field :password %>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :host_org, 'Please choose your healthcare provider' %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.select :host_org, options_for_select(AdminsController::HOSTS.drop(1)) %>
+      </div>
+    </div>
+    
+    <br />
+    <div class="row">
+      <div class="col">
+        <div class="text-center">
+          <%= form.submit "Submit",class:"btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+    
   <% end %>
-
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :middle_initial %>
-    <%= form.text_field :middle_initial %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.number_field :phone %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :host_org, 'Please choose your healthcare provider' %>
-    <%= form.select :host_org, options_for_select(AdminsController::HOSTS.drop(1)) %>
-  </div>
-  
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</body>

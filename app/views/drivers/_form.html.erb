@@ -1,47 +1,101 @@
-<%= form_with(model: driver, local: true) do |form| %>
-  <% if driver.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(driver.errors.count, "error") %> prohibited this driver from being saved:</h2>
-
-      <ul>
-      <% driver.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :middle_init %>
-    <%= form.text_field :middle_init %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.number_field :phone %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
+<head>
+  <style>
+    body{
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    .btn-primary{
+      background-color: navy
+    }
+  </style>
+</head>
+<body>
+  <%= form_with(model: driver, local: true) do |form| %>
+    <% if driver.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(driver.errors.count, "error") %> prohibited this driver from being saved:</h2>
   
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+        <ul>
+        <% driver.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :first_name %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.text_field :first_name %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :middle_init %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.text_field :middle_init %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :last_name %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.text_field :last_name %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :phone %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.number_field :phone %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :email %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.text_field :email %>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :password %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.password_field :password %>
+      </div>
+    </div>
+    
+    <br />
+    <div class="row">
+      <div class="col">
+        <div class="text-center">
+          <%= form.submit "Submit",class:"btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  
+  <% end %>
+</body>
