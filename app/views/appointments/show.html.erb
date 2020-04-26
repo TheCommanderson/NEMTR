@@ -28,8 +28,9 @@
 </p>
 
 <p>
-  <strong>Datetime:</strong>
-  <%= @appointment.datetime %>
+  <strong>Date & Time:</strong>
+  <p><%= Time.parse(@appointment.datetime).strftime("%a %b %d, %Y") %></p>
+  <p><%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %></p>
 </p>
 
 <p>
@@ -51,7 +52,7 @@
 <div class='parent'> 
   <div class='child float-left-child' id="map"></div>
   <div class='child float-left-child' id="right-panel"></div>
-</div>
+</div></br>
 
 <% if session[:login_type] == "D" %>
   <%= link_to 'Back', drivers_home_path %>

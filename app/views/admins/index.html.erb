@@ -303,7 +303,10 @@
                   <%=  @tempDriver.email %>
                 </td>
               <% end %>
-              <td><%= appointment.datetime %></td>
+              <td>
+                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %></br></br>
+                <%= Time.parse(appointment.datetime).strftime("%I:%M %p") %>
+              </td>
               <td>
                 <%= appointment.location[0][:name] %>
                 <%= appointment.location[0][:address] %>
