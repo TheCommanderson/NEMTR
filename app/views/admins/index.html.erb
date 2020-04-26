@@ -104,7 +104,7 @@
             </tr>
           </thead>
           <tbody>
-            <% AdminsController::HOSTS.drop(1).each do |host| %>
+            <% AdminsController::HOSTS.select{ |h| h != "N/A" }.each do |host| %>
               <tr>
                 <td><%= host %></td>
                 <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary btn-sm" %></td>
@@ -139,9 +139,19 @@
                 <td><%= admin.last_name %></td>
                 <td><%= admin.phone %></td>
                 <td><%= admin.email %></td>
-                <td><%= admin.auth_lvl %></td>
+                <td>
+                  <%= "Admin" if admin.auth_lvl == 1 %>
+                  <%= "HCP" if admin.auth_lvl == 2 %>
+                  <%= "Call Center" if admin.auth_lvl == 3 %>
+                </td>
                 <td><%= admin.host_org %></td>
-                <td><%= admin.approved %></td>
+                <td>
+                  <% if admin.approved %>
+                    <span>True</span>
+                  <% else %> 
+                    <span style="color:red">False</span>
+                  <% end %>
+                </td>
                 <td>
                   <% if admin.approved %>
                     <%#= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
@@ -187,8 +197,13 @@
                     <p><%= driver.admin.email %></p>
                   <% end %>
                 </td>
-                <td><%= driver.trained %></td>
-                
+                <td>
+                  <% if driver.trained %>
+                    <span>True</span>
+                  <% else %> 
+                    <span style="color:red">False</span>
+                  <% end %>
+                </td>
                 <td>
                     <% if !driver.trained %>
                       <%= button_to "Approve", { action: "train", id: driver.id }, method: :post,class: "btn btn-secondary btn-sm" %>
@@ -248,8 +263,13 @@
                 <p><%= patient.admin.email %></p>
               <% end %>
             </td>
-            <td><%= patient.approved %></td>
-            
+            <td>
+              <% if patient.approved %>
+                <span>True</span>
+              <% else %> 
+                <span style="color:red">False</span>
+              <% end %>
+            </td>
             <td>
               <% if @currentAdmin.auth_lvl == 2  %> 
                 <% if !patient.approved %>
