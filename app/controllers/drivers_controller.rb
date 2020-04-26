@@ -9,7 +9,7 @@ class DriversController < ApplicationController
     @logged_in_driver = Driver.find(session[:user_id])
     @drivers = Driver.all
     @patients = Patient.all
-    @appointments = Appointment.all
+    @appointments = Appointment.all.sort_by { |appt| [ appt.status, appt.datetime ] }
   end
 
  # GET /drivers
@@ -17,7 +17,7 @@ class DriversController < ApplicationController
     @logged_in_driver = Driver.find(session[:user_id])
     @drivers = Driver.all
     @patients = Patient.all
-    @appointments = Appointment.all
+    @appointments = Appointment.all.sort_by { |appt| [ appt.status, appt.datetime ] }
   end
   
   # GET /drivers/1

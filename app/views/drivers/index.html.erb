@@ -80,18 +80,17 @@
         <h4><%= @logged_in_driver.first_name %> <%= @logged_in_driver.last_name %></h4>
       </div>
       <div class="col-sm-1">
-        <%= button_to 'Log Out', logout_path, class:"btn btn-secondary right", style: "padding: 3px; margin: 6px 3px 0px 0px;" %>
-        <br><br>
         <%= button_to 'Edit Account', edit_driver_path(@logged_in_driver), method: :get, class:"btn btn-secondary right" %>
         <br><br>
         <%= button_to 'My Schedule', driver_schedules_url(@logged_in_driver), :method => 'get', class:"btn btn-secondary right" %>
+        <br><br>
+        <%= button_to 'Log Out', logout_path, class:"btn btn-secondary right", style: "padding: 3px; margin: 6px 3px 0px 0px;" %>
       </div>
     </div>
   </div> 
   <div style="padding: 10px;">
     <p id="notice" style="margin:0px;"><%= notice %></p>
     <% if @logged_in_driver.trained %>
-
       <h1>Your Upcoming Rides</h1>
       
       <table>
@@ -106,11 +105,14 @@
         </thead>
       
         <tbody>
-          <% Appointment.where('driver_id' => @logged_in_driver).each do |appointment| %>
+          <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
             <tr>
               <% @tempPatient = @patients.find(appointment.patient_id) %>
               <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-              <td><%= appointment.datetime %></td>
+              <td>
+                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y   ") %></br></br>
+                <%= Time.parse(appointment.datetime).strftime("%I:%M %p") %>
+              </td>
               <td>
                 <%= appointment.location[0][:name] %>
                 <br>
@@ -155,7 +157,11 @@
             <% else %>
               <td><%= @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %></td>
             <% end %>
-            <td><%= appointment.datetime %></td>
+            
+            <td>
+              <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y   ") %></br></br>
+              <%= Time.parse(appointment.datetime).strftime("%I:%M %p") %>
+            </td>
             <td>
               <%= appointment.location[0][:name] %>
               <br>

@@ -52,7 +52,7 @@ class AdminsController < ApplicationController
     @admins = Admin.all
     @patients = self.search
     @drivers = Driver.all
-    @appointments = Appointment.all
+    @appointments = Appointment.all.sort_by { |appt| [ appt.status, appt.datetime ] }
     
     @admins = @admins.sort_by {|admin| admin.approved ? 1 : 0}
     @patients = @patients.sort_by {|patient| patient.approved ? 1 : 0}

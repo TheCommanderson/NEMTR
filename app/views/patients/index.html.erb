@@ -103,7 +103,7 @@
         </thead>
       
         <tbody>
-          <% @appointments.where('patient_id' => @currentPatient).each do |appointment| %>
+          <% Appointment.where('patient_id' => @currentPatient).sort_by{ |appt| appt.datetime }.each do |appointment| %>
           <tr>
             <% @pickUpLocationid = appointment.location[0]["_id"] %>
             <% @destinationid = appointment.location[1]["_id"] %>
@@ -114,7 +114,10 @@
               <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
               <td><%= @tempDriver %></td>
             <% end %>
-            <td><%= appointment.datetime %></td>
+            <td>
+              <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %></br></br>
+              <%= Time.parse(appointment.datetime).strftime("%I:%M %p") %>
+            </td>
             <td>
               <%= appointment.location[0].name %>
               <br>
@@ -128,7 +131,7 @@
             </td>
             <td style="padding: 6px;">
               <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Update Date', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Update Date/Time', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary btn-sm" %>
               <%= button_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid), method: :get, class: "btn btn-secondary btn-sm" %>
               <%= button_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid), method: :get, class: "btn btn-secondary btn-sm" %>
               <%= button_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm"%>

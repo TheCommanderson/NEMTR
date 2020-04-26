@@ -4,7 +4,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    @appointments = Appointment.all
+    @appointments = Appointment.all.sort_by { |appt| [ appt.status, appt.datetime ] }
     @drivers = Driver.all
     @patients = Patient.all
   end

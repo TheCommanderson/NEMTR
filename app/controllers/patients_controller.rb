@@ -9,7 +9,7 @@ class PatientsController < ApplicationController
   def index
     @currentPatient = Patient.find(session[:user_id])
     @patients = Patient.all
-    @appointments = Appointment.all
+    @appointments = Appointment
     @drivers = Driver.all
   end
 
