@@ -7,6 +7,7 @@ class AdminsController < ApplicationController
   
   def add_host
     HOSTS.push(params[:host_org])
+    HOSTS.sort!
     redirect_to admins_home_path
   end
   
@@ -49,15 +50,10 @@ class AdminsController < ApplicationController
   # GET /admins.json
   def index
     @currentAdmin = Admin.find(session[:user_id])
-    @admins = Admin.all
-    @patients = self.search
-    @drivers = Driver.all
-    @appointments = Appointment.all.sort_by { |appt| [ appt.status, appt.datetime ] }
-    
-    @admins = @admins.sort_by {|admin| admin.approved ? 1 : 0}
-    @patients = @patients.sort_by {|patient| patient.approved ? 1 : 0}
-    @drivers = @drivers.sort_by {|driver| driver.trained ? 1 : 0}
-    
+    @admins = Admin.all.sort_by{ |adm| [ adm.approved, adm.auth_lvl, adm.first_name ] }
+    @patients = self.search.sort_by{ |patient| [patient.approved.to_s, patient.first_name] }
+    @drivers = Driver.all.sort_by{ |drvr| [ drvr.trained, drvr.first_name ] }
+    @appointments = Appointment.all.sort_by{ |appt| [ appt.status, appt.datetime ] }
   end
   
   def search
