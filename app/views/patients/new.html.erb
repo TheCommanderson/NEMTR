@@ -3,14 +3,12 @@
     h3{
         font-family: 'Lato', sans-serif;
         font-weight: 500;
+        color: #003354;
     }
 </style>
 <div class="text-center" >
     <h3>New Patient</h3>
 </div>
-
 <br>
-
 <%= render 'form', patient: @patient %>
-
-<div class="text-center"><%= link_to 'Back', patients_path %></div>
+<div class="text-center"><%= link_to 'Back', "/" %></div>

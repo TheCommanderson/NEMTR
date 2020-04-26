@@ -3,18 +3,27 @@
 <head>
   <style>
     .btn-primary{
-      background-color: navy;
+      background-color: #003354;
     }
     body{
       font-family: 'Source Sans Pro', sans-serif;
-      color: navy;
+      color: #003354;
       background-color: #fceae8;
+    }
+    h3{
+      color: #003354;
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+    }
+    input[type=text],input[type=password]{
+      line-height: 2;
+      width: 10%;
     }
   </style>
 </head>
 <body>
   <div class="text-center">
-    <h4>Login as <%= @login_type %></h4>
+    <h3>Login as <%= @login_type %></h3>
     <br>
     <%= form_with(url: create_session_url, local: true) do |form| %>
       <div class="col">

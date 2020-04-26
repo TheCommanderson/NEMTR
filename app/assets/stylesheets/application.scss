@@ -10,9 +10,30 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *= require_self
+ *= require_tree
  *= require appointments.scss
  */
+/*
+pink: 
+  #fceae8 (95%)(background)
+  #f6bfbb (85%)
+  #ee847d (71%)(pinkoi salmon)
+navy:
+  #33adff(60%)
+  #005c99(30%)
+  #003354(16%)(pinkoi navy)
+gray: 
+  #f2f2f3(95%)(secondary sm hover color)
+  #e5e5e6(90%)(pinkoi gray)
+yellow: 
+  #fcedcf (90%)(secondary btn hover color)
+  #fbe4b6 (85%)
+  #f9d58c (76%)(pinkoi yellow)
+*/
 
 // Custom bootstrap variables must be set or imported *before* bootstrap.
-
+body {
+  background-color: #fceae8 !important;
+}
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@400;600&display=swap");
 @import "bootstrap";
