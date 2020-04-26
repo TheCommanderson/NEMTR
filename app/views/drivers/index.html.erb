@@ -108,20 +108,21 @@
           <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
             <tr>
               <% @tempPatient = @patients.find(appointment.patient_id) %>
-              <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
               <td>
-                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y   ") %></br></br>
-                <%= Time.parse(appointment.datetime).strftime("%I:%M %p") %>
+                <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
+                <p></br>Phone: <%= @tempPatient.phone %></p>
+              </td>
+              <td nowrap='nowrap'>
+                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
+                <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
               </td>
               <td>
                 <%= appointment.location[0][:name] %>
-                <br>
-                <%= appointment.location[0][:address] %>
+                <p></br><%= appointment.location[0][:address] %></p>
               </td>
               <td>
                 <%= appointment.location[1][:name] %>
-                <br>
-                <%= appointment.location[1][:address] %>
+                <p></br><%= appointment.location[1][:address] %></p>
               </td> 
               <td>
                 <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
@@ -158,19 +159,17 @@
               <td><%= @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %></td>
             <% end %>
             
-            <td>
-              <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y   ") %></br></br>
-              <%= Time.parse(appointment.datetime).strftime("%I:%M %p") %>
+            <td nowrap="nowrap">
+              <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
+              <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
             </td>
             <td>
               <%= appointment.location[0][:name] %>
-              <br>
-              <%= appointment.location[0][:address] %>
+              <p></br><%= appointment.location[0][:address] %></p>
             </td>
             <td>
               <%= appointment.location[1][:name] %>
-              <br>
-              <%= appointment.location[1][:address] %>
+              <p></br><%= appointment.location[1][:address] %></p>
             </td>
             <td><%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %></td>
           </tr>
