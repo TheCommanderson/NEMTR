@@ -3,7 +3,7 @@
     body{
       font-family: 'Source Sans Pro', sans-serif;
       background-color: #fceae8;
-      
+      margin: 0px;
     }
     h1{
       color: #003354;
@@ -16,6 +16,14 @@
     }
     table,td,th{
       border: 1px solid #a6a6a6;
+      padding: 5px;
+    }
+    th{
+      font-size: 17px;
+      font-weight: 600;
+    }
+    td{
+      font-size: 15px;
     }
     .btn-primary{
       background-color: #003354
@@ -35,10 +43,15 @@
       color: #003354;
       background-color: #e5e5e6;
       font-size:15px; 
-      padding: 3px 5px
+      padding: 3px 5px;
+      margin: 3px;
     }
     .btn-secondary:hover.btn-sm{
       background-color: #f2f2f3;
+    }
+    .right {
+      position: absolute;
+      right: 7px;
     }
     #header{
       font-family: 'Lato', sans-serif;
@@ -48,13 +61,13 @@
   </style>
 </head>
 <body>
-  <p id="notice"><%= notice %></p>
+  
   <!-- ======================== HEADER ======================== -->
   <div id="header">
-    <h2 style="font-weight: 600; padding-left:20px; ">Logged in as <%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h2>
-    <div class="row" style="padding-left:20px; font-weight: 400; font-style: italic; ">
-      <div class="col col-lg-8">
-        <h4>Status: 
+    <div class="row" style="margin: 0px;">
+      <div class="col">
+        <h2 style="font-weight: 600;">Logged in as <%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h2>
+        <h4 style="font-weight: 400; font-style: italic;">Status: 
           <% if @currentAdmin.auth_lvl == 1 %>
             System Administrator
           <% elsif @currentAdmin.auth_lvl == 2 %>
@@ -64,26 +77,26 @@
           <% end %>
         </h4>
       </div>
-      <div class="col"><%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary " %></div>
-      <div class="col"><%= button_to 'Log Out', logout_path, class: "btn btn-secondary" %></div>
+      <div class="col-1">
+        <%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary right", style:"margin: 6px 0px 6px 0px;" %>
+        <br><br>
+        <%= button_to 'Log Out', logout_path, class: "btn btn-secondary right" %>
+      </div>
     </div>
   </div>
-  <br>
-
-  
-  <br>
-  <% #AUTH LEVEL: 1-clients, 2-healthcare provider, 3-call center %>
-  <div class="col" style="padding-left:20px;">
+  <p id="notice"><%= notice %></p>
+  <div class="col">
     <% if @currentAdmin.approved %>
       <% if @currentAdmin.auth_lvl == 1 %>
         <!-- ======================== ORGNIZATION ======================== -->
-        <%= form_tag(:controller => "admins", :action => "add_host") %>
         <h1>Organization</h1>
-        <div class="row" style="padding-left:20px; padding-bottom:5px; overflow: hidden;">
-          <div class="col"><%= text_field_tag :host_org, params[:host_org], placeholder: "Add an organization", class:"form-control" %></div>
-          <div class="col"><%= submit_tag "Submit" , class: "btn btn-primary" %></div>
-        </div>
-        <table cellpadding="5">
+        <%= form_tag(:controller => "admins", :action => "add_host") do%>
+          <div class="row" style="padding-left:20px; padding-bottom:5px; overflow: hidden;">
+            <div class="col"><%= text_field_tag :host_org, params[:host_org], placeholder: "Add an organization", class:"form-control" %></div>
+            <div class="col"><%= submit_tag "Submit" , class: "btn btn-primary" %></div>
+          </div>
+        <% end %>
+        <table>
           <thead>
             <tr>
               <th>Organization</th>
@@ -103,7 +116,7 @@
         <!-- ========================ADMINS======================== -->
       
         <h1>Admins</h1>
-        <table cellpadding=5px>
+        <table >
           <thead>
             <tr>
               <th>First name</th>
@@ -146,7 +159,7 @@
       
         <!-- ========================DRIVERS======================== -->
         <h1>Drivers</h1>
-        <table cellpadding="5">
+        <table>
           <thead>
             <tr>
               <th>First name</th>
@@ -205,7 +218,7 @@
       <% end %> 
       <br>
       
-      <table cellpadding="5">
+      <table>
         <thead>
           <tr>
             <th>First name</th>
@@ -261,7 +274,7 @@
       <!-- ======================== UPCOMING RIDES ======================== -->
       <% if (@currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 3) %>
         <h1>Upcoming Rides</h1>
-        <table cellpadding="5">
+        <table>
           <thead>
             <tr>
               <th>Patient</th>
@@ -278,26 +291,26 @@
             <tr>
               <% @tempPatient = Patient.all.find(appointment.patient_id) %>
               <td>
-                <p><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></p>
-                <p><%= @tempPatient.email %></p>
+                <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
+                <%= @tempPatient.email %>
               </td>
               <% if appointment.status == 0 %>
                 <td style="color:red">Unassigned</td>
               <% else %>
                 <td>
                   <% @tempDriver = Driver.all.find(appointment.driver_id) %>
-                  <p><%= @tempDriver.first_name + ' ' + @tempDriver.last_name %></p>
-                  <p><%=  @tempDriver.email %></p>
+                  <%= @tempDriver.first_name + ' ' + @tempDriver.last_name %>
+                  <%=  @tempDriver.email %>
                 </td>
               <% end %>
               <td><%= appointment.datetime %></td>
               <td>
-                <p><%= appointment.location[0][:name] %></p>
-                <p><%= appointment.location[0][:address] %></p>
+                <%= appointment.location[0][:name] %>
+                <%= appointment.location[0][:address] %>
               </td>
               <td>
-                <p><%= appointment.location[1][:name] %></p>
-                <p><%= appointment.location[1][:address] %></p>
+                <%= appointment.location[1][:name] %>
+                <%= appointment.location[1][:address] %>
               </td>
               <td>
                 <%= button_to 'Details', appointment, method: :get,class: "btn btn-secondary btn-sm" %>
