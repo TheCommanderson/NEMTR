@@ -119,11 +119,7 @@
         <table >
           <thead>
             <tr>
-              <th>First name</th>
-              <th>Middle init</th>
-              <th>Last name</th>
-              <th>Phone</th>
-              <th>Email</th>
+              <th>Admin</th>
               <th>Auth lvl</th>
               <th>Host org</th>
               <th>Approved?</th>
@@ -134,14 +130,15 @@
           <tbody>
             <% @admins.each do |admin| %>
               <tr>
-                <td><%= admin.first_name %></td>
-                <td><%= admin.middle_init %></td>
-                <td><%= admin.last_name %></td>
-                <td><%= admin.phone %></td>
-                <td><%= admin.email %></td>
                 <td>
-                  <%= "Admin" if admin.auth_lvl == 1 %>
-                  <%= "HCP" if admin.auth_lvl == 2 %>
+                  <%= admin.first_name %> <%= admin.middle_init %> <%= admin.last_name %>
+                  <p></br>
+                    Email: <%= admin.email %> | Phone: <%= admin.phone %>
+                  </p>
+                </td>
+                <td>
+                  <%= "System Administrator" if admin.auth_lvl == 1 %>
+                  <%= "Healthcare Provider" if admin.auth_lvl == 2 %>
                   <%= "Call Center" if admin.auth_lvl == 3 %>
                 </td>
                 <td><%= admin.host_org %></td>
@@ -172,11 +169,7 @@
         <table>
           <thead>
             <tr>
-              <th>First name</th>
-              <th>Middle init</th>
-              <th>Last name</th>
-              <th>Phone</th>
-              <th>Email</th>
+              <th>Driver</th>
               <th>Admin</th>
               <th>Trained</th>
               <th>Actions</th>
@@ -186,15 +179,18 @@
           <tbody>
             <% @drivers.each do |driver| %>
               <tr>
-                <td><%= driver.first_name %></td>
-                <td><%= driver.middle_init %></td>
-                <td><%= driver.last_name %></td>
-                <td><%= driver.phone %></td>
-                <td><%= driver.email %></td>
+                <td>
+                  <%= driver.first_name %> <%= driver.middle_init %> <%= driver.last_name %>
+                  <p></br>
+                    Email: <%= driver.email%> | Phone: <%= driver.phone %>
+                  </p>
+                </td>
                 <td>
                   <% if driver.admin %>
-                    <p><%= driver.admin.first_name + ' ' + driver.admin.last_name %></p>
-                    <p><%= driver.admin.email %></p>
+                    <%= driver.admin.first_name + ' ' + driver.admin.last_name %>
+                    <p></br>
+                      Email: <%= driver.admin.email%> | Phone: <%= driver.admin.phone %>
+                    </p>
                   <% end %>
                 </td>
                 <td>
@@ -236,13 +232,9 @@
       <table>
         <thead>
           <tr>
-            <th>First name</th>
-            <th>Middle initial</th>
-            <th>Last name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Host</th>
+            <th>Patient</th>
             <th>Admin</th>
+            <th>Host Org</th>
             <th>Approved?</th>
             <th>Actions</th>
           </tr>
@@ -251,18 +243,23 @@
         <tbody>
           <% @patients.each do |patient| %>
           <tr>
-            <td><%= patient.first_name %></td>
-            <td><%= patient.middle_initial %></td>
-            <td><%= patient.last_name %></td>
-            <td><%= patient.phone %></td>
-            <td><%= patient.email %></td>
-            <td><%= patient.host_org %></td>
+            <td>
+              <%= patient.first_name %> <%= patient.middle_initial %> <%= patient.last_name %>
+              <p></br>
+                Email: <%= patient.email%> |</br>
+                Phone: <%= patient.phone %>
+              </p>
+            </td>
             <td>
               <% if patient.admin %>
-                <p><%= patient.admin.first_name + ' ' + patient.admin.last_name %></p>
-                <p><%= patient.admin.email %></p>
+                <%= patient.admin.first_name + ' ' + patient.admin.last_name %>
+                <p></br>
+                  Email: <%= patient.admin.email%> |</br>
+                  Phone: <%= patient.admin.phone %>
+                </p>
               <% end %>
             </td>
+            <td><%= patient.host_org %></td>
             <td>
               <% if patient.approved %>
                 <span>True</span>
@@ -310,30 +307,36 @@
             <% @appointments.each do |appointment| %>
             <tr>
               <% @tempPatient = Patient.all.find(appointment.patient_id) %>
-              <td>
-                <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
-                <%= @tempPatient.email %>
+              <td nowrap="nowrap">
+                <%= @tempPatient.first_name %> <%= @tempPatient.middle_initial %> <%= @tempPatient.last_name %>
+                <p></br>
+                  Email: <%= @tempPatient.email%> |</br>
+                  Phone: <%= @tempPatient.phone %>
+                </p>
               </td>
               <% if appointment.status == 0 %>
                 <td style="color:red">Unassigned</td>
               <% else %>
-                <td>
+                <td nowrap="nowrap">
                   <% @tempDriver = Driver.all.find(appointment.driver_id) %>
                   <%= @tempDriver.first_name + ' ' + @tempDriver.last_name %>
-                  <%=  @tempDriver.email %>
+                  <p></br>
+                    Email: <%= @tempDriver.email%> |</br>
+                    Phone: <%= @tempDriver.phone %>
+                  </p>
                 </td>
               <% end %>
-              <td>
-                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %></br></br>
-                <%= Time.parse(appointment.datetime).strftime("%I:%M %p") %>
+              <td nowrap="nowrap">
+                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %></br>
+                <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
               </td>
               <td>
                 <%= appointment.location[0][:name] %>
-                <%= appointment.location[0][:address] %>
+                <p></br><%= appointment.location[0][:address] %></p>
               </td>
               <td>
                 <%= appointment.location[1][:name] %>
-                <%= appointment.location[1][:address] %>
+                <p></br><%= appointment.location[1][:address] %></p>
               </td>
               <td>
                 <%= button_to 'Details', appointment, method: :get,class: "btn btn-secondary btn-sm" %>
