@@ -246,16 +246,14 @@
             <td>
               <%= patient.first_name %> <%= patient.middle_initial %> <%= patient.last_name %>
               <p></br>
-                Email: <%= patient.email%> |</br>
-                Phone: <%= patient.phone %>
+                Email: <%= patient.email%> | Phone: <%= patient.phone %>
               </p>
             </td>
             <td>
               <% if patient.admin %>
                 <%= patient.admin.first_name + ' ' + patient.admin.last_name %>
                 <p></br>
-                  Email: <%= patient.admin.email%> |</br>
-                  Phone: <%= patient.admin.phone %>
+                  Email: <%= patient.admin.email%> | Phone: <%= patient.admin.phone %>
                 </p>
               <% end %>
             </td>
