@@ -30,7 +30,6 @@ class AppointmentsController < ApplicationController
     @appt_parms = appointment_params
     @appt_parms['datetime'] =params[:appointment]['dt(1i)'] + '-' + params[:appointment]['dt(2i)'] + '-' + params[:appointment]['dt(3i)'] + ' ' + params[:appointment]['dt(4i)'] + ':' + params[:appointment]['dt(5i)']
     @appointment = Appointment.new(@appt_parms)
-    @debug_log = matching_alg
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to "/patients_home"}
@@ -41,6 +40,7 @@ class AppointmentsController < ApplicationController
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
     end
+    @debug_log = matching_alg
   end
   
   def cancel
