@@ -10,8 +10,11 @@
       font-family: 'Lato', sans-serif;
       font-style: italic;
     }
+    p{
+      font-size: 14px;
+      font-style: italic;
+    }
     table{
-      margin-left: 20px;
       width: 100%;
     }
     table,td,th{
@@ -66,8 +69,7 @@
   <div id="header">
     <div class="row" style="margin: 0px;">
       <div class="col">
-        <h2 style="font-weight: 600;">Logged in as <%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h2>
-        <h4 style="font-weight: 400; font-style: italic;">Status: 
+        <h2 style="font-weight: 600;">
           <% if @currentAdmin.auth_lvl == 1 %>
             System Administrator
           <% elsif @currentAdmin.auth_lvl == 2 %>
@@ -75,7 +77,9 @@
           <% else %>
             211 Call Center
           <% end %>
-        </h4>
+           Home Page
+          </h2>
+        <h4 style="font-weight: 400; font-style: italic;"><%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h4>
       </div>
       <div class="col-1">
         <%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary right", style:"margin: 6px 0px 6px 0px;" %>
@@ -91,7 +95,7 @@
         <!-- ======================== ORGNIZATION ======================== -->
         <h1>Organization</h1>
         <%= form_tag(:controller => "admins", :action => "add_host") do%>
-          <div class="row" style="padding-left:20px; padding-bottom:5px; overflow: hidden;">
+          <div class="row" style=" padding-bottom:5px; overflow: hidden;">
             <div class="col"><%= text_field_tag :host_org, params[:host_org], placeholder: "Add an organization", class:"form-control" %></div>
             <div class="col"><%= submit_tag "Submit" , class: "btn btn-primary" %></div>
           </div>
@@ -120,7 +124,7 @@
           <thead>
             <tr>
               <th>Admin</th>
-              <th>Auth lvl</th>
+              <th>Authority Level</th>
               <th>Host org</th>
               <th>Approved?</th>
               <th>Actions</th>
