@@ -16,9 +16,11 @@
       font-weight: 400; 
       font-style: italic;
     }
+    p{
+      font-size: 14px;
+      font-style: italic;
+    }
     table{
-      margin-left: 20px;
-      margin-right: 20px;
       width: 100%;
     }
     table,td,th{
@@ -78,7 +80,7 @@
     <div id="header">
       <div class="row" style="margin: 0px;">
         <div class="col">
-            <h2>Upcoming Appointments</h2>
+            <h2>Patient Home Page</h2>
             <h4><%= @currentFirstName %> <%= @currentLastName%></h4>
         </div>
         <div class="col-1">
@@ -91,6 +93,7 @@
     <p id="notice" class="text-center" style="font-size: 14px;"><%= notice %></p>
     <!-- =================== MAIN STUFF =================== -->
     <div style="margin: 20px;">
+      <h1>Upcoming Appointments</h1>
       <table cellpadding="5">
         <thead>
           <tr>
