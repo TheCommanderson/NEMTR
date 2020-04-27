@@ -50,9 +50,9 @@ class AdminsController < ApplicationController
   # GET /admins.json
   def index
     @currentAdmin = Admin.find(session[:user_id])
-    @admins = Admin.all.sort_by{ |adm| [ adm.approved, adm.auth_lvl, adm.first_name ] }
+    @admins = Admin.all.sort_by{ |adm| [ adm.approved.to_s, adm.auth_lvl, adm.first_name ] }
     @patients = self.search.sort_by{ |patient| [patient.approved.to_s, patient.first_name] }
-    @drivers = Driver.all.sort_by{ |drvr| [ drvr.trained, drvr.first_name ] }
+    @drivers = Driver.all.sort_by{ |drvr| [ drvr.trained.to_s, drvr.first_name ] }
     @appointments = Appointment.all.sort_by{ |appt| [ appt.status, appt.datetime ] }
   end
   
