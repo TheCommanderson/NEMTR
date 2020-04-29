@@ -1,13 +1,15 @@
-# Dependencies
-* Bcrypt
-* Mongoid
+# Gem Dependencies
+* bcrypt
+* mongoid
+* bootsnap
+* bson_ext
+* whenever
+* geocoder
+ 
+# Deployment
+NEMTR deployment is still under construction.
 
-
-Data types for mongodb collection: https://www.tutorialspoint.com/mongodb/mongodb_datatype.htm  
-  
-# TODO  
-* Admin needs a lot of work - scheduling rides is broken, editing appts looks bad, approving patients and showing them doesnt work  
-* Appointment status needs to be mapped to a readable value "needs driver, upcoming, etc" for all  
-* MATCHING ALGORITHM NEEDS TO BE FINISHED  
-* Creating appts on patient's end needs to be working better with regards to location  
-* Viewing appointment should show the google map
+## Deployment Notes
+* The whenever gem interacts with the crontab on the server running NEMTR.  When deployed, the command `whenever --update-crontab` must be run to update the cronjobs with the listed jobs.  This ensures that rollover for schedules and database cleanup tasks run correctly.
+* The database is linked through an API call to Mongo Atlas found in the config file for the application.
+* The appplication is linked to Google API through an specific API key, and should the API calls ever need to change a new key will likely need to be generated and implemented.
