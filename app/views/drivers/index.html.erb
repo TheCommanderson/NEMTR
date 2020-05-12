@@ -1,169 +1,44 @@
-<head>
-  <style>
-    body{
-      font-family: 'Source Sans Pro', sans-serif;
-      background-color: #fceae8;
-      margin: 0px;
-    }
-    h1{
-      color: #003354;
-      font-family: 'Lato', sans-serif;
-      font-style: italic;
-    }
-    h4{
-      font-weight: 400; 
-      font-style: italic;
-    }
-    p{
-      font-size: 14px;
-      font-style: italic;
-    }
-    table{
-      padding-left: 20px;
-      width: 100%;
-    }
-    table,td,th{
-      border: 1px solid #a6a6a6;
-    }
-    th{
-      font-size: 17px;
-      font-weight: 600;
-    }
-    td{
-      font-size: 15px;
-    }
-    .btn-primary{
-      background-color: #003354;
-      color: white;
-      text-align: center;
-    }
-    .btn-primary:visited{
-      color: white;
-    }
-    .btn-secondary{ 
-      color: #003354;
-      background-color: #f9d58c;
-      font-size:15px; 
-      font-weight: 400;
-      padding: 3px 5px;
-      margin: 3px;
-    }
-    .btn-secondary:hover{
-      background-color: #fcedcf;
-      color: #33adff;
-    }
-    .btn-secondary.btn-sm{
-      color: #003354;
-      background-color: #e5e5e6;
-      font-size:13px; 
-      padding: 3px 5px;
-      margin: 2px;
-    }
-    .btn-secondary:hover.btn-sm{
-      background-color: #f2f2f3;
-    }
-    .right {
-      position: absolute;
-      right: 7px;
-    }
-    #header{
-      font-family: 'Lato', sans-serif;
-      background-color: #003354;
-      color:white;
-      padding-bottom: 15px;
-    }
-  </style>
-</head>
-<body>
-  <!-- =================== HEADER =================== -->
-  <div id="header">
-    <div class="row" style="margin: 0px">
-      <div class="col">
-        <h2>Driver Home Page</h2>
-        <br>
-        <h4><%= @logged_in_driver.first_name %> <%= @logged_in_driver.last_name %></h4>
-      </div>
-      <% if @logged_in_driver.trained %>
-        <div class="col-sm-1">
-          <%= button_to 'Edit Account', edit_driver_path(@logged_in_driver), method: :get, class:"btn btn-secondary right" %>
-          <br><br>
-          <%= button_to 'My Schedule', driver_schedules_url(@logged_in_driver), :method => 'get', class:"btn btn-secondary right" %>
-          <br><br>
-      <% end %>
-        <%= button_to 'Log Out', logout_path, class:"btn btn-secondary right", style: "padding: 3px; margin: 3px 3px 0px 0px;" %>
-      </div>
+<div id="header">
+  <div class="row" style="margin: 0px">
+    <div class="col">
+      <h2>Driver Home Page</h2>
+      <br>
+      <h4><%= @logged_in_driver.first_name %> <%= @logged_in_driver.last_name %></h4>
     </div>
-  </div> 
-  <div style="padding: 10px;">
-    <p id="notice" style="margin:0px;"><%= notice %></p>
     <% if @logged_in_driver.trained %>
-      <h1>Your Upcoming Rides</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Patient</th>
-            <th>Date & Time</th>
-            <th>Pick-Up Location</th>
-            <th>Destination</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
-            <tr>
-              <% @tempPatient = @patients.find(appointment.patient_id) %>
-              <td>
-                <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
-                <p></br>Phone: <%= @tempPatient.phone %></p>
-              </td>
-              <td nowrap='nowrap'>
-                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-                <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
-              </td>
-              <td>
-                <%= appointment.location[0][:name] %>
-                <p></br><%= appointment.location[0][:address] %></p>
-              </td>
-              <td>
-                <%= appointment.location[1][:name] %>
-                <p></br><%= appointment.location[1][:address] %></p>
-              </td> 
-              <td>
-                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-                <%= button_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
-              </td>
-              
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <br>
-      <br>
-      <h1>All Upcoming Rides</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Patient</th>
-            <th>Driver</th>
-            <th>Date & Time</th>
-            <th>Pick-Up Location</th>
-            <th>Destination</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-      
-        <tbody>
-          <% @appointments.each do |appointment| %>
+      <div class="col-sm-1">
+        <%= button_to 'Edit Account', edit_driver_path(@logged_in_driver), method: :get, class:"btn btn-secondary right" %>
+        <br><br>
+        <%= button_to 'My Schedule', driver_schedules_url(@logged_in_driver), :method => 'get', class:"btn btn-secondary right" %>
+        <br><br>
+    <% end %>
+      <%= button_to 'Log Out', logout_path, class:"btn btn-secondary right", style: "padding: 3px; margin: 3px 3px 0px 0px;" %>
+    </div>
+  </div>
+</div>
+<div style="padding: 10px;">
+  <p id="notice" style="margin:0px;"><%= notice %></p>
+  <% if @logged_in_driver.trained %>
+    <h1>Your Upcoming Rides</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Date & Time</th>
+          <th>Pick-Up Location</th>
+          <th>Destination</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
           <tr>
             <% @tempPatient = @patients.find(appointment.patient_id) %>
-            <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-            <% if appointment.status == 0 %>
-              <td style="color:red">Unassigned</td>
-            <% else %>
-              <td><%= @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %></td>
-            <% end %>
-            
-            <td nowrap="nowrap">
+            <td>
+              <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
+              <p></br>Phone: <%= @tempPatient.phone %></p>
+            </td>
+            <td nowrap='nowrap'>
               <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
               <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
             </td>
@@ -175,13 +50,59 @@
               <%= appointment.location[1][:name] %>
               <p></br><%= appointment.location[1][:address] %></p>
             </td>
-            <td><%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %></td>
+            <td>
+              <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
+              <%= button_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
+            </td>
+
           </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br>
+    <br>
+    <h1>All Upcoming Rides</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Driver</th>
+          <th>Date & Time</th>
+          <th>Pick-Up Location</th>
+          <th>Destination</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @appointments.each do |appointment| %>
+        <tr>
+          <% @tempPatient = @patients.find(appointment.patient_id) %>
+          <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
+          <% if appointment.status == 0 %>
+            <td style="color:red">Unassigned</td>
+          <% else %>
+            <td><%= @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %></td>
           <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <br><h1>Pending approval</h1><br>
-    <% end %>
-  </div>
-</body>
+
+          <td nowrap="nowrap">
+            <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
+            <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
+          </td>
+          <td>
+            <%= appointment.location[0][:name] %>
+            <p></br><%= appointment.location[0][:address] %></p>
+          </td>
+          <td>
+            <%= appointment.location[1][:name] %>
+            <p></br><%= appointment.location[1][:address] %></p>
+          </td>
+          <td><%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <br><h1>Pending approval</h1><br>
+  <% end %>
+</div>
