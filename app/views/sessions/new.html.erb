@@ -2,19 +2,6 @@
 <br><br><br><br><br><br><br><br><br>
 <head>
   <style>
-    .btn-primary{
-      background-color: #003354;
-    }
-    body{
-      font-family: 'Source Sans Pro', sans-serif;
-      color: #003354;
-      background-color: #fceae8;
-    }
-    h3{
-      color: #003354;
-      font-family: 'Lato', sans-serif;
-      font-weight: 500;
-    }
     input[type=text],input[type=password]{
       line-height: 2;
       width: 10%;
@@ -36,7 +23,7 @@
         <div class="row-md-offset-5" style="padding:5px;">
           <%= form.submit "Login" ,class:"btn btn-primary"%>
         </div>
-        <%= hidden_field_tag :login_type, @login_type %>  
+        <%= hidden_field_tag :login_type, @login_type %>
       </div>
     <% end %>
   </div>
