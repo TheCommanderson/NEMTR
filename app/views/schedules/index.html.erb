@@ -6,6 +6,11 @@
     line-height: 60px;
     font-size: 20px;
   }
+  .btn-secondary{
+    width: 140px
+    line-height: 60px;
+    font-size: 20px;
+  }
 </style>
 
 <h1 style="text-align: center; padding-top: 20px;">This Week's Schedule</h1>
@@ -46,7 +51,7 @@
 </table>
 
 <br>
-<%= link_to 'Edit Schedule', edit_driver_schedule_path(:id => @current_schedule[:id]), class: "btn-primary" %>
+<%= link_to 'Edit Schedule', edit_driver_schedule_path(:id => @current_schedule[:id]), class: "btn btn-primary" %>
 <br><br>
 
 <h1 style="text-align: center">Next Week's Schedule</h1>
@@ -87,55 +92,7 @@
 </table>
 
 <br>
-<%= link_to 'Edit Schedule', edit_driver_schedule_path(:id => @next_schedule[:id]), class: "btn-primary" %>
+<%= link_to 'Edit Schedule', edit_driver_schedule_path(:id => @next_schedule[:id]), class: "btn btn-primary" %>
 <br>
 
-<p><%= link_to 'Back', drivers_home_path %></p>
-<script>
-    function getThisWeek(){
-        var today = new Date()
-        var day_of_week = today.getDay()
-        if (!day_of_week) day_of_week = 7
-
-        var start_of_week = new Date(Date.now() - ((day_of_week-1)*86400000))
-
-        ret = []
-        for (i=0; i < 7; i++){
-            var d = new Date()
-            d.setDate(start_of_week.getDate()+i)
-            ret.push(d)
-        }
-        return ret // Returns an array of JS dates that correspond to the current day
-    }
-
-    function getNextWeek(){
-        var today = new Date()
-        var day_of_week = today.getDay()
-        if (!day_of_weeek) day_of_week = 7
-
-        var i = 0
-        while (day_of_week < 8){
-            day_of_week++
-            i++
-        }
-        var start_of_week = new Date()
-        start_of_week.setDate(today.getDate()+i)
-
-        ret = []
-        for (j=0; j<7; j++){
-            var d = new Date()
-            d.setDate(start_of_week.getDate()+i)
-            ret.push(d)
-        }
-        return ret // Returns an array of JS dates that correspond to the week coming after the current day
-    }
-
-    function displayDay(day){
-        options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-        document.write(day.toLocaleDateString("en-US", options))
-    }
-
-    function displayWeek(week){
-        week.forEach(displayDay)
-    }
-</script>
+<p style='padding-left: 20px;'><%= link_to 'Back', drivers_home_path, class: "btn btn-secondary" %></p>
