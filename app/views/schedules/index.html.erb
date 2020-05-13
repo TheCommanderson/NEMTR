@@ -1,70 +1,107 @@
-<h1>This Week's Schedule</h1>
+<style>
+  .schedule{
+    margin: auto;
+    text-align: center;
+    width: 60%;
+    height: 150px;
+    font-size: 18px;
+  }
+  th{
+    color: white;
+    background-color: #003354;
+  }
+  .btn-primary{
+    margin: auto;
+    display: table;
+    width: 200px;
+    line-height: 60px;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+  }
+</style>
 
+<h1 style="text-align: center; padding-top: 20px;">This Week's Schedule</h1>
 <table class="schedule">
     <tr>
-        <th>Monday</th>
+        <th>
+        Monday,
+        <br><%= @days_of_this_week[0] %>
+        </th>
+        <th>Tuesday,
+        <br><%= @days_of_this_week[1] %>
+        </th>
+        <th>Wednesday,
+        <br><%= @days_of_this_week[2] %>
+        </th>
+        <th>Thursday,
+        <br><%= @days_of_this_week[3] %>
+        </th>
+        <th>Friday,
+        <br><%= @days_of_this_week[4] %>
+        </th>
+        <th>Saturday,
+        <br><%= @days_of_this_week[5] %>
+        </th>
+        <th>Sunday,
+        <br><%= @days_of_this_week[6] %>
+        </th>
+    </tr>
+    <tr>
         <td><%= @current_sch_readable['Monday'] %>
-    </tr>
-    <tr>
-        <th>Tuesday</th>
         <td><%= @current_sch_readable['Tuesday'] %>
-    </tr>
-    <tr>
-        <th>Wednesday</th>
         <td><%= @current_sch_readable['Wednesday'] %>
-    </tr>
-    <tr>
-        <th>Thursday</th>
         <td><%= @current_sch_readable['Thursday'] %>
-    </tr>
-    <tr>
-        <th>Friday</th>
         <td><%= @current_sch_readable['Friday'] %>
-    </tr>
-    <tr>
-        <th>Saturday</th>
         <td><%= @current_sch_readable['Saturday'] %>
-    </tr>
-    <tr>
-        <th>Sunday</th>
         <td><%= @current_sch_readable['Sunday'] %>
     </tr>
 </table>
-<%= link_to 'Edit', edit_driver_schedule_path(:id => @current_schedule[:id]) %>
 
+<br>
+<%= link_to 'Edit Schedule', edit_driver_schedule_path(:id => @current_schedule[:id]), class: "btn-primary" %>
+<br><br>
 
-<h1>Next Week's Schedule</h1>
+<h1 style="text-align: center">Next Week's Schedule</h1>
 <table class="schedule">
     <tr>
-        <th>Monday</th>
+      <th>
+      Monday,
+      <br><%= @days_of_next_week[0] %>
+      </th>
+      <th>Tuesday,
+      <br><%= @days_of_next_week[1] %>
+      </th>
+      <th>Wednesday,
+      <br><%= @days_of_next_week[2] %>
+      </th>
+      <th>Thursday,
+      <br><%= @days_of_next_week[3] %>
+      </th>
+      <th>Friday,
+      <br><%= @days_of_next_week[4] %>
+      </th>
+      <th>Saturday,
+      <br><%= @days_of_next_week[5] %>
+      </th>
+      <th>Sunday,
+      <br><%= @days_of_next_week[6] %>
+      </th>
+    </tr>
+    <tr>
         <td><%= @next_sch_readable['Monday'] %>
-    </tr>
-    <tr>
-        <th>Tuesday</th>
         <td><%= @next_sch_readable['Tuesday'] %>
-    </tr>
-    <tr>
-        <th>Wednesday</th>
         <td><%= @next_sch_readable['Wednesday'] %>
-    </tr>
-    <tr>
-        <th>Thursday</th>
         <td><%= @next_sch_readable['Thursday'] %>
-    </tr>
-    <tr>
-        <th>Friday</th>
         <td><%= @next_sch_readable['Friday'] %>
-    </tr>
-    <tr>
-        <th>Saturday</th>
         <td><%= @next_sch_readable['Saturday'] %>
-    </tr>
-    <tr>
-        <th>Sunday</th>
         <td><%= @next_sch_readable['Sunday'] %>
     </tr>
 </table>
-<%= link_to 'Edit', edit_driver_schedule_path(:id => @next_schedule[:id]) %>
+
+<br>
+<%= link_to 'Edit Schedule', edit_driver_schedule_path(:id => @next_schedule[:id]), class: "btn-primary" %>
+<br>
+
 <p><%= link_to 'Back', drivers_home_path %></p>
 <script>
     function getThisWeek(){
