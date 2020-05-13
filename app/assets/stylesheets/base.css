@@ -43,8 +43,11 @@ table,td,th{
   border: 1px solid #a6a6a6;
 }
 th{
+  color: white;
+  background-color: #003354;
   font-size: 17px;
   font-weight: 600;
+  text-align: center;
 }
 td{
   font-size: 15px;
@@ -54,6 +57,7 @@ td{
   background-color: #003354;
   font-size: 15px;
   font-weight: 400;
+  font-family: 'Lato', sans-serif;
   padding: 3px 5px;
   margin: 3px;
   text-align: center;
@@ -95,6 +99,13 @@ td{
 }
 .row{
   padding: 4px;
+}
+.schedule{
+  margin: auto;
+  text-align: center;
+  width: 60%;
+  height: 150px;
+  font-size: 18px;
 }
 #header{
   font-family: 'Lato', sans-serif;
