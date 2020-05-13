@@ -6,8 +6,13 @@
     line-height: 60px;
     font-size: 20px;
   }
+  .btn-secondary{
+    width: 140px
+    line-height: 60px;
+    font-size: 20px;
+  }
 </style>
-<p style="padding-top: 40px;">
+<p style='padding-top: 30px;'>
 <%= form_with(model: @schedule, local: true, url: driver_schedule_path) do |form| %>
   <table class="schedule" style="width: 70%;">
       <tr>
@@ -35,47 +40,47 @@
           </th>
       </tr>
       <tr>
-          <td><input type="checkbox">
-          <td><input type="checkbox">
-          <td><input type="checkbox">
-          <td><input type="checkbox">
-          <td><input type="checkbox">
-          <td><input type="checkbox">
-          <td><input type="checkbox">
+          <td>Edit This Day <br> <input type="checkbox" id="check-M" onclick="toggleEdit('M')"/>
+          <td>Edit This Day <br> <input type="checkbox" id="check-T" onclick="toggleEdit('T')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-W" onclick="toggleEdit('W')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-R" onclick="toggleEdit('R')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-F" onclick="toggleEdit('F')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-S" onclick="toggleEdit('S')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-Su" onclick="toggleEdit('Su')">
 
       </tr>
       <tr>
-          <td>
+          <td id='M' style='visibility: hidden;'>
           <%= form.time_select :Monday1, {minute_step: 15, ampm: true, default: {hour: @default_vals['Monday'][0], min: @default_vals['Monday'][1]}} %>
           <br>to<br>
           <%= form.time_select :Monday2, {minute_step: 15, ampm: true, default: {hour: @default_vals['Monday'][2], min: @default_vals['Monday'][3]}} %>
 
-          <td>
+          <td id='T' style='visibility: hidden;'>
           <%= form.time_select :Tuesday1, {minute_step: 15, ampm: true, default: {hour: @default_vals['Tuesday'][0], min: @default_vals['Tuesday'][1]}} %>
           <br>to<br>
           <%= form.time_select :Tuesday2, {minute_step: 15, ampm: true, default: {hour: @default_vals['Tuesday'][2], min: @default_vals['Tuesday'][3]}} %>
 
-          <td>
+          <td id='W' style='visibility: hidden;'>
           <%= form.time_select :Wednesday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Wednesday'][0], min: @default_vals['Wednesday'][1]}} %>
           <br>to<br>
           <%= form.time_select :Wednesday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Wednesday'][2], min: @default_vals['Wednesday'][3]}} %>
 
-          <td>
+          <td id='R' style='visibility: hidden;'>
           <%= form.time_select :Thursday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Thursday'][0], min: @default_vals['Thursday'][1]}} %>
           <br>to<br>
           <%= form.time_select :Thursday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Thursday'][2], min: @default_vals['Thursday'][3]}} %>
 
-          <td>
+          <td id='F' style='visibility: hidden;'>
           <%= form.time_select :Friday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Friday'][0], min: @default_vals['Friday'][1]}} %>
           <br>to<br>
           <%= form.time_select :Friday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Friday'][2], min: @default_vals['Friday'][3]}} %>
 
-          <td>
+          <td id='S' style='visibility: hidden;'>
           <%= form.time_select :Saturday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Saturday'][0], min: @default_vals['Saturday'][1]}} %>
           <br>to<br>
           <%= form.time_select :Saturday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Saturday'][2], min: @default_vals['Saturday'][3]}} %>
 
-          <td>
+          <td id='Su' style='visibility: hidden;'>
           <%= form.time_select :Sunday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Sunday'][0], min: @default_vals['Sunday'][1]}} %>
           <br>to<br>
           <%= form.time_select :Sunday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Sunday'][2], min: @default_vals['Sunday'][3]}} %>
@@ -85,7 +90,21 @@
   </table>
 
   <div class="actions" style="padding-top: 20px;">
-    <%= form.submit "Submit Changes", class: "btn-primary" %>
+    <%= form.submit "Submit Changes", class: "btn btn-primary" %>
   </div>
-
 <% end %>
+
+
+<p style='padding-left: 20px;'><%= button_to 'Back', driver_schedules_url(params[:driver_id]), :method => 'get', class: "btn btn-secondary" %></p>
+
+<script>
+  function toggleEdit(_id){
+    var cell = document.getElementById(_id);
+    if(cell.style.visibility == 'visible'){
+      cell.style.visibility = 'hidden'
+    }
+    else{
+      cell.style.visibility = 'visible'
+    }
+  }
+</script>
