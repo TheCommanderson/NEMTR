@@ -46,9 +46,9 @@ class SchedulesController < ApplicationController
     @driver = Driver.find(params[:driver_id])
     @schedule = @driver.schedule.where(:id => params[:id]).first
     if @schedule.current
-      @monday_date = getMonday(DateTime.now).to_date
+      @days_of_week = getDatesOfWeek(getMonday(DateTime.now))
     else
-      @monday_date = getMonday((Time.now + 7.days).to_datetime)
+      @days_of_week = getDatesOfWeek(getMonday((Time.current + 7.days).to_datetime))
     end
     @default_vals = {}
     @schedule.attributes.each do |name, val|
