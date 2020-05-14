@@ -11,45 +11,46 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Patient:</strong>
-  <% @patient = Patient.find(@appointment.patient_id) %>
-  <%= @patient.first_name %> <%= @patient.last_name %>
-</p>
+<div class='appt-details'>
+  <p>
+    <strong>Patient:</strong>
+    <% @patient = Patient.find(@appointment.patient_id) %>
+    <%= @patient.first_name %> <%= @patient.last_name %>
+  </p>
 
-<p>
-  <strong>Driver:</strong>
-  <% if @appointment.status == 0 %>
-    <span style="color:red">unassigned</span>
-  <% else %>
-    <% @driver = Driver.find(@appointment.driver_id) %>
-    <%= @driver.first_name %> <%= @driver.last_name %>
-  <% end %>
-</p>
+  <p>
+    <strong>Driver:</strong>
+    <% if @appointment.status == 0 %>
+      <span style="color:red">unassigned</span>
+    <% else %>
+      <% @driver = Driver.find(@appointment.driver_id) %>
+      <%= @driver.first_name %> <%= @driver.last_name %>
+    <% end %>
+  </p>
 
-<p>
-  <strong>Date & Time:</strong>
-  <p><%= Time.parse(@appointment.datetime).strftime("%a %b %d, %Y") %></p>
-  <p><%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %></p>
-</p>
+  <p>
+    <strong>Date & Time:</strong>
+    <p><%= Time.parse(@appointment.datetime).strftime("%a %b %d, %Y") %></p>
+    <p><%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %></p>
+  </p>
 
-<p>
-  <strong>Patient Address:</strong> 
-  <p><%= @appointment.location[0][:name] %></p>
-  <p><%= @appointment.location[0][:address] %></p>
-</p>
-  
-<p>
-  <strong>Destination Address:</strong>
-  <p><%= @appointment.location[1][:name] %></p>
-  <p><%= @appointment.location[1][:address] %></p>
-</p>
+  <p>
+    <strong>Patient Address:</strong>
+    <p><%= @appointment.location[0][:name] %></p>
+    <p><%= @appointment.location[0][:address] %></p>
+  </p>
 
+  <p>
+    <strong>Destination Address:</strong>
+    <p><%= @appointment.location[1][:name] %></p>
+    <p><%= @appointment.location[1][:address] %></p>
+  </p>
+</div>
 <p>
   <strong>Map & Directions:</strong>
 </p>
 
-<div class='parent'> 
+<div class='parent'>
   <div class='child float-left-child' id="map"></div>
   <div class='child float-left-child' id="right-panel"></div>
 </div></br>
@@ -61,5 +62,3 @@
 <% else %>
   <%= link_to 'Back', admins_home_path %>
 <% end %>
-
-

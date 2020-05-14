@@ -101,6 +101,8 @@ td{
 .row{
   padding: 4px;
 }
+
+/* Schedule Page Stuff DO NOT MOVE UP */
 .schedule{
   margin: auto;
   text-align: center;
@@ -108,6 +110,19 @@ td{
   height: 150px;
   font-size: 18px;
 }
+.back-btn{
+  width: 130px;
+  line-height: 50px;
+  font-size: 20px;
+}
+.big-btn{
+  margin: auto;
+  display: table;
+  width: 200px;
+  line-height: 60px;
+  font-size: 20px;
+}
+
 #header{
   font-family: 'Lato', sans-serif;
   background-color: #003354;
