@@ -18,9 +18,17 @@
 
 .parent {
   display: flex;
-  height: 400px;
+  margin: auto;
+  height: 500px;
+  width: 90%;
+  border-color: #003354;
+  border-style: solid;
+  border-width: thin;
 }
 
-.float-left-child { 
+.float-left-child {
   flex: 1;
+  border-color: #003354;
+  border-style: solid;
+  border-width: medium;
 }
