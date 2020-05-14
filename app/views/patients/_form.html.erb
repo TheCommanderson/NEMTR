@@ -1,17 +1,5 @@
 <head>
   <style>
-    body{
-      font-family: 'Source Sans Pro', sans-serif;
-    }
-    .btn-primary{
-      background-color: #003354;
-    }
-    .row{
-      padding: 4px;
-    }
-    label{
-      font-size: 17px;
-    }
     input[type=text],input[type=number],input[type=password],select{
       line-height: 1.5;
     }
@@ -29,7 +17,7 @@
         </ul>
       </div>
     <% end %>
-  
+
     <div class="row">
       <div class="col">
         <div class="text-right">
@@ -40,7 +28,7 @@
         <%= form.text_field :first_name %>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col">
         <div class="text-right">
@@ -51,7 +39,7 @@
         <%= form.text_field :middle_init %>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col">
         <div class="text-right">
@@ -62,7 +50,7 @@
         <%= form.text_field :last_name %>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col">
         <div class="text-right">
@@ -73,7 +61,7 @@
         <%= form.number_field :phone %>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col">
         <div class="text-right">
@@ -84,7 +72,7 @@
         <%= form.text_field :email %>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col">
         <div class="text-right">
@@ -95,7 +83,7 @@
         <%= form.password_field :password %>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col">
         <div class="text-right">
@@ -106,7 +94,7 @@
         <%= form.select :host_org, options_for_select(AdminsController::HOSTS.drop(1)) %>
       </div>
     </div>
-    
+
     <br />
     <div class="row">
       <div class="col">
@@ -115,6 +103,6 @@
         </div>
       </div>
     </div>
-    
+
   <% end %>
 </body>
