@@ -1,7 +1,12 @@
-<h1>Update Date</h1>
-<%= form_with(model: @appointment, local: true) do |form| %>
-    <h3><%= form.label "New Date and Time:" %></h3>
-    <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
-    <br><br>
-    <%= form.submit "Submit" %>
-<% end %>
+<div style="text-align: center;">
+  <h1>Update Date and Time</h1>
+  <h3>(Time for Pick-Up, NOT Appointment Time)</h3>
+  <br><br>
+  <%= form_with(model: @appointment, local: true) do |form| %>
+      <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
+      <br><br>
+      <%= form.submit "Update", class: "btn btn-primary big-btn" %>
+  <% end %>
+</div>
+
+<p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>

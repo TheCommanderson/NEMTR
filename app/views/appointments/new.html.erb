@@ -1,58 +1,64 @@
-<h1>New Appointment</h1>
-<%= form_with(model: @appointment, local: true) do |form| %>
-  <% if @appointment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+<h1 style="text-align: center; padding-top: 2%;">New Appointment</h1>
+<div id="new-appt">
+  <%= form_with(model: @appointment, local: true) do |form| %>
+    <% if @appointment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
 
-      <ul>
-      <% @appointment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @appointment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  	<h3>Enter Date and Time</h3>
+    <h5>(Time for Pick-Up, NOT Appointment Time)</h5>
+    <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
+  	<!-- TODO: can use form.datetime_select -->
+    <%= form.hidden_field :patient_id, :value => params[:patient_id]%>
+    <%= form.hidden_field :status, :value => 0 %>
+    <%= form.hidden_field :est_time, :value => 60 %>
+
+    <div style="padding-top: 1%; padding-bottom: 1%;">
+      <div class="appt-loc">
+      	<h3>Pick-Up Location</h3>
+      	<%= form.fields_for :location, @appointment.location.build do |f| %>
+      		<%= f.label :addr1, "Address" %>
+      		<%= f.text_field :addr1 %>
+      		<%= f.label :addr2, "Address (cont.)" %>
+      		<%= f.text_field :addr2 %>
+      		<%= f.label :city %>
+      		<%= f.text_field :city %>
+      		<%= f.label :state %>
+      		<%= f.text_field :state %>
+      		<%= f.label :zip %>
+      		<%= f.number_field :zip %>
+          <%= f.label :name, "Address Nickname" %>
+      		<%= f.text_field :name, placeholder: "(Optional)" %>
+      	<% end %>
+      </div>
+      <div class="appt-loc">
+      	<h3>Destination Location</h3>
+      	<%= form.fields_for :location, @appointment.location.build do |f| %>
+      		<%= f.label :addr1, "Address" %>
+      		<%= f.text_field :addr1 %>
+      		<%= f.label :addr2, "Address (cont.)" %>
+      		<%= f.text_field :addr2 %>
+      		<%= f.label :city %>
+      		<%= f.text_field :city %>
+      		<%= f.label :state %>
+      		<%= f.text_field :state %>
+      		<%= f.label :zip %>
+      		<%= f.number_field :zip %>
+          <%= f.label :name, "Address Nickname" %>
+      		<%= f.text_field :name, placeholder: "(Optional)" %>
+      	<% end %>
+      </div>
     </div>
+  	<%= form.submit 'Schedule!', class: "btn btn-primary big-btn" %>
   <% end %>
+</div>
 
-	<h3><%= form.label "Datetime" %></h3>
-  <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
-	<!-- TODO: can use form.datetime_select -->
-  <%= form.hidden_field :patient_id, :value => params[:patient_id]%>
-  <%= form.hidden_field :status, :value => 0 %>
-  <%= form.hidden_field :est_time, :value => 60 %>
-
-	<!--<h3><%= form.label "Patient(will try to bypass this field)" %></h3>
-	<%= form.text_field :patient_id %>-->
-	<!-- TODO: can use form.collection_select :patient, Patient.all, :id, :first_name -->
-	<h3>Pick-up Location</h3>
-	<%= form.fields_for :location, @appointment.location.build do |f| %>
-		<%= f.label :name %>
-		<%= f.text_field :name %>
-		<%= f.label :addr1 %>
-		<%= f.text_field :addr1 %>
-		<%= f.label :addr2 %>
-		<%= f.text_field :addr2 %>
-		<%= f.label :city %>
-		<%= f.text_field :city %>
-		<%= f.label :state %>
-		<%= f.text_field :state %>
-		<%= f.label :zip %>
-		<%= f.number_field :zip %>
-	<% end %>
-	<h3>Destination</h3>
-	<%= form.fields_for :location, @appointment.location.build do |f| %>
-		<%= f.label :name %>
-		<%= f.text_field :name %>
-		<%= f.label :addr1 %>
-		<%= f.text_field :addr1 %>
-		<%= f.label :addr2 %>
-		<%= f.text_field :addr2 %>
-		<%= f.label :city %>
-		<%= f.text_field :city %>
-		<%= f.label :state %>
-		<%= f.text_field :state %>
-		<%= f.label :zip %>
-		<%= f.number_field :zip %>
-	<% end %>
-  <br><br>
-	<%= form.submit %>
-<% end %>
-
+<p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
