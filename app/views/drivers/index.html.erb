@@ -52,7 +52,7 @@
             </td>
             <td>
               <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-              <%= button_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
+              <%= button_to "Decline Appointment", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
             </td>
 
           </tr>

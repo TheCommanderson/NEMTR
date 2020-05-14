@@ -84,22 +84,11 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="text-right">
-          <%= form.label :host_org, 'Please choose your healthcare provider' %>
-        </div>
-      </div>
-      <div class="col">
-        <%= form.select :host_org, options_for_select(AdminsController::HOSTS.drop(1)) %>
-      </div>
-    </div>
-
     <br />
     <div class="row">
       <div class="col">
         <div class="text-center">
-          <%= form.submit "Submit",class:"btn btn-primary" %>
+          <%= form.submit "Submit",class:"btn btn-primary big-btn" %>
         </div>
       </div>
     </div>
