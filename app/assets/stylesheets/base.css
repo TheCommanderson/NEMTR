@@ -33,7 +33,7 @@ h5{
   color: #003454;
 }
 p{
-  font-size: 14px;
+  font-size: 18px;
 }
 table{
   padding-left: 20px;
@@ -50,7 +50,7 @@ th{
   text-align: center;
 }
 td{
-  font-size: 15px;
+  font-size: 18px;
 }
 .btn-primary{
   color: white;
@@ -73,7 +73,7 @@ td{
 .btn-secondary{
   color: #003354;
   background-color: #f9d58c;
-  font-size:15px;
+  font-size: 18px;
   font-weight: 400;
   padding: 3px 5px;
   margin: 3px;
@@ -86,8 +86,8 @@ td{
 .btn-secondary.btn-sm{
   color: #003354;
   background-color: #e5e5e6;
-  font-size:15px;
-  padding: 3px 5px;
+  font-size: 18px;
+  padding: 5px;
   margin: 2px;
 }
 .btn-secondary:hover.btn-sm{
