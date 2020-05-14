@@ -21,7 +21,7 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1/edit
   def edit
-    
+
   end
 
   # POST /appointments
@@ -42,7 +42,7 @@ class AppointmentsController < ApplicationController
     end
     @debug_log = matching_alg
   end
-  
+
   def cancel
    appointment = Appointment.find(params[:id])
    appointment.update_attribute(:status, 0)
@@ -51,7 +51,7 @@ class AppointmentsController < ApplicationController
    current_user.add_to_set(blacklist: appointment._id)
    current_user.save
   end
-  
+
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
@@ -68,7 +68,7 @@ class AppointmentsController < ApplicationController
       end
     end
   end
-  
+
   # DELETE /appointments/1
   # DELETE /appointments/1.json
   def destroy
@@ -88,9 +88,9 @@ class AppointmentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def appointment_params
       params.require(:appointment).permit(
-        :patient_id, 
-        :driver_id, 
-        :datetime, 
+        :patient_id,
+        :driver_id,
+        :datetime,
         :status,
         :est_time,
         location_attributes: [:name, :addr1, :addr2, :city, :state, :zip])

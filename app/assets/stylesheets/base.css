@@ -34,7 +34,6 @@ h5{
 }
 p{
   font-size: 14px;
-  font-style: italic;
 }
 table{
   padding-left: 20px;
@@ -101,7 +100,6 @@ td{
 .row{
   padding: 4px;
 }
-
 /* Schedule Page Stuff DO NOT MOVE UP */
 .schedule{
   margin: auto;
@@ -122,7 +120,6 @@ td{
   line-height: 60px;
   font-size: 20px;
 }
-
 #header{
   font-family: 'Lato', sans-serif;
   background-color: #003354;
