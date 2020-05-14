@@ -61,7 +61,7 @@
     </table>
     <br>
     <br>
-    <h1>All Upcoming Rides</h1>
+    <h1>Unassigned Upcoming Rides</h1>
     <table>
       <thead>
         <tr>
@@ -97,7 +97,10 @@
             <%= appointment.location[1][:name] %>
             <p></br><%= appointment.location[1][:address] %></p>
           </td>
-          <td><%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %></td>
+          <td>
+            <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
+            <%= button_to 'Claim this Ride', drivers_claim_url(appt: appointment), class: "btn btn-secondary btn-sm" %>
+          </td>
         </tr>
         <% end %>
       </tbody>
@@ -106,3 +109,8 @@
     <br><h1>Pending approval</h1><br>
   <% end %>
 </div>
+
+
+<% if flash[:alert] %>
+  <script>alert("<%= flash[:alert] %>")</script>
+<% end %>
