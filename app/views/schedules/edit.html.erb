@@ -40,16 +40,6 @@
           </th>
       </tr>
       <tr>
-          <td>Edit This Day <br> <input type="checkbox" id="check-M" onclick="toggleEdit('M')"/>
-          <td>Edit This Day <br> <input type="checkbox" id="check-T" onclick="toggleEdit('T')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-W" onclick="toggleEdit('W')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-R" onclick="toggleEdit('R')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-F" onclick="toggleEdit('F')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-S" onclick="toggleEdit('S')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-Su" onclick="toggleEdit('Su')">
-
-      </tr>
-      <tr>
           <td id='M' style='visibility: hidden;'>
           <%= form.time_select :Monday1, {minute_step: 15, ampm: true, default: {hour: @default_vals['Monday'][0], min: @default_vals['Monday'][1]}} %>
           <br>to<br>
@@ -84,7 +74,15 @@
           <%= form.time_select :Sunday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Sunday'][0], min: @default_vals['Sunday'][1]}} %>
           <br>to<br>
           <%= form.time_select :Sunday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Sunday'][2], min: @default_vals['Sunday'][3]}} %>
-
+      </tr>
+      <tr>
+          <td>Edit This Day <br> <input type="checkbox" id="check-M" onclick="toggleEdit('M')"/>
+          <td>Edit This Day <br> <input type="checkbox" id="check-T" onclick="toggleEdit('T')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-W" onclick="toggleEdit('W')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-R" onclick="toggleEdit('R')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-F" onclick="toggleEdit('F')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-S" onclick="toggleEdit('S')">
+          <td>Edit This Day <br> <input type="checkbox" id="check-Su" onclick="toggleEdit('Su')">
 
       </tr>
   </table>
@@ -95,7 +93,7 @@
 <% end %>
 
 
-<p style='padding-left: 20px;'><%= button_to 'Back', driver_schedules_url(params[:driver_id]), :method => 'get', class: "btn btn-secondary" %></p>
+<p style='padding-left: 20px; float: left;'><%= button_to 'Back', driver_schedules_url(params[:driver_id]), :method => 'get', class: "btn btn-secondary" %></p>
 
 <script>
   function toggleEdit(_id){
