@@ -20,8 +20,7 @@
 
 	<div class="row justify-content-md-center">
 		<div class="col col-md-2" style="width: 5%" align="center">
-				<h3>LOG IN  </h3>
-				<%= session[:user_id] %> <%= session[:login_type] %>
+				<h3>LOG IN</h3>
 				<%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-primary" %><br/>
 				<%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-primary" %><br/>
 				<%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-primary" %>

@@ -204,12 +204,13 @@
           <td>
             <% if @currentAdmin.auth_lvl == 2  %>
               <% if !patient.approved %>
-                <%= button_to "Approve", { action: "approve_patient", id: patient.id }, method: :post,class: "btn btn-secondary btn-sm" %>
+                <%= button_to "Approve", { action: "approve_patient", id: patient.id }, method: :post, class: "btn btn-secondary btn-sm" %>
               <% end %>
             <% end %>
 
             <% if @currentAdmin.auth_lvl == 1  %>
-              <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Comments', viewComments_patient_path(patient.id), method: :get, class: "btn btn-secondary btn-sm" %>
             <% end  %>
 
             <% if (@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3)%>
