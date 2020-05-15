@@ -54,6 +54,9 @@ th{
 td{
   font-size: 18px;
 }
+text_area{
+  height: auto;
+}
 .btn-primary{
   color: white;
   background-color: #003354;
@@ -89,7 +92,7 @@ td{
   color: #003354;
   background-color: #e5e5e6;
   font-size: 18px;
-  padding: 5px;
+  padding: 3px;
   margin: 2px;
 }
 .btn-secondary:hover.btn-sm{
