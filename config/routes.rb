@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'drivers_home', to: 'drivers#index'
   get 'drivers_test', to: 'drivers#test'
   post 'drivers_claim', to: 'drivers#claim'
+  get 'patients_comment', to: 'patients#comment'
 
   #TODO: am i using these?
   post '/appointments/:appointment_id/location/:id/edit', to: 'location#update'

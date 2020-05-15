@@ -10,6 +10,7 @@ class DriversController < ApplicationController
     @drivers = Driver.all
     @patients = Patient.all
     @appointments = Appointment.where(status: 0).sort_by { |appt| [ appt.datetime ] }
+    @dt_format = dt_format
   end
 
  # GET /drivers
@@ -48,6 +49,7 @@ class DriversController < ApplicationController
     end
     redirect_to root_url
   end
+
   # GET /drivers/1/edit
   def edit
   end

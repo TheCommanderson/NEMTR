@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
     helper_method :sign
     before_action :authorized
     before_action :set_logger
-    # Should return the current user or nil if not logged in
+
+    # Helper returns current user or nil if not logged in
     def current_user
         _user = nil
         case session[:login_type]
@@ -22,28 +23,34 @@ class ApplicationController < ActionController::Base
         end
     end
 
+    # Helper to see if someone is logged in
     def logged_in?
         !current_user.nil?
     end
 
+    # Logout function
     def logout
         session.delete(:login_type)
         session.delete(:user_id)
         redirect_to root_url, notice: "Successfully Logged Out"
     end
 
+    # Helper function to ensure user is authorized when they try to visit a page
     def authorized
         redirect_to root_url, notice: "Please Log In." unless logged_in?
     end
 
+    # Helper returns the sign of the number provided
     def sign(x)
         "++-"[x <=> 0]
     end
 
+    # Helper returns the string for datetime format storage in the database
     def dt_format
        return '%Y-%m-%d %H:%M'
     end
 
+    # Helper gets the monday of the week provided (7 is sunday because we begin our week on monday >:( )
     def getMonday(date)
        wday = date.to_time.wday
        if wday == 0
@@ -53,6 +60,7 @@ class ApplicationController < ActionController::Base
        _monday
     end
 
+    # ===================== MATCHING ENGINE STUFF ============================ #
     def check_conflicts(start_time, end_time, appt, dr)
       @driver_apps = Appointment.where(driver_id: dr)
       @driver_apps.each do |conflict|
@@ -176,6 +184,7 @@ class ApplicationController < ActionController::Base
         end
         return @debug_log
     end
+    # ===================== MATCHING ENGINE STUFF END ============================ #
     def set_logger
         if @debug_log.nil?
             @debug_log = ['start']
