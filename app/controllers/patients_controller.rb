@@ -1,7 +1,8 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorized, only: [:new, :create]
-  before_action :patient_authorized, except: [:new, :create, :edit, :update, :destroy, :comment, :append]
+  before_action :patient_authorized, except: [:new, :create, :edit, :update, :destroy, :comment, :append, :viewComments]
+  before_action :admin_authorized, only: [:viewComments]
   # GET /patients
   def pending
   end
@@ -82,6 +83,10 @@ class PatientsController < ApplicationController
     redirect_to root_path, notice: "Thank you for your feedback!"
   end
 
+  def viewComments
+    @patient = Patient.find(params[:id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_patient
@@ -95,5 +100,8 @@ class PatientsController < ApplicationController
 
     def patient_authorized
       redirect_to root_url unless session[:login_type] == 'P'
+    end
+    def admin_authorized
+      redirect_to root_url unless session[:login_type] == 'A'
     end
 end
