@@ -71,8 +71,8 @@
           <tr>
             <th>Admin</th>
             <th>Authority Level</th>
-            <th>Host org</th>
-            <th>Admin</th>
+            <th>Host Organization</th>
+            <th>Approved by</th>
             <th>Approved?</th>
             <th>Actions</th>
           </tr>
@@ -143,8 +143,8 @@
         <thead>
           <tr>
             <th>Driver</th>
-            <th>Admin</th>
-            <th>Trained</th>
+            <th>Approved By</th>
+            <th>Trained?</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -209,8 +209,8 @@
       <thead>
         <tr>
           <th>Patient</th>
-          <th>Admin</th>
-          <th>Host Org</th>
+          <th>Host Organization</th>
+          <th>Approved By</th>
           <th>Approved?</th>
           <th>Actions</th>
         </tr>
@@ -225,6 +225,7 @@
               Email: <%= patient.email%> | Phone: <%= patient.phone %>
             </p>
           </td>
+          <td><%= patient.host_org %></td>
           <td>
             <% if patient.admin %>
               <%= patient.admin.first_name + ' ' + patient.admin.last_name %>
@@ -233,7 +234,6 @@
               </p>
             <% end %>
           </td>
-          <td><%= patient.host_org %></td>
           <td>
             <% if patient.approved %>
               <span>True</span>
