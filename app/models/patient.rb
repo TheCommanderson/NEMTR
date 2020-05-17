@@ -3,7 +3,7 @@ class Patient
   include ActiveModel::SecurePassword
   
   field :first_name, type: String
-  field :middle_initial, type: String
+  field :middle_init, type: String
   field :last_name, type: String
   field :phone, type: Integer
   field :email, type: String

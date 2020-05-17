@@ -65,13 +65,43 @@ class AdminsController < ApplicationController
   # GET /admins.json
   def index
     @currentAdmin = Admin.find(session[:user_id])
-    @admins = Admin.all.sort_by{ |adm| [ adm.approved.to_s, adm.auth_lvl, adm.first_name ] }
-    @patients = self.search.sort_by{ |patient| [patient.approved.to_s, patient.first_name] }
-    @drivers = Driver.all.sort_by{ |drvr| [ drvr.trained.to_s, drvr.first_name ] }
+    @admins = self.admin_search.sort_by{ |adm| [ adm.approved.to_s, adm.auth_lvl, adm.first_name ] }
+    @patients = self.patient_search.sort_by{ |patient| [patient.approved.to_s, patient.first_name] }
+    @drivers = self.driver_search.sort_by{ |drvr| [ drvr.trained.to_s, drvr.first_name ] }
     @appointments = Appointment.all.sort_by{ |appt| [ appt.status, appt.datetime ] }
   end
   
-  def search
+  def admin_search
+    if params[:a_search]
+      @admins = self.search(Admin.all)
+    else
+      @admins = Admin.all
+    end
+  end
+  
+  def driver_search
+    if params[:d_search]
+      @drivers = self.search(Driver.all)
+    else
+      @drivers = Driver.all
+    end
+  end
+  
+  def patient_search
+    if @currentAdmin.auth_lvl == 2 
+      @patients = Patient.all.where({host_org: @currentAdmin.host_org})
+    else
+      @patients = Patient.all
+    end
+    
+    if params[:p_search]
+      @patients = self.search(@patients)
+    else
+      @patients = @patients
+    end
+  end
+  
+  def search(obj)
     if params[:search]
       @parameter = /#{params[:search]}/i
       @full_name = params[:search].gsub(/\s+/m, ' ').strip.split(" ")
@@ -80,25 +110,15 @@ class AdminsController < ApplicationController
         @second = /#{@full_name[1]}/i
       end
       
-      if @currentAdmin.auth_lvl == 2 
-        @patients = Patient.all.where({host_org: @currentAdmin.host_org})
-      else
-        @patients = Patient.all
-      end
-      
       if @full_name.length > 1
-        @patients = @patients.where('$and' => [{first_name: @first},{last_name: @second}])
+        @result = obj.where('$and' => [{first_name: @first},{last_name: @second}])
       else
-        @patients = @patients.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}])
+        @result = obj.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}])
       end
     else
-      if @currentAdmin.auth_lvl == 2 
-        @patients = Patient.all.where({host_org: @currentAdmin.host_org})
-      else
-        patients = Patient.all
-      end
+      @result = obj
     end
-    
+    return @result
   end
 
   # GET /admins/1
