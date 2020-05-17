@@ -1,17 +1,4 @@
 <style>
-		body {
-			font-family: 'Source Sans Pro', sans-serif;
-			background-color: #fceae8;
-		}
-		h3{
-			font-size: 23px;
-		}
-		h1,h3,h5{
-			color: #003354;
-		}
-		h1{
-			font-family: 'Lato', sans-serif;
-		}
 		.btn-primary{
 			background-color: #003354;
 			font-size: 17px;
@@ -26,15 +13,15 @@
 	<p class="text-center" style="color: red;"><%= notice %><p>
 	<!-- ============= MAIN STUFF ============= -->
 	<div class="text-center">
-		<h1>NEMTR</h1>
+		<h1 style="font-style: normal;">NEMTR</h1>
 		<h5>Non-Emergency Medical Transportation</h5>
 	</div>
 	<br>
-	
+
 	<div class="row justify-content-md-center">
 		<div class="col col-md-2" style="width: 5%" align="center">
 				<h3>LOG IN  </h3>
-				<%= session[:user_id] %> <%= session[:login_type] %> 
+				<%= session[:user_id] %> <%= session[:login_type] %>
 				<%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-primary " %><br/>
 				<%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-primary" %><br/>
 				<%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-primary" %>
