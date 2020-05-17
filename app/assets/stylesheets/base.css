@@ -39,9 +39,12 @@ p{
 table{
   padding-left: 20px;
   width: 100%;
+  background-color: #f5f6f6;
 }
+tr:nth-child(even) {background-color: #ebecec;}
 table,td,th{
-  border: 1px solid #a6a6a6;
+  padding: 5px;
+  border: 1px solid white;
 }
 th{
   color: white;

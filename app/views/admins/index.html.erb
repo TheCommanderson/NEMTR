@@ -110,9 +110,9 @@
               </td>
               <td>
                 <% if admin.approved %>
-                  <%= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                  <%= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
                 <% else %>
-                  <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                  <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
                 <% end %>
                 <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
               </td>
@@ -175,9 +175,9 @@
               </td>
               <td>
                   <% if driver.trained %>
-                    <%= button_to "Unapprove", { action: "unapprove", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                    <%= button_to "Unapprove", { action: "unapprove", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
                   <% else %>
-                    <%= button_to "Approve", { action: "approve", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                    <%= button_to "Approve", { action: "approve", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
                   <% end %>
 
                   <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
@@ -244,9 +244,9 @@
           <td>
             <% if @currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 2  %>
               <% if patient.approved %>
-                  <%= button_to "Unapprove", { action: "unapprove", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                  <%= button_to "Unapprove", { action: "unapprove", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
               <% else %>
-                <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
               <% end %>
             <% end %>
 
