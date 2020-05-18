@@ -31,10 +31,11 @@ h4{
 }
 h5{
   color: #003454;
+  font-size: 16px;
+  font-style: italic;
 }
 p{
-  font-size: 14px;
-  font-style: italic;
+  font-size: 18px;
 }
 table{
   padding-left: 20px;
@@ -54,7 +55,10 @@ th{
   text-align: center;
 }
 td{
-  font-size: 15px;
+  font-size: 18px;
+}
+text_area{
+  height: auto;
 }
 .btn-primary{
   color: white;
@@ -77,7 +81,7 @@ td{
 .btn-secondary{
   color: #003354;
   background-color: #f9d58c;
-  font-size:15px;
+  font-size: 18px;
   font-weight: 400;
   padding: 3px 5px;
   margin: 3px;
@@ -90,8 +94,8 @@ td{
 .btn-secondary.btn-sm{
   color: #003354;
   background-color: #e5e5e6;
-  font-size:15px;
-  padding: 3px 5px;
+  font-size: 18px;
+  padding: 3px;
   margin: 2px;
 }
 .btn-secondary:hover.btn-sm{
@@ -104,12 +108,25 @@ td{
 .row{
   padding: 4px;
 }
+/* Schedule Page Stuff DO NOT MOVE UP */
 .schedule{
   margin: auto;
   text-align: center;
   width: 60%;
   height: 150px;
   font-size: 18px;
+}
+.back-btn{
+  width: 130px;
+  line-height: 50px;
+  font-size: 20px;
+}
+.big-btn{
+  margin: auto;
+  display: table;
+  width: 200px;
+  line-height: 60px;
+  font-size: 20px;
 }
 #header{
   font-family: 'Lato', sans-serif;

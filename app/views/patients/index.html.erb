@@ -11,9 +11,9 @@
             <h4><%= @currentFirstName %> <%= @currentLastName%></h4>
         </div>
         <div class="col-1">
-          <%= button_to 'Edit Account', edit_patient_path(@currentPatient), method: :get, class: "btn btn-secondary right", style: "padding: 3px; margin: 6px 3px 0px 0px;" %>
+          <%= button_to 'Edit Account', edit_patient_path(@currentPatient), method: :get, class: "btn btn-secondary right", style: "padding: 3px; margin: 6px 3px 10px 4px;" %>
           <br><br>
-          <%= button_to 'Log Out', logout_path, class: "btn btn-secondary right", style: "padding: 3px;" %>
+          <%= button_to 'Log Out', logout_path, class: "btn btn-secondary right", style: "padding: 3px; margin-top: 7px;" %>
         </div>
       </div>
     </div>
@@ -21,11 +21,11 @@
     <!-- =================== MAIN STUFF =================== -->
     <div style="margin: 20px;">
       <h1>Upcoming Appointments</h1>
-      <table cellpadding="5">
+      <table cellpadding="5" style="text-align: center;">
         <thead>
           <tr>
             <th>Driver</th>
-            <th>Date & Time</th>
+            <th>Pick-up<br>Date & Time</th>
             <th>Pick-up Location</th>
             <th>Destination</th>
             <th>Actions</th>
@@ -68,7 +68,7 @@
         </tbody>
       </table>
       <div class="text-center" style="padding: 12px;">
-        <%= link_to 'Create New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get, class: "btn btn-primary", style: ""%>
+        <%= link_to 'New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get, class: "btn btn-primary big-btn", style: ""%>
       </div>
     </div>
   <% else %>
