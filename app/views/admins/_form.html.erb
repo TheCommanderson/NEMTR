@@ -107,7 +107,7 @@
         </div>
       </div>
       <div class="col">
-        <%= form.select :host_org, options_for_select(AdminsController::HOSTS)%>
+        <%= form.select :host_org, options_for_select(AdminsController::HOSTS,"N/A")%>
       </div>
     </div>
   <% end %>

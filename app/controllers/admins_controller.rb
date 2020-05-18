@@ -4,6 +4,7 @@ class AdminsController < ApplicationController
   before_action :admin_authorized, except: [:new, :create]
   
   HOSTS = ['N/A','A&M','United Way']
+  AUTH_LEVELS = ['System Administrator','Healthcare Provider','Call Center']
   
   def add_host
     HOSTS.push(params[:host_org])
@@ -15,34 +16,48 @@ class AdminsController < ApplicationController
     HOSTS.delete(params[:id])
     redirect_to admins_home_path
   end
-   
-  def train
-   @driver = Driver.find(params[:id])
-   @driver.update(trained: true)
-   @driver.update(admin: Admin.find(session[:user_id]))
-   @driver.save
-   redirect_to admins_home_path
-  end
-  
-  def approve_patient
-   @patient = Patient.find(params[:id])
-   @patient.update(approved: true)
-   @patient.update(admin: Admin.find(session[:user_id]))
-   @patient.save
-   redirect_to admins_home_path
-  end
   
   def approve
-   @admin = Admin.find(params[:id])
-   @admin.update(approved: true)
-   @admin.save
+    if !Admin.where(:id => params[:id]).blank?
+      @admin = Admin.find(params[:id])
+      @admin.update(approved: true)
+      @tmp = Admin.find(session[:user_id])
+      @admin.update(admin_name: @tmp.first_name + " " + @tmp.last_name)
+      @admin.update(admin_email: @tmp.email)
+      @admin.save
+    elsif !Patient.where(:id => params[:id]).blank?
+      @patient = Patient.find(params[:id])
+      @patient.update(approved: true)
+      @patient.update(admin: Admin.find(session[:user_id]))
+      @patient.save
+    elsif !Driver.where(:id => params[:id]).blank?
+      @driver = Driver.find(params[:id])
+      @driver.update(trained: true)
+      @driver.update(admin: Admin.find(session[:user_id]))
+      @driver.save
+    end
    redirect_to admins_home_path
   end
   
   def unapprove
-   @admin = Admin.find(params[:id])
-   @admin.update(approved: false)
-   @admin.save
+   if !Admin.where(:id => params[:id]).blank?
+      @admin = Admin.find(params[:id])
+      @admin.update(approved: false)
+      @tmp = Admin.find(session[:user_id])
+      @admin.update(admin_name: @tmp.first_name + " " + @tmp.last_name)
+      @admin.update(admin_email: @tmp.email)
+      @admin.save
+    elsif !Patient.where(:id => params[:id]).blank?
+      @patient = Patient.find(params[:id])
+      @patient.update(approved: false)
+      @patient.update(admin: Admin.find(session[:user_id]))
+      @patient.save
+    elsif !Driver.where(:id => params[:id]).blank?
+      @driver = Driver.find(params[:id])
+      @driver.update(trained: false)
+      @driver.update(admin: Admin.find(session[:user_id]))
+      @driver.save
+    end
    redirect_to admins_home_path
   end
   
@@ -50,27 +65,60 @@ class AdminsController < ApplicationController
   # GET /admins.json
   def index
     @currentAdmin = Admin.find(session[:user_id])
-    @admins = Admin.all.sort_by{ |adm| [ adm.approved.to_s, adm.auth_lvl, adm.first_name ] }
-    @patients = self.search.sort_by{ |patient| [patient.approved.to_s, patient.first_name] }
-    @drivers = Driver.all.sort_by{ |drvr| [ drvr.trained.to_s, drvr.first_name ] }
+    @admins = self.admin_search.sort_by{ |adm| [ adm.approved.to_s, adm.auth_lvl, adm.first_name ] }
+    @patients = self.patient_search.sort_by{ |patient| [patient.approved.to_s, patient.first_name] }
+    @drivers = self.driver_search.sort_by{ |drvr| [ drvr.trained.to_s, drvr.first_name ] }
     @appointments = Appointment.all.sort_by{ |appt| [ appt.status, appt.datetime ] }
   end
   
-  def search
+  def admin_search
+    if params[:a_search]
+      @admins = self.search(Admin.all)
+    else
+      @admins = Admin.all
+    end
+  end
+  
+  def driver_search
+    if params[:d_search]
+      @drivers = self.search(Driver.all)
+    else
+      @drivers = Driver.all
+    end
+  end
+  
+  def patient_search
+    if @currentAdmin.auth_lvl == 2 
+      @patients = Patient.all.where({host_org: @currentAdmin.host_org})
+    else
+      @patients = Patient.all
+    end
+    
+    if params[:p_search]
+      @patients = self.search(@patients)
+    else
+      @patients = @patients
+    end
+  end
+  
+  def search(obj)
     if params[:search]
       @parameter = /#{params[:search]}/i
-      if @currentAdmin.auth_lvl == 2
-        @patients = Patient.all.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}]).and({host_org: @currentAdmin.host_org},{approved: false})
+      @full_name = params[:search].gsub(/\s+/m, ' ').strip.split(" ")
+      if @full_name.length > 1
+        @first = /#{@full_name[0]}/i
+        @second = /#{@full_name[1]}/i
+      end
+      
+      if @full_name.length > 1
+        @result = obj.where('$and' => [{first_name: @first},{last_name: @second}])
       else
-        @patients = Patient.all.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}])
+        @result = obj.where('$or' => [{first_name: @parameter},{last_name: @parameter},{email: @parameter}])
       end
     else
-      if @currentAdmin.auth_lvl == 2
-        @patients = Patient.all.where('$and' => [{approved: false}, {host_org: @currentAdmin.host_org}])
-      else
-        @patients = Patient.all
-      end
+      @result = obj
     end
+    return @result
   end
 
   # GET /admins/1
@@ -138,7 +186,7 @@ class AdminsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def admin_params
-      params.require(:admin).permit(:first_name, :middle_init, :last_name, :phone, :email, :auth_lvl, :host_org, :password)
+      params.require(:admin).permit(:first_name, :middle_init, :last_name, :admin_name, :admin_email, :phone, :email, :auth_lvl, :host_org, :password)
     end
     
     def admin_authorized
