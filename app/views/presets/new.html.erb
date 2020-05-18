@@ -1,0 +1,23 @@
+<br><br>
+<div class="text-center">
+  <h1>Add Location for Patient</h1>
+
+  <%= form_with(model: @preset, local: true, method: :post, url: patient_presets_path) do |form| %>
+    <%= form.label :addr1, "Address" %>
+    <%= form.text_field :addr1 %>
+    <%= form.label :addr2, "Address (cont.)" %>
+    <%= form.text_field :addr2 %>
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+    <%= form.label :state %>
+    <%= form.text_field :state %>
+    <%= form.label :zip %>
+    <%= form.number_field :zip %>
+    <%= form.label :name, "Address Nickname" %>
+    <%= form.text_field :name %>
+    <br><br>
+    <%= form.submit "Create Location", class: "btn btn-primary big-btn" %>
+  <% end %>
+</div>
+<br>
+<p style='padding-left: 20px;'><%= link_to 'Back', patient_presets_path(@patient.id), class: "btn btn-secondary back-btn" %></p>
