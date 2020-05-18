@@ -16,52 +16,105 @@
     </div>
   </div>
 </div>
-<div style="padding: 10px;">
+
+<div>
   <p id="notice" style="margin:0px;"><%= notice %></p>
   <% if @logged_in_driver.trained %>
-    <h1>Your Upcoming Rides</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Patient</th>
-          <th>Date & Time</th>
-          <th>Pick-Up Location</th>
-          <th>Destination</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
+    <div class="dr_rides">
+      <h1>Your Upcoming Rides</h1>
+      <table>
+        <thead>
           <tr>
-            <% @tempPatient = @patients.find(appointment.patient_id) %>
-            <td>
-              <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
-              <p></br>Phone: <%= @tempPatient.phone %></p>
-            </td>
-            <td nowrap='nowrap'>
-              <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-              <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
-            </td>
-            <td>
-              <%= appointment.location[0][:name] %>
-              <p></br><%= appointment.location[0][:address] %></p>
-            </td>
-            <td>
-              <%= appointment.location[1][:name] %>
-              <p></br><%= appointment.location[1][:address] %></p>
-            </td>
-            <td>
-              <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-              <%= button_to "Cancel", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
-            </td>
-
+            <th>Patient</th>
+            <th>Date & Time</th>
+            <th>Pick-Up Location</th>
+            <th>Destination</th>
+            <th>Actions</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
+            <% if DateTime.strptime(appointment.datetime, @dt_format).to_date.past? %>
+              <% next %>
+            <% end %>
+            <tr>
+              <% @tempPatient = @patients.find(appointment.patient_id) %>
+              <td>
+                <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
+                <p></br>Phone: <%= @tempPatient.phone %></p>
+              </td>
+              <td nowrap='nowrap'>
+                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
+                <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
+              </td>
+              <td>
+                <%= appointment.location[0][:name] %>
+                <p></br><%= appointment.location[0][:address] %></p>
+              </td>
+              <td>
+                <%= appointment.location[1][:name] %>
+                <p></br><%= appointment.location[1][:address] %></p>
+              </td>
+              <td>
+                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
+                <%= button_to "Decline Appointment", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
+              </td>
+
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="dr_rides">
+      <h1>Your Recent Past Rides</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Date & Time</th>
+            <th>Pick-Up Location</th>
+            <th>Destination</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
+            <% if !DateTime.strptime(appointment.datetime, @dt_format).to_date.past? %>
+              <% next %>
+            <% end %>
+            <tr>
+              <% @tempPatient = @patients.find(appointment.patient_id) %>
+              <td>
+                <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
+                <p></br>Phone: <%= @tempPatient.phone %></p>
+              </td>
+              <td nowrap='nowrap'>
+                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
+                <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
+              </td>
+              <td>
+                <%= appointment.location[0][:name] %>
+                <p></br><%= appointment.location[0][:address] %></p>
+              </td>
+              <td>
+                <%= appointment.location[1][:name] %>
+                <p></br><%= appointment.location[1][:address] %></p>
+              </td>
+              <td>
+                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
+                <%= link_to 'Leave Comment', comment_patient_path(appointment.patient_id), method: :get, class: "btn btn-secondary btn-sm" %>
+              </td>
+
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
     <br>
     <br>
-    <h1>All Upcoming Rides</h1>
+
+    <h1>Unassigned Upcoming Rides</h1>
     <table>
       <thead>
         <tr>
@@ -76,6 +129,9 @@
 
       <tbody>
         <% @appointments.each do |appointment| %>
+          <% if DateTime.strptime(appointment.datetime, @dt_format).to_date.past? %>
+            <% next %>
+          <% end %>
         <tr>
           <% @tempPatient = @patients.find(appointment.patient_id) %>
           <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
@@ -97,7 +153,10 @@
             <%= appointment.location[1][:name] %>
             <p></br><%= appointment.location[1][:address] %></p>
           </td>
-          <td><%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %></td>
+          <td>
+            <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
+            <%= button_to 'Claim this Ride', drivers_claim_url(appt: appointment), class: "btn btn-secondary btn-sm" %>
+          </td>
         </tr>
         <% end %>
       </tbody>
@@ -106,3 +165,8 @@
     <br><h1>Pending approval</h1><br>
   <% end %>
 </div>
+
+
+<% if flash[:alert] %>
+  <script>alert("<%= flash[:alert] %>")</script>
+<% end %>

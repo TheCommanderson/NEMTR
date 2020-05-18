@@ -21,7 +21,7 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1/edit
   def edit
-    
+
   end
 
   # POST /appointments
@@ -42,7 +42,7 @@ class AppointmentsController < ApplicationController
     end
     @debug_log = matching_alg
   end
-  
+
   def cancel
    appointment = Appointment.find(params[:id])
    appointment.update_attribute(:status, 0)
@@ -51,7 +51,7 @@ class AppointmentsController < ApplicationController
    current_user.add_to_set(blacklist: appointment._id)
    current_user.save
   end
-  
+
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
@@ -59,6 +59,7 @@ class AppointmentsController < ApplicationController
       @appt_parms = appointment_params
       @appt_parms['datetime'] = params[:appointment]['dt(1i)'] + '-' + params[:appointment]['dt(2i)'] + '-' + params[:appointment]['dt(3i)'] + ' ' + params[:appointment]['dt(4i)'] + ':' + params[:appointment]['dt(5i)']
       if @appointment.update(@appt_parms)
+        check_appt_update(@appointment)
         format.html { redirect_to "/patients_home", notice: 'Appointment was successfully updated.'}
         # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :ok, location: @appointment }
@@ -68,7 +69,7 @@ class AppointmentsController < ApplicationController
       end
     end
   end
-  
+
   # DELETE /appointments/1
   # DELETE /appointments/1.json
   def destroy
@@ -88,9 +89,9 @@ class AppointmentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def appointment_params
       params.require(:appointment).permit(
-        :patient_id, 
-        :driver_id, 
-        :datetime, 
+        :patient_id,
+        :driver_id,
+        :datetime,
         :status,
         :est_time,
         location_attributes: [:name, :addr1, :addr2, :city, :state, :zip])

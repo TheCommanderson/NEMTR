@@ -11,29 +11,24 @@ class LocationController < ApplicationController
     @appointment = Appointment.find(params[:appointment_id])
     @location = @appointment.location.new
   end
-  
+
   def edit
   end
 
   def create
-    @appointment = Appointment.find(params[:appointment_id]) 
+    @appointment = Appointment.find(params[:appointment_id])
     @location = @appointment.location.build(params[:location])
     @appointment.save
   end
 
   def update
-    # @appointment = Appointment.find(params[:appointment_id])
-    # # Find out if the passed location is pick-up or destination
-    # # [0] is pick-up location
-    # # [1] is destination
-    # if params[:id] == @appointment.location[0]["_id"].to_s
-    #   @location = @appointment.location[0]
-    # else
-    #   @location = @appointment.location[1]
-    # end
     respond_to do |format|
       if @location.update(location_params)
-        format.html { redirect_to "/patients_home", notice: 'Location was successfully updated.'}
+        appt = Appointment.where('location._id' => @location.id).first
+        status = appt.status
+        appt.update(status: status)
+        check_appt_update(appt)
+        format.html { redirect_to root_url, notice: 'Location was successfully updated.'}
         # format.html { redirect_to @location, notice: 'Location was successfully created.' }
         format.json { render :show, status: :ok, location: @location }
       else
@@ -57,11 +52,11 @@ class LocationController < ApplicationController
   end
   def location_params
     params.require(:location).permit(
-      :name, 
-      :addr1, 
-      :addr2, 
-      :city, 
-      :state, 
+      :name,
+      :addr1,
+      :addr2,
+      :city,
+      :state,
       :zip)
   end
 

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'drivers', to: 'drivers#pending'
   get 'drivers_home', to: 'drivers#index'
   get 'drivers_test', to: 'drivers#test'
+  post 'drivers_claim', to: 'drivers#claim'
 
   #TODO: am i using these?
   post '/appointments/:appointment_id/location/:id/edit', to: 'location#update'
@@ -22,13 +23,17 @@ Rails.application.routes.draw do
 
   get 'patients', to:'patients#pending'
   get 'patients_home', to: 'patients#index'
-  resources :patients
+  resources :patients do
+    get :comment, on: :member
+    get :viewComments, on: :member
+    patch :append, on: :member
+  end
 
   post 'create_session', to: 'sessions#create'
   resources :sessions
 
   resources :locations
-  
+
   match 'admins_home', to: 'admins#index', via: [:get, :post]
   post 'admins/add_host'
   resources :admins do

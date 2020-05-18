@@ -8,19 +8,40 @@
   float: left;
   margin-right: 10px;
 }
-
 #right-panel {
   height: 100%;
   float: right;
   width: 50%;
   overflow: auto;
 }
-
+#appt-details{
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  font-size: 20px !important;
+}
+.new-appt-1{
+  text-align: center;
+  margin: auto;
+}
+.appt-loc{
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 5%;
+  padding-right: 5%;
+}
 .parent {
   display: flex;
-  height: 400px;
+  margin: auto;
+  height: 500px;
+  width: 90%;
+  border-color: #003354;
+  border-style: solid;
+  border-width: thin;
 }
-
-.float-left-child { 
+.float-left-child {
   flex: 1;
+  border-color: #003354;
+  border-style: solid;
+  border-width: medium;
 }

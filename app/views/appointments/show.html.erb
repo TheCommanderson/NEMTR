@@ -10,56 +10,51 @@
 <% end %>
 
 <p id="notice"><%= notice %></p>
+<h1 style="text-align: center">Appointment Details</h1>
+<table id='appt-details'>
+  <tr>
+    <th>Patient</th>
+    <td>
+      <% @patient = Patient.find(@appointment.patient_id) %>
+      <%= @patient.first_name %> <%= @patient.last_name %>
+    </td>
+  <tr>
+    <th>Driver</th>
+    <td>
+      <% if @appointment.status == 0 %>
+        <span style="color:red">unassigned</span>
+      <% else %>
+        <% @driver = Driver.find(@appointment.driver_id) %>
+        <%= @driver.first_name %> <%= @driver.last_name %>
+      <% end %>
+    </td>
+  <tr>
+    <th>Pickup Date & Time</th>
+    <td>
+      <%= Time.parse(@appointment.datetime).strftime("%a %b %d, %Y") %>
+      <p><%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %></p>
+    </td>
+  <tr>
+    <th>Patient Address</th>
+    <td>
+      <%= @appointment.location[0][:name] %>
+      <p><%= @appointment.location[0][:address] %></p>
+    </td>
+  <tr>
+    <th>Destination Address</th>
+    <td>
+      <%= @appointment.location[1][:name] %>
+      <p><%= @appointment.location[1][:address] %></p>
+    </td>
+</table>
 
 <p>
-  <strong>Patient:</strong>
-  <% @patient = Patient.find(@appointment.patient_id) %>
-  <%= @patient.first_name %> <%= @patient.last_name %>
+  <h3 style="text-align: center;">Map & Directions</h3>
 </p>
 
-<p>
-  <strong>Driver:</strong>
-  <% if @appointment.status == 0 %>
-    <span style="color:red">unassigned</span>
-  <% else %>
-    <% @driver = Driver.find(@appointment.driver_id) %>
-    <%= @driver.first_name %> <%= @driver.last_name %>
-  <% end %>
-</p>
-
-<p>
-  <strong>Date & Time:</strong>
-  <p><%= Time.parse(@appointment.datetime).strftime("%a %b %d, %Y") %></p>
-  <p><%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %></p>
-</p>
-
-<p>
-  <strong>Patient Address:</strong> 
-  <p><%= @appointment.location[0][:name] %></p>
-  <p><%= @appointment.location[0][:address] %></p>
-</p>
-  
-<p>
-  <strong>Destination Address:</strong>
-  <p><%= @appointment.location[1][:name] %></p>
-  <p><%= @appointment.location[1][:address] %></p>
-</p>
-
-<p>
-  <strong>Map & Directions:</strong>
-</p>
-
-<div class='parent'> 
+<div class='parent'>
   <div class='child float-left-child' id="map"></div>
   <div class='child float-left-child' id="right-panel"></div>
 </div></br>
 
-<% if session[:login_type] == "D" %>
-  <%= link_to 'Back', drivers_home_path %>
-<% elsif session[:login_type] == "P" %>
-  <%= link_to 'Back', patients_home_path %>
-<% else %>
-  <%= link_to 'Back', admins_home_path %>
-<% end %>
-
-
+<p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
