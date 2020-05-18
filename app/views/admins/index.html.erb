@@ -52,7 +52,7 @@
       <!-- ========================ADMINS======================== -->
 
       <h1>Admins</h1>
-      
+
       <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
         <%= hidden_field_tag "a_search", "a_search" %>
         <div class="row">
@@ -60,12 +60,12 @@
           <%= text_field_tag :search, params[:search], placeholder: "Search name or email", class: "form-control" %>
           </div>
           <div class="col">
-          <%= submit_tag "Submit", class: "btn btn-primary" %>  
+          <%= submit_tag "Submit", class: "btn btn-primary" %>
           </div>
         </div>
-      <% end %> 
+      <% end %>
       <br>
-      
+
       <table >
         <thead>
           <tr>
@@ -125,7 +125,7 @@
 
       <!-- ========================DRIVERS======================== -->
       <h1>Drivers</h1>
-      
+
       <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
         <%= hidden_field_tag "d_search","d_search" %>
         <div class="row">
@@ -133,12 +133,12 @@
           <%= text_field_tag :search, params[:search], placeholder: "Search name or email", class: "form-control" %>
           </div>
           <div class="col">
-          <%= submit_tag "Submit", class: "btn btn-primary" %>  
+          <%= submit_tag "Submit", class: "btn btn-primary" %>
           </div>
         </div>
-      <% end %> 
+      <% end %>
       <br>
-      
+
       <table>
         <thead>
           <tr>
@@ -199,10 +199,10 @@
         <%= text_field_tag :search, params[:search], placeholder: "Search name or email", class: "form-control" %>
         </div>
         <div class="col">
-        <%= submit_tag "Submit", class: "btn btn-primary" %>  
+        <%= submit_tag "Submit", class: "btn btn-primary" %>
         </div>
       </div>
-    <% end %> 
+    <% end %>
     <br>
 
     <table>
@@ -249,7 +249,9 @@
                 <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
               <% end %>
             <% end %>
-
+            <% if @currentAdmin.auth_lvl == 2 %>
+              <%= button_to 'Locations', patient_presets_path(patient.id), method: :get, class: "btn btn-secondary btn-sm" %>
+            <% end %>
             <% if @currentAdmin.auth_lvl == 1  %>
               <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
               <%= button_to 'Comments', viewComments_patient_path(patient.id), method: :get, class: "btn btn-secondary btn-sm" %>
