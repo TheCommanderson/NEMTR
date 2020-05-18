@@ -9,6 +9,8 @@ class Admin
   field :email, type: String
   field :auth_lvl, type: Integer
   field :host_org, type: String
+  field :admin_name, type: String
+  field :admin_email, type: String
   field :approved, type: Boolean
   field :password_digest, type: String
   

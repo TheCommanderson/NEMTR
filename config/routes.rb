@@ -39,8 +39,6 @@ Rails.application.routes.draw do
   resources :admins do
     post :approve, on: :member
     post :unapprove, on: :member
-    post :train, on: :member
-    post :approve_patient, on: :member
     post :delete_host, on: :member
     get :add_host, on: :member
     get :search, on: :member

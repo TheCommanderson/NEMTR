@@ -84,6 +84,17 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col">
+        <div class="text-right">
+          <%= form.label :host_org, 'Please choose your healthcare provider' %>
+        </div>
+      </div>
+      <div class="col">
+        <%= form.select :host_org, options_for_select(AdminsController::HOSTS.select{ |h| h != "N/A" }) %>
+      </div>
+    </div>
+
     <br />
     <div class="row">
       <div class="col">
@@ -92,6 +103,5 @@
         </div>
       </div>
     </div>
-
   <% end %>
 </body>

@@ -52,12 +52,27 @@
       <!-- ========================ADMINS======================== -->
 
       <h1>Admins</h1>
+      
+      <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
+        <%= hidden_field_tag "a_search", "a_search" %>
+        <div class="row">
+          <div class="col">
+          <%= text_field_tag :search, params[:search], placeholder: "Search name or email", class: "form-control" %>
+          </div>
+          <div class="col">
+          <%= submit_tag "Submit", class: "btn btn-primary" %>  
+          </div>
+        </div>
+      <% end %> 
+      <br>
+      
       <table >
         <thead>
           <tr>
             <th>Admin</th>
             <th>Authority Level</th>
-            <th>Host org</th>
+            <th>Host Organization</th>
+            <th>Approved by</th>
             <th>Approved?</th>
             <th>Actions</th>
           </tr>
@@ -79,6 +94,14 @@
               </td>
               <td><%= admin.host_org %></td>
               <td>
+                <% if admin.admin_name %>
+                  <%= admin.admin_name %>
+                  <p></br>
+                  Email: <%= admin.admin_email %>
+                  </p>
+                <% end %>
+              </td>
+              <td>
                 <% if admin.approved %>
                   <span>True</span>
                 <% else %>
@@ -87,9 +110,9 @@
               </td>
               <td>
                 <% if admin.approved %>
-                  <%#= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" } %>
+                  <%= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
                 <% else %>
-                  <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary" %>
+                  <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
                 <% end %>
                 <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
               </td>
@@ -102,12 +125,26 @@
 
       <!-- ========================DRIVERS======================== -->
       <h1>Drivers</h1>
+      
+      <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
+        <%= hidden_field_tag "d_search","d_search" %>
+        <div class="row">
+          <div class="col">
+          <%= text_field_tag :search, params[:search], placeholder: "Search name or email", class: "form-control" %>
+          </div>
+          <div class="col">
+          <%= submit_tag "Submit", class: "btn btn-primary" %>  
+          </div>
+        </div>
+      <% end %> 
+      <br>
+      
       <table>
         <thead>
           <tr>
             <th>Driver</th>
-            <th>Admin</th>
-            <th>Trained</th>
+            <th>Approved By</th>
+            <th>Trained?</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -137,8 +174,10 @@
                 <% end %>
               </td>
               <td>
-                  <% if !driver.trained %>
-                    <%= button_to "Approve", { action: "train", id: driver.id }, method: :post,class: "btn btn-secondary btn-sm" %>
+                  <% if driver.trained %>
+                    <%= button_to "Unapprove", { action: "unapprove", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                  <% else %>
+                    <%= button_to "Approve", { action: "approve", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
                   <% end %>
 
                   <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
@@ -154,23 +193,24 @@
     <!-- ======================== PATIENTS ======================== -->
     <h1>Patients</h1>
     <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
+      <%= hidden_field_tag "p_search", "p_search" %>
       <div class="row">
         <div class="col">
-        <%= text_field_tag :search, params[:search], placeholder: "Search patient name", class: "form-control" %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search name or email", class: "form-control" %>
         </div>
         <div class="col">
-        <%= submit_tag "Submit", class: "btn btn-primary" %>
+        <%= submit_tag "Submit", class: "btn btn-primary" %>  
         </div>
       </div>
-    <% end %>
+    <% end %> 
     <br>
 
     <table>
       <thead>
         <tr>
           <th>Patient</th>
-          <th>Admin</th>
-          <th>Host Org</th>
+          <th>Host Organization</th>
+          <th>Approved By</th>
           <th>Approved?</th>
           <th>Actions</th>
         </tr>
@@ -185,6 +225,7 @@
               Email: <%= patient.email%> | Phone: <%= patient.phone %>
             </p>
           </td>
+          <td><%= patient.host_org %></td>
           <td>
             <% if patient.admin %>
               <%= patient.admin.first_name + ' ' + patient.admin.last_name %>
@@ -193,7 +234,6 @@
               </p>
             <% end %>
           </td>
-          <td><%= patient.host_org %></td>
           <td>
             <% if patient.approved %>
               <span>True</span>
@@ -202,9 +242,11 @@
             <% end %>
           </td>
           <td>
-            <% if @currentAdmin.auth_lvl == 2  %>
-              <% if !patient.approved %>
-                <%= button_to "Approve", { action: "approve_patient", id: patient.id }, method: :post, class: "btn btn-secondary btn-sm" %>
+            <% if @currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 2  %>
+              <% if patient.approved %>
+                  <%= button_to "Unapprove", { action: "unapprove", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+              <% else %>
+                <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
               <% end %>
             <% end %>
 
@@ -213,7 +255,7 @@
               <%= button_to 'Comments', viewComments_patient_path(patient.id), method: :get, class: "btn btn-secondary btn-sm" %>
             <% end  %>
 
-            <% if (@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3)%>
+            <% if ((@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3) && (patient.approved)) %>
               <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary btn-sm" %>
             <% end %>
           </td>
