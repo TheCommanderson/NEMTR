@@ -61,6 +61,24 @@ class ApplicationController < ActionController::Base
     end
 
     # ===================== MATCHING ENGINE STUFF ============================ #
+    def check_appt_update(appt)
+      if appt.status == 0
+        log = matching_alg
+      else
+        driver = appt.driver_id
+        atts = {status: 0, driver_id: nil}
+        appt.update_attributes(atts)
+
+        cur = (getMonday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10] == getMonday(DateTime.now).to_s[0..10])
+        drivers = valid_drivers(appt, cur)
+        if drivers.include? driver
+          atts = {status: 1, driver_id: driver}
+        else
+          log = matching_alg
+        end
+      end
+    end
+
     def check_conflicts(start_time, end_time, appt, dr)
       @driver_apps = Appointment.where(driver_id: dr)
       @driver_apps.each do |conflict|
@@ -157,13 +175,16 @@ class ApplicationController < ActionController::Base
             return
         end
 
+        # For each appointment without a driver execute this code
         @matchable_apps.each do |appt|
             @debug_log.append('appointment date: ' + appt.datetime)
+            # Check if this appointment is within the next two weeks
             if ![this_monday.to_s[0..10], next_monday.to_s[0..10]].include? getMonday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10]
                 @debug_log.append('appointment is not within the next 2 weeks')
                 next
             end
-            # TESTED TO HERE
+
+            # Check for all valid drivers and assign one randomly to this appointment
             cur = (getMonday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10] == this_monday.to_s[0..10])
             @debug_log.append('is this appt this week? ' + cur.to_s)
             poss_drivers = valid_drivers(appt, cur)
