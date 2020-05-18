@@ -40,12 +40,12 @@ p{
 table{
   padding-left: 20px;
   width: 100%;
-  background-color: #f5f6f6;
+  background-color: #e3f3f8;
 }
-tr:nth-child(even) {background-color: #ebecec;}
+tr:nth-child(even) {background-color: #cee1e8;}
 table,td,th{
   padding: 5px;
-  border: 1px solid white;
+  border: 1px solid #003354;
 }
 th{
   color: white;
@@ -93,7 +93,7 @@ text_area{
 }
 .btn-secondary.btn-sm{
   color: #003354;
-  background-color: #e5e5e6;
+  background-color: white;
   font-size: 18px;
   padding: 3px;
   margin: 2px;
