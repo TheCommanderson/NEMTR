@@ -59,6 +59,7 @@ class AppointmentsController < ApplicationController
       @appt_parms = appointment_params
       @appt_parms['datetime'] = params[:appointment]['dt(1i)'] + '-' + params[:appointment]['dt(2i)'] + '-' + params[:appointment]['dt(3i)'] + ' ' + params[:appointment]['dt(4i)'] + ':' + params[:appointment]['dt(5i)']
       if @appointment.update(@appt_parms)
+        check_appt_update(@appointment)
         format.html { redirect_to "/patients_home", notice: 'Appointment was successfully updated.'}
         # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :ok, location: @appointment }
