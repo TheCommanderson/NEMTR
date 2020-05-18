@@ -18,6 +18,13 @@ class PresetsController < ApplicationController
   def edit
   end
 
+  def destroy
+    @patient = Patient.find(params[:patient_id])
+    @preset = @patient.preset.find(params[:id])
+    @preset.destroy
+    redirect_to patient_presets_path
+  end
+
   private
     def preset_params
       params.require(:preset).permit(:addr1, :addr2, :city, :state, :zip, :name)

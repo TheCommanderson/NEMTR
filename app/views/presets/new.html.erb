@@ -1,23 +1,41 @@
-<br><br>
-<div class="text-center">
-  <h1>Add Location for Patient</h1>
-
-  <%= form_with(model: @preset, local: true, method: :post, url: patient_presets_path) do |form| %>
-    <%= form.label :addr1, "Address" %>
-    <%= form.text_field :addr1 %>
-    <%= form.label :addr2, "Address (cont.)" %>
-    <%= form.text_field :addr2 %>
-    <%= form.label :city %>
-    <%= form.text_field :city %>
-    <%= form.label :state %>
-    <%= form.text_field :state %>
-    <%= form.label :zip %>
-    <%= form.number_field :zip %>
-    <%= form.label :name, "Address Nickname" %>
-    <%= form.text_field :name %>
-    <br><br>
-    <%= form.submit "Create Location", class: "btn btn-primary big-btn" %>
-  <% end %>
+<div id="preset-new-page">
+  <div id="preset-left">
+    <h1>Add Location for Patient</h1>
+    <%= form_with(model: @preset, local: true, method: :post, url: patient_presets_path) do |form| %>
+      <%= form.label :addr1, "Address" %>
+      <%= form.text_field :addr1 %>
+      <%= form.label :addr2, "Address (cont.)" %>
+      <%= form.text_field :addr2 %>
+      <%= form.label :city %>
+      <%= form.text_field :city %>
+      <%= form.label :state %>
+      <%= form.text_field :state %>
+      <%= form.label :zip %>
+      <%= form.number_field :zip %>
+      <%= form.label :name, "Address Nickname" %>
+      <%= form.text_field :name %>
+      <br><br>
+      <%= form.submit "Create Location", class: "btn btn-primary big-btn" %>
+    <% end %>
+  </div>
+  <div id="or">
+    <br style='margin-top: 30%;'>
+    <h1>OR</h1>
+  </div>
+  <div id="preset-right">
+    <h1>Choose Location Already In Use</h1>
+    <div class='scroll-wrapper-preset'>
+    <table id='admin-preset-picker'>
+      <thead>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    </div>
+  </div>
 </div>
-<br>
-<p style='padding-left: 20px;'><%= link_to 'Back', patient_presets_path(@patient.id), class: "btn btn-secondary back-btn" %></p>
+
+<p style='padding-left: 20px; margin-top: 30%;'><%= link_to 'Back', patient_presets_path(@patient.id), class: "btn btn-secondary back-btn" %></p>
