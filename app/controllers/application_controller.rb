@@ -131,6 +131,11 @@ class ApplicationController < ActionController::Base
             end
             @debug_log.append('not blacklisted')
 
+            if !driver.trained
+              @debug_log.append('not trained')
+              next
+            end
+
             # Checking if the appointment falls within the range of thier schedule
             driver_today_sch = driver.schedule.where(current: cur).first[DateTime.strptime(appt.datetime, dt_format).to_time.strftime("%A")]
             driver_today_time_start = driver_today_sch[0..3].to_i

@@ -1,6 +1,6 @@
 <div id="preset-new-page">
   <div id="preset-left">
-    <h1>Add Location for Patient</h1>
+    <h1>Add Location for <%= @patient.first_name %></h1>
     <%= form_with(model: @preset, local: true, method: :post, url: patient_presets_path) do |form| %>
       <%= form.label :addr1, "Address" %>
       <%= form.text_field :addr1 %>
@@ -23,7 +23,7 @@
     <h1>OR</h1>
   </div>
   <div id="preset-right">
-    <h1>Choose Location Already In Use</h1>
+    <h1>Choose a Location for <%= @patient.first_name %></h1>
     <div class='scroll-wrapper-preset'>
     <table id='admin-preset-picker'>
       <thead>
@@ -32,6 +32,19 @@
         <th>Action</th>
       </thead>
       <tbody>
+        <% Patient.where(host_org: current_user.host_org).each do |p| %>
+          <% p.preset.each do |location| %>
+            <tr>
+              <td><%= location.name %></td>
+              <td>
+                <%= location.addr1 + ' ' + location.addr2 %>
+                <br>
+                <%= location.city + ' ' + location.state + ' ' + location.zip.to_s %>
+              </td>
+              <td><%= button_to 'Add' %>
+            </tr>
+          <% end %>
+        <% end %>
       </tbody>
     </table>
     </div>
