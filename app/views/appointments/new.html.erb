@@ -1,5 +1,14 @@
 <h1 style="text-align: center; padding-top: 2%;">New Appointment</h1>
-<div class="new-appt-1">
+<br><br>
+<div style="text-align: center;">
+  <select name='restrict_loc' id='restrict_loc' onchange='toggleView()'>
+    <option value=0>(Choose Option)</option>
+    <option value=1>I need a drive to a medical location</option>
+    <option value=2>I need a drive home from a medical location</option>
+  </select>
+</div>
+
+<div id="show-dest-restricted" class='new-appt-whole' style='display: none;'>
   <%= form_with(model: @appointment, local: true) do |form| %>
     <% if @appointment.errors.any? %>
       <div id="error_explanation">
@@ -16,13 +25,12 @@
   	<h3>Enter Date and Time</h3>
     <h5>(Time for Pick-Up, NOT Appointment Time)</h5>
     <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
-  	<!-- TODO: can use form.datetime_select -->
     <%= form.hidden_field :patient_id, :value => params[:patient_id]%>
     <%= form.hidden_field :status, :value => 0 %>
     <%= form.hidden_field :est_time, :value => 60 %>
 
     <div style="padding-top: 1%; padding-bottom: 1%;">
-      <div class="appt-loc">
+      <div class="appt-loc" id='new-appt-1'>
       	<h3>Pick-Up Location</h3>
       	<%= form.fields_for :location, @appointment.location.build do |f| %>
       		<%= f.label :addr1, "Address" %>
@@ -39,7 +47,88 @@
       		<%= f.text_field :name, placeholder: "(Optional)" %>
       	<% end %>
       </div>
-      <div class="appt-loc">
+      <div class='appt-loc' id='new-appt-4'>
+        <h3>Destination Location</h3>
+        <%= form.fields_for :location, @appointment.location.build do |f| %>
+          <%= f.hidden_field :name, :value => 'tmp' %>
+        <% end %>
+        <table class='appt-loc-selector'>
+          <thead>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            <% @patient.preset.each do |location| %>
+              <tr>
+                <td><%= location.name %></td>
+                <td>
+                  <%= location.addr1 + ' ' + location.addr2 %>
+                  <br>
+                  <%= location.city + ' ' + location.state + ' ' + location.zip.to_s %>
+                </td>
+                <td><input type='radio' name='loc_select' value=<%= location.id.to_s %> />
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class='appt-sub-btn'>
+  	   <%= form.submit 'Schedule!', class: "btn btn-primary big-btn" %>
+    </div>
+    <% end %>
+</div>
+
+<div id="show-pickup-restricted" class='new-appt-whole' style='display: none;'>
+  <%= form_with(model: @appointment, local: true) do |form| %>
+    <% if @appointment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+        <ul>
+        <% @appointment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  	<h3>Enter Date and Time</h3>
+    <h5>(Time for Pick-Up, NOT Appointment Time)</h5>
+    <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
+    <%= form.hidden_field :patient_id, :value => params[:patient_id]%>
+    <%= form.hidden_field :status, :value => 0 %>
+    <%= form.hidden_field :est_time, :value => 60 %>
+
+    <div style="padding-top: 1%; padding-bottom: 1%;">
+      <div class='appt-loc' id='new-appt-4'>
+        <%= form.fields_for :location, @appointment.location.build do |f| %>
+          <%= f.hidden_field :name, :value => 'tmp' %>
+        <% end %>
+        <h3>Pick-Up Location</h3>
+        <table class='appt-loc-selector'>
+          <thead>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            <% @patient.preset.each do |location| %>
+              <tr>
+                <td><%= location.name %></td>
+                <td>
+                  <%= location.addr1 + ' ' + location.addr2 %>
+                  <br>
+                  <%= location.city + ' ' + location.state + ' ' + location.zip.to_s %>
+                </td>
+                <td><input type='radio' name='loc_select' value=<%= location.id.to_s %> />
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="appt-loc" id='new-appt-1'>
       	<h3>Destination Location</h3>
       	<%= form.fields_for :location, @appointment.location.build do |f| %>
       		<%= f.label :addr1, "Address" %>
@@ -57,8 +146,28 @@
       	<% end %>
       </div>
     </div>
-  	<%= form.submit 'Schedule!', class: "btn btn-primary big-btn" %>
+    <div class='appt-sub-btn'>
+  	   <%= form.submit 'Schedule!', class: "btn btn-primary big-btn" %>
+    </div>
   <% end %>
 </div>
 
 <p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
+
+<script>
+  function toggleView(){
+    var sel = document.getElementById('restrict_loc').value;
+      if (sel == 1){
+        document.getElementById('show-dest-restricted').style.display = 'block';
+        document.getElementById('show-pickup-restricted').style.display = 'none';
+      }
+      else if (sel == 2){
+        document.getElementById('show-dest-restricted').style.display = 'none';
+        document.getElementById('show-pickup-restricted').style.display = 'block';
+      }
+      else {
+        document.getElementById('show-dest-restricted').style.display = 'none';
+        document.getElementById('show-pickup-restricted').style.display = 'none';
+      }
+  }
+</script>
