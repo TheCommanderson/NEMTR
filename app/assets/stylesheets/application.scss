@@ -15,24 +15,41 @@
  */
 
 // Custom bootstrap variables must be set or imported *before* bootstrap.
-
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@400;600&display=swap");
+@import "bootstrap";
 /* GENERAL CSS */
-html{
-  /* For backgroudn pictures */
-  height: 100%;
+html, body{
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px !important;
+    overflow-x: hidden;
 }
 body {
   background-color: #fef3f2 !important;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 18px;
-  margin: 0px;
-  height: 100%;
 }
 label{
   font-size: 17px;
 }
-text_area{
-  height: auto;
+.bg{
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+p.flash-notice{
+  position: fixed;
+  bottom: 0;
+  right: 50%;
+  margin: auto;
+  text-align: center;
+  color: red;
+  background-color: white;
+  border-color: #003354;
+  border-radius: 10px;
+  padding: 5px 5px 5px 5px;
 }
 
 /* HEADER AND PARAGRAPH STYLES */
@@ -54,7 +71,7 @@ h4{
   font-style: italic;
 }
 p{
-  font-size: 18px;
+  font-size: 20px !important;
 }
 
 /* TABLE STYLES */
@@ -117,7 +134,7 @@ tr:nth-child(even){
 }
 
 /* BUTTON SIZES */
-.sm-btn{
+.btn-sm{
   color: #003354;
   background-color: white;
   font-size: 18px;
@@ -147,7 +164,6 @@ tr:nth-child(even){
   height: 150px;
   font-size: 18px;
 }
-=
 .f-left{
   float: left;
 }
@@ -160,8 +176,3 @@ tr:nth-child(even){
   color:white;
   padding-bottom: 15px;
 }
-
-
-
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@400;600&display=swap");
-@import "bootstrap";

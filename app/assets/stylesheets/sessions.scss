@@ -1,8 +1,9 @@
+// Place all the styles related to the sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
 #homepage-bg{
   background-image: url(homepage.jpg);
-  height: 100%;
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+}
+#signin-bg{
+  background-image: url(signin.jpg);
 }
