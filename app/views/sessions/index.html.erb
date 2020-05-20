@@ -1,35 +1,21 @@
-<style>
-		.btn-primary{
-			background-color: #003354;
-			font-size: 17px;
-			border-style: none;
-			width: 90px; !important
-		}
-	</style>
-</head>
-<body>
-	<br><br><br><br><br><br><br><br>
+<div id="homepage-bg">
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 	<!-- ============= NOTICE ============= -->
 	<p class="text-center" style="color: red;"><%= notice %><p>
 	<!-- ============= MAIN STUFF ============= -->
-	<div class="text-center">
-		<h1 style="font-style: normal;">NEMTR</h1>
-		<h5>Non-Emergency Medical Transportation</h5>
-	</div>
-	<br>
-
 	<div class="row justify-content-md-center">
 		<div class="col col-md-2" style="width: 5%" align="center">
-				<h3>LOG IN</h3>
-				<%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-primary" %><br/>
-				<%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-primary" %><br/>
-				<%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-primary" %>
+				<h2>LOG IN</h2>
+				<%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-secondary big-btn" %><br/>
+				<%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-secondary big-btn" %><br/>
+				<%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-secondary big-btn" %>
 		</div>
 		<div class="col col-md-2" align="center">
-			<h3>SIGN UP</h3>
-			<%= button_to 'ADMIN', new_admin_path, method: "get", class:"btn btn-primary" %><br/>
-			<%= button_to 'PATIENT', new_patient_path, method: "get", class:"btn btn-primary" %><br/>
-			<%= button_to 'DRIVER', new_driver_path, method: "get", class:"btn btn-primary" %>
+			<h2>SIGN UP</h2>
+			<%= button_to 'ADMIN', new_admin_path, method: "get", class:"btn btn-secondary big-btn" %><br/>
+			<%= button_to 'PATIENT', new_patient_path, method: "get", class:"btn btn-secondary big-btn" %><br/>
+			<%= button_to 'DRIVER', new_driver_path, method: "get", class:"btn btn-secondary big-btn" %>
 		</div>
 	</div>
-<body>
+</div>
