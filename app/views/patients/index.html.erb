@@ -57,11 +57,11 @@
               <p></br><%= appointment.location[1].address %></p>
             </td>
             <td style="padding: 6px;">
-              <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Update Date/Time', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid), method: :get, class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid), method: :get, class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm"%>
+              <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Update Date/Time', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid), method: :get, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid), method: :get, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn"%>
             </td>
           </tr>
           <% end %>

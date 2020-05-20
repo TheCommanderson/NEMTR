@@ -56,8 +56,8 @@
                 <p></br><%= appointment.location[1][:address] %></p>
               </td>
               <td>
-                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-                <%= button_to "Decline Appointment", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
+                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+                <%= button_to "Decline Appointment", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn" %>
               </td>
 
             </tr>
@@ -101,8 +101,8 @@
                 <p></br><%= appointment.location[1][:address] %></p>
               </td>
               <td>
-                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-                <%= link_to 'Leave Comment', comment_patient_path(appointment.patient_id), method: :get, class: "btn btn-secondary btn-sm" %>
+                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+                <%= link_to 'Leave Comment', comment_patient_path(appointment.patient_id), method: :get, class: "btn btn-secondary sm-btn" %>
               </td>
 
             </tr>
@@ -154,8 +154,8 @@
             <p></br><%= appointment.location[1][:address] %></p>
           </td>
           <td>
-            <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-            <%= button_to 'Claim this Ride', drivers_claim_url(appt: appointment), class: "btn btn-secondary btn-sm" %>
+            <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+            <%= button_to 'Claim this Ride', drivers_claim_url(appt: appointment), class: "btn btn-secondary sm-btn" %>
           </td>
         </tr>
         <% end %>
