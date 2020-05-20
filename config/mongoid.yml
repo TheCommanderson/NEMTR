@@ -8,7 +8,7 @@ development:
       uri: mongodb+srv://Spencer:r1desh4re@nemtr-pbmpo.mongodb.net/test?retryWrites=true&w=majority
       options:
         server_selection_timeout: 5
-        
+
 test:
   clients:
     default:
@@ -21,7 +21,7 @@ test:
         max_pool_size: 1
 
 production:
-  sessions:
+  clients:
     default:
       uri: mongodb+srv://Spencer:r1desh4re@nemtr-pbmpo.mongodb.net/test?retryWrites=true&w=majority
       options:
