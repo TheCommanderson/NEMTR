@@ -15,6 +15,21 @@ class PresetsController < ApplicationController
     redirect_to patient_presets_path
   end
 
+  def quickAdd
+    @patient = Patient.find(params[:patient_id])
+    tmp_patient = Patient.where(:'preset.id' => params[:preset_id]).first
+    copy_from = tmp_patient.preset.find(params[:preset_id])
+    @params = preset_params
+    @params[:addr1] = copy_from[:addr1]
+    @params[:addr2] = copy_from[:addr2]
+    @params[:city] = copy_from[:city]
+    @params[:state] = copy_from[:state]
+    @params[:zip] = copy_from[:zip]
+    @preset = @patient.preset.build(@params)
+    @patient.save
+    redirect_to patient_presets_path
+  end
+
   def edit
   end
 
