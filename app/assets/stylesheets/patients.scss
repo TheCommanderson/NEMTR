@@ -9,7 +9,45 @@
   padding-top: 2%;
   padding-bottom: 2%;
 }
+.scroll-wrapper-preset{
+  max-height: 41vh;
+  overflow: scroll;
+}
+#preset-new-page{
+  padding-top: 2%;
+  height: 40%;
+}
+#preset-left{
+  float: left;
+  text-align: center;
+  width: 30%;
+  margin-left: 10%;
+  height: 50%;
+}
+#or{
+  float: left;
+  text-align: center;
+  width: 20%;
+}
+#preset-right{
+  float: right;
+  text-align: center;
+  width: 30%;
+  margin-right: 10%;
+}
 #view-comments{
   padding-top: 2%;
   text-align: center;
+}
+#patient-presets{
+  text-align: center;
+  padding-top: 2%;
+}
+#preset-table{
+  width: 70%;
+  margin: auto;
+}
+#admin-preset-picker{
+  max-height: 20%;
+  overflow: scroll;
 }

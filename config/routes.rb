@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'patients', to:'patients#pending'
   get 'patients_home', to: 'patients#index'
   resources :patients do
+    resources :presets
     get :comment, on: :member
     get :viewComments, on: :member
     patch :append, on: :member

@@ -16,4 +16,6 @@ class Patient
   has_secure_password
   belongs_to :admin, :optional => true
   has_many :appointments
+  embeds_many :preset
+  accepts_nested_attributes_for :preset
 end
