@@ -20,15 +20,18 @@
   text-align: center;
   font-size: 20px !important;
 }
-.new-appt-1{
+.new-appt-whole{
   text-align: center;
   margin: auto;
 }
 .appt-loc{
   display: inline-block;
   vertical-align: top;
-  padding-left: 5%;
-  padding-right: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.appt-loc-selector{
+  margin: auto;
 }
 .parent {
   display: flex;
@@ -44,4 +47,7 @@
   border-color: #003354;
   border-style: solid;
   border-width: medium;
+}
+.appt-sub-btn{
+  clear: both;
 }
