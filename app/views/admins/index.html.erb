@@ -43,7 +43,7 @@
           <% AdminsController::HOSTS.select{ |h| h != "N/A" }.each do |host| %>
             <tr>
               <td><%= host %></td>
-              <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary btn-sm" %></td>
+              <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary sm-btn" %></td>
             </tr>
           <% end %>
         </tbody>
@@ -110,11 +110,11 @@
               </td>
               <td>
                 <% if admin.approved %>
-                  <%= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                  <%= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                 <% else %>
-                  <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                  <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                 <% end %>
-                <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
+                <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
               </td>
             </tr>
           <% end %>
@@ -175,12 +175,12 @@
               </td>
               <td>
                   <% if driver.trained %>
-                    <%= button_to "Unapprove", { action: "unapprove", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                    <%= button_to "Unapprove", { action: "unapprove", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                   <% else %>
-                    <%= button_to "Approve", { action: "approve", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                    <%= button_to "Approve", { action: "approve", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                   <% end %>
 
-                  <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
+                  <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
               </td>
             </tr>
           <% end %>
@@ -244,21 +244,21 @@
           <td>
             <% if @currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 2  %>
               <% if patient.approved %>
-                  <%= button_to "Unapprove", { action: "unapprove", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                  <%= button_to "Unapprove", { action: "unapprove", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
               <% else %>
-                <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
               <% end %>
             <% end %>
             <% if @currentAdmin.auth_lvl == 2 %>
-              <%= button_to 'Locations', patient_presets_path(patient.id), method: :get, class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Locations', patient_presets_path(patient.id), method: :get, class: "btn btn-secondary sm-btn" %>
             <% end %>
             <% if @currentAdmin.auth_lvl == 1  %>
-              <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Comments', viewComments_patient_path(patient.id), method: :get, class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Comments', viewComments_patient_path(patient.id), method: :get, class: "btn btn-secondary sm-btn" %>
             <% end  %>
 
             <% if ((@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3) && (patient.approved)) %>
-              <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary btn-sm" %>
+              <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary sm-btn" %>
             <% end %>
           </td>
         </tr>
@@ -318,9 +318,9 @@
               <p></br><%= appointment.location[1][:address] %></p>
             </td>
             <td>
-              <%= button_to 'Details', appointment, method: :get,class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Details', appointment, method: :get,class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
             </td>
           </tr>
           <% end %>

@@ -19,7 +19,7 @@
               <%= p.city + ' ' + p.state + ' ' + p.zip.to_s %>
             </td>
             <td>
-              <%= button_to 'Remove', patient_preset_path(id: p.id), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Remove', patient_preset_path(id: p.id), data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-secondary sm-btn" %>
           </tr>
         <% end %>
       </tbody>

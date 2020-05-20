@@ -15,8 +15,10 @@
  */
 
 // Custom bootstrap variables must be set or imported *before* bootstrap.
+
+/* GENERAL CSS */
 html{
-  /* FOR backgroudn pictures */
+  /* For backgroudn pictures */
   height: 100%;
 }
 body {
@@ -29,43 +31,39 @@ body {
 label{
   font-size: 17px;
 }
+text_area{
+  height: auto;
+}
 
-/* header styles */
+/* HEADER AND PARAGRAPH STYLES */
 h1,h2,h3,h4,h5{
   font-family: 'Lato', sans-serif;
 }
-h1{
+h1,h3,h5{
   color: #003454;
 }
-h2{
+h2,h4{
   color: #f2f2f3;
 }
 h3{
-  color: #003454;
   font-size: 23px;
   font-weight: 500;
   font-style: italic;
 }
 h4{
-  color: #f2f2f3;
-  font-weight: 400;
-  font-style: italic;
-}
-h5{
-  color: #003454;
-  font-size: 16px;
   font-style: italic;
 }
 p{
   font-size: 18px;
 }
+
+/* TABLE STYLES */
 table{
   padding-left: 20px;
   width: 100%;
   background-color: #e3f3f8;
 }
-tr:nth-child(even) {background-color: #cee1e8;}
-table,td,th{
+table,td{
   padding: 5px;
   border: 1px solid #003354;
 }
@@ -80,9 +78,11 @@ th{
 td{
   font-size: 18px;
 }
-text_area{
-  height: auto;
+tr:nth-child(even){
+  background-color: #cee1e8;
 }
+
+/* PRIMARY BUTTONS */
 .btn-primary{
   color: white;
   background-color: #003354;
@@ -101,6 +101,7 @@ text_area{
   color: #f2f2f3;
 }
 
+/* SECONDARY BUTTON */
 .btn-secondary{
   color: #003354;
   background-color: white;
@@ -114,19 +115,26 @@ text_area{
   background-color: #e7f5ff;
   color: #33adff;
 }
-.btn-secondary.btn-sm{
+
+/* BUTTON SIZES */
+.sm-btn{
   color: #003354;
   background-color: white;
   font-size: 18px;
   padding: 3px;
   margin: 2px;
 }
-.btn-secondary:hover.btn-sm{
-  background-color: #e7f5ff;
+.big-btn{
+  margin: auto;
+  display: table;
+  width: 200px;
+  line-height: 60px;
+  font-size: 21px;
 }
-.right {
-  position: absolute;
-  right: 7px;
+.back-btn{
+  width: 130px;
+  line-height: 50px;
+  font-size: 20px;
 }
 .row{
   padding: 4px;
@@ -139,18 +147,7 @@ text_area{
   height: 150px;
   font-size: 18px;
 }
-.back-btn{
-  width: 130px;
-  line-height: 50px;
-  font-size: 20px;
-}
-.big-btn{
-  margin: auto;
-  display: table;
-  width: 200px;
-  line-height: 60px;
-  font-size: 21px;
-}
+=
 .f-left{
   float: left;
 }
@@ -163,14 +160,7 @@ text_area{
   color:white;
   padding-bottom: 15px;
 }
-#homepage-bg{
-  background-image: url(homepage.jpg);
-  height: 100%;
 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@400;600&display=swap");
