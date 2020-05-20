@@ -11,7 +11,6 @@
     <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+Rails.application.credentials.gmap_geocode_api_kep , defer: true %>
     <%= yield(:head_tags) %>
   </head>
-
   <body>
     <%= yield %>
   </body>
