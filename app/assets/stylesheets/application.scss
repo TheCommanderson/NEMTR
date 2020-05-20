@@ -13,27 +13,165 @@
  *= require_tree
  *= require appointments.scss
  */
-/*
-pink:
-  #fceae8 (95%)(background)
-  #f6bfbb (85%)
-  #ee847d (71%)(pinkoi salmon)
-navy:
-  #33adff(60%)
-  #005c99(30%)
-  #003354(16%)(pinkoi navy)
-gray:
-  #f2f2f3(95%)(secondary sm hover color)
-  #e5e5e6(90%)(pinkoi gray)
-yellow:
-  #fcedcf (90%)(secondary btn hover color)
-  #fbe4b6 (85%)
-  #f9d58c (76%)(pinkoi yellow)
-*/
 
 // Custom bootstrap variables must be set or imported *before* bootstrap.
+html{
+  /* FOR backgroudn pictures */
+  height: 100%;
+}
 body {
   background-color: #fef3f2 !important;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 18px;
+  margin: 0px;
+  height: 100%;
 }
+label{
+  font-size: 17px;
+}
+
+/* header styles */
+h1,h2,h3,h4,h5{
+  font-family: 'Lato', sans-serif;
+}
+h1{
+  color: #003454;
+}
+h2{
+  color: #f2f2f3;
+}
+h3{
+  color: #003454;
+  font-size: 23px;
+  font-weight: 500;
+  font-style: italic;
+}
+h4{
+  color: #f2f2f3;
+  font-weight: 400;
+  font-style: italic;
+}
+h5{
+  color: #003454;
+  font-size: 16px;
+  font-style: italic;
+}
+p{
+  font-size: 18px;
+}
+table{
+  padding-left: 20px;
+  width: 100%;
+  background-color: #e3f3f8;
+}
+tr:nth-child(even) {background-color: #cee1e8;}
+table,td,th{
+  padding: 5px;
+  border: 1px solid #003354;
+}
+th{
+  color: white;
+  background-color: #003354;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+  border-right: 1px solid white;
+}
+td{
+  font-size: 18px;
+}
+text_area{
+  height: auto;
+}
+.btn-primary{
+  color: white;
+  background-color: #003354;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: 'Lato', sans-serif;
+  padding: 3px 5px;
+  margin: 3px;
+  text-align: center;
+}
+.btn-primary:visited{
+  color: white;
+}
+.btn-primary:hover{
+  background-color: #2d5c76;
+  color: #f2f2f3;
+}
+
+.btn-secondary{
+  color: #003354;
+  background-color: white;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 3px 5px;
+  margin: 3px;
+  text-align: center;
+}
+.btn-secondary:hover{
+  background-color: #e7f5ff;
+  color: #33adff;
+}
+.btn-secondary.btn-sm{
+  color: #003354;
+  background-color: white;
+  font-size: 18px;
+  padding: 3px;
+  margin: 2px;
+}
+.btn-secondary:hover.btn-sm{
+  background-color: #e7f5ff;
+}
+.right {
+  position: absolute;
+  right: 7px;
+}
+.row{
+  padding: 4px;
+}
+/* Schedule Page Stuff DO NOT MOVE UP */
+.schedule{
+  margin: auto;
+  text-align: center;
+  width: 60%;
+  height: 150px;
+  font-size: 18px;
+}
+.back-btn{
+  width: 130px;
+  line-height: 50px;
+  font-size: 20px;
+}
+.big-btn{
+  margin: auto;
+  display: table;
+  width: 200px;
+  line-height: 60px;
+  font-size: 21px;
+}
+.f-left{
+  float: left;
+}
+.f-right{
+  float: right;
+}
+#header{
+  font-family: 'Lato', sans-serif;
+  background-color: #003354;
+  color:white;
+  padding-bottom: 15px;
+}
+#homepage-bg{
+  background-image: url(homepage.jpg);
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@400;600&display=swap");
 @import "bootstrap";
