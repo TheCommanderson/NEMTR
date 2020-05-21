@@ -1,7 +1,15 @@
-<br><br>
-<div class="text-center" >
-  <h3>New Driver</h3>
+<head>
+	<style>
+		body{
+			 overflow-x: hidden;
+		}
+	</style>
+</head>
+<div class='bg signup-bg'>
+  <div class="center signup-page" >
+    <h3>New Driver</h3>
+  </div>
+  <br>
+  <%= render 'form', driver: @driver %>
+  <%= link_to 'Back', root_url, class: "btn btn-secondary big-btn" %>
 </div>
-<br>
-<%= render 'form', driver: @driver %>
-<p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
