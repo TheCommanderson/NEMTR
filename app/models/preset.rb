@@ -7,5 +7,7 @@ class Preset
   field :state, type: String
   field :zip, type: Integer
 
+  validates_presence_of :addr1, :city, :state, :zip
+
   embedded_in :Patient
 end
