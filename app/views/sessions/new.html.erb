@@ -1,15 +1,23 @@
+<head>
+	<style>
+		body{
+			 overflow-x: hidden;
+		}
+	</style>
+</head>
 <% @login_type = params[:login] %>
-<br><br><br><br><br><br><br><br><br>
 <head>
   <style>
     input[type=text],input[type=password]{
-      line-height: 2;
-      width: 10%;
+      line-height: 3;
+      width: 15%;
+      font-size: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="text-center">
+<div id='signin-bg' class='bg'>
+  <div class="center" id='login-btns'>
     <h3>Login as <%= @login_type %></h3>
     <br>
     <%= form_with(url: create_session_url, local: true) do |form| %>
@@ -21,10 +29,11 @@
           <%= password_field_tag :password, nil, placeholder: 'Password' %>
         </div>
         <div class="row-md-offset-5" style="padding:5px;">
-          <%= form.submit "Login" ,class:"btn btn-primary"%>
+          <%= form.submit "Login" ,class:"btn btn-primary big-btn"%>
         </div>
         <%= hidden_field_tag :login_type, @login_type %>
       </div>
     <% end %>
   </div>
+</div>
 </body>

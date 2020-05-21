@@ -1,18 +1,16 @@
 <div id="header">
   <div class="row" style="margin: 0px">
     <div class="col">
-      <h2>Driver Home Page</h2>
       <br>
+      <h2>Driver Home Page</h2>
       <h4><%= @logged_in_driver.first_name %> <%= @logged_in_driver.last_name %></h4>
     </div>
     <% if @logged_in_driver.trained %>
       <div class="col-sm-1">
         <%= button_to 'Edit Account', edit_driver_path(@logged_in_driver), method: :get, class:"btn btn-secondary right" %>
-        <br><br>
         <%= button_to 'My Schedule', driver_schedules_url(@logged_in_driver), :method => 'get', class:"btn btn-secondary right" %>
-        <br><br>
     <% end %>
-      <%= button_to 'Log Out', logout_path, class:"btn btn-secondary right", style: "padding: 3px; margin: 3px 3px 0px 0px;" %>
+      <%= button_to 'Log Out', logout_path, class:"btn btn-secondary right" %>
     </div>
   </div>
 </div>
@@ -56,8 +54,8 @@
                 <p></br><%= appointment.location[1][:address] %></p>
               </td>
               <td>
-                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-                <%= button_to "Decline Appointment", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
+                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+                <%= button_to "Decline Appointment", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn" %>
               </td>
 
             </tr>
@@ -101,8 +99,8 @@
                 <p></br><%= appointment.location[1][:address] %></p>
               </td>
               <td>
-                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-                <%= link_to 'Leave Comment', comment_patient_path(appointment.patient_id), method: :get, class: "btn btn-secondary btn-sm" %>
+                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+                <%= link_to 'Leave Comment', comment_patient_path(appointment.patient_id), method: :get, class: "btn btn-secondary sm-btn" %>
               </td>
 
             </tr>
@@ -154,8 +152,8 @@
             <p></br><%= appointment.location[1][:address] %></p>
           </td>
           <td>
-            <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary btn-sm" %>
-            <%= button_to 'Claim this Ride', drivers_claim_url(appt: appointment), class: "btn btn-secondary btn-sm" %>
+            <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+            <%= button_to 'Claim this Ride', drivers_claim_url(appt: appointment), class: "btn btn-secondary sm-btn" %>
           </td>
         </tr>
         <% end %>

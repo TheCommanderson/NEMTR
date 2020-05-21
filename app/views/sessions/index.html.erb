@@ -1,17 +1,22 @@
-<div id="homepage-bg">
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<head>
+	<style>
+		body{
+			 overflow-x: hidden;
+		}
+	</style>
+</head>
 
+<div id="homepage-bg" class='bg'>
 	<!-- ============= NOTICE ============= -->
-	<p class="text-center" style="color: red;"><%= notice %><p>
-	<!-- ============= MAIN STUFF ============= -->
-	<div class="row justify-content-md-center">
-		<div class="col col-md-2" style="width: 5%" align="center">
+	<p class="flash-notice"><%= notice %></p>
+	<div class="center" id="index-btns">
+		<div class="home-btns">
 				<h2>LOG IN</h2>
 				<%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-secondary big-btn" %><br/>
 				<%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-secondary big-btn" %><br/>
 				<%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-secondary big-btn" %>
 		</div>
-		<div class="col col-md-2" align="center">
+		<div class="home-btns">
 			<h2>SIGN UP</h2>
 			<%= button_to 'ADMIN', new_admin_path, method: "get", class:"btn btn-secondary big-btn" %><br/>
 			<%= button_to 'PATIENT', new_patient_path, method: "get", class:"btn btn-secondary big-btn" %><br/>
