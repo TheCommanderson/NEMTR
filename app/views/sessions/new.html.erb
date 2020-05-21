@@ -3,15 +3,14 @@
   <style>
     input[type=text],input[type=password]{
       line-height: 3;
-      width: 12%;
+      width: 15%;
       font-size: 20px;
     }
   </style>
 </head>
 <body>
 <div id='signin-bg' class='bg'>
-  <br><br><br><br><br><br><br><br><br>
-  <div class="text-center">
+  <div class="center" id='login-btns'>
     <h3>Login as <%= @login_type %></h3>
     <br>
     <%= form_with(url: create_session_url, local: true) do |form| %>
