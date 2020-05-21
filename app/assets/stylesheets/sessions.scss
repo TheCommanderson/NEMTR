@@ -1,3 +1,21 @@
 // Place all the styles related to the sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.home-btns{
+  float: left;
+  width: 49.5%;
+  text-align: center;
+}
+#index-btns{
+  width: 50%;
+  padding-top: 45vh;
+}
+#login-btns{
+  padding-top: 30vh;
+}
+#homepage-bg{
+  background-image: url(homepage.jpg);
+}
+#signin-bg{
+  background-image: url(signin.jpg);
+}

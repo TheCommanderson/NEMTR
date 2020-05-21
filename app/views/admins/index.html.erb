@@ -14,9 +14,8 @@
       <h4 style="font-weight: 400; font-style: italic;"><%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h4>
     </div>
     <div class="col-1">
-      <%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary right", style:"margin: 6px 0px 6px 0px;" %>
-      <br><br>
-      <%= button_to 'Log Out', logout_path, class: "btn btn-secondary right", style:"margin-top: 7px" %>
+      <%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary right" %>
+      <%= button_to 'Log Out', logout_path, class: "btn btn-secondary right" %>
     </div>
   </div>
 </div>
@@ -25,7 +24,7 @@
   <% if @currentAdmin.approved %>
     <% if @currentAdmin.auth_lvl == 1 %>
       <!-- ======================== ORGNIZATION ======================== -->
-      <h1>Organization</h1>
+      <h1>Healthcare Organizations</h1>
       <%= form_tag(:controller => "admins", :action => "add_host") do%>
         <div class="row" style=" padding-bottom:5px; overflow: hidden;">
           <div class="col"><%= text_field_tag :host_org, params[:host_org], placeholder: "Add an organization", class:"form-control" %></div>
@@ -43,14 +42,14 @@
           <% AdminsController::HOSTS.select{ |h| h != "N/A" }.each do |host| %>
             <tr>
               <td><%= host %></td>
-              <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary btn-sm" %></td>
+              <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary sm-btn" %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
 
       <!-- ========================ADMINS======================== -->
-
+      <br>
       <h1>Admins</h1>
 
       <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
@@ -110,20 +109,19 @@
               </td>
               <td>
                 <% if admin.approved %>
-                  <%= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                  <%= button_to "Unapprove", { action: "unapprove", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                 <% else %>
-                  <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                  <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                 <% end %>
-                <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
+                <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <br>
-      <br>
 
       <!-- ========================DRIVERS======================== -->
+      <br>
       <h1>Drivers</h1>
 
       <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
@@ -175,22 +173,21 @@
               </td>
               <td>
                   <% if driver.trained %>
-                    <%= button_to "Unapprove", { action: "unapprove", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                    <%= button_to "Unapprove", { action: "unapprove", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                   <% else %>
-                    <%= button_to "Approve", { action: "approve", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                    <%= button_to "Approve", { action: "approve", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                   <% end %>
 
-                  <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
+                  <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <br>
-      <br>
     <% end %>
 
     <!-- ======================== PATIENTS ======================== -->
+    <br>
     <h1>Patients</h1>
     <%= form_tag(admins_home_path, :method => :get, class: "search-form") do %>
       <%= hidden_field_tag "p_search", "p_search" %>
@@ -221,7 +218,7 @@
         <tr>
           <td>
             <%= patient.first_name %> <%= patient.middle_initial %> <%= patient.last_name %>
-            <p></br>
+            <p><br>
               Email: <%= patient.email%> | Phone: <%= patient.phone %>
             </p>
           </td>
@@ -229,7 +226,7 @@
           <td>
             <% if patient.admin %>
               <%= patient.admin.first_name + ' ' + patient.admin.last_name %>
-              <p></br>
+              <p><br>
                 Email: <%= patient.admin.email%> | Phone: <%= patient.admin.phone %>
               </p>
             <% end %>
@@ -244,31 +241,31 @@
           <td>
             <% if @currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 2  %>
               <% if patient.approved %>
-                  <%= button_to "Unapprove", { action: "unapprove", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                  <%= button_to "Unapprove", { action: "unapprove", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
               <% else %>
-                <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary btn-sm" %>
+                <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
               <% end %>
             <% end %>
             <% if @currentAdmin.auth_lvl == 2 %>
-              <%= button_to 'Locations', patient_presets_path(patient.id), method: :get, class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Locations', patient_presets_path(patient.id), method: :get, class: "btn btn-secondary sm-btn" %>
             <% end %>
             <% if @currentAdmin.auth_lvl == 1  %>
-              <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Comments', viewComments_patient_path(patient.id), method: :get, class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Delete', patient, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Comments', viewComments_patient_path(patient.id), method: :get, class: "btn btn-secondary sm-btn" %>
             <% end  %>
 
             <% if ((@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3) && (patient.approved)) %>
-              <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary btn-sm" %>
+              <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary sm-btn" %>
             <% end %>
           </td>
         </tr>
         <% end %>
       </tbody>
     </table>
-    <br><br>
 
     <!-- ======================== UPCOMING RIDES ======================== -->
     <% if (@currentAdmin.auth_lvl == 1 || @currentAdmin.auth_lvl == 3) %>
+      <br>
       <h1>Upcoming Rides</h1>
       <table>
         <thead>
@@ -318,9 +315,9 @@
               <p></br><%= appointment.location[1][:address] %></p>
             </td>
             <td>
-              <%= button_to 'Details', appointment, method: :get,class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary btn-sm" %>
-              <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary btn-sm" %>
+              <%= button_to 'Details', appointment, method: :get,class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
             </td>
           </tr>
           <% end %>
