@@ -1,79 +1,74 @@
 <% @currentFirstName = @patients.find(@currentPatient).first_name%>
 <% @currentLastName = @patients.find(@currentPatient).last_name%>
 
-<body>
-  <% if @currentPatient.approved %>
-    <!-- =================== HEADER =================== -->
-    <div id="header">
-      <div class="row" style="margin: 0px;">
-        <div class="col">
-            <h2>Patient Home Page</h2>
-            <h4><%= @currentFirstName %> <%= @currentLastName%></h4>
-        </div>
-        <div class="col-1">
-          <%= button_to 'Edit Account', edit_patient_path(@currentPatient), method: :get, class: "btn btn-secondary right", style: "padding: 3px; margin: 6px 3px 10px 4px;" %>
-          <br><br>
-          <%= button_to 'Log Out', logout_path, class: "btn btn-secondary right", style: "padding: 3px; margin-top: 7px;" %>
-        </div>
+<% if @currentPatient.approved %>
+  <!-- =================== HEADER =================== -->
+  <div id="header">
+    <div class="row" style="margin: 0px;">
+      <div class="col">
+          <h2>Patient Home Page</h2>
+          <h4><%= @currentFirstName %> <%= @currentLastName%></h4>
+      </div>
+      <div class="col-1">
+        <%= button_to 'Edit Account', edit_patient_path(@currentPatient), method: :get, class: "btn btn-secondary right" %>
+        <%= button_to 'Log Out', logout_path, class: "btn btn-secondary right" %>
       </div>
     </div>
-    <p id="notice" class="text-center" style="font-size: 14px;"><%= notice %></p>
-    <!-- =================== MAIN STUFF =================== -->
-    <div style="margin: 20px;">
-      <h1>Upcoming Appointments</h1>
-      <table cellpadding="5" style="text-align: center;">
-        <thead>
-          <tr>
-            <th>Driver</th>
-            <th>Pick-up<br>Date & Time</th>
-            <th>Pick-up Location</th>
-            <th>Destination</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+  </div>
+  <p id="notice" class="text-center" style="font-size: 14px;"><%= notice %></p>
+  <!-- =================== MAIN STUFF =================== -->
+  <div style="margin: 20px;">
+    <h1>Upcoming Appointments</h1>
+    <table cellpadding="5" style="text-align: center;">
+      <thead>
+        <tr>
+          <th>Driver</th>
+          <th>Pick-up<br>Date & Time</th>
+          <th>Pick-up Location</th>
+          <th>Destination</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
 
-        <tbody>
-          <% Appointment.where('patient_id' => @currentPatient).sort_by{ |appt| appt.datetime }.each do |appointment| %>
-          <tr>
-            <% @pickUpLocationid = appointment.location[0]["_id"] %>
-            <% @destinationid = appointment.location[1]["_id"] %>
-            <% if appointment.status == 0 %>
-              <td style="color:red">Unassigned</td>
-            <% else %>
-              <% @drivers.find(appointment.driver_id) %>
-              <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
-              <td><%= @tempDriver %></td>
-            <% end %>
-            <td nowrap="nowrap">
-              <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-              <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
-            </td>
-            <td>
-              <%= appointment.location[0].name %>
-              <p></br><%= appointment.location[0].address %></p>
-            </td>
-            <td>
-              <%= appointment.location[1].name %>
-              <p></br><%= appointment.location[1].address %></p>
-            </td>
-            <td style="padding: 6px;">
-              <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
-              <%= button_to 'Update Date/Time', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary sm-btn" %>
-              <%= button_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid), method: :get, class: "btn btn-secondary sm-btn" %>
-              <%= button_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid), method: :get, class: "btn btn-secondary sm-btn" %>
-              <%= button_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn"%>
-            </td>
-          </tr>
+      <tbody>
+        <% Appointment.where('patient_id' => @currentPatient).sort_by{ |appt| appt.datetime }.each do |appointment| %>
+        <tr>
+          <% @pickUpLocationid = appointment.location[0]["_id"] %>
+          <% @destinationid = appointment.location[1]["_id"] %>
+          <% if appointment.status == 0 %>
+            <td style="color:red">Unassigned</td>
+          <% else %>
+            <% @drivers.find(appointment.driver_id) %>
+            <% @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %>
+            <td><%= @tempDriver %></td>
           <% end %>
-        </tbody>
-      </table>
-      <div class="text-center" style="padding: 12px;">
-        <%= link_to 'New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get, class: "btn btn-primary big-btn", style: ""%>
-      </div>
+          <td nowrap="nowrap">
+            <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
+            <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
+          </td>
+          <td>
+            <%= appointment.location[0].name %>
+            <p></br><%= appointment.location[0].address %></p>
+          </td>
+          <td>
+            <%= appointment.location[1].name %>
+            <p></br><%= appointment.location[1].address %></p>
+          </td>
+          <td style="padding: 6px;">
+            <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+            <%= button_to 'Update Date/Time', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary sm-btn" %>
+            <%= button_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid), method: :get, class: "btn btn-secondary sm-btn" %>
+            <%= button_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid), method: :get, class: "btn btn-secondary sm-btn" %>
+            <%= button_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn"%>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="text-center" style="padding: 12px;">
+      <%= link_to 'New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get, class: "btn btn-primary big-btn", style: ""%>
     </div>
-  <% else %>
-    <br><h1>Pending approval</h1><br>
-  <% end %>
-
-
-</body>
+  </div>
+<% else %>
+  <br><h1>Pending approval</h1><br>
+<% end %>
