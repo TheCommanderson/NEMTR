@@ -22,7 +22,6 @@ html, body{
   width: 100%;
   padding: 0px;
   margin: 0px !important;
-  overflow-x: hidden;
 }
 body {
   background-color: #fef3f2 !important;
@@ -37,6 +36,12 @@ label{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+.signup-bg{
+  background-image: url(signin.jpg);
+}
+.signup-page{
+  padding-top: 10vh;
 }
 p.flash-notice{
   position: fixed;
@@ -53,6 +58,9 @@ p.flash-notice{
 .center{
   margin: 0 auto;
   text-align: center;
+}
+.row{
+  padding: 4px;
 }
 
 /* HEADER AND PARAGRAPH STYLES */
@@ -76,6 +84,13 @@ h4{
 p{
   font-size: 20px !important;
 }
+#header{
+  font-family: 'Lato', sans-serif;
+  background-color: #003354;
+  color:white;
+  padding-bottom: 15px;
+}
+
 
 /* TABLE STYLES */
 table{
@@ -96,7 +111,7 @@ th{
   border-right: 1px solid white;
 }
 td{
-  font-size: 18px;
+  font-size: 18px !important;
 }
 tr:nth-child(even){
   background-color: #cee1e8;
@@ -158,27 +173,4 @@ tr:nth-child(even){
   width: 130px;
   line-height: 50px;
   font-size: 20px;
-}
-.row{
-  padding: 4px;
-}
-/* Schedule Page Stuff DO NOT MOVE UP */
-.schedule{
-  margin: auto;
-  text-align: center;
-  width: 60%;
-  height: 150px;
-  font-size: 18px;
-}
-.f-left{
-  float: left;
-}
-.f-right{
-  float: right;
-}
-#header{
-  font-family: 'Lato', sans-serif;
-  background-color: #003354;
-  color:white;
-  padding-bottom: 15px;
 }
