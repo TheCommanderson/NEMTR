@@ -62,7 +62,15 @@ p.flash-notice{
 .row{
   padding: 4px;
 }
-
+/* Overwriting error field because lazy and hacky */
+.field_with_errors{
+  display: block !important;
+  background-color: transparent !important;
+  color: red;
+}
+#error_explanation{
+  margin: 0 auto !important;
+}
 /* HEADER AND PARAGRAPH STYLES */
 h1,h2,h3,h4,h5{
   font-family: 'Lato', sans-serif;

@@ -2,21 +2,21 @@ class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorized, only: [:new, :create]
   before_action :admin_authorized, except: [:new, :create]
-  
+
   HOSTS = ['N/A','A&M','United Way']
   AUTH_LEVELS = ['System Administrator','Healthcare Provider','Call Center']
-  
+
   def add_host
     HOSTS.push(params[:host_org])
     HOSTS.sort!
     redirect_to admins_home_path
   end
-  
+
   def delete_host
     HOSTS.delete(params[:id])
     redirect_to admins_home_path
   end
-  
+
   def approve
     if !Admin.where(:id => params[:id]).blank?
       @admin = Admin.find(params[:id])
@@ -38,7 +38,7 @@ class AdminsController < ApplicationController
     end
    redirect_to admins_home_path
   end
-  
+
   def unapprove
    if !Admin.where(:id => params[:id]).blank?
       @admin = Admin.find(params[:id])
@@ -60,7 +60,7 @@ class AdminsController < ApplicationController
     end
    redirect_to admins_home_path
   end
-  
+
   # GET /admins
   # GET /admins.json
   def index
@@ -70,7 +70,7 @@ class AdminsController < ApplicationController
     @drivers = self.driver_search.sort_by{ |drvr| [ drvr.trained.to_s, drvr.first_name ] }
     @appointments = Appointment.all.sort_by{ |appt| [ appt.status, appt.datetime ] }
   end
-  
+
   def admin_search
     if params[:a_search]
       @admins = self.search(Admin.all)
@@ -78,7 +78,7 @@ class AdminsController < ApplicationController
       @admins = Admin.all
     end
   end
-  
+
   def driver_search
     if params[:d_search]
       @drivers = self.search(Driver.all)
@@ -86,21 +86,21 @@ class AdminsController < ApplicationController
       @drivers = Driver.all
     end
   end
-  
+
   def patient_search
-    if @currentAdmin.auth_lvl == 2 
+    if @currentAdmin.auth_lvl == 2
       @patients = Patient.all.where({host_org: @currentAdmin.host_org})
     else
       @patients = Patient.all
     end
-    
+
     if params[:p_search]
       @patients = self.search(@patients)
     else
       @patients = @patients
     end
   end
-  
+
   def search(obj)
     if params[:search]
       @parameter = /#{params[:search]}/i
@@ -109,7 +109,7 @@ class AdminsController < ApplicationController
         @first = /#{@full_name[0]}/i
         @second = /#{@full_name[1]}/i
       end
-      
+
       if @full_name.length > 1
         @result = obj.where('$and' => [{first_name: @first},{last_name: @second}])
       else
@@ -188,7 +188,7 @@ class AdminsController < ApplicationController
     def admin_params
       params.require(:admin).permit(:first_name, :middle_init, :last_name, :admin_name, :admin_email, :phone, :email, :auth_lvl, :host_org, :password)
     end
-    
+
     def admin_authorized
       redirect_to root_url unless session[:login_type] == 'A'
     end
