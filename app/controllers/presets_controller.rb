@@ -11,8 +11,12 @@ class PresetsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @preset = @patient.preset.build(preset_params)
-    @patient.save
-    redirect_to patient_presets_path
+    if @patient.save
+      redirect_to patient_presets_path
+    else
+      flash[:notice] = "Required fields are missing data."
+      redirect_back(fallback_location: root_url)
+    end
   end
 
   def quickAdd

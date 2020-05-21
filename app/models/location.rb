@@ -8,16 +8,13 @@ class Location
   field :city, type: String
   field :state, type: String
   field :zip, type: Integer
-
   field :address, type: String
-  # field :latitude, type: Float
-  # field :longitude, type: Float
   field :coordinates, type: Array
 
+  validates_presence_of :addr1, :city, :state
+
   embedded_in :Appointment
-  # not working for me for some reason, made a hack solution 
-  # geocoded_by :address, coordinates: :coords 
-  # after_validation :geocode
+
   before_save :generate_full_address
 
   protected
