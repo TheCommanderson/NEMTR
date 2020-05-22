@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
        _monday
     end
 
-    # ===================== MATCHING ENGINE STUFF ============================ #
+    # ===================== MATCHING ALGORITHM STUFF ============================ #
     def check_appt_update(appt)
       if appt.status == 0
         log = matching_alg
