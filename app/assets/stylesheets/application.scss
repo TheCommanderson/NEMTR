@@ -17,9 +17,7 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@400;600&display=swap");
 /* GENERAL CSS */
-html, body{
-  height: 100%;
-  width: 100%;
+body, html{
   padding: 0px;
   margin: 0px !important;
 }
@@ -94,6 +92,7 @@ p{
   background-color: #003354;
   color:white;
   padding-bottom: 15px;
+  width: 100%;
 }
 .logo{
   display: inline;
