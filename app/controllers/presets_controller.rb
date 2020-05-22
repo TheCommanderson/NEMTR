@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PresetsController < ApplicationController
   def index
     @patient = Patient.find(params[:patient_id])
@@ -23,7 +25,7 @@ class PresetsController < ApplicationController
 
   def quickAdd
     @patient = Patient.find(params[:patient_id])
-    tmp_patient = Patient.where(:'preset.id' => params[:preset_id]).first
+    tmp_patient = Patient.where('preset.id': params[:preset_id]).first
     copy_from = tmp_patient.preset.find(params[:preset_id])
     @params = preset_params
     @params[:addr1] = copy_from[:addr1]
@@ -36,8 +38,7 @@ class PresetsController < ApplicationController
     redirect_to patient_presets_path
   end
 
-  def edit
-  end
+  def edit; end
 
   def destroy
     @patient = Patient.find(params[:patient_id])
@@ -47,7 +48,8 @@ class PresetsController < ApplicationController
   end
 
   private
-    def preset_params
-      params.require(:preset).permit(:addr1, :addr2, :city, :state, :zip, :name)
-    end
+
+  def preset_params
+    params.require(:preset).permit(:addr1, :addr2, :city, :state, :zip, :name)
+  end
 end

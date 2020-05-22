@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class PatientsController < ApplicationController
-  before_action :set_patient, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authorized, only: [:new, :create]
-  before_action :patient_authorized, except: [:new, :create, :edit, :update, :destroy, :comment, :append, :viewComments]
+  before_action :set_patient, only: %i[show edit update destroy]
+  skip_before_action :authorized, only: %i[new create]
+  before_action :patient_authorized, except: %i[new create edit update destroy comment append viewComments]
   before_action :admin_authorized, only: [:viewComments]
   # GET /patients
-  def pending
-  end
+  def pending; end
+
   # GET /patients.json
   def index
     @currentPatient = Patient.find(session[:user_id])
@@ -16,8 +18,7 @@ class PatientsController < ApplicationController
 
   # GET /patients/1
   # GET /patients/1.json
-  def show
-  end
+  def show; end
 
   # GET /patients/new
   def new
@@ -25,16 +26,13 @@ class PatientsController < ApplicationController
   end
 
   # GET /patients/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /patients
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
-    if (!@patient.approved)
-      @patient.approved = false
-    end
+    @patient.approved = false unless @patient.approved
 
     respond_to do |format|
       if @patient.save
@@ -80,7 +78,7 @@ class PatientsController < ApplicationController
     p_comment = params[:patient][:comment] + " [Comment by: #{current_user.first_name} #{current_user.last_name}]"
     patient.add_to_set(comments: p_comment)
     patient.save
-    redirect_to root_path, notice: "Thank you for your feedback!"
+    redirect_to root_path, notice: 'Thank you for your feedback!'
   end
 
   def viewComments
@@ -88,20 +86,22 @@ class PatientsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_patient
-      @patient = Patient.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def patient_params
-      params.require(:patient).permit(:first_name, :middle_initial, :last_name, :phone, :email, :host_org, :admin_id, :password, :search, :comment, preset_attributes: [:name, :addr1, :addr2, :city, :state, :zip])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_patient
+    @patient = Patient.find(params[:id])
+  end
 
-    def patient_authorized
-      redirect_to root_url unless session[:login_type] == 'P'
-    end
-    def admin_authorized
-      redirect_to root_url unless session[:login_type] == 'A'
-    end
+  # Only allow a list of trusted parameters through.
+  def patient_params
+    params.require(:patient).permit(:first_name, :middle_initial, :last_name, :phone, :email, :host_org, :admin_id, :password, :search, :comment, preset_attributes: %i[name addr1 addr2 city state zip])
+  end
+
+  def patient_authorized
+    redirect_to root_url unless session[:login_type] == 'P'
+  end
+
+  def admin_authorized
+    redirect_to root_url unless session[:login_type] == 'A'
+  end
 end

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class DriversController < ApplicationController
-  before_action :set_driver, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authorized, only: [:new, :create]
-  before_action :driver_authorized, except: [:new, :create]
+  before_action :set_driver, only: %i[show edit update destroy]
+  skip_before_action :authorized, only: %i[new create]
+  before_action :driver_authorized, except: %i[new create]
   # GET /drivers
   # GET /drivers.json
 
@@ -9,23 +11,21 @@ class DriversController < ApplicationController
     @logged_in_driver = Driver.find(session[:user_id])
     @drivers = Driver.all
     @patients = Patient.all
-    @appointments = Appointment.where(status: 0).sort_by { |appt| [ appt.datetime ] }
+    @appointments = Appointment.where(status: 0).sort_by { |appt| [appt.datetime] }
     @dt_format = dt_format
   end
 
- # GET /drivers
+  # GET /drivers
   def pending
     @logged_in_driver = Driver.find(session[:user_id])
     @drivers = Driver.all
     @patients = Patient.all
-    @appointments = Appointment.all.sort_by { |appt| [ appt.status, appt.datetime ] }
+    @appointments = Appointment.all.sort_by { |appt| [appt.status, appt.datetime] }
   end
 
   # GET /drivers/1
   # GET /drivers/1.json
-  def show
-
-  end
+  def show; end
 
   # GET /drivers/new
   def new
@@ -39,10 +39,10 @@ class DriversController < ApplicationController
   def claim
     appointment = Appointment.find(params[:appt])
     driver = Driver.find(session[:user_id])
-    appt_start_time = DateTime.strptime(appointment.datetime, dt_format).to_time.strftime("%H%M").to_i
-    appt_end_time = (DateTime.strptime(appointment.datetime, dt_format).to_time + appointment.est_time.minutes).strftime("%H%M").to_i
+    appt_start_time = DateTime.strptime(appointment.datetime, dt_format).to_time.strftime('%H%M').to_i
+    appt_end_time = (DateTime.strptime(appointment.datetime, dt_format).to_time + appointment.est_time.minutes).strftime('%H%M').to_i
     if check_conflicts(appt_start_time, appt_end_time, appointment, driver[:id])
-      new_atts = {status: 1, driver_id: driver[:id]}
+      new_atts = { status: 1, driver_id: driver[:id] }
       appointment.update_attributes(new_atts)
     else
       flash[:alert] = 'Could not claim appointment, conflict with existing appointment!'
@@ -51,22 +51,19 @@ class DriversController < ApplicationController
   end
 
   # GET /drivers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /drivers
   # POST /drivers.json
   def create
-    sch1 = {Monday: '0000 0000', Tuesday: '0000 0000', Wednesday: '0000 0000', Thursday: '0000 0000', Friday: '0000 0000', Saturday: '0000 0000', Sunday: '0000 0000', current: true}
-    sch2 = {Monday: '0000 0000', Tuesday: '0000 0000', Wednesday: '0000 0000', Thursday: '0000 0000', Friday: '0000 0000', Saturday: '0000 0000', Sunday: '0000 0000', current: false}
+    sch1 = { Monday: '0000 0000', Tuesday: '0000 0000', Wednesday: '0000 0000', Thursday: '0000 0000', Friday: '0000 0000', Saturday: '0000 0000', Sunday: '0000 0000', current: true }
+    sch2 = { Monday: '0000 0000', Tuesday: '0000 0000', Wednesday: '0000 0000', Thursday: '0000 0000', Friday: '0000 0000', Saturday: '0000 0000', Sunday: '0000 0000', current: false }
 
     @driver = Driver.new(driver_params)
     @sch1 = @driver.schedule.build(sch1)
     @sch2 = @driver.schedule.build(sch2)
 
-    if (!@driver.trained)
-      @driver.trained = false
-    end
+    @driver.trained = false unless @driver.trained
 
     respond_to do |format|
       if @driver.save
@@ -104,17 +101,18 @@ class DriversController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_driver
-      @driver = Driver.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def driver_params
-      params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id, :password, schedule_attributes: [:Monday, :Tuesday, :Wednesday, :Thursday, :Friday, :Saturday, :Sunday, :current])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_driver
+    @driver = Driver.find(params[:id])
+  end
 
-    def driver_authorized
-      redirect_to root_url unless session[:login_type] == 'D'
-    end
+  # Only allow a list of trusted parameters through.
+  def driver_params
+    params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id, :password, schedule_attributes: %i[Monday Tuesday Wednesday Thursday Friday Saturday Sunday current])
+  end
+
+  def driver_authorized
+    redirect_to root_url unless session[:login_type] == 'D'
+  end
 end
