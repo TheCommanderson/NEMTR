@@ -146,6 +146,10 @@ tr:nth-child(even){
   background-color: #2d5c76;
   color: #f2f2f3;
 }
+.btn-primary:disabled{
+  color: grey;
+  background-color: black;
+}
 
 /* SECONDARY BUTTON */
 .btn-secondary{

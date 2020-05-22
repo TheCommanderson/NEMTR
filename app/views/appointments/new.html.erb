@@ -56,7 +56,7 @@
           <thead>
             <th>Name</th>
             <th>Address</th>
-            <th>Action</th>
+            <th>Select</th>
           </thead>
           <tbody>
             <% @patient.preset.each do |location| %>
@@ -67,7 +67,7 @@
                   <br>
                   <%= location.city + ' ' + location.state + ' ' + location.zip.to_s %>
                 </td>
-                <td><input type='radio' name='loc_select' value=<%= location.id.to_s %> />
+                <td><input type='radio' name='loc_select' onChange='submitOn(1)' value=<%= location.id.to_s %> />
               </tr>
             <% end %>
           </tbody>
@@ -75,7 +75,7 @@
       </div>
     </div>
     <div class='appt-sub-btn'>
-  	   <%= form.submit 'Schedule!', class: "btn btn-primary big-btn" %>
+  	   <%= form.submit 'Schedule!', class: "btn btn-primary big-btn", disabled: true, id: 'appt-submit-1' %>
     </div>
     <% end %>
 </div>
@@ -111,7 +111,7 @@
           <thead>
             <th>Name</th>
             <th>Address</th>
-            <th>Action</th>
+            <th>Select</th>
           </thead>
           <tbody>
             <% @patient.preset.each do |location| %>
@@ -122,7 +122,7 @@
                   <br>
                   <%= location.city + ' ' + location.state + ' ' + location.zip.to_s %>
                 </td>
-                <td><input type='radio' name='loc_select' value=<%= location.id.to_s %> />
+                <td><input type='radio' name='loc_select' onchange="submitOn(0)" value=<%= location.id.to_s %>> </input>
               </tr>
             <% end %>
           </tbody>
@@ -147,7 +147,7 @@
       </div>
     </div>
     <div class='appt-sub-btn'>
-  	   <%= form.submit 'Schedule!', class: "btn btn-primary big-btn" %>
+  	   <%= form.submit 'Schedule!', class: "btn btn-primary big-btn", disabled: true, id: 'appt-submit-0' %>
     </div>
   <% end %>
 </div>
@@ -169,5 +169,13 @@
         document.getElementById('show-dest-restricted').style.display = 'none';
         document.getElementById('show-pickup-restricted').style.display = 'none';
       }
+  }
+  function submitOn(num){
+    if (num === 0){
+      document.getElementById('appt-submit-0').disabled = false;
+    }
+    else{
+      document.getElementById('appt-submit-1').disabled = false;
+    }
   }
 </script>
