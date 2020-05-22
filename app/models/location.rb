@@ -12,6 +12,7 @@ class Location
   field :coordinates, type: Array
 
   validates_presence_of :addr1, :city, :state
+  validates_length_of :zip, minimum: 5, maximum: 5
 
   embedded_in :Appointment
 
