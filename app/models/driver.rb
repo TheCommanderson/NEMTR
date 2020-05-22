@@ -15,6 +15,10 @@ class Driver
   embeds_many :schedule
   accepts_nested_attributes_for :schedule
 
+  validates_presence_of :first_name, :last_name, :phone, :email
+  validates_uniqueness_of :email
+  validates_length_of :phone, minimum: 10, maximum: 11
+
   has_secure_password
   belongs_to :admin, :optional => true
   has_many :appointments

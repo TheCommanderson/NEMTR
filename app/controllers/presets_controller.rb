@@ -11,8 +11,14 @@ class PresetsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @preset = @patient.preset.build(preset_params)
-    @patient.save
-    redirect_to patient_presets_path
+    respond_to do |format|
+      if @patient.save
+        redirect_to patient_presets_path, notice: 'New location added successfully.'
+      else
+        format.html { render :new }
+        format.json { render json: @preset.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def quickAdd
