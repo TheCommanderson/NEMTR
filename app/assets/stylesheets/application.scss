@@ -95,7 +95,13 @@ p{
   color:white;
   padding-bottom: 15px;
 }
-
+.logo{
+  display: inline;
+  object-fit: cover;
+  max-height: 12%;
+  margin-top: 1%;
+  max-width: 7%;
+}
 
 /* TABLE STYLES */
 table{

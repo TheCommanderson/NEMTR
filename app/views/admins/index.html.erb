@@ -1,9 +1,8 @@
 <div id="header">
   <div class="row" style="margin: 0px;">
-    <div class='<col'>
-      <img src='UWBV-white.png' alt='UWBV logo'>
-    </div>
+    <img src="<%= asset_path('UWBV-white.png') %>" alt='UWBV logo' class='logo'>
     <div class="col">
+      <br>
       <h2 style="font-weight: 600;">
         <% if @currentAdmin.auth_lvl == 1 %>
           System Administrator
@@ -17,6 +16,7 @@
       <h4 style="font-weight: 400; font-style: italic;"><%= @currentAdmin.first_name + " " + @currentAdmin.last_name %></h4>
     </div>
     <div class="col-1">
+      <br>
       <%= button_to 'Edit Account', edit_admin_path(@currentAdmin), method: :get, class: "btn btn-secondary right" %>
       <%= button_to 'Log Out', logout_path, class: "btn btn-secondary right" %>
     </div>
