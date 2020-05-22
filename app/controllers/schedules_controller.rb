@@ -17,7 +17,21 @@ class SchedulesController < ApplicationController
       if val[0..3] == val[5..8]
         @current_sch_readable[name] = 'None'
       else
-        day_str = val[0..1] + ':' + val[2..3] + ' to ' + val[5..6] + ':' + val[7..8]
+        ampm1 = 'AM'
+        if val[0..1].to_i > 12
+          h1 = val[0..1].to_i % 12
+          ampm1 = 'PM'
+        else
+          h1 = val[0..1].to_i
+        end
+        ampm2 = 'AM'
+        if val[5..6].to_i > 12
+          h2 = val[5..6].to_i % 12
+          ampm2 = 'PM'
+        else
+          h2 = val[5..6].to_i
+        end
+        day_str = h1.to_s + ':' + val[2..3] + ampm1 + ' to ' + h2.to_s + ':' + val[7..8] + ampm2
         @current_sch_readable[name] = day_str
       end
     end
@@ -29,7 +43,21 @@ class SchedulesController < ApplicationController
       if val[0..3] == val[5..8]
         @next_sch_readable[name] = 'None'
       else
-        day_str = val[0..1] + ':' + val[2..3] + ' to ' + val[5..6] + ':' + val[7..8]
+        ampm1 = 'AM'
+        if val[0..1].to_i > 12
+          h1 = val[0..1].to_i % 12
+          ampm1 = 'PM'
+        else
+          h1 = val[0..1].to_i
+        end
+        ampm2 = 'AM'
+        if val[5..6].to_i > 12
+          h2 = val[5..6].to_i % 12
+          ampm2 = 'PM'
+        else
+          h2 = val[5..6].to_i
+        end
+        day_str = h1.to_s + ':' + val[2..3] + ampm1 + ' to ' + h2.to_s + ':' + val[7..8] + ampm2
         @next_sch_readable[name] = day_str
       end
     end

@@ -36,7 +36,7 @@
 </table>
 
 <br>
-<%= link_to 'Edit Your Availability', edit_driver_schedule_path(:id => @current_schedule[:id]), class: "btn btn-primary big-btn" %>
+<%= link_to 'Edit', edit_driver_schedule_path(:id => @current_schedule[:id]), class: "btn btn-primary big-btn" %>
 <br><br>
 
 <h1 style="text-align: center">Next Week's Availability</h1>
@@ -77,7 +77,7 @@
 </table>
 
 <br>
-<%= link_to 'Edit Your Availability', edit_driver_schedule_path(:id => @next_schedule[:id]), class: "btn btn-primary big-btn" %>
+<%= link_to 'Edit', edit_driver_schedule_path(:id => @next_schedule[:id]), class: "btn btn-primary big-btn" %>
 <br>
 
 <p style='padding-left: 20px;'><%= link_to 'Back', drivers_home_path, class: "btn btn-secondary back-btn" %></p>
