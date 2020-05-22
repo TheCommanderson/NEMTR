@@ -42,11 +42,11 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new(@appt_parms)
     respond_to do |format|
       if @appointment.save
-        format.html { redirect_to "/patients_home"}
+        format.html { redirect_to root_url}
         # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :created, location: @appointment }
       else
-        format.html { render :new }
+        format.html { redirect_to root_url, notice: "Error with appointment.  Please ensure all fields are filled out." }
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
     end

@@ -44,15 +44,12 @@ label{
   padding-top: 10vh;
 }
 p.flash-notice{
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  top: 0;
   right: 50%;
   margin: auto;
   text-align: center;
   color: red;
-  background-color: white;
-  border-color: #003354;
-  border-radius: 10px;
   padding: 5px 5px 5px 5px;
 }
 .center{
@@ -62,7 +59,15 @@ p.flash-notice{
 .row{
   padding: 4px;
 }
-
+/* Overwriting error field because lazy and hacky */
+.field_with_errors{
+  display: block !important;
+  background-color: transparent !important;
+  color: red;
+}
+#error_explanation{
+  margin: 0 auto !important;
+}
 /* HEADER AND PARAGRAPH STYLES */
 h1,h2,h3,h4,h5{
   font-family: 'Lato', sans-serif;
@@ -137,6 +142,10 @@ tr:nth-child(even){
 .btn-primary:hover{
   background-color: #2d5c76;
   color: #f2f2f3;
+}
+.btn-primary:disabled{
+  color: grey;
+  background-color: black;
 }
 
 /* SECONDARY BUTTON */
