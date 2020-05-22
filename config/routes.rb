@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   root 'sessions#index'
-  post :logout, controller:"application"
+  post :logout, controller: 'application'
 
   resources :appointments do
     resources :location
@@ -10,18 +12,18 @@ Rails.application.routes.draw do
   get 'drivers', to: 'drivers#pending'
   get 'drivers_home', to: 'drivers#index'
   get 'drivers_test', to: 'drivers#test'
-  post 'drivers_claim', to: 'drivers#claim'
 
-  #TODO: am i using these?
+  # TODO: am i using these?
   post '/appointments/:appointment_id/location/:id/edit', to: 'location#update'
   get 'location/:id/edit', to: 'locations#edit'
   patch 'location/:id/edit', to: 'locations#update'
 
   resources :drivers do
     resources :schedules
+    post :claim, on: :member
   end
 
-  get 'patients', to:'patients#pending'
+  get 'patients', to: 'patients#pending'
   get 'patients_home', to: 'patients#index'
   resources :patients do
     resources :presets
@@ -35,7 +37,7 @@ Rails.application.routes.draw do
 
   resources :locations
 
-  match 'admins_home', to: 'admins#index', via: [:get, :post]
+  match 'admins_home', to: 'admins#index', via: %i[get post]
   post 'admins/add_host'
   resources :admins do
     post :approve, on: :member

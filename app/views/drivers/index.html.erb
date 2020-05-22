@@ -153,7 +153,7 @@
           </td>
           <td>
             <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
-            <%= button_to 'Claim this Ride', drivers_claim_url(appt: appointment), class: "btn btn-secondary sm-btn" %>
+            <%= button_to 'Claim this Ride', claim_driver_path(@logged_in_driver.id, appt: appointment), class: "btn btn-secondary sm-btn" %>
           </td>
         </tr>
         <% end %>

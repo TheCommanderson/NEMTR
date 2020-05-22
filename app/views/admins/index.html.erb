@@ -28,12 +28,14 @@
     <% if @currentAdmin.auth_lvl == 1 %>
       <!-- ======================== ORGNIZATION ======================== -->
       <h1>Healthcare Organizations</h1>
+
       <%= form_tag(:controller => "admins", :action => "add_host") do%>
         <div class="row" style=" padding-bottom:5px; overflow: hidden;">
           <div class="col"><%= text_field_tag :host_org, params[:host_org], placeholder: "Add an organization", class:"form-control" %></div>
           <div class="col"><%= submit_tag "Submit" , class: "btn btn-primary" %></div>
         </div>
       <% end %>
+      <br>
       <table>
         <thead>
           <tr>
@@ -85,7 +87,7 @@
             <tr>
               <td>
                 <%= admin.first_name %> <%= admin.middle_init %> <%= admin.last_name %>
-                <p></br>
+                <p>
                   Email: <%= admin.email %> | Phone: <%= admin.phone %>
                 </p>
               </td>
@@ -98,7 +100,7 @@
               <td>
                 <% if admin.admin_name %>
                   <%= admin.admin_name %>
-                  <p></br>
+                  <p>
                   Email: <%= admin.admin_email %>
                   </p>
                 <% end %>
@@ -155,14 +157,14 @@
             <tr>
               <td>
                 <%= driver.first_name %> <%= driver.middle_init %> <%= driver.last_name %>
-                <p></br>
+                <p>
                   Email: <%= driver.email%> | Phone: <%= driver.phone %>
                 </p>
               </td>
               <td>
                 <% if driver.admin %>
                   <%= driver.admin.first_name + ' ' + driver.admin.last_name %>
-                  <p></br>
+                  <p>
                     Email: <%= driver.admin.email%> | Phone: <%= driver.admin.phone %>
                   </p>
                 <% end %>
@@ -288,8 +290,8 @@
             <% @tempPatient = Patient.all.find(appointment.patient_id) %>
             <td nowrap="nowrap">
               <%= @tempPatient.first_name %> <%= @tempPatient.middle_initial %> <%= @tempPatient.last_name %>
-              <p></br>
-                Email: <%= @tempPatient.email%> |</br>
+              <p><br>
+                Email: <%= @tempPatient.email%> |
                 Phone: <%= @tempPatient.phone %>
               </p>
             </td>
@@ -299,28 +301,32 @@
               <td nowrap="nowrap">
                 <% @tempDriver = Driver.all.find(appointment.driver_id) %>
                 <%= @tempDriver.first_name + ' ' + @tempDriver.last_name %>
-                <p></br>
-                  Email: <%= @tempDriver.email%> |</br>
+                <p><br>
+                  Email: <%= @tempDriver.email%> |
                   Phone: <%= @tempDriver.phone %>
                 </p>
               </td>
             <% end %>
-            <td nowrap="nowrap">
-              <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %></br>
-              <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
+            <td nowrap="nowrap" style='text-align: center;'>
+              <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
+              <p></p>
+              <%= Time.parse(appointment.datetime).strftime("%I:%M %p") %>
             </td>
-            <td>
+            <td style='text-align: center;'>
               <%= appointment.location[0][:name] %>
-              <p></br><%= appointment.location[0][:address] %></p>
+              <p></p>
+              <%= appointment.location[0][:address] %>
             </td>
-            <td>
+            <td style='text-align: center;'>
               <%= appointment.location[1][:name] %>
-              <p></br><%= appointment.location[1][:address] %></p>
+              <p></p>
+              <%= appointment.location[1][:address] %>
             </td>
             <td>
-              <%= button_to 'Details', appointment, method: :get,class: "btn btn-secondary sm-btn" %>
-              <%= button_to 'Edit', edit_appointment_path(appointment), method: :get,class: "btn btn-secondary sm-btn" %>
-              <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Edit', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Assign to Driver', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+              <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn" %>
             </td>
           </tr>
           <% end %>

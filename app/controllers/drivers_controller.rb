@@ -38,7 +38,7 @@ class DriversController < ApplicationController
 
   def claim
     appointment = Appointment.find(params[:appt])
-    driver = Driver.find(session[:user_id])
+    driver = Driver.find(params[:id])
     appt_start_time = DateTime.strptime(appointment.datetime, dt_format).to_time.strftime('%H%M').to_i
     appt_end_time = (DateTime.strptime(appointment.datetime, dt_format).to_time + appointment.est_time.minutes).strftime('%H%M').to_i
     if check_conflicts(appt_start_time, appt_end_time, appointment, driver[:id])
