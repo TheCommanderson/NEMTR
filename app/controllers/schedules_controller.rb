@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class SchedulesController < ApplicationController
   def index
     @driver = Driver.find(session[:user_id])
-    @current_schedule = @driver.schedule.where(:current => true).first
-    @next_schedule = @driver.schedule.where(:current => false).first
+    @current_schedule = @driver.schedule.where(current: true).first
+    @next_schedule = @driver.schedule.where(current: false).first
     @current_sch_readable = {}
     @next_sch_readable = {}
     @days_of_this_week = getDatesOfWeek(getMonday(DateTime.now))
@@ -10,22 +12,24 @@ class SchedulesController < ApplicationController
 
     # Get the readable format of the current schedule
     @current_schedule.attributes.each do |name, val|
-      next if not days.include? name
+      next unless days.include? name
+
       if val[0..3] == val[5..8]
-        @current_sch_readable[name] = "None"
+        @current_sch_readable[name] = 'None'
       else
-        day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
+        day_str = val[0..1] + ':' + val[2..3] + ' to ' + val[5..6] + ':' + val[7..8]
         @current_sch_readable[name] = day_str
       end
     end
 
     # Get the readable format of the next schedule
     @next_schedule.attributes.each do |name, val|
-      next if not days.include? name
+      next unless days.include? name
+
       if val[0..3] == val[5..8]
-        @next_sch_readable[name] = "None"
+        @next_sch_readable[name] = 'None'
       else
-        day_str = val[0..1] + ":" + val[2..3] + " to " + val[5..6] + ":" + val[7..8]
+        day_str = val[0..1] + ':' + val[2..3] + ' to ' + val[5..6] + ':' + val[7..8]
         @next_sch_readable[name] = day_str
       end
     end
@@ -44,30 +48,31 @@ class SchedulesController < ApplicationController
 
   def edit
     @driver = Driver.find(params[:driver_id])
-    @schedule = @driver.schedule.where(:id => params[:id]).first
-    if @schedule.current
-      @days_of_week = getDatesOfWeek(getMonday(DateTime.now))
-    else
-      @days_of_week = getDatesOfWeek(getMonday((Time.current + 7.days).to_datetime))
-    end
+    @schedule = @driver.schedule.where(id: params[:id]).first
+    @days_of_week = if @schedule.current
+                      getDatesOfWeek(getMonday(DateTime.now))
+                    else
+                      getDatesOfWeek(getMonday((Time.current + 7.days).to_datetime))
+                    end
     @default_vals = {}
     @schedule.attributes.each do |name, val|
-      next if not days.include? name
+      next unless days.include? name
+
       @default_vals[name] = [val[0..1], val[2..3], val[5..6], val[7..8]]
     end
   end
 
   def update
     @driver = Driver.find(params[:driver_id])
-    @schedule = @driver.schedule.where(:id => params[:id]).first
-    flash[:notice] = ""
+    @schedule = @driver.schedule.where(id: params[:id]).first
+    flash[:notice] = ''
     new_sch = {}
-    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
     days.each do |day|
-      day1 = (params[:schedule][day+"1(4i)"]).to_s + (params[:schedule][day+"1(5i)"]).to_s
-      day2 = (params[:schedule][day+"2(4i)"]).to_s + (params[:schedule][day+"2(5i)"]).to_s
+      day1 = (params[:schedule][day + '1(4i)']).to_s + (params[:schedule][day + '1(5i)']).to_s
+      day2 = (params[:schedule][day + '2(4i)']).to_s + (params[:schedule][day + '2(5i)']).to_s
       if day1.to_i > day2.to_i
-        flash[:notice] += day + " was not updated, invalid time given.  "
+        flash[:notice] += day + ' was not updated, invalid time given.  '
         next
       end
       new_sch[day] = day1 + ' ' + day2
@@ -79,15 +84,18 @@ class SchedulesController < ApplicationController
   end
 
   private
+
   def schedule_params
     params.require(:schedule).permit(:Monday, :Tuesday, :Wednesday, :Thursday, :Friday, :Saturday, :Sunday)
   end
+
   def days
-    _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    _days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
   end
+
   def getDatesOfWeek(monday)
     _dates = []
-    (0..6).each {|i| _dates.append((monday.to_time + i.days).strftime("%B %-d"))}
+    (0..6).each { |i| _dates.append((monday.to_time + i.days).strftime('%B %-d')) }
     _dates
   end
 end
