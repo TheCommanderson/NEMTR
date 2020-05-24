@@ -335,9 +335,7 @@
             <td>
               <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
               <%= button_to 'Edit', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary sm-btn" %>
-              <%#= button_to 'Assign to Driver', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
               <%= button_to "Assign to Driver", pick_driver_path, :params => {:id => appointment.id}, method: :post, class: "btn btn-secondary sm-btn" %>
-              <%#= button_to "Assign to Driver", { action: "assign", id: appointment.id }, method: :post, class: "btn btn-secondary sm-btn" %>
               <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn" %>
             </td>
           </tr>

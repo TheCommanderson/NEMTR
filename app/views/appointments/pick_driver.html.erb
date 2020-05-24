@@ -26,7 +26,6 @@
         <h3 style="text-align: center">Confirm driver for appointment</h3> 
         <%= form_tag(assign_appointment_path(params[:id]), :method => :post) do %>
             <div style="row">
-            <%= hidden_field_tag :id, params[:id] %>
             <%= select_tag :driver_id, options_from_collection_for_select(Driver.all, 'id', 'email', params[:driver_id])  %>
             <%= submit_tag "Submit", class: "btn btn-primary" %>
             </div>
@@ -52,6 +51,9 @@
                 <% else %>
                     <% (0..6).each { |i| @days_of_this_week.append((Date.today.next_week.at_beginning_of_week(:monday).to_time + i.days).strftime('%B %-d')) } %>
                 <% end %>
+                
+                <% sch = SchedulesController.make_readable(sch) %>
+                
                 <table class="schedule">
                     <tr>
                         <th>
