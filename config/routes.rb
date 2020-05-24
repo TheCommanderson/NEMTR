@@ -3,7 +3,8 @@
 Rails.application.routes.draw do
   root 'sessions#index'
   post :logout, controller: 'application'
-
+  
+  post 'pick_driver', :to => 'appointments#pick_driver', :as => :pick_driver
   resources :appointments do
     resources :location
     post :assign, on: :member
@@ -48,6 +49,6 @@ Rails.application.routes.draw do
     get :add_host, on: :member
     get :search, on: :member
   end
-  post 'pick_driver', :to => 'appointments#pick_driver', :as => :pick_driver
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

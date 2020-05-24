@@ -5,17 +5,20 @@ class SchedulesController < ApplicationController
     @driver = Driver.find(session[:user_id])
     @current_schedule = @driver.schedule.where(current: true).first
     @next_schedule = @driver.schedule.where(current: false).first
-    @current_sch_readable = {}
-    @next_sch_readable = {}
+    @current_sch_readable = self.class.make_readable(@current_schedule)
+    @next_sch_readable = self.class.make_readable(@next_schedule)
     @days_of_this_week = getDatesOfWeek(getMonday(DateTime.now))
     @days_of_next_week = getDatesOfWeek(getMonday((Time.current + 7.days).to_datetime))
-
-    # Get the readable format of the current schedule
-    @current_schedule.attributes.each do |name, val|
+  end
+  
+  def self.make_readable(schedule)
+    @sch = {}
+    days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
+    schedule.attributes.each do |name, val|
       next unless days.include? name
 
       if val[0..3] == val[5..8]
-        @current_sch_readable[name] = 'None'
+        @sch[name] = 'None'
       else
         ampm1 = 'AM'
         if val[0..1].to_i > 12
@@ -32,35 +35,10 @@ class SchedulesController < ApplicationController
           h2 = val[5..6].to_i
         end
         day_str = h1.to_s + ':' + val[2..3] + ampm1 + ' to ' + h2.to_s + ':' + val[7..8] + ampm2
-        @current_sch_readable[name] = day_str
+        @sch[name] = day_str
       end
     end
-
-    # Get the readable format of the next schedule
-    @next_schedule.attributes.each do |name, val|
-      next unless days.include? name
-
-      if val[0..3] == val[5..8]
-        @next_sch_readable[name] = 'None'
-      else
-        ampm1 = 'AM'
-        if val[0..1].to_i > 12
-          h1 = val[0..1].to_i % 12
-          ampm1 = 'PM'
-        else
-          h1 = val[0..1].to_i
-        end
-        ampm2 = 'AM'
-        if val[5..6].to_i > 12
-          h2 = val[5..6].to_i % 12
-          ampm2 = 'PM'
-        else
-          h2 = val[5..6].to_i
-        end
-        day_str = h1.to_s + ':' + val[2..3] + ampm1 + ' to ' + h2.to_s + ':' + val[7..8] + ampm2
-        @next_sch_readable[name] = day_str
-      end
-    end
+    return @sch
   end
 
   def new
