@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :appointments do
     resources :location
+    post :assign, on: :member
     patch :cancel, on: :member
   end
 
@@ -43,8 +44,10 @@ Rails.application.routes.draw do
     post :approve, on: :member
     post :unapprove, on: :member
     post :delete_host, on: :member
+    post :reset, on: :member
     get :add_host, on: :member
     get :search, on: :member
   end
+  post 'pick_driver', :to => 'appointments#pick_driver', :as => :pick_driver
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
