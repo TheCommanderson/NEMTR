@@ -22,6 +22,7 @@
     </div>
   </div>
 </div>
+<br>
 <p id="notice"><%= notice %></p>
 <div class="col">
   <% if @currentAdmin.approved %>
@@ -119,6 +120,9 @@
                   <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                 <% end %>
                 <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
+                
+                <%= button_to "Reset Password", { action: "reset", id: admin.id }, :params => {:type => "admin"}, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-secondary sm-btn" %>
+
               </td>
             </tr>
           <% end %>
@@ -184,6 +188,9 @@
                   <% end %>
 
                   <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
+                  
+                  <%= button_to "Reset Password", { action: "reset", id: driver.id }, :params => {:type => "driver"}, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-secondary sm-btn" %>
+
               </td>
             </tr>
           <% end %>
@@ -262,6 +269,9 @@
             <% if ((@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3) && (patient.approved)) %>
               <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary sm-btn" %>
             <% end %>
+            
+            <%= button_to "Reset Password", { action: "reset", id: patient.id }, :params => {:type => "patient"}, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-secondary sm-btn" %>
+
           </td>
         </tr>
         <% end %>
@@ -325,7 +335,9 @@
             <td>
               <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
               <%= button_to 'Edit', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary sm-btn" %>
-              <%= button_to 'Assign to Driver', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+              <%#= button_to 'Assign to Driver', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
+              <%= button_to "Assign to Driver", pick_driver_path, :params => {:id => appointment.id}, method: :post, class: "btn btn-secondary sm-btn" %>
+              <%#= button_to "Assign to Driver", { action: "assign", id: appointment.id }, method: :post, class: "btn btn-secondary sm-btn" %>
               <%= button_to 'Delete', appointment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn" %>
             </td>
           </tr>

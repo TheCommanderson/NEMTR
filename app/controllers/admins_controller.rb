@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'securerandom'
+require 'date'
 
 class AdminsController < ApplicationController
   before_action :set_admin, only: %i[show edit update destroy]
@@ -60,6 +62,23 @@ class AdminsController < ApplicationController
       @driver.update(admin: Admin.find(session[:user_id]))
       @driver.save
      end
+    redirect_to admins_home_path
+  end
+  
+  def reset
+    temp_password = SecureRandom.base64(15)
+    if params[:type] == "patient"
+      @user = Patient.find(params[:id])
+    elsif params[:type] == "driver"
+      @user = Driver.find(params[:id])
+    elsif params[:type] == "admin"
+      @user = Admin.find(params[:id])
+    end
+    
+    @user.update(password: temp_password)
+    @user.save
+    
+    flash[:notice] = "Successfully reset #{@user.first_name} #{@user.last_name}'s password to #{temp_password}"
     redirect_to admins_home_path
   end
 

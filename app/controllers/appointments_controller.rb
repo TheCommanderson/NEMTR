@@ -10,6 +10,18 @@ class AppointmentsController < ApplicationController
     @drivers = Driver.all
     @patients = Patient.all
   end
+  
+  def assign
+    if !Appointment.where(id: params[:id]).blank? 
+      @appointment = Appointment.find(params[:id])
+      #flash[:notice] = "#{@appointment.patient.first_name}"
+      @driver = Driver.find(params[:driver_id])
+      #flash[:notice] = "#{@driver.first_name}"
+      @appointment.update_attribute(:driver_id, params[:driver_id])
+      @appointment.save
+    end
+    redirect_to admins_home_path
+  end
 
   # GET /appointments/1
   # GET /appointments/1.json

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <style>
+    .inv {
+        display: none;
+    }
+    </style>
+    <body>
+        <% @appointment = Appointment.find(params[:id]) %>
+        <h1 style="text-align: center">Appointment Details</h1>
+        <table id='appt-details'>
+          <tr>
+            <th>Pickup Date & Time</th>
+            <td>
+              <%= Time.parse(@appointment.datetime).strftime("%a %b %d, %Y") %>
+              <p><%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %></p>
+            </td>
+        </table>
+        
+        <br><br>
+        
+        <center>
+        <h3 style="text-align: center">Confirm driver for appointment</h3> 
+        <%= form_tag(assign_appointment_path(params[:id]), :method => :post) do %>
+            <div style="row">
+            <%= hidden_field_tag :id, params[:id] %>
+            <%= select_tag :driver_id, options_from_collection_for_select(Driver.all, 'id', 'email', params[:driver_id])  %>
+            <%= submit_tag "Submit", class: "btn btn-primary" %>
+            </div>
+        <% end %>
+        
+        <br>
+        
+        <h3> View driver schedules </h3>
+        <select id="target">
+            <option value = "default" >Select driver</option>
+        <% Driver.all.each do |driver| %>
+            <option value=<%= "#{driver.id}" %>><%= "#{driver.first_name} #{driver.last_name} (#{driver.email})" %></option>
+        <% end %>
+        <select>
+            
+        <% Driver.all.each do |driver| %>
+            <div id=<%= "#{driver.id}" %> class="inv">
+            <h1 style="text-align: center; padding-top: 20px;">Availability</h1>
+            <% [driver.schedule.where(current: true).first, driver.schedule.where(current: false).first].each do |sch| %>
+                <% @days_of_this_week = [] %>
+                <% if sch[:current] %>
+                    <% (0..6).each { |i| @days_of_this_week.append((Date.today.at_beginning_of_week(:monday).to_time + i.days).strftime('%B %-d')) } %>
+                <% else %>
+                    <% (0..6).each { |i| @days_of_this_week.append((Date.today.next_week.at_beginning_of_week(:monday).to_time + i.days).strftime('%B %-d')) } %>
+                <% end %>
+                <table class="schedule">
+                    <tr>
+                        <th>
+                        Monday,
+                        <br><%= @days_of_this_week[0] %>
+                        </th>
+                        <th>Tuesday,
+                        <br><%= @days_of_this_week[1] %>
+                        </th>
+                        <th>Wednesday,
+                        <br><%= @days_of_this_week[2] %>
+                        </th>
+                        <th>Thursday,
+                        <br><%= @days_of_this_week[3] %>
+                        </th>
+                        <th>Friday,
+                        <br><%= @days_of_this_week[4] %>
+                        </th>
+                        <th>Saturday,
+                        <br><%= @days_of_this_week[5] %>
+                        </th>
+                        <th>Sunday,
+                        <br><%= @days_of_this_week[6] %>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td><%= sch['Monday'] %>
+                        <td><%= sch['Tuesday'] %>
+                        <td><%= sch['Wednesday'] %>
+                        <td><%= sch['Thursday'] %>
+                        <td><%= sch['Friday'] %>
+                        <td><%= sch['Saturday'] %>
+                        <td><%= sch['Sunday'] %>
+                    </tr>
+                </table>
+            <% end %>
+                
+            </div>
+        <% end %>
+        </center>
+        
+        <br>
+        <p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
+        
+        <script>
+            document
+                .getElementById('target')
+                .addEventListener('change', function () {
+                    'use strict';
+                    var vis = document.querySelector('.vis'),   
+                    target = document.getElementById(this.value);
+                    if (vis !== null) {
+                        vis.className = 'inv';
+                    }
+                    if (target !== null ) {
+                        target.className = 'vis';
+                    }
+            });
+        </script>
+    </body>
+</html>
