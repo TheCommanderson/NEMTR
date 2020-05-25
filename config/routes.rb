@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'location/:id/edit', to: 'locations#edit'
   patch 'location/:id/edit', to: 'locations#update'
 
+  get 'driver_availability', :to => 'patients#driver_availability', :as => :driver_availability
   resources :drivers do
     resources :schedules
     post :claim, on: :member

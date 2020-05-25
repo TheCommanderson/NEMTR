@@ -1,0 +1,120 @@
+<center>
+<% sch = Driver.all.first.schedule.where(current: true).first %>
+<% next_sch = Driver.all.first.schedule.where(current: false).first %>
+
+<% @days_of_this_week = [] %>
+<% @days_of_next_week = [] %>
+
+<% if sch[:current] %>
+    <% (0..6).each { |i| @days_of_this_week.append((Date.today.at_beginning_of_week(:monday).to_time + i.days).strftime('%B %-d')) } %>
+<% end %>
+<% if !next_sch[:current] %>
+    <% (0..6).each { |i| @days_of_next_week.append((Date.today.next_week.at_beginning_of_week(:monday).to_time + i.days).strftime('%B %-d')) } %>
+<% end %>
+
+<% @current_schedules = [] %>
+<% @next_schedules = [] %>
+
+<% Driver.all.each do |driver| %>
+    <% @current_schedules << driver.schedule.where(current: true).first %>
+    <% @next_schedules << driver.schedule.where(current: false).first %>
+    
+<% end %>
+
+
+<h1 style="padding-top: 20px;"> This Week's Availablility </h1>
+<table class="schedule">
+    <thead>
+    <tr>
+        <th>
+        Monday,
+        <br><%= @days_of_this_week[0] %>
+        </th>
+        <th>Tuesday,
+        <br><%= @days_of_this_week[1] %>
+        </th>
+        <th>Wednesday,
+        <br><%= @days_of_this_week[2] %>
+        </th>
+        <th>Thursday,
+        <br><%= @days_of_this_week[3] %>
+        </th>
+        <th>Friday,
+        <br><%= @days_of_this_week[4] %>
+        </th>
+        <th>Saturday,
+        <br><%= @days_of_this_week[5] %>
+        </th>
+        <th>Sunday,
+        <br><%= @days_of_this_week[6] %>
+        </th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    <% @sorted_sch = PatientsController.sort_schedule(@current_schedules) %>
+    <% @sorted_sch.each do |day| %>
+    <tr>
+        <% day.each do |time| %>
+            <td>
+            <% if time != 'None' %>
+                <%= time %>
+            <% end %>
+            </td>
+        <% end %>
+    </tr>
+    <% end %>
+    </tbody>
+</table>
+
+<br><br>
+
+<h1 style="padding-top: 20px;"> Next Week's Availablility </h1>
+<table class="schedule">
+    <thead>
+    <tr>
+        <th>
+        Monday,
+        <br><%= @days_of_next_week[0] %>
+        </th>
+        <th>Tuesday,
+        <br><%= @days_of_next_week[1] %>
+        </th>
+        <th>Wednesday,
+        <br><%= @days_of_next_week[2] %>
+        </th>
+        <th>Thursday,
+        <br><%= @days_of_next_week[3] %>
+        </th>
+        <th>Friday,
+        <br><%= @days_of_next_week[4] %>
+        </th>
+        <th>Saturday,
+        <br><%= @days_of_next_week[5] %>
+        </th>
+        <th>Sunday,
+        <br><%= @days_of_next_week[6] %>
+        </th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    <% @sorted_sch = PatientsController.sort_schedule(@next_schedules) %>
+    <% @sorted_sch.each do |day| %>
+    <tr>
+        <% day.each do |time| %>
+            <td>
+            <% if time != 'None' %>
+                <%= time %>
+            <% end %>
+            </td>
+        <% end %>
+    </tr>
+    <% end %>
+    </tbody>
+</table>
+
+</center>
+
+<br>
+<p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
