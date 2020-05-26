@@ -10,14 +10,19 @@ class AppointmentsController < ApplicationController
     @drivers = Driver.all
     @patients = Patient.all
   end
-  
+
   def assign
-    if !Appointment.where(id: params[:id]).blank? 
+    unless Appointment.where(id: params[:id]).blank?
       @appointment = Appointment.find(params[:id])
       @driver = Driver.find(params[:driver_id])
-      @appointment.update_attribute(:status, 1)
-      @appointment.update_attribute(:driver_id, params[:driver_id])
-      @appointment.save
+      appt_start_time = DateTime.strptime(@appointment.datetime, dt_format).to_time.strftime('%H%M').to_i
+      appt_end_time = (DateTime.strptime(@appointment.datetime, dt_format).to_time + @appointment.est_time.minutes).strftime('%H%M').to_i
+      if check_conflicts(appt_start_time, appt_end_time, @appointment, @driver[:id])
+        new_atts = { status: 1, driver_id: @driver[:id] }
+        @appointment.update_attributes(new_atts)
+      else
+        flash[:alert] = 'Could not assign appointment, conflict with existing appointment for this driver!'
+      end
     end
     redirect_to admins_home_path
   end
