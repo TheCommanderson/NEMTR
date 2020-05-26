@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'securerandom'
 require 'date'
 
@@ -64,20 +65,20 @@ class AdminsController < ApplicationController
      end
     redirect_to admins_home_path
   end
-  
+
   def reset
     temp_password = SecureRandom.base64(15)
-    if params[:type] == "patient"
+    if params[:type] == 'patient'
       @user = Patient.find(params[:id])
-    elsif params[:type] == "driver"
+    elsif params[:type] == 'driver'
       @user = Driver.find(params[:id])
-    elsif params[:type] == "admin"
+    elsif params[:type] == 'admin'
       @user = Admin.find(params[:id])
     end
-    
+
     @user.update(password: temp_password)
     @user.save
-    
+
     flash[:notice] = "Successfully reset #{@user.first_name} #{@user.last_name}'s password to #{temp_password}"
     redirect_to admins_home_path
   end
@@ -86,6 +87,7 @@ class AdminsController < ApplicationController
   # GET /admins.json
   def index
     @currentAdmin = Admin.find(session[:user_id])
+    @dt_format = dt_format
     @admins = admin_search.sort_by { |adm| [adm.approved.to_s, adm.auth_lvl, adm.first_name] }
     @patients = patient_search.sort_by { |patient| [patient.approved.to_s, patient.first_name] }
     @drivers = driver_search.sort_by { |drvr| [drvr.trained.to_s, drvr.first_name] }
