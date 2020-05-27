@@ -25,6 +25,7 @@ body {
   background-color: #fef3f2 !important;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 18px;
+  min-width: fit-content;
 }
 label{
   font-size: 17px;
@@ -99,7 +100,7 @@ p{
   object-fit: cover;
   max-height: 12%;
   margin-top: 1%;
-  max-width: 7%;
+  max-width: 8%;
 }
 
 /* TABLE STYLES */
@@ -187,4 +188,7 @@ tr:nth-child(even){
   width: 130px;
   line-height: 50px;
   font-size: 20px;
+}
+.nav-btn{
+  max-width: 100% !important;
 }
