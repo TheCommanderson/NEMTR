@@ -10,7 +10,7 @@ class SchedulesController < ApplicationController
     @days_of_this_week = getDatesOfWeek(getMonday(DateTime.now))
     @days_of_next_week = getDatesOfWeek(getMonday((Time.current + 7.days).to_datetime))
   end
-  
+
   def self.make_readable(schedule)
     @sch = {}
     days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
@@ -38,7 +38,7 @@ class SchedulesController < ApplicationController
         @sch[name] = day_str
       end
     end
-    return @sch
+    @sch
   end
 
   def new

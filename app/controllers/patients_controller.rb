@@ -14,32 +14,7 @@ class PatientsController < ApplicationController
     @patients = Patient.all
     @appointments = Appointment
     @drivers = Driver.all
-  end
-  
-  def self.sort_schedule(schedules)
-    mon, tues, wed, thurs, fri, sat, sun = [], [], [], [], [], [], []
-    @sch = []
-    
-    schedules.each do |sch|
-      mon << SchedulesController.make_readable(sch)['Monday']
-      tues << SchedulesController.make_readable(sch)['Tuesday']
-      wed << SchedulesController.make_readable(sch)['Wednesday']
-      thurs << SchedulesController.make_readable(sch)['Thursday']
-      fri << SchedulesController.make_readable(sch)['Friday']
-      sat << SchedulesController.make_readable(sch)['Saturday']
-      sun << SchedulesController.make_readable(sch)['Sunday']
-    end
-    
-    @week = [mon, tues, wed, thurs, fri, sat, sun]
-    @week.each do |day|
-      if day.include? "None" 
-        @sch << day.sort
-      else
-        @sch << day.sort!{ |a,b| a[a.index(':')+3] <=> b[b.index(':')+3]}
-      end
-    end
-    
-    return @sch.transpose()
+    @dt_format = dt_format
   end
 
   # GET /patients/1
@@ -109,6 +84,38 @@ class PatientsController < ApplicationController
 
   def viewComments
     @patient = Patient.find(params[:id])
+  end
+
+  def self.sort_schedule(schedules)
+    mon = []
+    tues = []
+    wed = []
+    thurs = []
+    fri = []
+    sat = []
+    sun = []
+    @sch = []
+
+    schedules.each do |sch|
+      mon << SchedulesController.make_readable(sch)['Monday']
+      tues << SchedulesController.make_readable(sch)['Tuesday']
+      wed << SchedulesController.make_readable(sch)['Wednesday']
+      thurs << SchedulesController.make_readable(sch)['Thursday']
+      fri << SchedulesController.make_readable(sch)['Friday']
+      sat << SchedulesController.make_readable(sch)['Saturday']
+      sun << SchedulesController.make_readable(sch)['Sunday']
+    end
+
+    @week = [mon, tues, wed, thurs, fri, sat, sun]
+    @week.each do |day|
+      @sch << if day.include? 'None'
+                day.sort
+              else
+                day.sort! { |a, b| a[a.index(':') + 3] <=> b[b.index(':') + 3] }
+              end
+    end
+
+    @sch.transpose
   end
 
   private
