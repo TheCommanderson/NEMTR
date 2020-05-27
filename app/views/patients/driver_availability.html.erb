@@ -18,11 +18,11 @@
 <% Driver.all.each do |driver| %>
     <% @current_schedules << driver.schedule.where(current: true).first %>
     <% @next_schedules << driver.schedule.where(current: false).first %>
-    
+
 <% end %>
 
 
-<h1 style="padding-top: 20px;"> This Week's Availablility </h1>
+<h1 style="padding-top: 20px;"> When are drivers available this week?</h1>
 <table class="schedule">
     <thead>
     <tr>
@@ -50,7 +50,7 @@
         </th>
     </tr>
     </thead>
-    
+
     <tbody>
     <% @sorted_sch = PatientsController.sort_schedule(@current_schedules) %>
     <% @sorted_sch.each do |day| %>
@@ -69,7 +69,7 @@
 
 <br><br>
 
-<h1 style="padding-top: 20px;"> Next Week's Availablility </h1>
+<h1 style="padding-top: 20px;"> When are drivers available next week?</h1>
 <table class="schedule">
     <thead>
     <tr>
@@ -97,7 +97,7 @@
         </th>
     </tr>
     </thead>
-    
+
     <tbody>
     <% @sorted_sch = PatientsController.sort_schedule(@next_schedules) %>
     <% @sorted_sch.each do |day| %>
