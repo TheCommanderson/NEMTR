@@ -35,6 +35,9 @@
 
       <tbody>
         <% Appointment.where('patient_id' => @currentPatient).sort_by{ |appt| appt.datetime }.each do |appointment| %>
+          <% if DateTime.strptime(appointment.datetime, @dt_format).to_date.past? %>
+            <% next %>
+          <% end %>
         <tr>
           <% @pickUpLocationid = appointment.location[0]["_id"] %>
           <% @destinationid = appointment.location[1]["_id"] %>
