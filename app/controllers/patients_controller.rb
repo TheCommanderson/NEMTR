@@ -108,11 +108,7 @@ class PatientsController < ApplicationController
 
     @week = [mon, tues, wed, thurs, fri, sat, sun]
     @week.each do |day|
-      @sch << if day.include? 'None'
-                day.sort
-              else
-                day.sort! { |a, b| a[a.index(':') + 3] <=> b[b.index(':') + 3] }
-              end
+      @sch << day.sort! { |a, b| (!a.index(':').nil? ? a[a.index(':') + 3] : "Zero") <=> (!b.index(':').nil? ? b[b.index(':') + 3] : "Zero") }
     end
 
     @sch.transpose
