@@ -1,4 +1,11 @@
-<center>
+<style>
+.inv {
+    display: none;
+}
+</style>
+<h1 style="text-align: center; padding-top: 2%;">When are drivers available?</h1>
+<br><br>
+
 <% sch = Driver.all.first.schedule.where(current: true).first %>
 <% next_sch = Driver.all.first.schedule.where(current: false).first %>
 
@@ -18,103 +25,99 @@
 <% Driver.all.each do |driver| %>
     <% @current_schedules << driver.schedule.where(current: true).first %>
     <% @next_schedules << driver.schedule.where(current: false).first %>
-
 <% end %>
 
+<% @week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']%>
 
-<h1 style="padding-top: 20px;"> When are drivers available this week?</h1>
-<table class="schedule">
-    <thead>
-    <tr>
-        <th>
-        Monday,
-        <br><%= @days_of_this_week[0] %>
-        </th>
-        <th>Tuesday,
-        <br><%= @days_of_this_week[1] %>
-        </th>
-        <th>Wednesday,
-        <br><%= @days_of_this_week[2] %>
-        </th>
-        <th>Thursday,
-        <br><%= @days_of_this_week[3] %>
-        </th>
-        <th>Friday,
-        <br><%= @days_of_this_week[4] %>
-        </th>
-        <th>Saturday,
-        <br><%= @days_of_this_week[5] %>
-        </th>
-        <th>Sunday,
-        <br><%= @days_of_this_week[6] %>
-        </th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @sorted_sch = PatientsController.sort_schedule(@current_schedules) %>
-    <% @sorted_sch.each do |day| %>
-    <tr>
-        <% day.each do |time| %>
-            <td>
-            <% if time != 'None' %>
-                <%= time %>
+<div style="text-align: center;">
+    <select id="target">
+        <option value=0>(Choose Option)</option>
+        <optgroup label="This Week">
+            <% @week.zip(@days_of_this_week).each do |name, date| %>
+                <option value=<%= "#{date.delete(' ')}" %>><%= "#{name} (#{date})" %></option>
             <% end %>
-            </td>
-        <% end %>
-    </tr>
-    <% end %>
-    </tbody>
-</table>
-
-<br><br>
-
-<h1 style="padding-top: 20px;"> When are drivers available next week?</h1>
-<table class="schedule">
-    <thead>
-    <tr>
-        <th>
-        Monday,
-        <br><%= @days_of_next_week[0] %>
-        </th>
-        <th>Tuesday,
-        <br><%= @days_of_next_week[1] %>
-        </th>
-        <th>Wednesday,
-        <br><%= @days_of_next_week[2] %>
-        </th>
-        <th>Thursday,
-        <br><%= @days_of_next_week[3] %>
-        </th>
-        <th>Friday,
-        <br><%= @days_of_next_week[4] %>
-        </th>
-        <th>Saturday,
-        <br><%= @days_of_next_week[5] %>
-        </th>
-        <th>Sunday,
-        <br><%= @days_of_next_week[6] %>
-        </th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @sorted_sch = PatientsController.sort_schedule(@next_schedules) %>
-    <% @sorted_sch.each do |day| %>
-    <tr>
-        <% day.each do |time| %>
-            <td>
-            <% if time != 'None' %>
-                <%= time %>
+        </optgroup>
+        <optgroup label="Next Week">
+            <% @week.zip(@days_of_next_week).each do |name, date| %>
+                <option value=<%= "#{date.delete(' ')}" %>><%= "#{name} (#{date})" %></option>
             <% end %>
-            </td>
-        <% end %>
-    </tr>
+        </optgroup>
+    </select>
+    
+    <br><br>
+    
+    <% @days_of_this_week.each_with_index do |date,index| %>
+        <div id=<%= "#{date.delete(' ')}" %> class="inv">
+            <% @sorted_day = PatientsController.day_schedules(@current_schedules,@week[index]) %>
+            <table class="schedule">
+                <thead>
+                    <tr>
+                    <th><%= @week[index] %>,
+                    <br><%= date %></th>
+                    </tr>
+                </thead>
+            
+                <tbody>
+                    <% if @sorted_day.empty? %>
+                        <tr>
+                            <td> No Available Times
+                        </tr>
+                    <% else %>
+                        <% @sorted_day.each do |sch| %>
+                                <tr>
+                                    <td><%= sch %>
+                                </tr>
+                        <% end %>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
     <% end %>
-    </tbody>
-</table>
-
-</center>
+    
+    <% @days_of_next_week.each_with_index do |date,index| %>
+        <div id=<%= "#{date.delete(' ')}" %> class="inv">
+            <% @sorted_day = PatientsController.day_schedules(@next_schedules,@week[index]) %>
+            <table class="schedule">
+                <thead>
+                    <tr>
+                    <th><%= @week[index] %>,
+                    <br><%= date %></th>
+                    </tr>
+                </thead>
+            
+                <tbody>
+                    <% if @sorted_day.empty? %>
+                        <tr>
+                            <td> No Available Times
+                        </tr>
+                    <% else %>
+                        <% @sorted_day.each do |sch| %>
+                                <tr>
+                                    <td><%= sch %>
+                                </tr>
+                        <% end %>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    <% end %>
+</div>
 
 <br>
 <p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
+
+<script>
+    document
+        .getElementById('target')
+        .addEventListener('change', function () {
+            'use strict';
+            var vis = document.querySelector('.vis'),   
+            target = document.getElementById(this.value);
+            if (vis !== null) {
+                vis.className = 'inv';
+            }
+            if (target !== null ) {
+                target.className = 'vis';
+            }
+    });
+</script>

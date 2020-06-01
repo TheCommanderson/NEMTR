@@ -105,13 +105,30 @@ class PatientsController < ApplicationController
       sat << SchedulesController.make_readable(sch)['Saturday']
       sun << SchedulesController.make_readable(sch)['Sunday']
     end
-
+    
+    num_schedules = mon.length()
     @week = [mon, tues, wed, thurs, fri, sat, sun]
+    @week.map{ |day| day.reject! {|val| val == 'None'} }
     @week.each do |day|
-      @sch << day.sort! { |a, b| (!a.index(':').nil? ? a[a.index(':') + 3] : "Zero") <=> (!b.index(':').nil? ? b[b.index(':') + 3] : "Zero") }
+      #@sch << day.sort! { |a, b| (!a.index(':').nil? ? a[a.index(':') + 3] : 'Zero') <=> (!b.index(':').nil? ? b[b.index(':') + 3] : 'Zero') }
+      sorted_day = day.sort! { |a, b| a[a.index(':') + 3] <=> b[b.index(':') + 3] }
+      @sch << (Array(sorted_day).fill ' ', Array(sorted_day).size, num_schedules - sorted_day.length())
     end
 
     @sch.transpose
+  end
+  
+  def self.day_schedules(schedules,day)
+    @sch = []
+    schedules.each do |sch|
+      @sch << SchedulesController.make_readable(sch)[day]
+    end
+    
+    num_schedules = @sch.length()
+    @sch.reject! {|val| val == 'None'}
+    sorted_day = @sch.sort! { |a, b| a[a.index(':') + 3] <=> b[b.index(':') + 3] }
+    
+    sorted_day
   end
 
   private
