@@ -39,19 +39,19 @@
               <% @tempPatient = @patients.find(appointment.patient_id) %>
               <td>
                 <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
-                <p></br>Phone: <%= @tempPatient.phone %></p>
+                <p>Phone: <%= @tempPatient.phone %></p>
               </td>
               <td nowrap='nowrap'>
                 <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-                <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
+                <p><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
               </td>
               <td>
                 <%= appointment.location[0][:name] %>
-                <p></br><%= appointment.location[0][:address] %></p>
+                <p><%= appointment.location[0][:address] %></p>
               </td>
               <td>
                 <%= appointment.location[1][:name] %>
-                <p></br><%= appointment.location[1][:address] %></p>
+                <p><%= appointment.location[1][:address] %></p>
               </td>
               <td>
                 <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
@@ -84,19 +84,19 @@
               <% @tempPatient = @patients.find(appointment.patient_id) %>
               <td>
                 <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
-                <p></br>Phone: <%= @tempPatient.phone %></p>
+                <p>Phone: <%= @tempPatient.phone %></p>
               </td>
               <td nowrap='nowrap'>
                 <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-                <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
+                <p><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
               </td>
               <td>
                 <%= appointment.location[0][:name] %>
-                <p></br><%= appointment.location[0][:address] %></p>
+                <p><%= appointment.location[0][:address] %></p>
               </td>
               <td>
                 <%= appointment.location[1][:name] %>
-                <p></br><%= appointment.location[1][:address] %></p>
+                <p><%= appointment.location[1][:address] %></p>
               </td>
               <td>
                 <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
@@ -141,15 +141,15 @@
 
           <td nowrap="nowrap">
             <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-            <p></br><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
+            <p><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
           </td>
           <td>
             <%= appointment.location[0][:name] %>
-            <p></br><%= appointment.location[0][:address] %></p>
+            <p><%= appointment.location[0][:address] %></p>
           </td>
           <td>
             <%= appointment.location[1][:name] %>
-            <p></br><%= appointment.location[1][:address] %></p>
+            <p><%= appointment.location[1][:address] %></p>
           </td>
           <td>
             <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
