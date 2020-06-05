@@ -1,39 +1,36 @@
-<p id="notice"><%= notice %></p>
+<div class="center">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @admin.first_name %>
-</p>
+  <p>
+    <strong>First name:</strong>
+    <%= @admin.first_name %>
+  </p>
 
-<p>
-  <strong>Middle init:</strong>
-  <%= @admin.middle_init %>
-</p>
+  <p>
+    <strong>Middle init:</strong>
+    <%= @admin.middle_init %>
+  </p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @admin.last_name %>
-</p>
+  <p>
+    <strong>Last name:</strong>
+    <%= @admin.last_name %>
+  </p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @admin.phone %>
-</p>
+  <p>
+    <strong>Phone:</strong>
+    <%= @admin.phone %>
+  </p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @admin.email %>
-</p>
+  <p>
+    <strong>Email:</strong>
+    <%= @admin.email %>
+  </p>
 
-<p>
-  <strong>Auth lvl:</strong>
-  <%= @admin.auth_lvl %>
-</p>
+  <p>
+    <strong>Host org:</strong>
+    <%= @admin.host_org %>
+  </p>
 
-<p>
-  <strong>Host org:</strong>
-  <%= @admin.host_org %>
-</p>
-
-<%= link_to 'Edit', edit_admin_path(@admin) %> |
-<%= link_to 'Back', admins_home_path %>
+  <%= link_to 'Edit', edit_admin_path(@admin) %> |
+  <%= link_to 'Back', admins_home_path %>
+</div>
