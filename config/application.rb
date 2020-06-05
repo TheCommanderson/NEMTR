@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
-require "rails"
+require 'rails'
 # Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "rails/mongoid"
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'rails/mongoid'
 # require "active_record/railtie"
 # require "active_storage/engine"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "action_cable/engine"
-require "sprockets/railtie"
-require "rails/test_unit/railtie"
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'action_cable/engine'
+require 'sprockets/railtie'
+require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,6 +26,7 @@ module NEMTR
     config.load_defaults 5.2
     config.autoload_paths << Rails.root.join('lib')
 
+    config.require_master_key = true
     config.time_zone = 'Central Time (US & Canada)'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

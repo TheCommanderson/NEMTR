@@ -5,7 +5,7 @@ development:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      uri: mongodb+srv://Spencer:r1desh4re@nemtr-pbmpo.mongodb.net/test?retryWrites=true&w=majority
+      uri: <%= Rails.application.credentials.mongo_uri %>
       options:
         server_selection_timeout: 5
 
@@ -23,7 +23,7 @@ test:
 production:
   clients:
     default:
-      uri: mongodb+srv://Spencer:r1desh4re@nemtr-pbmpo.mongodb.net/test?retryWrites=true&w=majority
+      uri: <%= Rails.application.credentials.mongo_uri %>
       options:
         skip_version_check: true
         safe: true
