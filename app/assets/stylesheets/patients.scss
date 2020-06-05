@@ -11,11 +11,12 @@
 }
 .scroll-wrapper-preset{
   max-height: 41vh;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 #preset-new-page{
   padding-top: 2%;
   height: 40%;
+  overflow: auto;
 }
 #preset-left{
   float: left;
@@ -49,5 +50,4 @@
 }
 #admin-preset-picker{
   max-height: 20%;
-  overflow: scroll;
 }
