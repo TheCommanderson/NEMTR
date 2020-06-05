@@ -8,6 +8,13 @@ class PresetsController < ApplicationController
   def new
     @patient = Patient.find(params[:patient_id])
     @preset = @patient.preset.new
+    tmp_arr = []
+    Patient.where(host_org: current_user.host_org).each do |patient|
+      patient.preset.each do |preset|
+        tmp_arr << preset if @patient.preset.select { |p| p.name == preset.name }.empty?
+      end
+    end
+    @unique_presets = tmp_arr.uniq(&:name)
   end
 
   def create
