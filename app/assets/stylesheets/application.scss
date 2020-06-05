@@ -67,6 +67,10 @@ p.flash-notice{
 #error_explanation{
   margin: 0 auto !important;
 }
+.col-1{
+  max-width: 40% !important;
+}
+
 /* HEADER AND PARAGRAPH STYLES */
 h1,h2,h3,h4,h5{
   font-family: 'Lato', sans-serif;
@@ -97,7 +101,7 @@ p{
 }
 .logo{
   display: inline;
-  object-fit: cover;
+  object-fit: contain;
   max-height: 12%;
   margin-top: 1%;
   max-width: 8%;
