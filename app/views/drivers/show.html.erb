@@ -1,39 +1,31 @@
-<p id="notice"><%= notice %></p>
+<div class='center'>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @driver.first_name %>
-</p>
+  <p>
+    <strong>First name:</strong>
+    <%= @driver.first_name %>
+  </p>
 
-<p>
-  <strong>Middle init:</strong>
-  <%= @driver.middle_init %>
-</p>
+  <p>
+    <strong>Middle init:</strong>
+    <%= @driver.middle_init %>
+  </p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @driver.last_name %>
-</p>
+  <p>
+    <strong>Last name:</strong>
+    <%= @driver.last_name %>
+  </p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @driver.phone %>
-</p>
+  <p>
+    <strong>Phone:</strong>
+    <%= @driver.phone %>
+  </p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @driver.email %>
-</p>
+  <p>
+    <strong>Email:</strong>
+    <%= @driver.email %>
+  </p>
 
-<p>
-  <strong>Trained:</strong>
-  <%= @driver.trained %>
-</p>
-
-<p>
-  <strong>Admin:</strong>
-  <%= @driver.admin %>
-</p>
-
-<%= link_to 'Edit', edit_driver_path(@driver) %> |
-<%= link_to 'Back', drivers_home_path %>
+  <%= link_to 'Edit', edit_driver_path(@driver) %> |
+  <%= link_to 'Back', drivers_home_path %>
+</div>
