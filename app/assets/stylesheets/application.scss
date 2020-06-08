@@ -173,7 +173,7 @@ tr:nth-child(even){
   color: #33adff;
 }
 
-/* BUTTON SIZES */
+/* BUTTON OPTIONS */
 .btn-sm{
   color: #003354;
   background-color: white;
@@ -195,4 +195,13 @@ tr:nth-child(even){
 }
 .nav-btn{
   max-width: 100% !important;
+}
+.red-btn{
+  background-color: #e42311;
+}
+.red-btn:hover{
+  background-color: #721109;
+}
+.red-btn:focus{
+  background-color: #260603;
 }
