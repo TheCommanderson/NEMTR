@@ -19,20 +19,20 @@
               <p><%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %></p>
             </td>
         </table>
-        
+
         <br><br>
-        
+
         <center>
-        <h3 style="text-align: center">Confirm driver for appointment</h3> 
+        <h3 style="text-align: center">Confirm driver for appointment</h3>
         <%= form_tag(assign_appointment_path(params[:id]), :method => :post) do %>
             <div style="row">
             <%= select_tag :driver_id, options_from_collection_for_select(Driver.all, 'id', 'email', params[:driver_id])  %>
             <%= submit_tag "Submit", class: "btn btn-primary" %>
             </div>
         <% end %>
-        
+
         <br>
-        
+
         <h3> View driver schedules </h3>
         <select id="target">
             <option value = "default" >Select driver</option>
@@ -40,7 +40,7 @@
             <option value=<%= "#{driver.id}" %>><%= "#{driver.first_name} #{driver.last_name} (#{driver.email})" %></option>
         <% end %>
         <select>
-            
+
         <% Driver.all.each do |driver| %>
             <div id=<%= "#{driver.id}" %> class="inv">
             <h1 style="text-align: center; padding-top: 20px;">Availability</h1>
@@ -51,9 +51,9 @@
                 <% else %>
                     <% (0..6).each { |i| @days_of_this_week.append((Date.today.next_week.at_beginning_of_week(:monday).to_time + i.days).strftime('%B %-d')) } %>
                 <% end %>
-                
+
                 <% sch = SchedulesController.make_readable(sch) %>
-                
+
                 <table class="schedule">
                     <tr>
                         <th>
@@ -89,21 +89,22 @@
                         <td><%= sch['Sunday'] %>
                     </tr>
                 </table>
+                <br>
             <% end %>
-                
+
             </div>
         <% end %>
         </center>
-        
+
         <br>
         <p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
-        
+
         <script>
             document
                 .getElementById('target')
                 .addEventListener('change', function () {
                     'use strict';
-                    var vis = document.querySelector('.vis'),   
+                    var vis = document.querySelector('.vis'),
                     target = document.getElementById(this.value);
                     if (vis !== null) {
                         vis.className = 'inv';
