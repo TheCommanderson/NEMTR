@@ -95,16 +95,16 @@ class AdminsController < ApplicationController
   end
 
   def admin_search
-    @admins = if params[:a_search]
-                search(Admin.all)
+    @admins = if params[:admin_search]
+                search(Admin.all,params[:admin_search])
               else
                 Admin.all
               end
   end
 
   def driver_search
-    @drivers = if params[:d_search]
-                 search(Driver.all)
+    @drivers = if params[:driver_search]
+                 search(Driver.all,params[:driver_search])
                else
                  Driver.all
                end
@@ -117,17 +117,17 @@ class AdminsController < ApplicationController
                   Patient.all
                 end
 
-    @patients = if params[:p_search]
-                  search(@patients)
+    @patients = if params[:patient_search]
+                  search(@patients,params[:patient_search])
                 else
                   @patients
                 end
   end
 
-  def search(obj)
-    if params[:search]
-      @parameter = /#{params[:search]}/i
-      @full_name = params[:search].gsub(/\s+/m, ' ').strip.split(' ')
+  def search(obj,param)
+    if param
+      @parameter = /#{param}/i
+      @full_name = param.gsub(/\s+/m, ' ').strip.split(' ')
       if @full_name.length > 1
         @first = /#{@full_name[0]}/i
         @second = /#{@full_name[1]}/i
