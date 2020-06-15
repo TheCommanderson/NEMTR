@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rides: 
+  errors: 
+  current: 
+  date: 
+  drivers: 
+  patients: 
+
+two:
+  rides: 
+  errors: 
+  current: 
+  date: 
+  drivers: 
+  patients: 
