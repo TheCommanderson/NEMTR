@@ -21,7 +21,7 @@
   <p id="notice" class="text-center" style="margin: 0;"><%= notice %></p>
   <!-- =================== MAIN STUFF =================== -->
   <div style="margin: 20px;">
-    <h1>Upcoming Appointments</h1>
+    <h1>Upcoming Rides</h1>
     <table cellpadding="5" style="text-align: center;">
       <thead>
         <tr>
@@ -65,16 +65,19 @@
             <%= button_to 'Update Date/Time', edit_appointment_path(appointment), method: :get, class: "btn btn-secondary sm-btn" %>
             <%= button_to 'Update Pick-up Location', edit_appointment_location_path(appointment.id, @pickUpLocationid), method: :get, class: "btn btn-secondary sm-btn" %>
             <%= button_to 'Update Destination', edit_appointment_location_path(appointment.id, @destinationid), method: :get, class: "btn btn-secondary sm-btn" %>
-            <%= button_to 'Cancel Appointment', appointment, method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn"%>
+            <%= button_to 'Cancel Ride', appointment, method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn"%>
           </td>
         </tr>
         <% end %>
       </tbody>
     </table>
     <div class="text-center" style="padding: 12px;">
-      <%= link_to 'New Appointment',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get, class: "btn btn-primary big-btn", style: ""%>
+      <%= link_to 'New Ride',{action: :new, controller: :appointments, patient_id: @currentPatient.id}, method: :get, class: "btn btn-primary big-btn", style: ""%>
     </div>
   </div>
 <% else %>
-  <br><h1>Pending approval</h1><br>
+  <br>
+  <h3>Pending approval</h3>
+  <p>Please contact your healthcare provider.</p>
+  <br>
 <% end %>
