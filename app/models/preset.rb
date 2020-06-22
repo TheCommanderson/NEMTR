@@ -6,6 +6,7 @@ class Preset
   field :city, type: String
   field :state, type: String
   field :zip, type: Integer
+  field :home, type: Integer
 
   validates_presence_of :addr1, :city, :state, :zip
 

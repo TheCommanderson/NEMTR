@@ -10,7 +10,7 @@ class PresetsController < ApplicationController
     @preset = @patient.preset.new
     tmp_arr = []
     Patient.where(host_org: current_user.host_org).each do |patient|
-      patient.preset.each do |preset|
+      patient.preset.where({ home: 0 }).each do |preset|
         tmp_arr << preset if @patient.preset.select { |p| p.name == preset.name }.empty?
       end
     end
@@ -51,6 +51,6 @@ class PresetsController < ApplicationController
   private
 
   def preset_params
-    params.require(:preset).permit(:addr1, :addr2, :city, :state, :zip, :name)
+    params.require(:preset).permit(:addr1, :addr2, :city, :state, :zip, :name, :home)
   end
 end

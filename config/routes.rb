@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     resources :presets
     get :comment, on: :member
     get :viewComments, on: :member
+    get :defaultAddress, on: :member
+    post :saveAddress, on: :member
     patch :append, on: :member
   end
 
