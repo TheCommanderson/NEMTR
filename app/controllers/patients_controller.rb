@@ -92,12 +92,20 @@ class PatientsController < ApplicationController
   
   def saveAddress
     @patient = Patient.find(params[:id])
+    
+    if !@patient.preset.where({ home: 1 }).empty?
+      @current_default = @patient.preset.where({ home: 1 }).first
+      @preset = @patient.preset.find(@current_default.id)
+      @preset.destroy
+    end
+    
     addr1 = params[:preset][:addr1]
     addr2 = params[:preset][:addr2]
     city = params[:preset][:city]
     state = params[:preset][:state]
     zip = params[:preset][:zip]
     name = params[:preset][:name]
+    
     @preset = @patient.preset.build(addr1: addr1, addr2: addr2, city: city, state: state, zip: zip, name: name, home: 1)
     @preset.save
     @patient.save

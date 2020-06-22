@@ -8,6 +8,12 @@
   </select>
 </div>
 
+<% if !@preset.empty? %>
+  <% @presets = [@preset.first.addr1,@preset.first.addr2,@preset.first.city,@preset.first.state,@preset.first.zip,@preset.first.name]  %>
+<% else %>
+  <% @presets = ['','','','','','']  %>
+<% end %>
+
 <div id="show-dest-restricted" class='new-appt-whole' style='display: none;'>
   <%= form_with(model: @appointment, local: true) do |form| %>
     <% if @appointment.errors.any? %>
@@ -34,17 +40,21 @@
       	<h3>Pick-Up Location</h3>
       	<%= form.fields_for :location, @appointment.location.build do |f| %>
       		<%= f.label :addr1, "Address" %>
-      		<%= f.text_field :addr1 %>
+      		<%= f.text_field :addr1, value: @presets[0] %>
       		<%= f.label :addr2, "Address (cont.)" %>
-      		<%= f.text_field :addr2 %>
+      		<%= f.text_field :addr2, value: @presets[1] %>
       		<%= f.label :city %>
-      		<%= f.text_field :city %>
+      		<%= f.text_field :city, value: @presets[2] %>
       		<%= f.label :state %>
-      		<%= f.text_field :state %>
+      		<%= f.text_field :state, value: @presets[3] %>
       		<%= f.label :zip %>
-      		<%= f.number_field :zip %>
+      		<% if !@preset.empty? %>
+      		  <%= f.number_field :zip, value: @presets[4] %>
+      		<% else %>
+      		  <%= f.number_field :zip %>
+      		<% end %>
           <%= f.label :name, "Address Nickname" %>
-      		<%= f.text_field :name, placeholder: "(Optional)" %>
+      		<%= f.text_field :name, placeholder: "(Optional)", value: @presets[5] %>
       	<% end %>
       </div>
       <div class='appt-loc' id='new-appt-4'>
@@ -132,17 +142,21 @@
       	<h3>Destination Location</h3>
       	<%= form.fields_for :location, @appointment.location.build do |f| %>
       		<%= f.label :addr1, "Address" %>
-      		<%= f.text_field :addr1 %>
+      		<%= f.text_field :addr1, value: @presets[0] %>
       		<%= f.label :addr2, "Address (cont.)" %>
-      		<%= f.text_field :addr2 %>
+      		<%= f.text_field :addr2, value: @presets[1] %>
       		<%= f.label :city %>
-      		<%= f.text_field :city %>
+      		<%= f.text_field :city, value: @presets[2] %>
       		<%= f.label :state %>
-      		<%= f.text_field :state %>
+      		<%= f.text_field :state, value: @presets[3] %>
       		<%= f.label :zip %>
-      		<%= f.number_field :zip %>
+      		<% if !@preset.empty? %>
+      		  <%= f.number_field :zip, value: @presets[4] %>
+      		<% else %>
+      		  <%= f.number_field :zip %>
+      		<% end %>
           <%= f.label :name, "Address Nickname" %>
-      		<%= f.text_field :name, placeholder: "(Optional)" %>
+      		<%= f.text_field :name, placeholder: "(Optional)", value: @presets[5] %>
       	<% end %>
       </div>
     </div>

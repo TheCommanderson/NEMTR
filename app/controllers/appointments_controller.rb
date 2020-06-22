@@ -35,6 +35,7 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
     @patient = Patient.find(params[:patient_id])
+    @preset = @patient.preset.where({ home: 1 })
   end
 
   # GET /appointments/1/edit
