@@ -20,6 +20,8 @@ class PresetsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @preset = @patient.preset.build(preset_params)
+    @preset.home = 0
+    @preset.save
     @patient.save
     redirect_to patient_presets_path, notice: 'New location added successfully.'
   end
