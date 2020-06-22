@@ -85,37 +85,23 @@ class PatientsController < ApplicationController
   def viewComments
     @patient = Patient.find(params[:id])
   end
-
-  def self.sort_schedule(schedules)
-    mon = []
-    tues = []
-    wed = []
-    thurs = []
-    fri = []
-    sat = []
-    sun = []
-    @sch = []
-
-    schedules.each do |sch|
-      mon << SchedulesController.make_readable(sch)['Monday']
-      tues << SchedulesController.make_readable(sch)['Tuesday']
-      wed << SchedulesController.make_readable(sch)['Wednesday']
-      thurs << SchedulesController.make_readable(sch)['Thursday']
-      fri << SchedulesController.make_readable(sch)['Friday']
-      sat << SchedulesController.make_readable(sch)['Saturday']
-      sun << SchedulesController.make_readable(sch)['Sunday']
-    end
-
-    num_schedules = mon.length
-    @week = [mon, tues, wed, thurs, fri, sat, sun]
-    @week.map { |day| day.reject! { |val| val == 'None' } }
-    @week.each do |day|
-      # @sch << day.sort! { |a, b| (!a.index(':').nil? ? a[a.index(':') + 3] : 'Zero') <=> (!b.index(':').nil? ? b[b.index(':') + 3] : 'Zero') }
-      sorted_day = day.sort! { |a, b| a[a.index(':') + 3] <=> b[b.index(':') + 3] }
-      @sch << (Array(sorted_day).fill ' ', Array(sorted_day).size, num_schedules - sorted_day.length)
-    end
-
-    @sch.transpose
+  
+  def defaultAddress
+    @patient = Patient.find(params[:id])
+  end
+  
+  def saveAddress
+    @patient = Patient.find(params[:id])
+    addr1 = params[:preset][:addr1]
+    addr2 = params[:preset][:addr2]
+    city = params[:preset][:city]
+    state = params[:preset][:state]
+    zip = params[:preset][:zip]
+    name = params[:preset][:name]
+    @preset = @patient.preset.build(addr1: addr1, addr2: addr2, city: city, state: state, zip: zip, name: name, home: 1)
+    @preset.save
+    @patient.save
+    redirect_to patients_home_path
   end
 
   def self.day_schedules(schedules, day)

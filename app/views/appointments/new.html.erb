@@ -59,7 +59,7 @@
             <th>Select</th>
           </thead>
           <tbody>
-            <% @patient.preset.each do |location| %>
+            <% @patient.preset.where({ home: 0 }).each do |location| %>
               <tr>
                 <td><%= location.name %></td>
                 <td>
@@ -114,7 +114,7 @@
             <th>Select</th>
           </thead>
           <tbody>
-            <% @patient.preset.each do |location| %>
+            <% @patient.preset.where({ home: 0 }).each do |location| %>
               <tr>
                 <td><%= location.name %></td>
                 <td>
