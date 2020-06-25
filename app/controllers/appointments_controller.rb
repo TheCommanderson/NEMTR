@@ -58,6 +58,7 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new(@appt_parms)
     respond_to do |format|
       if @appointment.save
+        UserMailer.with(appt: @appointment).ride_created_email.deliver
         format.html { redirect_to root_url }
         # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :created, location: @appointment }
