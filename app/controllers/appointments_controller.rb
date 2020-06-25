@@ -71,11 +71,16 @@ class AppointmentsController < ApplicationController
 
   def cancel
     appointment = Appointment.find(params[:id])
+    driver = appointment.driver_id
+    patient = appointment.patient_id
     appointment.update_attribute(:status, 0)
     appointment.update_attribute(:driver_id, nil)
     redirect_back(fallback_location: root_path)
     current_user.add_to_set(blacklist: appointment._id)
     current_user.save
+    if DateTime.strptime(appointment.datetime, dt_format).to_time < 1.hour.from_now
+      AdminMailer.with(driver: driver, patient: patient).short_cancel_email.deliver
+    end
   end
 
   # PATCH/PUT /appointments/1

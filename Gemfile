@@ -31,6 +31,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'delayed_job_mongoid'
 gem 'whenever'
 
+gem 'google-api-client'
 gem 'textmagic-ruby'
 
 # Reduces boot times through caching; required in config/boot.rb
