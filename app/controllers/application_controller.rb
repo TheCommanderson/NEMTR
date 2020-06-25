@@ -211,9 +211,11 @@ class ApplicationController < ActionController::Base
         driver = poss_drivers.first
       end
 
+      # Assign the driver
       @debug_log.append('appt assigned to ' + driver.first_name)
       new_atts = { status: 1, driver_id: driver[:id] }
       appt.update_attributes(new_atts)
+      UserMailer.with(appt: appt).ride_assigned_email.deliver
     end
     @debug_log
   end
