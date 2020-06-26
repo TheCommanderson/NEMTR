@@ -20,4 +20,5 @@ class UserMailer < ApplicationMailer
     @patient = Patient.find(@appointment.patient_id)
     @driver = Driver.find(@appointment.driver_id)
     mail(to: @patient.email, subject: 'Ride2Health Trip Updated')
+  end
 end
