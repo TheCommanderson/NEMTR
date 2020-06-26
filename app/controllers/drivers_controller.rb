@@ -67,6 +67,7 @@ class DriversController < ApplicationController
 
     respond_to do |format|
       if @driver.save
+        AdminMailer.with(driver: @driver).new_driver_email.deliver
         format.html { redirect_to @driver, notice: 'Driver was successfully created.' }
         format.json { render :show, status: :created, location: @driver }
       else
