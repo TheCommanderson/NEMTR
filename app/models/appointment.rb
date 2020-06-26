@@ -32,7 +32,9 @@ class Appointment
   end
 
   def email_updates
-    UserMailer.with(appt: appt).ride_updated_email.deliver
-    UserMailer.with(appt: appt).ride_assigned_email.deliver
+    if status == 1
+      UserMailer.with(appt: self).ride_updated_email.deliver
+      UserMailer.with(appt: self).ride_assigned_email.deliver
+    end
   end
 end
