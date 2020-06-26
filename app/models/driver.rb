@@ -23,7 +23,6 @@ class Driver
   validates_presence_of :first_name, :last_name, :phone, :email
   validates_uniqueness_of :email
   validates_length_of :phone, is: 10
-  validates_length_of :car_license_plate, minimum: 6, maximum: 7
 
   has_secure_password
   belongs_to :admin, optional: true
