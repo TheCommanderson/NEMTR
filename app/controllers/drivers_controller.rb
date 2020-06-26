@@ -110,7 +110,12 @@ class DriversController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def driver_params
-    params.require(:driver).permit(:first_name, :middle_init, :last_name, :phone, :email, :trained, :admin_id, :password, schedule_attributes: %i[Monday Tuesday Wednesday Thursday Friday Saturday Sunday current])
+    params.require(:driver).permit(
+      :first_name, :middle_init, :last_name,
+      :car_make, :car_model, :car_license_plate,
+      :phone, :email, :trained, :admin_id, :password,
+      schedule_attributes: %i[Monday Tuesday Wednesday Thursday Friday Saturday Sunday current]
+    )
   end
 
   def driver_authorized

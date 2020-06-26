@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin
   include Mongoid::Document
   include ActiveModel::SecurePassword
@@ -16,7 +18,7 @@ class Admin
 
   validates_presence_of :first_name, :last_name, :phone, :email, :approved
   validates_uniqueness_of :email
-  validates_length_of :phone, minimum: 10, maximum: 11
+  validates_length_of :phone, is: 10
 
   has_secure_password
   has_many :drivers

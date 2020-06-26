@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Patient
   include Mongoid::Document
   include ActiveModel::SecurePassword
@@ -15,10 +17,10 @@ class Patient
 
   validates_presence_of :first_name, :last_name, :phone, :email
   validates_uniqueness_of :email
-  validates_length_of :phone, minimum: 10, maximum: 11
+  validates_length_of :phone, is: 10
 
   has_secure_password
-  belongs_to :admin, :optional => true
+  belongs_to :admin, optional: true
   has_many :appointments
   embeds_many :preset
   accepts_nested_attributes_for :preset
