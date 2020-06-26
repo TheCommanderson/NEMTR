@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+'''
 class Stat
   include Mongoid::Document
   field :rides, type: Integer
@@ -16,6 +16,7 @@ def self.collect
     s.drivers = Driver.count
     s.current = false
   end
-  params = { rides: 0, errors: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
+  paramss = { rides: 0, errors: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
   next_stat = Stat.new(params)
 end
+'''
