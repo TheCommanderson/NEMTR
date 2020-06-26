@@ -1,0 +1,13 @@
+<%= @driver.first_name %>,
+
+You have been assigned a new ride!
+
+Time and Date of Pickup: <%= @appointment.datetime %>
+Pickup Location: <%= @appointment.location[0].address %>
+Dropoff Location: <%= @appointment.location[1].address %>
+Estimated Time: <%= @appointment.est_time %> minutes
+
+To view the full details of this ride, visit Ride2Health.org
+
+Thanks!
+Ride2Health Automated Messaging
