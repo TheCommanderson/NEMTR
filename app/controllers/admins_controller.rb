@@ -96,7 +96,7 @@ class AdminsController < ApplicationController
 
   def admin_search
     @admins = if params[:admin_search]
-                search(Admin.all,params[:admin_search])
+                search(Admin.all, params[:admin_search])
               else
                 Admin.all
               end
@@ -104,7 +104,7 @@ class AdminsController < ApplicationController
 
   def driver_search
     @drivers = if params[:driver_search]
-                 search(Driver.all,params[:driver_search])
+                 search(Driver.all, params[:driver_search])
                else
                  Driver.all
                end
@@ -118,13 +118,13 @@ class AdminsController < ApplicationController
                 end
 
     @patients = if params[:patient_search]
-                  search(@patients,params[:patient_search])
+                  search(@patients, params[:patient_search])
                 else
                   @patients
                 end
   end
 
-  def search(obj,param)
+  def search(obj, param)
     if param
       @parameter = /#{param}/i
       @full_name = param.gsub(/\s+/m, ' ').strip.split(' ')
@@ -164,6 +164,7 @@ class AdminsController < ApplicationController
 
     respond_to do |format|
       if @admin.save
+        AdminMailer.with(admin: @admin).new_admin_email.deliver
         format.html { redirect_to @admin, notice: 'Admin was successfully created.' }
         format.json { render :show, status: :created, location: @admin }
       else

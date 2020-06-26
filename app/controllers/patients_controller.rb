@@ -37,6 +37,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
+        AdminMailer.with(patient: @patient).new_patient_email.deliver
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
         format.json { render :show, status: :created, location: @patient }
       else
@@ -85,27 +86,27 @@ class PatientsController < ApplicationController
   def viewComments
     @patient = Patient.find(params[:id])
   end
-  
+
   def defaultAddress
     @patient = Patient.find(params[:id])
   end
-  
+
   def saveAddress
     @patient = Patient.find(params[:id])
-    
-    if !@patient.preset.where({ home: 1 }).empty?
+
+    unless @patient.preset.where({ home: 1 }).empty?
       @current_default = @patient.preset.where({ home: 1 }).first
       @preset = @patient.preset.find(@current_default.id)
       @preset.destroy
     end
-    
+
     addr1 = params[:preset][:addr1]
     addr2 = params[:preset][:addr2]
     city = params[:preset][:city]
     state = params[:preset][:state]
     zip = params[:preset][:zip]
     name = params[:preset][:name]
-    
+
     @preset = @patient.preset.build(addr1: addr1, addr2: addr2, city: city, state: state, zip: zip, name: name, home: 1)
     @preset.save
     @patient.save
