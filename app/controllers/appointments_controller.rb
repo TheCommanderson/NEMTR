@@ -36,6 +36,9 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new
     @patient = Patient.find(params[:patient_id])
     @preset = @patient.preset.where({ home: 1 })
+    if params[:type] == 'clear'
+      @preset = []
+    end
   end
 
   # GET /appointments/1/edit
