@@ -166,6 +166,11 @@
   <% end %>
 </div>
 
+<center>
+  <br>
+   <%= button_to "Clear Form", { action: "new"}, :params => {:patient_id => params[:patient_id], :type => "clear"}, method: :get, class: "btn btn-secondary sm-btn" %>
+</center>
+
 <p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
 
 <script>
