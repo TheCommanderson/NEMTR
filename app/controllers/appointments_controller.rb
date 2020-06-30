@@ -36,9 +36,7 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new
     @patient = Patient.find(params[:patient_id])
     @preset = @patient.preset.where({ home: 1 })
-    if params[:type] == 'clear'
-      @preset = []
-    end
+    @preset = [] if params[:type] == 'clear'
   end
 
   # GET /appointments/1/edit
@@ -82,7 +80,7 @@ class AppointmentsController < ApplicationController
     redirect_back(fallback_location: root_path)
     current_user.add_to_set(blacklist: appointment._id)
     current_user.save
-    if DateTime.strptime(appointment.datetime, dt_format).to_time < 1.hour.from_now
+    if Time.parse(appointment.datetime) < 1.hour.from_now
       AdminMailer.with(driver: driver, patient: patient).short_cancel_email.deliver
     end
   end
