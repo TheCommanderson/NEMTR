@@ -118,13 +118,13 @@
                 <% else %>
                   <%= button_to "Approve", { action: "approve", id: admin.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                 <% end %>
-    
+
                 <% if @currentAdmin.auth_lvl == 1  %>
                   <%= button_to "Reset Password", { action: "reset", id: admin.id }, :params => {:type => "admin"}, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-secondary sm-btn" %>
                 <% end %>
-                
+
                 <%= button_to 'Delete', admin, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
-                
+
               </td>
             </tr>
           <% end %>
@@ -187,11 +187,11 @@
                   <% else %>
                     <%= button_to "Approve", { action: "approve", id: driver.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
                   <% end %>
-                  
+
                   <% if @currentAdmin.auth_lvl == 1  %>
                     <%= button_to "Reset Password", { action: "reset", id: driver.id }, :params => {:type => "driver"}, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-secondary sm-btn" %>
                   <% end %>
-                  
+
                   <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-secondary sm-btn" %>
 
               </td>
@@ -259,7 +259,7 @@
               <% else %>
                 <%= button_to "Approve", { action: "approve", id: patient.id }, method: :post, data: { confirm: "Are you sure?" },class: "btn btn-secondary sm-btn" %>
               <% end %>
-              
+
               <%= button_to "Reset Password", { action: "reset", id: patient.id }, :params => {:type => "patient"}, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-secondary sm-btn" %>
             <% end %>
             <% if @currentAdmin.auth_lvl == 2 %>
@@ -273,7 +273,7 @@
             <% if ((@currentAdmin.auth_lvl == 1 ||  @currentAdmin.auth_lvl == 3) && (patient.approved)) %>
               <%= link_to 'Create New Ride',{action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-secondary sm-btn" %>
             <% end %>
-            
+
           </td>
         </tr>
         <% end %>
@@ -298,7 +298,7 @@
 
         <tbody>
           <% @appointments.each do |appointment| %>
-            <% if DateTime.strptime(appointment.datetime, @dt_format).to_date.past? %>
+            <% if Time.parse(appointment.datetime).past? %>
               <% next %>
             <% end %>
           <tr>

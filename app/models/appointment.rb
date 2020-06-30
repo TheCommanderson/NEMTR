@@ -21,7 +21,7 @@ class Appointment
 
   def self.clean_past_appointments
     Appointment.each do |appt|
-      appt.destroy if DateTime.strptime(appt.datetime, '%Y-%m-%d %H:%M').to_date.past?
+      appt.destroy if Time.parse(appt.datetime).past?
     end
   end
 

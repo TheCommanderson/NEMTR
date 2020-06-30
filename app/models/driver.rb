@@ -39,7 +39,7 @@ class Driver
                end
         if appt.nil?
           to_del.append(bl)
-        elsif DateTime.strptime(appt.datetime, '%Y-%m-%d %H:%M').to_date.past?
+        elsif Time.parse(appt.datetime).past?
           to_del.append(bl)
         end
       end
