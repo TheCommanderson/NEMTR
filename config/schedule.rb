@@ -4,15 +4,7 @@ env :PATH, ENV['PATH']
 
 # Use this file to easily define all of your cron jobs.
 set :output, 'log/cron.log'
-# every 2.hours do
-#   command "/usr/bin/some_great_command"
-#   runner "MyModel.some_method"
-#   rake "some:great:rake:task"
-# end
-#
-# every 4.days do
-#   runner "AnotherModel.prune_old_records"
-# end
+
 every :monday, at: '12:01 am' do
   runner 'Schedule.rollover'
 end
@@ -25,4 +17,7 @@ every :monday, at: '12:10 am' do
   runner 'Appointment.clean_past_appointments'
 end
 
+every 2.minutes do
+  runner 'Stat.collect'
+end
 # Learn more: http://github.com/javan/whenever

@@ -3,11 +3,12 @@
 Rails.application.routes.draw do
   root 'sessions#index'
   post :logout, controller: 'application'
-  
-  post 'pick_driver', :to => 'appointments#pick_driver', :as => :pick_driver
+
+  post 'pick_driver', to: 'appointments#pick_driver', as: :pick_driver
   resources :appointments do
     resources :location
     post :assign, on: :member
+    post :report, on: :member
     patch :cancel, on: :member
   end
 
@@ -20,7 +21,7 @@ Rails.application.routes.draw do
   get 'location/:id/edit', to: 'locations#edit'
   patch 'location/:id/edit', to: 'locations#update'
 
-  get 'driver_availability', :to => 'patients#driver_availability', :as => :driver_availability
+  get 'driver_availability', to: 'patients#driver_availability', as: :driver_availability
   resources :drivers do
     resources :schedules
     post :claim, on: :member
@@ -52,6 +53,6 @@ Rails.application.routes.draw do
     get :add_host, on: :member
     get :search, on: :member
   end
-  
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

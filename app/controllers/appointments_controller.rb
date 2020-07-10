@@ -60,6 +60,9 @@ class AppointmentsController < ApplicationController
     respond_to do |format|
       if @appointment.save
         UserMailer.with(appt: @appointment).ride_created_email.deliver
+        stats = Stat.where(current: true).first
+        stats.update_attribute(:rides, stats.rides + 1)
+        stats.save
         format.html { redirect_to root_url }
         # format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.json { render :show, status: :created, location: @appointment }
@@ -106,12 +109,19 @@ class AppointmentsController < ApplicationController
   # DELETE /appointments/1
   # DELETE /appointments/1.json
   def destroy
+    unless Time.parse(@appointment.datetime).past?
+      stats = Stat.where(current: true).first
+      stats.update_attribute(:rides, stats.rides - 1)
+      stats.save
+    end
     @appointment.destroy
     respond_to do |format|
       format.html { redirect_to '/patients_home', notice: 'Appointment was successfully deleted.' }
       format.json { head :no_content }
     end
   end
+
+  def report; end
 
   private
 
