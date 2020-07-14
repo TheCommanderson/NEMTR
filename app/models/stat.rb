@@ -10,13 +10,14 @@ class Stat
   field :patients, type: Integer
 
   def self.collect
-    Stat.find_by(current: true) do |s|
-      s.patients = Patient.count
-      s.drivers = Driver.count
-      s.current = false
-    end
-    params = { rides: 0, reports: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
-    next_stat = Stat.new(params)
+    s = Stat.where(current: true).first
+    s.patients = Patient.count
+    s.drivers = Driver.count
+    s.current = false
+    p = { patients: Patient.count, drivers: Driver.count, current: false }
+    s.update_attributes(p)
+    new_p = { rides: 0, reports: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
+    next_stat = Stat.new(new_p)
     next_stat.save
   end
 end

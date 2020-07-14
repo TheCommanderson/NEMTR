@@ -17,7 +17,7 @@ every :monday, at: '12:10 am' do
   runner 'Appointment.clean_past_appointments'
 end
 
-every 2.minutes do
+every :month do
   runner 'Stat.collect'
 end
 # Learn more: http://github.com/javan/whenever

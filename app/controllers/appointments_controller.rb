@@ -121,7 +121,11 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  def report; end
+  def report
+    new_p = { rides: 0, reports: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
+    next_stat = Stat.new(new_p)
+    next_stat.save
+  end
 
   private
 
