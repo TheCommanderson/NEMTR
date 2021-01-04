@@ -219,7 +219,7 @@ class ApplicationController < ActionController::Base
     @debug_log
   end
 
-  # ===================== MATCHING ENGINE STUFF END ============================ #
+  # ===================== MATCHING ALGORITHM STUFF END ============================ #
   def set_logger
     @debug_log = ['start'] if @debug_log.nil?
   end
