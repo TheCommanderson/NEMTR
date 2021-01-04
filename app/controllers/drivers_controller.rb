@@ -13,6 +13,7 @@ class DriversController < ApplicationController
     @patients = Patient.all
     @appointments = Appointment.where(status: 0).sort_by { |appt| [appt.datetime] }
     @dt_format = dt_format
+    @on_call = is_on_call
   end
 
   # GET /drivers
@@ -120,5 +121,19 @@ class DriversController < ApplicationController
 
   def driver_authorized
     redirect_to root_url unless session[:login_type] == 'D'
+  end
+
+  def is_on_call
+    cur_time = Time.now
+    day_of_week = cur_time.strftime('%A')
+    cur_time_int = cur_time.strftime('%H%M').to_i
+    driver = Driver.find(session[:user_id])
+    driver_today_sch = driver.schedule.where(current: true).first[day_of_week]
+    driver_today_time_start = driver_today_sch[0..3].to_i
+    driver_today_time_end = driver_today_sch[5..8].to_i
+    return false if driver_today_time_start == driver_today_time_end
+    return false if cur_time_int < driver_today_time_start || cur_time_int > driver_today_time_end
+
+    true
   end
 end
