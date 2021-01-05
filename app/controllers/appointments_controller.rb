@@ -129,7 +129,7 @@ class AppointmentsController < ApplicationController
     patient = Patient.find(appointment.patient_id)
     reporter = current_user
     issue = params[:issue_text]
-    redirect_to request.referrer, alert: 'Issue cannot be blank.' if issue.empty?
+    redirect_to :back, alert: 'Issue cannot be blank.' if issue.empty?
 
     AdminMailer.with(driver: driver, patient: patient, reporter: reporter, issue: issue).issue_email.deliver
     redirect_to root_url, notice: 'Issue has been reported.'
