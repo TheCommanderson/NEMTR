@@ -129,10 +129,13 @@ class AppointmentsController < ApplicationController
     patient = Patient.find(appointment.patient_id)
     reporter = current_user
     issue = params[:issue_text]
-    redirect_to :back, alert: 'Issue cannot be blank.' if issue.empty?
+    if issue.empty?
+      flash.alert = 'Issue cannot be blank.'
+      redirect_back fallback_location: root_url and return
+    end
 
     AdminMailer.with(driver: driver, patient: patient, reporter: reporter, issue: issue).issue_email.deliver
-    redirect_to root_url, notice: 'Issue has been reported.'
+    redirect_to root_url, notice: 'Issue has been reported.' and return
     # STATS STUFF (*skeleton meme* thanks, but reconsider!!)
     # new_p = { rides: 0, reports: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
     # next_stat = Stat.new(new_p)

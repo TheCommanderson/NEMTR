@@ -30,6 +30,9 @@ body {
 label{
   font-size: 17px;
 }
+.alert{
+  color: red;
+}
 .bg{
   height: 100%;
   background-position: center;
@@ -41,6 +44,9 @@ label{
 }
 .signup-page{
   padding-top: 10vh;
+}
+p.flash-alert{
+  color: red;
 }
 p.flash-notice{
   position: absolute;
