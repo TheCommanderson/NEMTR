@@ -121,10 +121,22 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  def report
-    new_p = { rides: 0, reports: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
-    next_stat = Stat.new(new_p)
-    next_stat.save
+  def report; end
+
+  def sendReport
+    appointment = Appointment.find(params[:id])
+    driver = appointment.status == 1 ? Driver.find(appointment.driver_id) : nil
+    patient = Patient.find(appointment.patient_id)
+    reporter = current_user
+    issue = params[:issue_text]
+    redirect_to request.referrer, alert: 'Issue cannot be blank.' if issue.nil?
+
+    AdminMailer.with(driver: driver, patient: patient, reporter: reporter, issue: issue).issue_email.deliver
+    redirect_to root_url, notice: 'Issue has been reported.'
+    # STATS STUFF (*skeleton meme* thanks, but reconsider!!)
+    # new_p = { rides: 0, reports: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
+    # next_stat = Stat.new(new_p)
+    # next_stat.save
   end
 
   private
