@@ -33,11 +33,7 @@ class AdminMailer < ApplicationMailer
   end
 
   def issue_email
-    @reporter = if params[:reporter] == 'A'
-                  'Admin Report'
-                else
-                  params[:reporter] == 'D' ? params[:driver] : params[:patient]
-                end
+    @reporter = params[:reporter]
     @driver = params[:driver]
     @patient = params[:patient]
     @issue = params[:issue]
