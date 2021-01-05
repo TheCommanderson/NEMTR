@@ -128,6 +128,8 @@ class AppointmentsController < ApplicationController
     driver = appointment.status == 1 ? Driver.find(appointment.driver_id) : nil
     patient = Patient.find(appointment.patient_id)
     reporter = current_user
+    issue = params[:issue_text]
+    redirect_to request.referrer, alert: 'Issue cannot be blank.' if issue.nil?
     AdminMailer.with(driver: driver, patient: patient, reporter: reporter, issue: params[:issue_text]).issue_email.deliver
     redirect_to root_url, notice: 'Issue has been reported.'
     # STATS STUFF (*skeleton meme* thanks, but reconsider!!)
