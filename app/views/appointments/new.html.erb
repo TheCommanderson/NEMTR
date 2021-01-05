@@ -42,7 +42,7 @@
       		<%= f.label :addr1, "Address" %>
       		<%= f.text_field :addr1, value: @presets[0] %>
       		<%= f.label :addr2, "Address (cont.)" %>
-      		<%= f.text_field :addr2, value: @presets[1] %>
+      		<%= f.text_field :addr2, placeholder: "(Optional)", value: @presets[1] %>
       		<%= f.label :city %>
       		<%= f.text_field :city, value: @presets[2] %>
       		<%= f.label :state %>

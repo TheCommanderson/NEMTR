@@ -7,8 +7,9 @@ Rails.application.routes.draw do
   post 'pick_driver', to: 'appointments#pick_driver', as: :pick_driver
   resources :appointments do
     resources :location
+    get :report, on: :member
     post :assign, on: :member
-    post :report, on: :member
+    post :sendReport, on: :member
     patch :cancel, on: :member
   end
 
