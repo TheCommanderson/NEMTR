@@ -31,4 +31,18 @@ class AdminMailer < ApplicationMailer
 
     mail(to: emails, subject: 'Ride2Health Driver Canceled an imminent trip!')
   end
+
+  def issue_email
+    @reporter = if params[:reporter] == 'A'
+                  'Admin Report'
+                else
+                  params[:reporter] == 'D' ? params[:driver] : params[:patient]
+                end
+    @driver = params[:driver]
+    @patient = params[:patient]
+    @issue = params[:issue]
+    emails = Admin.where(auth_lvl: 1).collect(&:email).join(',')
+
+    mail(to: emails, subject: 'Issue reported for a recent Ride2Health trip')
+  end
 end
