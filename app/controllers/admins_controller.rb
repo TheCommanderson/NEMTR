@@ -88,9 +88,9 @@ class AdminsController < ApplicationController
   def index
     @currentAdmin = Admin.find(session[:user_id])
     @dt_format = dt_format
-    @admins = admin_search.sort_by { |adm| [adm.auth_lvl, adm.first_name] }
-    @patients = patient_search.sort_by { |patient| [patient.first_name] }
-    @drivers = driver_search.sort_by { |drvr| [drvr.first_name] }
+    @admins = admin_search.sort_by { |adm| [adm ? 1 : 0, adm.approved.to_s, adm.auth_lvl, adm.first_name] }
+    @patients = patient_search.sort_by { |patient| [patient.approved.to_s, patient.first_name] }
+    @drivers = driver_search.sort_by { |drvr| [drvr.trained.to_s, drvr.first_name] }
     @appointments = Appointment.all.sort_by { |appt| [appt.status, appt.datetime] }
   end
 
