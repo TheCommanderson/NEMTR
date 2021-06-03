@@ -4,7 +4,7 @@ require 'securerandom'
 require 'date'
 
 class AdminsController < ApplicationController
-  before_action :set_admin, only: %i[show edit update destroy index add_host delete_host approve]
+  before_action :set_admin, only: %i[show edit update destroy add_host delete_host approve]
   skip_before_action :authorized, only: %i[new create]
   before_action :admin_authorized, except: %i[new create]
 
@@ -12,20 +12,20 @@ class AdminsController < ApplicationController
   AUTH_LEVELS = ['System Administrator', 'Healthcare Provider', 'Call Center'].freeze
 
   def add_host
-    if @current_admin.auth_lvl > 1
+    if @admin.auth_lvl > 1
       flash[:notice] = 'Only system administrators may create new host organizations!'
     else
-      @current_admin.add_to_set(host_orgs: params[:host_org])
-      @current_admin.save
+      @admin.add_to_set(host_orgs: params[:host_org])
+      @admin.save
       flash[:notice] = "Host organization #{params[:host_org]} has been added."
     end
     redirect_to admins_home_path
   end
 
   def delete_host
-    if @current_admin.host_orgs.include? params[:id]
-      @current_admin.delete(params[:id])
-      @current_admin.save
+    if @admin.host_orgs.include? params[:id]
+      @admin.delete(params[:id])
+      @admin.save
       flash[:notice] = "Host organization #{params[:id]} removed."
     else
       flash[:notice] = "You are not the admin who added the host organization #{params[:id]}, so it could not be removed."
@@ -36,21 +36,21 @@ class AdminsController < ApplicationController
   def approve
     case user_type(params[:id])
     when 'A'
-      @admin = Admin.find(params[:id])
-      @admin.update(approved: true)
-      @admin.update(admin_name: @current_admin.first_name + ' ' + @current_admin.last_name)
-      @admin.update(admin_email: @current_admin.email)
-      @admin.save
+      a = Admin.find(params[:id])
+      a.update(approved: true)
+      a.update(admin_name: @admin.first_name + ' ' + @admin.last_name)
+      a.update(admin_email: @admin.email)
+      a.save
     when 'P'
-      @patient = Patient.find(params[:id])
-      @patient.update(approved: true)
-      @patient.update(admin: @current_admin)
-      @patient.save
+      p = Patient.find(params[:id])
+      p.update(approved: true)
+      p.update(admin: @admin)
+      p.save
     when 'D'
-      @driver = Driver.find(params[:id])
-      @driver.update(trained: true)
-      @driver.update(admin: @current_admin)
-      @driver.save
+      d = Driver.find(params[:id])
+      d.update(trained: true)
+      d.update(admin: @admin)
+      d.save
     else
       flash[:notice] = "An internal error occurred while fetching this user, could not approve.  ID: #{params[:id]}"
     end
@@ -60,21 +60,21 @@ class AdminsController < ApplicationController
   def unapprove
     case user_type(params[:id])
     when 'A'
-      @admin = Admin.find(params[:id])
-      @admin.update(approved: false)
-      @admin.remove_attribute(:admin_name)
-      @admin.remove_attribute(:admin_email)
-      @admin.save
+      a = Admin.find(params[:id])
+      a.update(approved: false)
+      a.remove_attribute(:admin_name)
+      a.remove_attribute(:admin_email)
+      a.save
     when 'P'
-      @patient = Patient.find(params[:id])
-      @patient.update(approved: false)
-      @patient.update(admin: Admin.find(session[:user_id]))
-      @patient.save
+      p = Patient.find(params[:id])
+      p.update(approved: false)
+      p.update(admin: Admin.find(session[:user_id]))
+      p.save
     when 'D'
-      @driver = Driver.find(params[:id])
-      @driver.update(trained: false)
-      @driver.update(admin: Admin.find(session[:user_id]))
-      @driver.save
+      d = Driver.find(params[:id])
+      d.update(trained: false)
+      d.update(admin: Admin.find(session[:user_id]))
+      d.save
     else
       flash[:notice] = "An internal error occurred while fetching this user, could not unapprove.  ID: #{params[:id]}"
      end
@@ -105,8 +105,7 @@ class AdminsController < ApplicationController
   # GET /admins
   # GET /admins.json
   def index
-    # TODO(spencer) change currentAdmin to current_admin in admins.index and remove this line
-    @currentAdmin = @current_admin
+    @currentAdmin = @admin
     @dt_format = dt_format
     @admins = admin_search.sort_by { |adm| [adm.approved.to_s, adm.auth_lvl, adm.first_name] }
     @patients = patient_search.sort_by { |patient| [patient.approved.to_s, patient.first_name] }
@@ -170,7 +169,7 @@ class AdminsController < ApplicationController
 
   # GET /admins/new
   def new
-    @current_admin = Admin.new
+    @admin = Admin.new
   end
 
   # GET /admins/1/edit
@@ -179,17 +178,17 @@ class AdminsController < ApplicationController
   # POST /admins
   # POST /admins.json
   def create
-    @current_admin = Admin.new(admin_params)
-    @current_admin.approved = false unless @current_admin.approved
+    @admin = Admin.new(admin_params)
+    @admin.approved = false unless @admin.approved
 
     respond_to do |format|
-      if @current_admin.save
-        AdminMailer.with(admin: @current_admin).new_admin_email.deliver
-        format.html { redirect_to @current_admin, notice: 'Admin was successfully created.' }
-        format.json { render :show, status: :created, location: @current_admin }
+      if @admin.save
+        AdminMailer.with(admin: @admin).new_admin_email.deliver
+        format.html { redirect_to @admin, notice: 'Admin was successfully created.' }
+        format.json { render :show, status: :created, location: @admin }
       else
         format.html { render :new }
-        format.json { render json: @current_admin.errors, status: :unprocessable_entity }
+        format.json { render json: @admin.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -198,12 +197,12 @@ class AdminsController < ApplicationController
   # PATCH/PUT /admins/1.json
   def update
     respond_to do |format|
-      if @current_admin.update(admin_params)
-        format.html { redirect_to @current_admin, notice: 'Update was successful!' }
-        format.json { render :show, status: :ok, location: @current_admin }
+      if @admin.update(admin_params)
+        format.html { redirect_to @admin, notice: 'Update was successful!' }
+        format.json { render :show, status: :ok, location: @admin }
       else
         format.html { render :edit }
-        format.json { render json: @current_admin.errors, status: :unprocessable_entity }
+        format.json { render json: @admin.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -211,7 +210,7 @@ class AdminsController < ApplicationController
   # DELETE /admins/1
   # DELETE /admins/1.json
   def destroy
-    @current_admin.destroy
+    @admin.destroy
     respond_to do |format|
       format.html { redirect_to admins_url, notice: 'Admin was successfully deleted.' }
       format.json { head :no_content }
@@ -222,7 +221,7 @@ class AdminsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_admin
-    @current_admin = current_user
+    @admin = current_user
   end
 
   # Only allow a list of trusted parameters through.

@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class DriversController < ApplicationController
-  before_action :set_driver, only: %i[show edit update destroy index]
+  before_action :set_driver, only: %i[show edit update destroy index pending claim]
   skip_before_action :authorized, only: %i[new create]
   before_action :driver_authorized, except: %i[new create]
+
   # GET /drivers
   # GET /drivers.json
-
   def index
+    # TODO(spencer) remove logged_in_driver from index and remove this line.
+    @logged_in_driver = @driver
     @drivers = Driver.all
     @patients = Patient.all
     @appointments = Appointment.where(status: 0).sort_by { |appt| [appt.datetime] }
@@ -17,7 +19,8 @@ class DriversController < ApplicationController
 
   # GET /drivers
   def pending
-    @logged_in_driver = Driver.find(session[:user_id])
+    # TODO(spencer) remove logged_in_driver from index and remove this line.
+    @logged_in_driver = @driver
     @drivers = Driver.all
     @patients = Patient.all
     @appointments = Appointment.all.sort_by { |appt| [appt.status, appt.datetime] }
@@ -29,7 +32,7 @@ class DriversController < ApplicationController
 
   # GET /drivers/new
   def new
-    @current_driver = Driver.new
+    @driver = Driver.new
   end
 
   def test
@@ -38,11 +41,10 @@ class DriversController < ApplicationController
 
   def claim
     appointment = Appointment.find(params[:appt])
-    driver = Driver.find(params[:id])
     appt_start_time = DateTime.strptime(appointment.datetime, dt_format).to_time.strftime('%H%M').to_i
     appt_end_time = (DateTime.strptime(appointment.datetime, dt_format).to_time + appointment.est_time.minutes).strftime('%H%M').to_i
-    if check_conflicts(appt_start_time, appt_end_time, appointment, driver[:id])
-      new_atts = { status: 1, driver_id: driver[:id] }
+    if check_conflicts(appt_start_time, appt_end_time, appointment, @driver[:id])
+      new_atts = { status: 1, driver_id: @driver.id }
       appointment.update_attributes(new_atts)
     else
       flash[:alert] = 'Could not claim appointment, conflict with existing appointment!'
@@ -59,20 +61,18 @@ class DriversController < ApplicationController
     sch1 = { Monday: '0000 0000', Tuesday: '0000 0000', Wednesday: '0000 0000', Thursday: '0000 0000', Friday: '0000 0000', Saturday: '0000 0000', Sunday: '0000 0000', current: true }
     sch2 = { Monday: '0000 0000', Tuesday: '0000 0000', Wednesday: '0000 0000', Thursday: '0000 0000', Friday: '0000 0000', Saturday: '0000 0000', Sunday: '0000 0000', current: false }
 
-    @current_driver = Driver.new(driver_params)
-    @sch1 = @current_driver.schedule.build(sch1)
-    @sch2 = @current_driver.schedule.build(sch2)
-
-    @current_driver.trained = false unless @current_driver.trained
+    @driver = Driver.new(driver_params)
+    @sch1 = @driver.schedule.build(sch1)
+    @sch2 = @driver.schedule.build(sch2)
 
     respond_to do |format|
-      if @current_driver.save
-        AdminMailer.with(driver: @current_driver).new_driver_email.deliver
-        format.html { redirect_to @current_driver, notice: 'Driver was successfully created.' }
-        format.json { render :show, status: :created, location: @current_driver }
+      if @driver.save
+        AdminMailer.with(driver: @driver).new_driver_email.deliver
+        format.html { redirect_to @driver, notice: 'Driver was successfully created.' }
+        format.json { render :show, status: :created, location: @driver }
       else
         format.html { render :new }
-        format.json { render json: @current_driver.errors, status: :unprocessable_entity }
+        format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -81,12 +81,12 @@ class DriversController < ApplicationController
   # PATCH/PUT /drivers/1.json
   def update
     respond_to do |format|
-      if @current_driver.update(driver_params)
-        format.html { redirect_to @current_driver, notice: 'Update Successful!' }
-        format.json { render :show, status: :ok, location: @current_driver }
+      if @driver.update(driver_params)
+        format.html { redirect_to @driver, notice: 'Update Successful!' }
+        format.json { render :show, status: :ok, location: @driver }
       else
         format.html { render :edit }
-        format.json { render json: @current_driver.errors, status: :unprocessable_entity }
+        format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -94,7 +94,7 @@ class DriversController < ApplicationController
   # DELETE /drivers/1
   # DELETE /drivers/1.json
   def destroy
-    @current_driver.destroy
+    @driver.destroy
     respond_to do |format|
       format.html { redirect_to drivers_url, notice: 'Driver was successfully deleted.' }
       format.json { head :no_content }
@@ -105,7 +105,7 @@ class DriversController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_driver
-    @current_driver = Driver.find(params[:id])
+    @driver = Driver.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
