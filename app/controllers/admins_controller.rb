@@ -4,68 +4,79 @@ require 'securerandom'
 require 'date'
 
 class AdminsController < ApplicationController
-  before_action :set_admin, only: %i[show edit update destroy]
+  before_action :set_admin, only: %i[show edit update destroy add_host delete_host approve]
   skip_before_action :authorized, only: %i[new create]
   before_action :admin_authorized, except: %i[new create]
 
+  # 1 = Sys admin, 2 = healthcare provider, 3 = call center
   AUTH_LEVELS = ['System Administrator', 'Healthcare Provider', 'Call Center'].freeze
 
   def add_host
-    @currentAdmin = Admin.find(session[:user_id])
-    if @currentAdmin.auth_lvl > 1
+    if @current_admin.auth_lvl > 1
       flash[:notice] = 'Only system administrators may create new host organizations!'
     else
-      @currentAdmin.add_to_set(host_orgs: params[:host_org])
+      @current_admin.add_to_set(host_orgs: params[:host_org])
+      @current_admin.save
       flash[:notice] = "Host organization #{params[:host_org]} has been added."
     end
     redirect_to admins_home_path
   end
 
   def delete_host
-    HOSTS.delete(params[:id])
+    if @current_admin.host_orgs.include? params[:id]
+      @current_admin.delete(params[:id])
+      @current_admin.save
+      flash[:notice] = "Host organization #{params[:id]} removed."
+    else
+      flash[:notice] = "You are not the admin who added the host organization #{params[:id]}, so it could not be removed."
+    end
     redirect_to admins_home_path
   end
 
   def approve
-    if !Admin.where(id: params[:id]).blank?
+    case user_type(params[:id])
+    when 'A'
       @admin = Admin.find(params[:id])
       @admin.update(approved: true)
-      @tmp = Admin.find(session[:user_id])
-      @admin.update(admin_name: @tmp.first_name + ' ' + @tmp.last_name)
-      @admin.update(admin_email: @tmp.email)
+      @admin.update(admin_name: @current_admin.first_name + ' ' + @current_admin.last_name)
+      @admin.update(admin_email: @current_admin.email)
       @admin.save
-    elsif !Patient.where(id: params[:id]).blank?
+    when 'P'
       @patient = Patient.find(params[:id])
       @patient.update(approved: true)
-      @patient.update(admin: Admin.find(session[:user_id]))
+      @patient.update(admin: @current_admin)
       @patient.save
-    elsif !Driver.where(id: params[:id]).blank?
+    when 'D'
       @driver = Driver.find(params[:id])
       @driver.update(trained: true)
-      @driver.update(admin: Admin.find(session[:user_id]))
+      @driver.update(admin: @current_admin)
       @driver.save
+    else
+      flash[:notice] = 'An internal error occurred while fetching this user, could not approve'
     end
     redirect_to admins_home_path
   end
 
   def unapprove
-    if !Admin.where(id: params[:id]).blank?
+    case user_type(params[:id])
+    when 'A'
       @admin = Admin.find(params[:id])
       @admin.update(approved: false)
-      @tmp = Admin.find(session[:user_id])
-      @admin.update(admin_name: @tmp.first_name + ' ' + @tmp.last_name)
-      @admin.update(admin_email: @tmp.email)
+      @admin.remove_attribute(:admin_name)
+      @admin.remove_attribute(:admin_email)
       @admin.save
-    elsif !Patient.where(id: params[:id]).blank?
+    when 'P'
       @patient = Patient.find(params[:id])
       @patient.update(approved: false)
       @patient.update(admin: Admin.find(session[:user_id]))
       @patient.save
-    elsif !Driver.where(id: params[:id]).blank?
+    when 'D'
       @driver = Driver.find(params[:id])
       @driver.update(trained: false)
       @driver.update(admin: Admin.find(session[:user_id]))
       @driver.save
+    else
+      flash[:notice] = 'An internal error occurred while fetching this user, could not unapprove'
      end
     redirect_to admins_home_path
   end
@@ -206,7 +217,7 @@ class AdminsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_admin
-    @admin = Admin.find(params[:id])
+    @current_admin = current_user
   end
 
   # Only allow a list of trusted parameters through.

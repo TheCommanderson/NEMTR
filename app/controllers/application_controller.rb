@@ -61,6 +61,16 @@ class ApplicationController < ActionController::Base
     '%Y-%m-%d %H:%M'
   end
 
+  def user_type(id)
+    if !Admin.where(id: id).blank?
+      'A'
+    elsif !Driver.where(id: id).blank?
+      'D'
+    elsif !Patient.where(id: id).blank?
+      'P'
+    end
+  end
+
   # Helper gets the monday of the week provided (7 is sunday because we begin our week on monday >:( )
   def getMonday(date)
     wday = date.to_time.wday
