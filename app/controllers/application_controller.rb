@@ -98,6 +98,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # returns false if conflict exists, else returns true
   def check_conflicts(start_time, end_time, appt, dr)
     @driver_apps = Appointment.where(driver_id: dr)
     @driver_apps.each do |conflict|
