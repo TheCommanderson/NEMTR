@@ -8,12 +8,15 @@ class AdminsController < ApplicationController
   skip_before_action :authorized, only: %i[new create]
   before_action :admin_authorized, except: %i[new create]
 
-  HOSTS = ['N/A', 'A&M', 'United Way'].freeze
   AUTH_LEVELS = ['System Administrator', 'Healthcare Provider', 'Call Center'].freeze
 
   def add_host
-    HOSTS.push(params[:host_org])
-    HOSTS.sort!
+    @currentAdmin = Admin.find(session[:user_id])
+    if @currentAdmin.auth_lvl > 1
+      flash[:notice] = "Only system administrators may create new host organizations!"
+    else
+      @currentAdmin.add_to_set(host_orgs: params[:host_org])
+      flash[:notice] = "Host organization #{params[:host_org]} has been added."
     redirect_to admins_home_path
   end
 
