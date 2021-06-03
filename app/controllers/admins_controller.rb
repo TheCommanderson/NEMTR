@@ -170,7 +170,7 @@ class AdminsController < ApplicationController
 
   # GET /admins/new
   def new
-    @admin = Admin.new
+    @current_admin = Admin.new
   end
 
   # GET /admins/1/edit
@@ -179,17 +179,17 @@ class AdminsController < ApplicationController
   # POST /admins
   # POST /admins.json
   def create
-    @admin = Admin.new(admin_params)
-    @admin.approved = false unless @admin.approved
+    @current_admin = Admin.new(admin_params)
+    @current_admin.approved = false unless @current_admin.approved
 
     respond_to do |format|
-      if @admin.save
-        AdminMailer.with(admin: @admin).new_admin_email.deliver
-        format.html { redirect_to @admin, notice: 'Admin was successfully created.' }
-        format.json { render :show, status: :created, location: @admin }
+      if @current_admin.save
+        AdminMailer.with(admin: @current_admin).new_admin_email.deliver
+        format.html { redirect_to @current_admin, notice: 'Admin was successfully created.' }
+        format.json { render :show, status: :created, location: @current_admin }
       else
         format.html { render :new }
-        format.json { render json: @admin.errors, status: :unprocessable_entity }
+        format.json { render json: @current_admin.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -198,12 +198,12 @@ class AdminsController < ApplicationController
   # PATCH/PUT /admins/1.json
   def update
     respond_to do |format|
-      if @admin.update(admin_params)
-        format.html { redirect_to @admin, notice: 'Update was successful!' }
-        format.json { render :show, status: :ok, location: @admin }
+      if @current_admin.update(admin_params)
+        format.html { redirect_to @current_admin, notice: 'Update was successful!' }
+        format.json { render :show, status: :ok, location: @current_admin }
       else
         format.html { render :edit }
-        format.json { render json: @admin.errors, status: :unprocessable_entity }
+        format.json { render json: @current_admin.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -211,7 +211,7 @@ class AdminsController < ApplicationController
   # DELETE /admins/1
   # DELETE /admins/1.json
   def destroy
-    @admin.destroy
+    @current_admin.destroy
     respond_to do |format|
       format.html { redirect_to admins_url, notice: 'Admin was successfully deleted.' }
       format.json { head :no_content }
