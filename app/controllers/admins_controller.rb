@@ -13,10 +13,11 @@ class AdminsController < ApplicationController
   def add_host
     @currentAdmin = Admin.find(session[:user_id])
     if @currentAdmin.auth_lvl > 1
-      flash[:notice] = "Only system administrators may create new host organizations!"
+      flash[:notice] = 'Only system administrators may create new host organizations!'
     else
       @currentAdmin.add_to_set(host_orgs: params[:host_org])
       flash[:notice] = "Host organization #{params[:host_org]} has been added."
+    end
     redirect_to admins_home_path
   end
 
