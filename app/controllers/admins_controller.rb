@@ -52,7 +52,7 @@ class AdminsController < ApplicationController
       @driver.update(admin: @current_admin)
       @driver.save
     else
-      flash[:notice] = 'An internal error occurred while fetching this user, could not approve'
+      flash[:notice] = "An internal error occurred while fetching this user, could not approve.  ID: #{params[:id]}"
     end
     redirect_to admins_home_path
   end
@@ -76,24 +76,28 @@ class AdminsController < ApplicationController
       @driver.update(admin: Admin.find(session[:user_id]))
       @driver.save
     else
-      flash[:notice] = 'An internal error occurred while fetching this user, could not unapprove'
+      flash[:notice] = "An internal error occurred while fetching this user, could not unapprove.  ID: #{params[:id]}"
      end
     redirect_to admins_home_path
   end
 
   def reset
-    temp_password = SecureRandom.base64(15)
-    if params[:type] == 'patient'
+    # TODO(spencer) remove type param from reset call in admin index.html
+    case user_type(params[:id])
+    when 'P'
       @user = Patient.find(params[:id])
-    elsif params[:type] == 'driver'
+    when 'D'
       @user = Driver.find(params[:id])
-    elsif params[:type] == 'admin'
+    when 'A'
       @user = Admin.find(params[:id])
+    else
+      flash[:notice] = "An internal error occurred while fetching user, could not reset password.  ID: #{params[:id]}"
+      return
     end
 
+    temp_password = SecureRandom.base64(15)
     @user.update(password: temp_password)
     @user.save
-
     flash[:notice] = "Successfully reset #{@user.first_name} #{@user.last_name}'s password to #{temp_password}"
     redirect_to admins_home_path
   end
@@ -101,7 +105,8 @@ class AdminsController < ApplicationController
   # GET /admins
   # GET /admins.json
   def index
-    @currentAdmin = Admin.find(session[:user_id])
+    # TODO(spencer) change currentAdmin to current_admin in admins.index and remove this line
+    @currentAdmin = @current_admin
     @dt_format = dt_format
     @admins = admin_search.sort_by { |adm| [adm.approved.to_s, adm.auth_lvl, adm.first_name] }
     @patients = patient_search.sort_by { |patient| [patient.approved.to_s, patient.first_name] }
