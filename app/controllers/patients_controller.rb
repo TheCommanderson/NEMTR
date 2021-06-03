@@ -99,7 +99,7 @@ class PatientsController < ApplicationController
       @preset = @patient.preset.find(@current_default.id)
       @preset.destroy
     end
-    
+
     if params[:type] != 'reset'
       addr1 = params[:preset][:addr1]
       addr2 = params[:preset][:addr2]
@@ -107,12 +107,12 @@ class PatientsController < ApplicationController
       state = params[:preset][:state]
       zip = params[:preset][:zip]
       name = params[:preset][:name]
-  
+
       @preset = @patient.preset.build(addr1: addr1, addr2: addr2, city: city, state: state, zip: zip, name: name, home: 1)
       @preset.save
       @patient.save
     end
-    
+
     redirect_to patients_home_path
   end
 
