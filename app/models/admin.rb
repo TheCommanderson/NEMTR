@@ -15,6 +15,7 @@ class Admin
   field :admin_email, type: String
   field :approved, type: Boolean
   field :password_digest, type: String
+  filed :host_orgs, type: Array, default: []
 
   validates_presence_of :first_name, :last_name, :phone, :email, :approved
   validates_uniqueness_of :email
