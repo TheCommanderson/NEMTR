@@ -68,13 +68,12 @@ class AdminsController < ApplicationController
     when 'P'
       p = Patient.find(params[:id])
       p.update(approved: false)
-      p.update(admin: Admin.find(session[:user_id]))
+      p.remove_attribute(:admin)
       p.save
     when 'D'
       d = Driver.find(params[:id])
       d.update(trained: false)
-      d.update(admin: Admin.find(session[:user_id]))
-      d.save
+      d.remove_attribute(:admin)
     else
       flash[:notice] = "An internal error occurred while fetching this user, could not unapprove.  ID: #{params[:id]}"
      end
