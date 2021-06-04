@@ -4,81 +4,99 @@ require 'securerandom'
 require 'date'
 
 class AdminsController < ApplicationController
-  before_action :set_admin, only: %i[show edit update destroy]
+  before_action :set_admin, only: %i[show edit update destroy add_host delete_host approve index]
   skip_before_action :authorized, only: %i[new create]
   before_action :admin_authorized, except: %i[new create]
 
-  HOSTS = ['N/A', 'A&M', 'United Way'].freeze
+  # 1 = Sys admin, 2 = healthcare provider, 3 = call center
   AUTH_LEVELS = ['System Administrator', 'Healthcare Provider', 'Call Center'].freeze
 
   def add_host
-    HOSTS.push(params[:host_org])
-    HOSTS.sort!
+    if @admin.auth_lvl > 1
+      flash[:notice] = 'Only system administrators may create new host organizations!'
+    else
+      @admin.add_to_set(host_orgs: params[:host_org])
+      @admin.save
+      flash[:notice] = "Host organization #{params[:host_org]} has been added."
+    end
     redirect_to admins_home_path
   end
 
   def delete_host
-    HOSTS.delete(params[:id])
+    if @admin.host_orgs.include? params[:id]
+      @admin.delete(params[:id])
+      @admin.save
+      flash[:notice] = "Host organization #{params[:id]} removed."
+    else
+      flash[:notice] = "You are not the admin who added the host organization #{params[:id]}, so it could not be removed."
+    end
     redirect_to admins_home_path
   end
 
   def approve
-    if !Admin.where(id: params[:id]).blank?
-      @admin = Admin.find(params[:id])
-      @admin.update(approved: true)
-      @tmp = Admin.find(session[:user_id])
-      @admin.update(admin_name: @tmp.first_name + ' ' + @tmp.last_name)
-      @admin.update(admin_email: @tmp.email)
-      @admin.save
-    elsif !Patient.where(id: params[:id]).blank?
-      @patient = Patient.find(params[:id])
-      @patient.update(approved: true)
-      @patient.update(admin: Admin.find(session[:user_id]))
-      @patient.save
-    elsif !Driver.where(id: params[:id]).blank?
-      @driver = Driver.find(params[:id])
-      @driver.update(trained: true)
-      @driver.update(admin: Admin.find(session[:user_id]))
-      @driver.save
+    case user_type(params[:id])
+    when 'A'
+      a = Admin.find(params[:id])
+      a.update(approved: true)
+      a.update(admin_name: @admin.first_name + ' ' + @admin.last_name)
+      a.update(admin_email: @admin.email)
+      a.save
+    when 'P'
+      p = Patient.find(params[:id])
+      p.update(approved: true)
+      p.update(admin: @admin)
+      p.save
+    when 'D'
+      d = Driver.find(params[:id])
+      d.update(trained: true)
+      d.update(admin: @admin)
+      d.save
+    else
+      flash[:notice] = "An internal error occurred while fetching this user, could not approve.  ID: #{params[:id]}"
     end
     redirect_to admins_home_path
   end
 
   def unapprove
-    if !Admin.where(id: params[:id]).blank?
-      @admin = Admin.find(params[:id])
-      @admin.update(approved: false)
-      @tmp = Admin.find(session[:user_id])
-      @admin.update(admin_name: @tmp.first_name + ' ' + @tmp.last_name)
-      @admin.update(admin_email: @tmp.email)
-      @admin.save
-    elsif !Patient.where(id: params[:id]).blank?
-      @patient = Patient.find(params[:id])
-      @patient.update(approved: false)
-      @patient.update(admin: Admin.find(session[:user_id]))
-      @patient.save
-    elsif !Driver.where(id: params[:id]).blank?
-      @driver = Driver.find(params[:id])
-      @driver.update(trained: false)
-      @driver.update(admin: Admin.find(session[:user_id]))
-      @driver.save
+    case user_type(params[:id])
+    when 'A'
+      a = Admin.find(params[:id])
+      a.update(approved: false)
+      a.remove_attribute(:admin_name)
+      a.remove_attribute(:admin_email)
+      a.save
+    when 'P'
+      p = Patient.find(params[:id])
+      p.update(approved: false)
+      p.remove_attribute(:admin)
+      p.save
+    when 'D'
+      d = Driver.find(params[:id])
+      d.update(trained: false)
+      d.remove_attribute(:admin)
+    else
+      flash[:notice] = "An internal error occurred while fetching this user, could not unapprove.  ID: #{params[:id]}"
      end
     redirect_to admins_home_path
   end
 
   def reset
-    temp_password = SecureRandom.base64(15)
-    if params[:type] == 'patient'
+    # TODO(spencer) remove type param from reset call in admin index.html
+    case user_type(params[:id])
+    when 'P'
       @user = Patient.find(params[:id])
-    elsif params[:type] == 'driver'
+    when 'D'
       @user = Driver.find(params[:id])
-    elsif params[:type] == 'admin'
+    when 'A'
       @user = Admin.find(params[:id])
+    else
+      flash[:notice] = "An internal error occurred while fetching user, could not reset password.  ID: #{params[:id]}"
+      return
     end
 
+    temp_password = SecureRandom.base64(15)
     @user.update(password: temp_password)
     @user.save
-
     flash[:notice] = "Successfully reset #{@user.first_name} #{@user.last_name}'s password to #{temp_password}"
     redirect_to admins_home_path
   end
@@ -86,7 +104,7 @@ class AdminsController < ApplicationController
   # GET /admins
   # GET /admins.json
   def index
-    @currentAdmin = Admin.find(session[:user_id])
+    @currentAdmin = @admin
     @dt_format = dt_format
     @admins = admin_search.sort_by { |adm| [adm.approved.to_s, adm.auth_lvl, adm.first_name] }
     @patients = patient_search.sort_by { |patient| [patient.approved.to_s, patient.first_name] }
