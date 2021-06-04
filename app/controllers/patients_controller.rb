@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PatientsController < ApplicationController
-  before_action :set_patient, only: %i[show edit update destroy]
+  before_action :set_patient, only: %i[show edit update destroy index comment append viewComments defaultAddress saveAddress]
   skip_before_action :authorized, only: %i[new create]
   before_action :patient_authorized, except: %i[new create edit update destroy comment append viewComments]
   before_action :admin_authorized, only: [:viewComments]
@@ -10,7 +10,8 @@ class PatientsController < ApplicationController
 
   # GET /patients.json
   def index
-    @currentPatient = Patient.find(session[:user_id])
+    # TODO(spencer) clean this up
+    @currentPatient = current_user
     @patients = Patient.all
     @appointments = Appointment
     @drivers = Driver.all
@@ -71,35 +72,26 @@ class PatientsController < ApplicationController
     end
   end
 
-  def comment
-    @patient = Patient.find(params[:id])
-  end
+  def comment; end
 
   def append
-    patient = Patient.find(params[:id])
     p_comment = params[:patient][:comment] + " [Comment by: #{current_user.first_name} #{current_user.last_name}]"
-    patient.add_to_set(comments: p_comment)
-    patient.save
+    current_user.add_to_set(comments: p_comment)
+    @patient.save
     redirect_to root_path, notice: 'Thank you for your feedback!'
   end
 
-  def viewComments
-    @patient = Patient.find(params[:id])
-  end
+  def viewComments; end
 
-  def defaultAddress
-    @patient = Patient.find(params[:id])
-  end
+  def defaultAddress; end
 
   def saveAddress
-    @patient = Patient.find(params[:id])
-
     unless @patient.preset.where({ home: 1 }).empty?
       @current_default = @patient.preset.where({ home: 1 }).first
       @preset = @patient.preset.find(@current_default.id)
       @preset.destroy
     end
-    
+
     if params[:type] != 'reset'
       addr1 = params[:preset][:addr1]
       addr2 = params[:preset][:addr2]
@@ -107,12 +99,12 @@ class PatientsController < ApplicationController
       state = params[:preset][:state]
       zip = params[:preset][:zip]
       name = params[:preset][:name]
-  
+
       @preset = @patient.preset.build(addr1: addr1, addr2: addr2, city: city, state: state, zip: zip, name: name, home: 1)
       @preset.save
       @patient.save
     end
-    
+
     redirect_to patients_home_path
   end
 
