@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 class DriversController < ApplicationController
-  before_action :set_driver, only: %i[show edit update destroy]
+  before_action :set_driver, only: %i[show edit update destroy claim]
   skip_before_action :authorized, only: %i[new create]
   before_action :driver_authorized, except: %i[new create]
+
   # GET /drivers
   # GET /drivers.json
-
   def index
-    @logged_in_driver = Driver.find(session[:user_id])
+    # TODO(spencer) clean this logged_in_driver var up
+    @logged_in_driver = current_user
     @drivers = Driver.all
     @patients = Patient.all
     @appointments = Appointment.where(status: 0).sort_by { |appt| [appt.datetime] }
@@ -18,7 +19,8 @@ class DriversController < ApplicationController
 
   # GET /drivers
   def pending
-    @logged_in_driver = Driver.find(session[:user_id])
+    # TODO(spencer) remove logged_in_driver from index and remove this line.
+    @logged_in_driver = current_user
     @drivers = Driver.all
     @patients = Patient.all
     @appointments = Appointment.all.sort_by { |appt| [appt.status, appt.datetime] }
@@ -39,11 +41,10 @@ class DriversController < ApplicationController
 
   def claim
     appointment = Appointment.find(params[:appt])
-    driver = Driver.find(params[:id])
     appt_start_time = DateTime.strptime(appointment.datetime, dt_format).to_time.strftime('%H%M').to_i
     appt_end_time = (DateTime.strptime(appointment.datetime, dt_format).to_time + appointment.est_time.minutes).strftime('%H%M').to_i
-    if check_conflicts(appt_start_time, appt_end_time, appointment, driver[:id])
-      new_atts = { status: 1, driver_id: driver[:id] }
+    if check_conflicts(appt_start_time, appt_end_time, appointment, @driver[:id])
+      new_atts = { status: 1, driver_id: @driver.id }
       appointment.update_attributes(new_atts)
     else
       flash[:alert] = 'Could not claim appointment, conflict with existing appointment!'
@@ -63,8 +64,6 @@ class DriversController < ApplicationController
     @driver = Driver.new(driver_params)
     @sch1 = @driver.schedule.build(sch1)
     @sch2 = @driver.schedule.build(sch2)
-
-    @driver.trained = false unless @driver.trained
 
     respond_to do |format|
       if @driver.save
@@ -127,7 +126,7 @@ class DriversController < ApplicationController
     cur_time = Time.now
     day_of_week = cur_time.strftime('%A')
     cur_time_int = cur_time.strftime('%H%M').to_i
-    driver = Driver.find(session[:user_id])
+    driver = current_user
     driver_today_sch = driver.schedule.where(current: true).first[day_of_week]
     driver_today_time_start = driver_today_sch[0..3].to_i
     driver_today_time_end = driver_today_sch[5..8].to_i
