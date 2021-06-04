@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PatientsController < ApplicationController
-  before_action :set_patient, only: %i[show edit update destroy]
+  before_action :set_patient, only: %i[show edit update destroy index comment append viewComments defaultAddress saveAddress]
   skip_before_action :authorized, only: %i[new create]
   before_action :patient_authorized, except: %i[new create edit update destroy comment append viewComments]
   before_action :admin_authorized, only: [:viewComments]
@@ -10,7 +10,8 @@ class PatientsController < ApplicationController
 
   # GET /patients.json
   def index
-    @currentPatient = Patient.find(session[:user_id])
+    # TODO(spencer) change this to @patient in the index and remove this line
+    @currentPatient = @patient
     @patients = Patient.all
     @appointments = Appointment
     @drivers = Driver.all
@@ -71,29 +72,20 @@ class PatientsController < ApplicationController
     end
   end
 
-  def comment
-    @patient = Patient.find(params[:id])
-  end
+  def comment; end
 
   def append
-    patient = Patient.find(params[:id])
     p_comment = params[:patient][:comment] + " [Comment by: #{current_user.first_name} #{current_user.last_name}]"
-    patient.add_to_set(comments: p_comment)
-    patient.save
+    @patient.add_to_set(comments: p_comment)
+    @patient.save
     redirect_to root_path, notice: 'Thank you for your feedback!'
   end
 
-  def viewComments
-    @patient = Patient.find(params[:id])
-  end
+  def viewComments; end
 
-  def defaultAddress
-    @patient = Patient.find(params[:id])
-  end
+  def defaultAddress; end
 
   def saveAddress
-    @patient = Patient.find(params[:id])
-
     unless @patient.preset.where({ home: 1 }).empty?
       @current_default = @patient.preset.where({ home: 1 }).first
       @preset = @patient.preset.find(@current_default.id)
