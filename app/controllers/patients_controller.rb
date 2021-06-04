@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PatientsController < ApplicationController
-  before_action :set_patient, only: %i[show edit update destroy index comment append viewComments defaultAddress saveAddress]
+  before_action :set_patient, only: %i[show edit update destroy comment append viewComments defaultAddress saveAddress]
   skip_before_action :authorized, only: %i[new create]
   before_action :patient_authorized, except: %i[new create edit update destroy comment append viewComments]
   before_action :admin_authorized, only: [:viewComments]
@@ -10,8 +10,8 @@ class PatientsController < ApplicationController
 
   # GET /patients.json
   def index
-    # TODO(spencer) change this to @patient in the index and remove this line
-    @currentPatient = @patient
+    # TODO(spencer) clean this up
+    @currentPatient = current_user
     @patients = Patient.all
     @appointments = Appointment
     @drivers = Driver.all

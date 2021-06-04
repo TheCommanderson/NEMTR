@@ -79,6 +79,16 @@ class ApplicationController < ActionController::Base
     _monday
   end
 
+  def user_type(_id)
+    if !Admin.where(id: params[:id]).blank?
+      'A'
+    elsif !Patient.where(id: params[:id]).blank?
+      'P'
+    elsif !Driver.where(id: params[:id]).blank?
+      'D'
+    end
+  end
+
   # ===================== MATCHING ALGORITHM STUFF ============================ #
   def check_appt_update(appt)
     if appt.status == 0

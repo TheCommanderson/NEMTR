@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class DriversController < ApplicationController
-  before_action :set_driver, only: %i[show edit update destroy index pending claim]
+  before_action :set_driver, only: %i[show edit update destroy claim]
   skip_before_action :authorized, only: %i[new create]
   before_action :driver_authorized, except: %i[new create]
 
   # GET /drivers
   # GET /drivers.json
   def index
-    # TODO(spencer) remove logged_in_driver from index and remove this line.
-    @logged_in_driver = @driver
+    # TODO(spencer) clean this logged_in_driver var up
+    @logged_in_driver = current_user
     @drivers = Driver.all
     @patients = Patient.all
     @appointments = Appointment.where(status: 0).sort_by { |appt| [appt.datetime] }
@@ -19,8 +19,7 @@ class DriversController < ApplicationController
 
   # GET /drivers
   def pending
-    # TODO(spencer) remove logged_in_driver from index and remove this line.
-    @logged_in_driver = @driver
+    @logged_in_driver = current_user
     @drivers = Driver.all
     @patients = Patient.all
     @appointments = Appointment.all.sort_by { |appt| [appt.status, appt.datetime] }
@@ -126,7 +125,7 @@ class DriversController < ApplicationController
     cur_time = Time.now
     day_of_week = cur_time.strftime('%A')
     cur_time_int = cur_time.strftime('%H%M').to_i
-    driver = Driver.find(session[:user_id])
+    driver = current_user
     driver_today_sch = driver.schedule.where(current: true).first[day_of_week]
     driver_today_time_start = driver_today_sch[0..3].to_i
     driver_today_time_end = driver_today_sch[5..8].to_i
