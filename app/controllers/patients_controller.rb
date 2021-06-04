@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PatientsController < ApplicationController
-  before_action :set_patient, only: %i[show edit update destroy index comment append viewComments defaultAddress saveAddress]
+  before_action :set_patient, only: %i[show edit update destroy comment append viewComments defaultAddress saveAddress]
   skip_before_action :authorized, only: %i[new create]
   before_action :patient_authorized, except: %i[new create edit update destroy comment append viewComments]
   before_action :admin_authorized, only: [:viewComments]
@@ -76,7 +76,7 @@ class PatientsController < ApplicationController
 
   def append
     p_comment = params[:patient][:comment] + " [Comment by: #{current_user.first_name} #{current_user.last_name}]"
-    current_user.add_to_set(comments: p_comment)
+    @patient.add_to_set(comments: p_comment)
     @patient.save
     redirect_to root_path, notice: 'Thank you for your feedback!'
   end
