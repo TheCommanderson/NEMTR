@@ -4,7 +4,7 @@ require 'securerandom'
 require 'date'
 
 class AdminsController < ApplicationController
-  before_action :set_admin, only: %i[show edit update destroy add_host delete_host approve]
+  before_action :set_admin, only: %i[show edit update destroy add_host delete_host approve index]
   skip_before_action :authorized, only: %i[new create]
   before_action :admin_authorized, except: %i[new create]
 
