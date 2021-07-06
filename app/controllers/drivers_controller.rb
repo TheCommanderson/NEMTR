@@ -3,7 +3,7 @@
 class DriversController < ApplicationController
   before_action :set_driver, only: %i[show edit update destroy claim]
   skip_before_action :authorized, only: %i[new create]
-  before_action :driver_authorized, except: %i[new create]
+  before_action :driver_authorized, except: %i[new create destroy]
 
   # GET /drivers
   # GET /drivers.json
