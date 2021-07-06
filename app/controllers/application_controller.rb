@@ -7,9 +7,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :logged_in?
   helper_method :sign
+
   before_action :authorized
   before_action :set_logger
 
+  # =============== HELPER FUNCTIONS ================== #
   # Helper returns current user or nil if not logged in
   def current_user
     _user = case session[:login_type]
@@ -32,6 +34,10 @@ class ApplicationController < ActionController::Base
                 nil
                 end
     end
+  end
+
+  def user_login_type
+    session[:login_type]
   end
 
   # Helper to see if someone is logged in
