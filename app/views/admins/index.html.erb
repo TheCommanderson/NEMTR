@@ -45,7 +45,7 @@
           </tr>
         </thead>
         <tbody>
-          <% AdminsController::HOSTS.select{ |h| h != "N/A" }.each do |host| %>
+          <% all_host_orgs.select{ |h| h != "N/A" }.each do |host| %>
             <tr>
               <td><%= host %></td>
               <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary sm-btn" %></td>

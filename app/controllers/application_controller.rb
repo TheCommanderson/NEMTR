@@ -85,6 +85,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def all_host_orgs
+    Admin.all.map(|a| a.host_orgs).compact.flatten
+  end
+
   # ===================== MATCHING ALGORITHM STUFF ============================ #
   def check_appt_update(appt)
     if appt.status == 0
