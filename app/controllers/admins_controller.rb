@@ -24,7 +24,7 @@ class AdminsController < ApplicationController
 
   def delete_host
     if @admin.host_orgs.include? params[:id]
-      @admin.delete(params[:id])
+      @admin.host_orgs.delete(params[:id])
       @admin.save
       flash[:notice] = "Host organization #{params[:id]} removed."
     else
