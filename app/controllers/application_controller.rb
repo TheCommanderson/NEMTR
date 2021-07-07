@@ -99,7 +99,7 @@ class ApplicationController < ActionController::Base
   end
 
   def all_host_orgs
-    Admin.all.map(&:host_orgs).compact.flatten.unique
+    Admin.all.map(&:host_orgs).compact.flatten.uniq!
   end
 
   # ===================== MATCHING ALGORITHM STUFF ============================ #
