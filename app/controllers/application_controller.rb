@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :sign
   helper_method :all_host_orgs
   helper_method :dt_format
+  helper_method :user_type
 
   before_action :authorized
   before_action :set_logger
@@ -98,7 +99,7 @@ class ApplicationController < ActionController::Base
   end
 
   def all_host_orgs
-    Admin.all.map(|a| a.host_orgs).compact.flatten
+    Admin.all.map(&:host_orgs).compact.flatten.unique
   end
 
   # ===================== MATCHING ALGORITHM STUFF ============================ #
