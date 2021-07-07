@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :logged_in?
   helper_method :sign
+  helper_method :all_host_orgs
+  helper_method :dt_format
 
   before_action :authorized
   before_action :set_logger
