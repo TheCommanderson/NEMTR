@@ -97,6 +97,7 @@ class AdminsController < ApplicationController
     temp_password = SecureRandom.base64(15)
     @user.update(password: temp_password)
     @user.save
+    AdminMailer.with(user_email: @user.email, password: temp_password).password_reset_email.deliver
     flash[:notice] = "Successfully reset #{@user.first_name} #{@user.last_name}'s password to #{temp_password}"
     redirect_to admins_home_path
   end

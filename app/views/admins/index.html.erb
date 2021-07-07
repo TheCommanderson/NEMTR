@@ -45,13 +45,11 @@
           </tr>
         </thead>
         <tbody>
-          <% Admin.each do |admin| %>
-            <% admin.host_orgs.each do |host| %>
-              <tr>
-                <td><%= host %></td>
-                <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary sm-btn" %></td>
-              </tr>
-            <% end %>
+          <% all_host_orgs.select{ |h| h != "N/A" }.each do |host| %>
+            <tr>
+              <td><%= host %></td>
+              <td><%= button_to 'Delete', {action: 'delete_host', id: host}, method: :post, class:"btn btn-secondary sm-btn" %></td>
+            </tr>
           <% end %>
         </tbody>
       </table>

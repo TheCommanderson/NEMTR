@@ -7,9 +7,13 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :logged_in?
   helper_method :sign
+  helper_method :all_host_orgs
+  helper_method :dt_format
+
   before_action :authorized
   before_action :set_logger
 
+  # =============== HELPER FUNCTIONS ================== #
   # Helper returns current user or nil if not logged in
   def current_user
     _user = case session[:login_type]
@@ -32,6 +36,10 @@ class ApplicationController < ActionController::Base
                 nil
                 end
     end
+  end
+
+  def user_login_type
+    session[:login_type]
   end
 
   # Helper to see if someone is logged in
@@ -87,6 +95,10 @@ class ApplicationController < ActionController::Base
     elsif !Driver.where(id: params[:id]).blank?
       'D'
     end
+  end
+
+  def all_host_orgs
+    Admin.all.map(|a| a.host_orgs).compact.flatten
   end
 
   # ===================== MATCHING ALGORITHM STUFF ============================ #
