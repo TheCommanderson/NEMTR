@@ -45,4 +45,5 @@ class AdminMailer < ApplicationMailer
   def password_reset_email
     @password = params[:password]
     mail(to: params[:user_email], subject: 'Ride2Health password reset')
+  end
 end
