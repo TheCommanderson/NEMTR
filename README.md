@@ -1,11 +1,3 @@
-# Gem Dependencies
-* bcrypt
-* mongoid
-* bootsnap
-* bson_ext
-* whenever
-* geocoder
- 
 # Deployment
 NEMTR deployment is still under construction.
 
