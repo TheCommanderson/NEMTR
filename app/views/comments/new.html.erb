@@ -1,0 +1,63 @@
+<section class="p-4 container centered-card">
+  <div class="row p-lg-5 bg-dark rounded">
+    <h1 class="text-center"><%= "#{@comment_greeting}" %></h1>
+    <% if defined? @patient %>
+      <%= form_with(model: [:patient, @comment], local: true) do |form| %>
+      <% if @comment.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <%= pluralize(@comment.errors.count, "error(s)! Please fix the following issues:") %>
+          <ul>
+            <% @comment.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="row py-2">
+        <div class="form-group col-md">
+          <%= form.label :text, "Tell us what's up" %>
+          <%= form.text_area :text, class: "form-control"%>
+        </div>
+      </div>
+      <%= form.hidden_field :author, value: current_user.id %>
+      <% if params.has_key?(:is_report) %>
+        <%= form.hidden_field :report, value: true %>
+      <% end %>
+      <%= form.hidden_field :patient_id, :value => params[:patient_id] %>
+      <div class="text-center py-4">
+        <%= form.submit "Submit Comment", class: "btn btn-outline-light" %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <%= form_with(model: [:appointment, @comment], local: true) do |form| %>
+    <% if @comment.errors.any? %>
+      <div class="alert alert-danger" role="alert">
+        <%= pluralize(@comment.errors.count, "error(s)! Please fix the following issues:") %>
+        <ul>
+          <% @comment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= form.label :text, "Tell us what's up" %>
+        <%= form.text_area :text, class: "form-control"%>
+      </div>
+    </div>
+    <%= form.hidden_field :author, value: current_user.id %>
+    <% if params.has_key?(:is_report) %>
+      <%= form.hidden_field :report, value: true %>
+    <% end %>
+    <%= form.hidden_field :appointment_id, :value => params[:appointment_id] %>
+    <div class="text-center py-4">
+      <%= form.submit "Submit Comment", class: "btn btn-outline-light" %>
+    </div>
+  <% end %>
+<% end %>
+</div>
+</section>

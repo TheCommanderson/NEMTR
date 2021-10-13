@@ -1,0 +1,24 @@
+body, html {
+  background-image: url("~images/r2h-grey.png");
+}
+table {
+  overflow-x: scroll;
+}
+td {
+  color: #000;
+}
+
+.table-blue {
+  background-color: var(--r2h-blue);
+}
+.table-container {
+  max-height: 700px !important;
+}
+.table-red {
+  background-color: var(--r2h-red);
+  color: #000;
+}
+.table-yellow {
+  background-color: var(--r2h-yellow);
+  color: #000;
+}

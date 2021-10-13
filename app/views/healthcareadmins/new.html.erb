@@ -1,0 +1,78 @@
+<body>
+  <main>
+    <section class="p-4 container centered-card">
+      <div class="row p-lg-5 bg-dark rounded">
+        <h1 class="text-center">Sign Up</h1>
+        <small class="text-center">Healthcare Provider</small>
+        <%= form_with(model: @healthcareadmin, local: true) do |form| %>
+        <% if @healthcareadmin.errors.any? %>
+          <div class="alert alert-danger" role="alert">
+            <h2><%= pluralize(@healthcareadmin.errors.count, "error") %>
+              prohibited this @healthcareadmin from being saved:</h2>
+            <ul>
+              <% @healthcareadmin.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="row py-2">
+          <div class="form-group col-md">
+            <%= form.label :first_name %>
+            <%= form.text_field :first_name, class: "form-control", autofocus: true %>
+          </div>
+
+          <div class="form-group col-md-1">
+            <%= form.label 'Middle' %>
+            <%= form.text_field :middle_init, class: "form-control" %>
+          </div>
+
+          <div class="form-group col-md">
+            <%= form.label :last_name %>
+            <%= form.text_field :last_name, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="form-group col-md-3">
+            <%= form.label :phone %>
+            <%= form.telephone_field :phone, class: "form-control phone-form", placeholder: '(xxx) xxx xxxx' %>
+          </div>
+
+          <div class="form-group col-md">
+            <%= form.label :email %>
+            <%= form.text_field :email, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row py-2">
+          <div class="form-group col">
+            <%= form.label :password %>
+            <%= form.password_field :password, class: "form-control" %>
+          </div>
+          <div class="form-group col">
+            <%= form.label :retype_password %>
+            <%= form.password_field :retype_password, class: "form-control" %>
+          </div>
+          <small class="form-text text-muted">
+            Don't share your password with anyone!
+          </small>
+        </div>
+        <p>I am a representative of</p>
+        <div class="row">
+          <div class="form-group col-md">
+            <%= form.text_field :host_org, class: "form-control", placeholder: "XYZ Healthcare" %>
+          </div>
+        </div>
+        <div class="text-center py-4">
+          <%= form.submit "Submit",class:"btn btn-outline-light" %>
+        </div>
+      <% end %>
+      <div class="text-center pb-3">
+        <%= button_to 'Back', involved_sessions_path, method: 'get', class: "btn btn-light" %>
+      </div>
+    </div>
+  </section>
+</main>
+</body>

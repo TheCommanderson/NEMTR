@@ -1,0 +1,104 @@
+<section class="p-4 container centered-card">
+  <div class="row p-lg-5 bg-dark rounded">
+    <h1 class="text-center">Edit Address</h1>
+    <% if @location.preset %>
+      <%= form_with(model: [:appointment, @location], local: true) do |form| %>
+      <%= hidden_field_tag(:appt_id, @appointment.id) %>
+      <% if @location.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <%= pluralize(@location.errors.count, "error(s)! Please fix the following issues:") %>
+          <ul>
+            <% @location.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= form.hidden_field :name, :value => 'tmp' %>
+      <div class="container table-container table-responsive">
+        <table class="table">
+          <thead class="table-yellow">
+            <th class="text-dark"></th>
+            <th class="text-dark">Name</th>
+            <th class="text-dark">Address</th>
+          </thead>
+          <tbody>
+            <% @patient.locations.where(preset: true).each do |l| %>
+              <tr>
+                <td><input type='radio' name='loc-select' class='loc-select' value=<%= l.id.to_s %>></td>
+                <td><%= l.name %></td>
+                <td>
+                  <div class="container">
+                    <div class="row">
+                      <%= "#{l.addr1} #{l.addr2}" %>
+                    </div>
+                    <div class="row">
+                      <%= "#{l.city} #{l.state} #{l.zip}" %>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center py-4">
+        <%= form.submit "Update location", class: "btn btn-outline-light", id: "submit-form" %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= form_with(model: [:appointment, @location], local: true) do |form| %>
+    <%= hidden_field_tag(:appt_id, @appointment.id) %>
+    <% if @location.errors.any? %>
+      <div class="alert alert-danger" role="alert">
+        <%= pluralize(@location.errors.count, "error(s)! Please fix the following issues:") %>
+        <ul>
+          <% @location.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= form.label :addr1, "Address" %>
+        <%= form.text_field :addr1, value: @preset.nil? ? '' : @preset.addr1, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= form.label :addr2, "Address (cont.)" %>
+        <%= form.text_field :addr2, placeholder: "(Optional)", value: @preset.nil? ? '' : @preset.addr2, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= form.label :city %>
+        <%= form.text_field :city, value: @preset.nil? ? '' : @preset.city, class: "form-control" %>
+      </div>
+      <div class="form-group col-md">
+        <%= form.label :state %>
+        <%= form.text_field :state, value: @preset.nil? ? '' : @preset.state, class: "form-control state-form" %>
+      </div>
+      <div class="form-group col-md">
+        <%= form.label :zip %>
+        <%= form.number_field :zip, value: @preset.nil? ? '' : @preset.zip, class: "form-control zip-form" %>
+      </div>
+    </div>
+
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= form.label :name, "Address Nickname" %>
+        <%= form.text_field :name, placeholder: "(Optional)", value: @preset.nil? ? '' : @preset.name, class: "form-control" %>
+      </div>
+    </div>
+    <div class="text-center py-4">
+      <%= form.submit "Update location", class: "btn btn-outline-light", id: "submit-form" %>
+    </div>
+  <% end %>
+<% end %>
+</div>
+</section>

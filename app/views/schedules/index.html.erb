@@ -1,83 +1,86 @@
-<h1 style="text-align: center; padding-top: 20px;">This Week's Availability</h1>
-<table class="schedule">
-    <tr>
-        <th>
-        Monday,
-        <br><%= @days_of_this_week[0] %>
-        </th>
-        <th>Tuesday,
-        <br><%= @days_of_this_week[1] %>
-        </th>
-        <th>Wednesday,
-        <br><%= @days_of_this_week[2] %>
-        </th>
-        <th>Thursday,
-        <br><%= @days_of_this_week[3] %>
-        </th>
-        <th>Friday,
-        <br><%= @days_of_this_week[4] %>
-        </th>
-        <th>Saturday,
-        <br><%= @days_of_this_week[5] %>
-        </th>
-        <th>Sunday,
-        <br><%= @days_of_this_week[6] %>
-        </th>
-    </tr>
-    <tr>
-        <td><%= @current_sch_readable['Monday'] %>
-        <td><%= @current_sch_readable['Tuesday'] %>
-        <td><%= @current_sch_readable['Wednesday'] %>
-        <td><%= @current_sch_readable['Thursday'] %>
-        <td><%= @current_sch_readable['Friday'] %>
-        <td><%= @current_sch_readable['Saturday'] %>
-        <td><%= @current_sch_readable['Sunday'] %>
-    </tr>
-</table>
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<br>
-<%= link_to 'Edit', edit_driver_schedule_path(:id => @current_schedule[:id]), class: "btn btn-primary big-btn" %>
-<br><br>
+<% content_for :navbar do %>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'My Schedule', driver_schedules_path(current_user), method: "get", class:"btn btn-outline-light", disabled: true %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'My Profile', driver_path(current_user), method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Logout', logout_sessions_path, method: "delete", class:"btn btn-outline-light" %>
+  </li>
+<% end %>
+<div class="container table-container table-responsive pt-3 text-center">
+  <h3>
+    Current Schedule
+  </h3>
+  <table class="table table-bordered border-dark">
+    <thead class="table-blue">
+      <tr>
+        <th>Actions</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+      </tr>
+    </thead>
 
-<h1 style="text-align: center">Next Week's Availability</h1>
-<table class="schedule">
-    <tr>
-      <th>
-      Monday,
-      <br><%= @days_of_next_week[0] %>
-      </th>
-      <th>Tuesday,
-      <br><%= @days_of_next_week[1] %>
-      </th>
-      <th>Wednesday,
-      <br><%= @days_of_next_week[2] %>
-      </th>
-      <th>Thursday,
-      <br><%= @days_of_next_week[3] %>
-      </th>
-      <th>Friday,
-      <br><%= @days_of_next_week[4] %>
-      </th>
-      <th>Saturday,
-      <br><%= @days_of_next_week[5] %>
-      </th>
-      <th>Sunday,
-      <br><%= @days_of_next_week[6] %>
-      </th>
-    </tr>
-    <tr>
-        <td><%= @next_sch_readable['Monday'] %>
-        <td><%= @next_sch_readable['Tuesday'] %>
-        <td><%= @next_sch_readable['Wednesday'] %>
-        <td><%= @next_sch_readable['Thursday'] %>
-        <td><%= @next_sch_readable['Friday'] %>
-        <td><%= @next_sch_readable['Saturday'] %>
-        <td><%= @next_sch_readable['Sunday'] %>
-    </tr>
-</table>
-
-<br>
-<%= link_to 'Edit', edit_driver_schedule_path(:id => @next_schedule[:id]), class: "btn btn-primary big-btn" %>
-<br>
-
-<p style='padding-left: 20px;'><%= link_to 'Back', drivers_home_path, class: "btn btn-secondary back-btn" %></p>
+    <tbody>
+      <% @schedules.each do |s| %>
+        <tr>
+          <td>
+            <%= button_to 'Edit', edit_driver_schedule_path(current_user, s[:id]), method: "get", class:"btn btn-outline-dark" %>
+          </td>
+          <td>
+            <%= s[:days]['Monday'] %>
+            <div>
+              <%= s[:sch]['Monday'] %>
+            </div>
+          </td>
+          <td>
+            <%= s[:days]['Tuesday'] %>
+            <div>
+              <%= s[:sch]['Tuesday'] %>
+            </div>
+          </td>
+          <td>
+            <%= s[:days]['Wednesday'] %>
+            <div>
+              <%= s[:sch]['Wednesday'] %>
+            </div>
+          </td>
+          <td>
+            <%= s[:days]['Thursday'] %>
+            <div>
+              <%= s[:sch]['Thursday'] %>
+            </div>
+          </td>
+          <td>
+            <%= s[:days]['Friday'] %>
+            <div>
+              <%= s[:sch]['Friday'] %>
+            </div>
+          </td>
+          <td>
+            <%= s[:days]['Saturday'] %>
+            <div>
+              <%= s[:sch]['Saturday'] %>
+            </div>
+          </td>
+          <td>
+            <%= s[:days]['Sunday'] %>
+            <div>
+              <%= s[:sch]['Sunday'] %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="row text-center">
+  <%= button_to 'Back', root_url, method: "get", class:"btn btn-outline-dark btn-lg" %>

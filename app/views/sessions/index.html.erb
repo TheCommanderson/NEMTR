@@ -1,30 +1,28 @@
-<head>
-	<style>
-		html, body{
-		  height: 100%;
-		  width: 100%;
-		}
-		body{
-			 overflow-x: hidden;
-		}
-	</style>
-</head>
+<% content_for :navbar do %>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'About', about_sessions_path, method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Get Involved', involved_sessions_path, method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Volunteer Login', new_session_path, method: "get", class:"btn btn-outline-light" %>
+  </li>
+<% end %>
 
-<div id="homepage-bg" class='bg'>
-	<!-- ============= NOTICE ============= -->
-	<p class="flash-notice"><%= notice %></p>
-	<div class="center" id="index-btns">
-		<div class="home-btns">
-				<h2>LOG IN</h2>
-				<%= button_to 'ADMIN', new_session_path, method: "get", params: {login: "Admin"}, class:"btn btn-secondary big-btn" %><br/>
-				<%= button_to 'PATIENT', new_session_path, method: "get", params: {login: "Patient"}, class:"btn btn-secondary big-btn" %><br/>
-				<%= button_to 'DRIVER', new_session_path, method: "get", params: {login:"Driver"}, class:"btn btn-secondary big-btn" %>
-		</div>
-		<div class="home-btns">
-			<h2>SIGN UP</h2>
-			<%= button_to 'ADMIN', new_admin_path, method: "get", class:"btn btn-secondary big-btn" %><br/>
-			<%= button_to 'PATIENT', new_patient_path, method: "get", class:"btn btn-secondary big-btn" %><br/>
-			<%= button_to 'DRIVER', new_driver_path, method: "get", class:"btn btn-secondary big-btn" %>
-		</div>
-	</div>
-</div>
+<body>
+  <main>
+    <section class="p-4 text-center container centered-card">
+      <div class="row p-lg-5 bg-dark rounded">
+        <h1 class="fw-light">Welcome to Ride2Health</h1>
+        <p class="lead">
+          Ride2Health is a website the provides rideshare to healthcare. For new accounts, please select 'Sign Up'. If you already have an account, click 'Login' to get started!
+        </p>
+        <p>
+          <%= button_to 'Login', new_session_path, method: "get", class:"btn btn-light btn-lg my-2" %>
+          <%= button_to 'Signup', new_patient_path, method: "get", class:"btn btn-outline-light btn-lg my-2" %>
+        </p>
+      </div>
+    </section>
+  </main>
+</body>

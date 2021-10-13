@@ -1,21 +1,99 @@
 # frozen_string_literal: true
 
 class SchedulesController < ApplicationController
+  skip_before_action :authorized, only: %i[create new]
+  before_action :set_schedule, only: %i[show edit destroy]
+
+  # GET /schedules or /schedules.json
   def index
     @driver = Driver.find(session[:user_id])
-    @current_schedule = @driver.schedule.where(current: true).first
-    @next_schedule = @driver.schedule.where(current: false).first
-    @current_sch_readable = self.class.make_readable(@current_schedule)
-    @next_sch_readable = self.class.make_readable(@next_schedule)
-    @days_of_this_week = getDatesOfWeek(getMonday(DateTime.now))
-    @days_of_next_week = getDatesOfWeek(getMonday((Time.current + 7.days).to_datetime))
+    @current_schedule = @driver.schedules.where(current: true).first
+    @next_schedule = @driver.schedules.where(current: false).first
+    @this_monday = getMonday(DateTime.now)
+    @next_monday = getMonday(Time.current + 7.days).to_datetime
+    @schedules = [
+      { id: @current_schedule.id, sch: pretty_print_schedule(@current_schedule), days: getDatesOfWeek(@this_monday) },
+      { id: @next_schedule.id, sch: pretty_print_schedule(@next_schedule), days: getDatesOfWeek(@next_monday) }
+    ]
   end
 
-  def self.make_readable(schedule)
-    @sch = {}
+  # GET /schedules/1 or /schedules/1.json
+  def show; end
+
+  # GET /schedules/new
+  def new; end
+
+  # GET /schedules/1/edit
+  def edit
+    @days = if @schedule.current
+              getDatesOfWeek(getMonday(DateTime.now))
+            else
+              getDatesOfWeek(getMonday(Time.current + 7.days).to_datetime)
+            end
+  end
+
+  # POST /schedules or /schedules.json
+  def create
+    @schedule = Schedule.new(schedule_params)
+    respond_to do |format|
+      if @schedule.save
+        format.html { redirect_to @schedule, notice: 'schedule was successfully created.' }
+        format.json { render :show, status: :created, location: @schedule }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @schedule.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /schedules/1 or /schedules/1.json
+  def update
+    params[:driver_id] = params[:d_id]
+    @schedule = Driver.find(params[:driver_id]).schedules.find(params[:id])
+    flash[:notice] = ''
+    new_sch = {}
     days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
+    days.each do |day|
+      day1 = (params[:schedule][day + '1(4i)']).to_s + (params[:schedule][day + '1(5i)']).to_s
+      day2 = (params[:schedule][day + '2(4i)']).to_s + (params[:schedule][day + '2(5i)']).to_s
+      if day1.to_i > day2.to_i
+        flash[:info] += day + ' was not updated, invalid time given.  '
+        next
+      end
+      new_sch[day] = day1 + ' ' + day2
+    end
+
+    respond_to do |format|
+      if @schedule.update(new_sch)
+        if flash[:info]
+          flash[:info] += 'Schedule updated.'
+        else
+          flash[:info] = 'Schedule updated.'
+        end
+        format.html { redirect_to driver_schedules_path(current_user) }
+        format.json { render :show, status: :ok, location: @schedule }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @schedule.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /schedules/1 or /schedules/1.json
+  def destroy
+    @schedule.destroy
+    respond_to do |format|
+      format.html { redirect_to root_url, notice: 'schedule was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+
+  def pretty_print_schedule(schedule)
+    @sch = {}
     schedule.attributes.each do |name, val|
-      next unless days.include? name
+      next unless daysOfTheWeek.include? name
 
       if val[0..3] == val[5..8]
         @sch[name] = 'None'
@@ -41,67 +119,25 @@ class SchedulesController < ApplicationController
     @sch
   end
 
-  def new
-    @driver = Driver.find(params[:driver_id])
-    @schedule = @driver.schedule.new
-  end
-
-  def create
-    @driver = Driver.find(params[:driver_id])
-    @schedule = @driver.schedule.build(params[:schedule])
-    @driver.save
-  end
-
-  def edit
-    @driver = Driver.find(params[:driver_id])
-    @schedule = @driver.schedule.where(id: params[:id]).first
-    @days_of_week = if @schedule.current
-                      getDatesOfWeek(getMonday(DateTime.now))
-                    else
-                      getDatesOfWeek(getMonday((Time.current + 7.days).to_datetime))
-                    end
-    @default_vals = {}
-    @schedule.attributes.each do |name, val|
-      next unless days.include? name
-
-      @default_vals[name] = [val[0..1], val[2..3], val[5..6], val[7..8]]
-    end
-  end
-
-  def update
-    @driver = Driver.find(params[:driver_id])
-    @schedule = @driver.schedule.where(id: params[:id]).first
-    flash[:notice] = ''
-    new_sch = {}
-    days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
-    days.each do |day|
-      day1 = (params[:schedule][day + '1(4i)']).to_s + (params[:schedule][day + '1(5i)']).to_s
-      day2 = (params[:schedule][day + '2(4i)']).to_s + (params[:schedule][day + '2(5i)']).to_s
-      if day1.to_i > day2.to_i
-        flash[:notice] += day + ' was not updated, invalid time given.  '
-        next
-      end
-      new_sch[day] = day1 + ' ' + day2
-    end
-
-    @schedule.update_attributes(new_sch)
-    @debug_log = matching_alg
-    redirect_to drivers_home_url
-  end
-
-  private
-
-  def schedule_params
-    params.require(:schedule).permit(:Monday, :Tuesday, :Wednesday, :Thursday, :Friday, :Saturday, :Sunday)
-  end
-
-  def days
-    _days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
-  end
-
   def getDatesOfWeek(monday)
-    _dates = []
-    (0..6).each { |i| _dates.append((monday.to_time + i.days).strftime('%B %-d')) }
-    _dates
+    dates = {}
+    (0..6).each { |i| dates[daysOfTheWeek[i]] = (monday.to_time + i.days).strftime('%B %-d') }
+    dates
+  end
+
+  def daysOfTheWeek
+    %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_schedule
+    @schedule = Driver.find(params[:driver_id]).schedules.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def schedule_params
+    params.require(:schedule).permit(
+      :first_name, :middle_init, :last_name, :phone, :email, :password
+    )
   end
 end

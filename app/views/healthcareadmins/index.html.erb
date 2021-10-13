@@ -1,0 +1,88 @@
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<% content_for :navbar do %>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'My Profile', healthcareadmin_path(current_user), method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Logout', logout_sessions_path, method: "delete", class:"btn btn-outline-light" %>
+  </li>
+<% end %>
+
+<div class="container table-container table-responsive pt-3">
+  <h3>
+    Users
+  </h3>
+  <table class="table">
+    <thead class="table-blue">
+      <tr>
+        <th>Patient</th>
+        <th>Approved By</th>
+        <th>Approved?</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @patients.each do |patient| %>
+        <tr>
+          <td>
+            <div class="container">
+              <div class="row">
+                <%= "#{patient.first_name} #{patient.middle_init} #{patient.last_name}"%>
+              </div>
+              <div class="row">
+                <%= "#{patient.email} | #{patient.phone}"%>
+              </div>
+            </div>
+          </td>
+          <td>
+            <% if patient.healthcareadmin %>
+              <div class="row">
+                <%= "#{patient.healthcareadmin.first_name} #{patient.healthcareadmin.last_name}" %>
+              </div>
+              <div class="row">
+                <%= "#{patient.healthcareadmin.host_org}" %>
+              </div>
+            <% else %>
+              No Healthcare Administrator is associated with this patient yet.
+            <% end %>
+          </td>
+          <td>
+            <% if patient.approved %>
+              <span style="color:green">True</span>
+            <% else %>
+              <span style="color:red">False</span>
+            <% end %>
+          </td>
+          <td>
+            <div class="row pb-2">
+              <div class="col">
+                <% if patient.approved %>
+                  <%= button_to "Unapprove", approve_patient_path(patient.id), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+                <% else %>
+                  <%= button_to "Approve", approve_patient_path(patient.id), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
+                <% end %>
+              </div>
+              <div class="col">
+                <% if patient.approved %>
+                  <%= button_to 'Approved Locations', patient_locations_path(patient.id), method: :get,class: "btn btn-outline-dark" %>
+                <% end %>
+              </div>
+            </div>
+            <div class="row pb-2">
+              <div class="col">
+                <%= button_to 'Comments', patient_comments_path(patient.id), method: :get, class: "btn btn-outline-dark" %>
+              </div>
+              <div class="col">
+                <% if patient.approved %>
+                  <%= button_to 'Appointments', appointments_patient_path(patient.id), method: :get,class: "btn btn-outline-dark" %>
+                <% end %>
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,48 @@
+:root {
+  --r2h-red: #FF4E29;
+  --r2h-blue: #0D53A8;
+  --r2h-yellow: #FFAE46;
+  --r2h-grey: #CECDD6;
+}
+
+body, label, h1, h2, p, small, td, th {
+  color: var(--r2h-grey);
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100% !important;
+  width: 100% !important;
+  background-image: url("~images/welcome.png");
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+.btn-xlarge {
+    padding: 18px 28px;
+    font-size: 40px !important; //change this to your desired size
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+}
+.centered-card {
+  max-width: 900px !important;
+}
+.img-logo {
+  max-height: 60px;
+  min-height: 40px;
+}
+.text-r2h-grey {
+  color: var(--r2h-grey);
+}
+.wonder-btn {
+  border-radius: 15px !important;
+  border-width: thick !important;
+  border-image: linear-gradient(to right,
+     var(--r2h-blue) 33%, var(--r2h-yellow) 33% 66%, var(--r2h-red) 66% 100%) 5 !important;
+}
+
+// Import Bootstrap v5
+@import "~bootstrap/scss/bootstrap";

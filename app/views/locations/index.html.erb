@@ -1,0 +1,51 @@
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<div class="container table-container pt-3">
+  <h3>
+    Locations
+  </h3>
+  <% if @locations.empty? %>
+    <h3 class="text-center">
+      <%= "Looks like #{@patient.first_name} has no approved locations!" %>
+    </h3>
+  <% else %>
+    <table class="table">
+      <thead class="table-red">
+        <tr>
+          <th class="text-dark">Name</th>
+          <th class="text-dark">Address</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @locations.each do |l| %>
+          <tr>
+            <td>
+              <% if l.name %>
+                <%= l.name %>
+              <% else %>
+                <%= "This location is unnamed." %>
+              <% end %>
+            </td>
+            <td>
+              <div class="row">
+                <%= l.addr1 %>
+              </div>
+              <div class="row">
+                <%= l.addr2 %>
+              </div>
+              <div class="row">
+                <%= "#{l.city}, #{l.state}, #{l.zip}" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <div class="text-center pb-3">
+    <%= button_to 'Add Location', new_patient_location_path(@patient), method: 'get', class: "btn btn-outline-dark btn-lg" %>
+  </div>
+  <div class="text-center pb-3">
+    <%= button_to 'Back', request.headers['HTTP_REFERER'], method: 'get', class: "btn btn-outline-dark btn-lg" %>
+  </div>

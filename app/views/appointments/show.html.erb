@@ -1,60 +1,127 @@
-<% provide :head_tags do %>
+<% content_for :head do %>
+  <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+Rails.application.credentials.google_maps_key, defer: true %>
+  <%= javascript_pack_tag 'appointment', 'data-turbolinks-track': 'reload' %>
   <script>
-    document.addEventListener("DOMContentLoaded", function(){
-        initMap(<%=@appointment.location[0][:coordinates]%>, <%=@appointment.location[1][:coordinates]%>)
+    document.addEventListener("DOMContentLoaded", function () {
+      initMap(<%=@appointment.locations[0][:coordinates]%>, <%=@appointment.locations[1][:coordinates]%>)
     });
-    if (location.href.indexOf('re')==-1) {
-        location.href=location.href+'?re';
+    if (location.href.indexOf('re') == -1) {
+      location.href = location.href + '?re';
     }
   </script>
 <% end %>
 
-<p id="notice"><%= notice %></p>
-<h1 style="text-align: center">Ride Details</h1>
-<table id='appt-details'>
-  <tr>
-    <th>Patient</th>
-    <td>
-      <% @patient = Patient.find(@appointment.patient_id) %>
-      <%= @patient.first_name %> <%= @patient.last_name %>
-    </td>
-  <tr>
-    <th>Driver</th>
-    <td>
-      <% if @appointment.status == 0 %>
-        <span style="color:red">unassigned</span>
-      <% else %>
-        <% @driver = Driver.find(@appointment.driver_id) %>
-        <%= @driver.first_name %> <%= @driver.last_name %>
+<section class="p-4 container">
+  <div class="row p-lg-5 bg-dark rounded">
+    <div class="container table-container table-responsive pt-3">
+      <table class="table">
+        <tr>
+          <th>Patient</th>
+          <td>
+            <%= "#{@patient.first_name} #{@patient.last_name}" %>
+          </td>
+        </tr>
+        <tr>
+          <th>Driver</th>
+          <td>
+            <% if @appointment.status.unassigned? %>
+              <span style="color:red">Unassigned</span>
+            <% else %>
+              <% d = Driver.find(@appointment.driver_id) %>
+                <%= "#{d.first_name} #{d.middle_init} #{d.last_name}" %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <th>Pickup Date & Time</th>
+            <td>
+              <div class="container">
+                <div class="row">
+                  <%= Time.parse(@appointment.datetime).strftime("%a %b %d, %Y") %>
+                </div>
+                <div class="row">
+                  <%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="table-blue">Pick-Up Address</th>
+            <td>
+              <div class="row">
+                <%= @appointment.locations[0].name %>
+              </div>
+              <div class="row">
+                <%= @appointment.locations[0].addr1 %>
+              </div>
+              <div class="row">
+                <%= @appointment.locations[0].addr2 %>
+              </div>
+              <div class="row">
+                <%= "#{@appointment.locations[0].city}, #{@appointment.locations[0].state}, #{@appointment.locations[0].zip}" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Destination Address</th>
+            <td>
+              <div class="row">
+                <%= @appointment.locations[1].name %>
+              </div>
+              <div class="row">
+                <%= @appointment.locations[1].addr1 %>
+              </div>
+              <div class="row">
+                <%= @appointment.locations[1].addr2 %>
+              </div>
+              <div class="row">
+                <%= "#{@appointment.locations[1].city}, #{@appointment.locations[1].state}, #{@appointment.locations[1].zip}" %>
+              </div>
+            </td>
+          </tr>
+        </table>confirm
+      </div>
+      <div class="text-center">
+        <div class="row md-2 pb-2">
+          <div class="mw-25">
+            <%= link_to 'See in Google Maps', build_gmap_url(@appointment.locations[0], @appointment.locations[1]), class: "btn btn-success btn-lg" %>
+          </div>
+        </div>
+      </div>
+      <% if !@appointment.comments.empty? %>
+        <div>
+          <h2 class="text-danger">This appointment has been reported:</h2>
+          <div class="container table-container table-responsive pt-3">
+            <table class="table">
+              <thead>
+                <th>Report</th>
+                <th>Reporter</th>
+              </thead>
+              <tbody>
+                <% @appointment.comments.each do |report| %>
+                  <tr>
+                    <td>
+                      <%= "#{report.text}" %>
+                    </td>
+                    <td>
+                      <%= "#{User.find(report.author).full_name}" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
       <% end %>
-    </td>
-  <tr>
-    <th>Pickup Date & Time</th>
-    <td>
-      <%= Time.parse(@appointment.datetime).strftime("%a %b %d, %Y") %>
-      <p><%= Time.parse(@appointment.datetime).strftime("%I:%M %p") %></p>
-    </td>
-  <tr>
-    <th>Patient Address</th>
-    <td>
-      <%= @appointment.location[0][:name] %>
-      <p><%= @appointment.location[0][:address] %></p>
-    </td>
-  <tr>
-    <th>Destination Address</th>
-    <td>
-      <%= @appointment.location[1][:name] %>
-      <p><%= @appointment.location[1][:address] %></p>
-    </td>
-</table>
-
-<p>
-  <h3 style="text-align: center;">Map & Directions</h3>
-</p>
-
-<div class='parent'>
-  <div class='child float-left-child' id="map"></div>
-  <div class='child float-left-child' id="right-panel"></div>
-</div></br>
-<%= link_to 'Report Issue', report_appointment_url, method: :get, class: 'btn btn-primary big-btn red-btn' %>
-<p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
+      <div class="text-center">
+        <div class="row md-2 pb-2">
+          <%= button_to 'Report Issue', new_appointment_comment_path(@appointment.id), method: 'get', class: "btn btn-danger btn-lg" %>
+        </div>
+        <div class="row md-2 pb-2">
+          <%= button_to 'Back', root_url, method: 'get', class: "btn btn-outline-light btn-lg" %>
+        </div>
+      </div>
+      <div id="map"></div>
+      <div id="right-panel"></div>
+    </div>
+  </section>

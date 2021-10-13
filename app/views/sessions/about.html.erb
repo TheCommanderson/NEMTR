@@ -1,0 +1,24 @@
+<% content_for :navbar do %>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'About', about_sessions_path, method: "get", class:"btn btn-outline-light", disabled: true %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Get Involved', involved_sessions_path, method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Volunteer Login', new_session_path, method: "get", class:"btn btn-outline-light" %>
+  </li>
+<% end %>
+
+<body>
+  <main>
+    <section class="p-4 text-center container centered-card">
+      <div class="row p-lg-5 bg-dark rounded">
+        <h1 class="fw-light">Under Construction</h1>
+        <p class="lead">
+          Please come back later!
+        </p>
+      </div>
+    </section>
+  </main>
+</body>

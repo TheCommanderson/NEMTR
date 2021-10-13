@@ -1,40 +1,58 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :authorized, only: %i[index create new]
+  skip_before_action :authorized
 
+  # GET /sessions.json
   def index
     if logged_in?
       case session[:login_type]
-      when 'P'
-        redirect_to patients_home_url
       when 'D'
-        redirect_to drivers_home_url
-      when 'A'
-        redirect_to admins_home_url
+        redirect_to drivers_url
+      when 'H'
+        redirect_to healthcareadmins_url
+      when 'P'
+        redirect_to patients_url
+      when 'S'
+        redirect_to sysadmins_url
+      when 'V'
+        redirect_to volunteers_url
       end
     end
   end
 
-  def new; end
-
-  def create
+  # GET /sessions/new
+  def new
     @login_type = params[:login_type]
+  end
 
-    case @login_type
-    when 'Admin'
-      @user = Admin.where(email: params[:email])[0]
-    when 'Patient'
-      @user = Patient.where(email: params[:email])[0]
-    when 'Driver'
-      @user = Driver.where(email: params[:email])[0]
-    end
-    if @user&.authenticate(params[:password])
-      session[:user_id] = @user._id
-      session[:login_type] = @login_type[0]
+  # POST /sessions.json
+  def create
+    user = User.where(email: params[:email]).first
+    if user.present? && user.authenticate(params[:password])
+      # sets up user.id sessions
+      session[:user_id] = user.id
+      session[:login_type] = user._type[0]
+      flash[:info] = "Welcome, #{user.first_name}!"
+      redirect_to root_url
     else
-      flash.notice = 'Incorrect Email or Password.'
+      flash.now[:danger] = 'Invalid email or password'
+
+      render :new
     end
+  end
+
+  # GET /sessions/about
+  def about; end
+
+  # GET /sessions/involved
+  def involved; end
+
+  # DELETE /sessions
+  def logout
+    session.delete(:login_type)
+    session.delete(:user_id)
+    flash[:info] = 'Successfully logged out.'
     redirect_to root_url
   end
 end

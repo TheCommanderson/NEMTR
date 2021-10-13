@@ -1,0 +1,39 @@
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<section class="p-4 container">
+  <div class="row p-lg-5 bg-dark rounded">
+    <h1 class="text-center"><%= "Assign a Driver for #{@appointment.patient.first_name}'s appointment" %></h1>
+  </div>
+</section>
+<h3 class="container">Drivers</h3>
+<div class="container table-container table-responsive">
+  <table class="table border-dark">
+    <thead class="table-red">
+      <tr>
+        <th class="text-dark">Name</th>
+        <th class="text-dark">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @drivers.each do |driver| %>
+        <tr>
+          <td>
+            <div class="container">
+              <div class="row">
+                <%= "#{driver.first_name} #{driver.middle_init} #{driver.last_name}"%>
+              </div>
+              <div class="row">
+                <%= "#{driver.email} | #{driver.phone}"%>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="row pb-2">
+              <%= button_to "Assign to this Driver", assign_driver_path(driver), params: {appointment_id: @appointment.id}, method: :post, class: "btn btn-outline-dark" %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

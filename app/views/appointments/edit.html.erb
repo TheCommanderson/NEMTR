@@ -1,12 +1,25 @@
-<div style="text-align: center;">
-  <h1>Update Date and Time</h1>
-  <h3>(Time for Pick-Up, NOT Appointment Time)</h3>
-  <br><br>
-  <%= form_with(model: @appointment, local: true) do |form| %>
-      <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
-      <br><br>
-      <%= form.submit "Update", class: "btn btn-primary big-btn" %>
-  <% end %>
+<section class="p-4 container">
+  <div class="row p-lg-5 bg-dark rounded">
+    <div class="text-center">
+      <h1>Update Date and Time</h1>
+      <h2>(Time for pick-up, NOT Appointment Time)</h2>
+      <div class="row py-2">
+        <div class="form-group col-md">
+          <%= form_with(model: @appointment, local: true) do |form| %>
+          <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-md">
+          <%= form.submit "Update", class: "btn btn-light", id: "submit-form" %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row py-3">
+      <div class="col-md">
+        <%= button_to 'Back', request.headers['HTTP_REFERER'], method: 'get', class: "btn btn-outline-light" %>
+      </div>
+    </div>
+  </div>
 </div>
-
-<p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
+</section>
