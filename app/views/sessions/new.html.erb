@@ -1,43 +1,23 @@
-<head>
-	<style>
-		html, body{
-		  height: 100%;
-		  width: 100%;
-		}
-		body{
-			 overflow-x: hidden;
-		}
-	</style>
-</head>
-<% @login_type = params[:login] %>
-<head>
-  <style>
-    input[type=text],input[type=password]{
-      line-height: 3;
-      width: 15%;
-      font-size: 20px;
-    }
-  </style>
-</head>
 <body>
-<div id='signin-bg' class='bg'>
-  <div class="center" id='login-btns'>
-    <h3>Login as <%= @login_type %></h3>
-    <br>
-    <%= form_with(url: create_session_url, local: true) do |form| %>
+  <section class="p-4 text-center container centered-card">
+    <div class="row p-lg-5 bg-dark rounded">
+      <h1>Ride2Health Login</h1>
+      <p>
+        Welcome! Please log in to get started.
+      </p>
+      <%= form_with url: "/sessions", local: true do |form| %>
       <div class="col">
-        <div class="row-md-offset-5" style="padding:5px;">
+        <div class="row-md-offset-5 py-1">
           <%= text_field_tag :email, nil, placeholder: 'Email' %>
         </div>
-        <div class="row-md-offset-5" style="padding:5px;">
+        <div class="row-md-offset-5 py-1">
           <%= password_field_tag :password, nil, placeholder: 'Password' %>
         </div>
-        <div class="row-md-offset-5" style="padding:5px;">
-          <%= form.submit "Login" ,class:"btn btn-primary big-btn"%>
+        <div class="row-md-offset-5 py-1">
+          <%= form.submit "Login" ,class:"btn btn-outline-light"%>
         </div>
-        <%= hidden_field_tag :login_type, @login_type %>
       </div>
     <% end %>
   </div>
-</div>
+</section>
 </body>

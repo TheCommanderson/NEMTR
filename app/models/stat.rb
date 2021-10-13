@@ -1,14 +1,23 @@
 # frozen_string_literal: true
 
+# Class that tracks stats per month for the ride2health team to keep track of.
 class Stat
   include Mongoid::Document
+  # The number of rides given this month
   field :rides, type: Integer
+  # The number of reports filed this month
   field :reports, type: Integer
-  field :current, type: Boolean
-  field :date, type: String
+  field :reported_appointments, type: Array, default: true
+  # Month and Year
+  field :month, type: String
+  field :year, type: Integer
+  # Number of drivers, patients and volunteers
   field :drivers, type: Integer
   field :patients, type: Integer
+  field :volunteers, type: Integer
 
+  # THIS FUNCTION SHOULD COLLECT AT THE BEGINNING OF THE MONTH AND THEN UPDATE
+  # AS NECESSARY WHENEVER A FIELD UPDATES
   def self.collect
     s = Stat.where(current: true).first
     s.patients = Patient.count

@@ -1,0 +1,49 @@
+<% content_for :navbar do %>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'About', about_sessions_path, method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Get Involved', involved_sessions_path, method: "get", class:"btn btn-outline-light", disabled: true %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Volunteer Login', new_session_path, method: "get", class:"btn btn-outline-light" %>
+  </li>
+<% end %>
+
+<body>
+  <main>
+    <section class="p-4 text-center container centered-card">
+      <div class="row p-lg-5 bg-dark rounded">
+        <h1 class="fw-light">Get Involved</h1>
+        <table class="table">
+          <tr>
+            <th scope="col" class="align-middle">Volunteers</th>
+            <td scope="col">
+              Looking for opportunities to volunteer? Ride2Health is always looking for new members! Please reach out to (TODO) at (TODO@email.com) to find out about volunteer opportunities.
+            </td>
+          </tr>
+          <tr>
+            <th scope="col">Healthcare Providers</th>
+            <td scope="col">
+              Would you like to provide your patients the opportunity to use Ride2Health? Reach out to (TODO) at (TODO@email.com) regarding partnership with Ride2Health!
+            </td>
+          </tr>
+        </table>
+        <p>
+          If you've already been in contact with us, you can use the links below to register your volunteer account:
+        </p>
+        <div class="row">
+          <div class="col">
+            <%= button_to 'Driver Signup', new_driver_path, method: "get", class:"btn btn-light btn-lg" %>
+          </div>
+          <div class="col">
+            <%= button_to 'Dispatch Signup', new_volunteer_path, method: "get", class:"btn btn-light btn-lg" %>
+          </div>
+          <div class="col">
+            <%= button_to 'Healthcare Provider Signup', new_healthcareadmin_path, method: "get", class:"btn btn-light btn-lg" %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>

@@ -1,33 +1,36 @@
 # frozen_string_literal: true
 
-class Driver
+class Driver < User
   include Mongoid::Document
-  include ActiveModel::SecurePassword
 
-  field :first_name, type: String
-  field :middle_init, type: String
-  field :last_name, type: String
-  field :phone, type: Integer
-  field :email, type: String
-  field :trained, type: Mongoid::Boolean
-  field :admin_id, type: String
-  field :blacklist, type: Array, default: []
-  field :password_digest, type: String
+  # Has the driver been trained?
+  field :trained, type: Boolean, default: false
+  # Driver's car information
   field :car_make, type: String
   field :car_model, type: String
+  field :car_color, type: String
   field :car_license_plate, type: String
+  # If a driver declines an appt, this appt ID is entered into a blacklist to
+  # prevent this driver from being reassigned the appointment
+  field :blacklist, type: Array, default: []
+  field :keep_schedule, type: Boolean, default: false
 
-  embeds_many :schedule
-  accepts_nested_attributes_for :schedule
+  before_create :create_schedule
 
-  validates_presence_of :first_name, :last_name, :phone, :email
-  validates_uniqueness_of :email
-  validates_length_of :phone, is: 10
+  # Embeds
+  # A driver will have exactly 2 schedules, since they are able to set their
+  # schedule up to 2 weeks out
+  embeds_many :schedules
+  accepts_nested_attributes_for :schedules
 
-  has_secure_password
-  belongs_to :admin, optional: true
+  # Belongs
+  belongs_to :sysadmin, optional: true
+
+  # Has
   has_many :appointments
 
+  # Cleanup method for all driver blacklists that will find and remove any
+  # appointments that are now in the past for every driver.
   def self.blacklist_reset
     Driver.each do |driver|
       to_del = []
@@ -48,5 +51,26 @@ class Driver
       end
       driver.save
     end
+  end
+
+  def create_schedule
+    first_schedule = { Monday: '0000 0000',
+                       Tuesday: '0000 0000',
+                       Wednesday: '0000 0000',
+                       Thursday: '0000 0000',
+                       Friday: '0000 0000',
+                       Saturday: '0000 0000',
+                       Sunday: '0000 0000',
+                       current: true }
+    second_schedule = { Monday: '0000 0000',
+                        Tuesday: '0000 0000',
+                        Wednesday: '0000 0000',
+                        Thursday: '0000 0000',
+                        Friday: '0000 0000',
+                        Saturday: '0000 0000',
+                        Sunday: '0000 0000',
+                        current: false }
+    schedules.build(first_schedule)
+    schedules.build(second_schedule)
   end
 end

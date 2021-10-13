@@ -1,26 +1,23 @@
 # frozen_string_literal: true
 
-class PatientsController < ApplicationController
-  before_action :set_patient, only: %i[show edit update destroy comment append viewComments defaultAddress saveAddress]
+class PatientsController < UsersController
+  before_action :set_patient, only: %i[show edit update destroy approve appointments]
   skip_before_action :authorized, only: %i[new create]
-  before_action :patient_authorized, except: %i[new create edit update destroy comment append viewComments]
-  before_action :admin_authorized, only: [:viewComments]
+
   # GET /patients
   def pending; end
 
   # GET /patients.json
   def index
-    # TODO(spencer) clean this up
-    @currentPatient = current_user
-    @patients = Patient.all
-    @appointments = Appointment
+    @appointments = Appointment.where(patient_id: current_user.id).sort_by(&:datetime)
     @drivers = Driver.all
-    @dt_format = dt_format
   end
 
   # GET /patients/1
   # GET /patients/1.json
-  def show; end
+  def show
+    @home = @patient.locations.where(home: true).first unless @patient.locations.where(home: true).empty?
+  end
 
   # GET /patients/new
   def new
@@ -34,16 +31,20 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
-    @patient.approved = false unless @patient.approved
 
     respond_to do |format|
-      if @patient.save
-        AdminMailer.with(patient: @patient).new_patient_email.deliver
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
-        format.json { render :show, status: :created, location: @patient }
-      else
-        format.html { render :new }
-        format.json { render json: @patient.errors, status: :unprocessable_entity }
+      begin
+        if @patient.save
+          # AdminMailer.with(patient: @patient).new_patient_email.deliver
+          format.html { redirect_to @patient, notice: 'User was successfully created.' }
+          format.json { render :show, status: :created, locations: @patient }
+        else
+          format.html { render :new }
+          format.json { render json: @patient.errors, status: :unprocessable_entity }
+        end
+      rescue ArgumentError
+        flash.now[:danger] = 'Please ensure all fields are filled in.'
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -53,8 +54,9 @@ class PatientsController < ApplicationController
   def update
     respond_to do |format|
       if @patient.update(patient_params)
-        format.html { redirect_to @patient, notice: 'Update Successful!' }
-        format.json { render :show, status: :ok, location: @patient }
+        flash[:info] = 'Update Successful!'
+        format.html { redirect_to @patient }
+        format.json { render :show, status: :ok, locations: @patient }
       else
         format.html { render :edit }
         format.json { render json: @patient.errors, status: :unprocessable_entity }
@@ -67,58 +69,25 @@ class PatientsController < ApplicationController
   def destroy
     @patient.destroy
     respond_to do |format|
-      format.html { redirect_to patients_url, notice: 'Patient was successfully deleted.' }
+      format.html { redirect_to root_url, notice: 'Patient was successfully deleted.' }
       format.json { head :no_content }
     end
   end
 
-  def comment; end
-
-  def append
-    p_comment = params[:patient][:comment] + " [Comment by: #{current_user.first_name} #{current_user.last_name}]"
-    @patient.add_to_set(comments: p_comment)
-    @patient.save
-    redirect_to root_path, notice: 'Thank you for your feedback!'
+  def approve
+    @patient.update_attribute(:approved, !@patient.approved)
+    if @patient.approved && @patient.update_attribute(:healthcareadmin, current_user)
+      flash[:info] = 'Approved!'
+    elsif !@patient.approved && @patient.unset(:healthcareadmin)
+      flash[:info] = 'Patient unapproved successfully.'
+    else
+      flash[:danger] = 'There was an error (un)approving this patient, please try again.'
+    end
+    redirect_to root_url
   end
 
-  def viewComments; end
-
-  def defaultAddress; end
-
-  def saveAddress
-    unless @patient.preset.where({ home: 1 }).empty?
-      @current_default = @patient.preset.where({ home: 1 }).first
-      @preset = @patient.preset.find(@current_default.id)
-      @preset.destroy
-    end
-
-    if params[:type] != 'reset'
-      addr1 = params[:preset][:addr1]
-      addr2 = params[:preset][:addr2]
-      city = params[:preset][:city]
-      state = params[:preset][:state]
-      zip = params[:preset][:zip]
-      name = params[:preset][:name]
-
-      @preset = @patient.preset.build(addr1: addr1, addr2: addr2, city: city, state: state, zip: zip, name: name, home: 1)
-      @preset.save
-      @patient.save
-    end
-
-    redirect_to patients_home_path
-  end
-
-  def self.day_schedules(schedules, day)
-    @sch = []
-    schedules.each do |sch|
-      @sch << SchedulesController.make_readable(sch)[day]
-    end
-
-    num_schedules = @sch.length
-    @sch.reject! { |val| val == 'None' }
-    sorted_day = @sch.sort! { |a, b| a[a.index(':') + 3] <=> b[b.index(':') + 3] }
-
-    sorted_day
+  def appointments
+    @appointments = Appointment.where(patient_id: @patient.id).sort_by(&:datetime)
   end
 
   private
@@ -130,14 +99,8 @@ class PatientsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def patient_params
-    params.require(:patient).permit(:first_name, :middle_initial, :last_name, :phone, :email, :host_org, :admin_id, :password, :search, :comment, preset_attributes: %i[name addr1 addr2 city state zip])
-  end
-
-  def patient_authorized
-    redirect_to root_url unless session[:login_type] == 'P'
-  end
-
-  def admin_authorized
-    redirect_to root_url unless session[:login_type] == 'A'
+    params.require(:patient).permit(
+      :first_name, :middle_init, :last_name, :phone, :email, :password, :host_org
+    )
   end
 end

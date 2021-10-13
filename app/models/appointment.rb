@@ -2,22 +2,34 @@
 
 class Appointment
   include Mongoid::Document
+  extend Enumerize
+
+  BUFFER_TIME = 15
+
+  # The datetime of the scheduled appointment
   field :datetime, type: String
-  field :status, type: Integer
-  field :est_time, type: Integer
+  # The status of the appointment
+  field :status
+  enumerize :status, in: %i[unassigned assigned completed], default: :unassigned
+  # The estimated time to destination as provided by Google Maps
+  field :est_time, type: Integer, default: 60
 
-  embeds_many :location, cascade_callbacks: true
+  # Embeds
+  # There will be exactly 2 locations, [0] = pickup, [1] = dropoff
+  embeds_many :locations, cascade_callbacks: true
+  accepts_nested_attributes_for :locations
 
-  validates_associated :location
-
-  accepts_nested_attributes_for :location
-
+  # Belongs
   belongs_to :driver, optional: true
   belongs_to :patient, optional: true
 
-  before_save :get_est_time
-  before_update :get_est_time
-  after_update :email_updates
+  # Has
+  has_many :comments
+
+  # Callbacks
+  # before_save :get_est_time
+  # before_update :get_est_time
+  after_update :send_updates
 
   def self.clean_past_appointments
     Appointment.each do |appt|
@@ -25,13 +37,20 @@ class Appointment
     end
   end
 
+  # Calls the Google Maps API to retreive the estimated time for this ride.
   def get_est_time
-    url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + location[0].coordinates[0].to_s + ',' + location[0].coordinates[1].to_s + '&destination=' + location[1].coordinates[0].to_s + ',' + location[1].coordinates[1].to_s + '&key=' + Rails.application.credentials.gmap_geocode_api_kep
+    url = "https://maps.googleapis.com/maps/api/directions/json?origin=\
+      #{locations[0].coordinates[0]},#{locations[0].coordinates[1]}\
+      &destination=#{locations[1].coordinates[0]},\
+      #{locations[1].coordinates[1]}&key=\
+      #{Rails.application.credentials.gmap_geocode_api_kep}"
     response = HTTParty.get(url).parsed_response
-    self.est_time = ((response['routes'].first['legs'].first['duration']['value']) / 60).round + 15 # BUFFER TIME
+    self.est_time = ((response['routes'].first['legs'].first['duration']['value']) / 60).round + BUFFER_TIME
   end
 
-  def email_updates
+  # Sends updates via email (and if enabled also sends text message) to the
+  # driver and the patient
+  def send_updates
     if status == 1
       UserMailer.with(appt: self).ride_updated_email.deliver
       UserMailer.with(appt: self).ride_assigned_email.deliver

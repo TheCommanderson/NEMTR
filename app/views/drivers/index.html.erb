@@ -1,180 +1,173 @@
-<div id="header">
-  <div class="row" style="margin: 0px">
-    <img src="<%= asset_path('UWBV-white.png') %>" alt='UWBV logo' class='logo'>
-    <div class="col">
-      <br>
-      <h2>Driver Home Page</h2>
-      <h4><%= @logged_in_driver.first_name %> <%= @logged_in_driver.last_name %></h4>
-    </div>
-    <% if @logged_in_driver.trained %>
-      <div class="col-1">
-        <%= button_to 'Edit Account', edit_driver_path(@logged_in_driver), method: :get, class:"btn btn-secondary nav-btn" %>
-    <% end %>
-      <%= button_to 'Log Out', logout_path, class:"btn btn-secondary nav-btn" %>
-    </div>
-  </div>
-</div>
-<p id="notice" class='text-center' style="margin:0px;"><%= notice %></p>
-<div style="margin: 20px;">
-  <% if @logged_in_driver.trained %>
-  <div class="schedule-index-box">
-      <% if @on_call %>
-      <h1>Currently On Call: Yes</h1>
-      <% else %>
-      <h1>Currently On Call: No</h1>
-      <% end %>
-      <%= button_to 'See My Schedule', driver_schedules_url(@logged_in_driver), :method => 'get', class:"btn btn-primary big-btn" %>
-  </div>
-    <div class="dr_rides">
-      <h1>Your Upcoming Rides</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Patient</th>
-            <th>Date & Time</th>
-            <th>Pick-Up Location</th>
-            <th>Destination</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
-            <% if Time.parse(appointment.datetime).past? %>
-              <% next %>
-            <% end %>
-            <tr>
-              <% @tempPatient = @patients.find(appointment.patient_id) %>
-              <td>
-                <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
-                <p>Phone: <%= @tempPatient.phone %></p>
-              </td>
-              <td nowrap='nowrap'>
-                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-                <p><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
-              </td>
-              <td>
-                <%= appointment.location[0][:name] %>
-                <p><%= appointment.location[0][:address] %></p>
-              </td>
-              <td>
-                <%= appointment.location[1][:name] %>
-                <p><%= appointment.location[1][:address] %></p>
-              </td>
-              <td>
-                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
-                <%= button_to "Decline Ride", cancel_appointment_path(appointment), method: :patch,  data: { confirm: 'Are you sure?' }, class: "btn btn-secondary sm-btn" %>
-              </td>
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <div class="dr_rides">
-      <h1>Your Recent Past Rides</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Patient</th>
-            <th>Date & Time</th>
-            <th>Pick-Up Location</th>
-            <th>Destination</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% Appointment.where('driver_id' => @logged_in_driver).sort_by{ |appt| appt.datetime }.each do |appointment| %>
-            <% if !Time.parse(appointment.datetime).past? %>
-              <% next %>
-            <% end %>
-            <tr>
-              <% @tempPatient = @patients.find(appointment.patient_id) %>
-              <td>
-                <%= @tempPatient.first_name %> <%= @tempPatient.last_name %>
-                <p>Phone: <%= @tempPatient.phone %></p>
-              </td>
-              <td nowrap='nowrap'>
-                <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-                <p><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
-              </td>
-              <td>
-                <%= appointment.location[0][:name] %>
-                <p><%= appointment.location[0][:address] %></p>
-              </td>
-              <td>
-                <%= appointment.location[1][:name] %>
-                <p><%= appointment.location[1][:address] %></p>
-              </td>
-              <td>
-                <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
-                <%= link_to 'Leave Comment', comment_patient_path(appointment.patient_id), method: :get, class: "btn btn-secondary sm-btn" %>
-              </td>
-
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <br>
-    <br>
-
-    <h1>Unassigned Upcoming Rides</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Patient</th>
-          <th>Driver</th>
-          <th>Date & Time</th>
-          <th>Pick-Up Location</th>
-          <th>Destination</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @appointments.each do |appointment| %>
-          <% if Time.parse(appointment.datetime).past? %>
-            <% next %>
-          <% end %>
-        <tr>
-          <% @tempPatient = @patients.find(appointment.patient_id) %>
-          <td><%= @tempPatient.first_name %> <%= @tempPatient.last_name %></td>
-          <% if appointment.status == 0 %>
-            <td style="color:red">Unassigned</td>
-          <% else %>
-            <td><%= @tempDriver = ->(x) {x.first_name + ' ' + x.last_name}.call(@drivers.find(appointment.driver_id)) %></td>
-          <% end %>
-
-          <td nowrap="nowrap">
-            <%= Time.parse(appointment.datetime).strftime("%a %b %d, %Y") %>
-            <p><%= Time.parse(appointment.datetime).strftime("%I:%M %p") %></p>
-          </td>
-          <td>
-            <%= appointment.location[0][:name] %>
-            <p><%= appointment.location[0][:address] %></p>
-          </td>
-          <td>
-            <%= appointment.location[1][:name] %>
-            <p><%= appointment.location[1][:address] %></p>
-          </td>
-          <td>
-            <%= button_to 'Details', appointment, method: :get, class: "btn btn-secondary sm-btn" %>
-            <%= button_to 'Claim this Ride', claim_driver_path(@logged_in_driver.id, appt: appointment), class: "btn btn-secondary sm-btn" %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <br>
-    <h3>Pending approval</h3>
-    <p>Please contact a system administrator.</p>
-    <br>
-  <% end %>
-</div>
-
-
-<% if flash[:alert] %>
-  <script>alert("<%= flash[:alert] %>")</script>
+<% content_for :navbar do %>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'My Schedule', driver_schedules_path(current_user), method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'My Profile', driver_path(current_user), method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Logout', logout_sessions_path, method: "delete", class:"btn btn-outline-light" %>
+  </li>
 <% end %>
+
+<% if @driver.trained %>
+  <h1>Display Schedule</h1>
+<% end %>
+<div class="container table-container table-responsive pt-3">
+  <table class="table">
+    <thead class="table-blue">
+      <tr>
+        <th>Driver</th>
+        <th>Pick-up Date & Time</th>
+        <th>Pick-up Location</th>
+        <th>Destination</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @driver_appointments.each do |a| %>
+        <% if Time.parse(a.datetime).past? %>
+          <% next %><% end %>
+          <tr>
+            <td>
+              <% if a.status.unassigned? %>
+                <strong style="color:red">Unassigned</strong>
+              <% else %>
+                <% d = Driver.find(a.driver_id) %>
+                  <%= "#{d.first_name} #{d.middle_init} #{d.last_name}" %>
+                <% end %>
+              </td>
+              <td>
+                <div class="container">
+                  <div class="row">
+                    <%= Time.parse(a.datetime).strftime("%a %b %d, %Y") %>
+                  </div>
+                  <div class="row">
+                    <%= Time.parse(a.datetime).strftime("%I:%M %p") %>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="row">
+                  <%= a.locations[0].name %>
+                </div>
+                <div class="row">
+                  <%= a.locations[0].addr1 %>
+                </div>
+                <div class="row">
+                  <%= a.locations[0].addr2 %>
+                </div>
+                <div class="row">
+                  <%= "#{a.locations[0].city}, #{a.locations[0].state}, #{a.locations[0].zip}" %>
+                </div>
+              </td>
+              <td>
+                <div class="row">
+                  <%= a.locations[1].name %>
+                </div>
+                <div class="row">
+                  <%= a.locations[1].addr1 %>
+                </div>
+                <div class="row">
+                  <%= a.locations[1].addr2 %>
+                </div>
+                <div class="row">
+                  <%= "#{a.locations[1].city}, #{a.locations[1].state}, #{a.locations[1].zip}" %>
+                </div>
+              </td>
+              <td>
+                <div class="row pb-2">
+                  <%= button_to 'Details', appointment_path(a), method: :get, class: "btn btn-outline-dark" %>
+                </div>
+                <div class="row pb-2">
+                  <%= button_to 'Unassign from me', assign_driver_path(@driver), method: :post , data: { confirm: 'Are you sure? This will send an email to the Ride2Health administrators if the ride is less than 1 hour away.' }, params: {appointment_id: a.id}, class:
+                  "btn btn-outline-danger"%>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container table-container table-responsive pt-3">
+      <h1>Unassigned Upcoming Rides</h1>
+      <table class="table">
+        <thead class="table-yellow">
+          <tr>
+            <th class="text-dark">Driver</th>
+            <th class="text-dark">Pick-up Date & Time</th>
+            <th class="text-dark">Pick-up Location</th>
+            <th class="text-dark">Destination</th>
+            <th class="text-dark">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @appointments.each do |a| %>
+            <% if Time.parse(a.datetime).past? %>
+              <% next %><% end %>
+              <tr>
+                <td>
+                  <% if a.status.unassigned? %>
+                    <strong style="color:red">Unassigned</strong>
+                  <% else %>
+                    <% d = Driver.find(a.driver_id) %>
+                      <%= "#{d.first_name} #{d.middle_init} #{d.last_name}" %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <div class="container">
+                      <div class="row">
+                        <%= Time.parse(a.datetime).strftime("%a %b %d, %Y") %>
+                      </div>
+                      <div class="row">
+                        <%= Time.parse(a.datetime).strftime("%I:%M %p") %>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="row">
+                      <%= a.locations[0].name %>
+                    </div>
+                    <div class="row">
+                      <%= a.locations[0].addr1 %>
+                    </div>
+                    <div class="row">
+                      <%= a.locations[0].addr2 %>
+                    </div>
+                    <div class="row">
+                      <%= "#{a.locations[0].city}, #{a.locations[0].state}, #{a.locations[0].zip}" %>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="row">
+                      <%= a.locations[1].name %>
+                    </div>
+                    <div class="row">
+                      <%= a.locations[1].addr1 %>
+                    </div>
+                    <div class="row">
+                      <%= a.locations[1].addr2 %>
+                    </div>
+                    <div class="row">
+                      <%= "#{a.locations[1].city}, #{a.locations[1].state}, #{a.locations[1].zip}" %>
+                      <%= "#{a.id}" %>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="row pb-2">
+                      <%= button_to 'Details', appointment_path(a), method: :get, class: "btn btn-outline-dark" %>
+                    </div>
+                    <div class="row pb-2">
+                      <%= button_to 'Assign to me', assign_driver_path(@driver), method: :post, params: {appointment_id: a.id}, class: "btn btn-outline-dark"%>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>

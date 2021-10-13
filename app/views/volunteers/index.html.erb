@@ -1,0 +1,204 @@
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<% content_for :navbar do %>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'My Profile', user_path(current_user), method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Logout', logout_sessions_path, method: "delete", class:"btn btn-outline-light" %>
+  </li>
+<% end %>
+
+<!--=========================== DRIVERS ============================-->
+<h3 class="container pt-3">Drivers</h3>
+<div class="container table-container table-responsive">
+  <table class="table">
+    <thead class="table-blue">
+      <tr>
+        <th scope="col">Driver</th>
+        <th scope="col">Approved By</th>
+        <th scope="col">Trained?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @drivers.each do |driver| %>
+        <tr>
+          <td scope="row">
+            <div class="container">
+              <div class="row">
+                <%= "#{driver.first_name} #{driver.middle_init} #{driver.last_name}"%>
+              </div>
+              <div class="row">
+                <%= "#{driver.email} | #{driver.phone}"%>
+              </div>
+            </div>
+          </td>
+          <td>
+            <% if driver.sysadmin %>
+              <%= "#{driver.sysadmin.first_name} #{driver.sysadmin.last_name}" %>
+            <% else %>
+              No Administrator is associated with the Driver yet.
+            <% end %>
+          </td>
+          <td>
+            <% if driver.trained %>
+              <span style="color:green">True</span>
+            <% else %>
+              <span style="color:red">False</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<!--=========================== USERS ============================-->
+<h3 class="container">Users</h3>
+<div class="container table-container table-responsive">
+  <table class="table">
+    <thead class="table-red">
+      <tr>
+        <th class="text-dark">Patient</th>
+        <th class="text-dark">Approved By</th>
+        <th class="text-dark">Approved?</th>
+        <th class="text-dark">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @patients.each do |patient| %>
+        <tr>
+          <td>
+            <div class="container">
+              <div class="row">
+                <%= "#{patient.first_name} #{patient.middle_init} #{patient.last_name}"%>
+              </div>
+              <div class="row">
+                <%= "#{patient.email} | #{patient.phone}"%>
+              </div>
+            </div>
+          </td>
+          <td>
+            <% if patient.healthcareadmin %>
+              <div class="row">
+                <%= "#{patient.healthcareadmin.first_name} #{patient.healthcareadmin.last_name}" %>
+              </div>
+              <div class="row">
+                <%= "#{patient.healthcareadmin.host_org}" %>
+              </div>
+            <% else %>
+              No Healthcare Administrator is associated with this user yet.
+            <% end %>
+          </td>
+          <td>
+            <% if patient.approved %>
+              <span style="color:green">True</span>
+            <% else %>
+              <span style="color:red">False</span>
+            <% end %>
+          </td>
+          <td>
+            <div class="row pb-2">
+              <%= button_to "Reset Password", reset_user_path(patient.id), method: 'patch', data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
+            </div>
+            <div class="row pb-2">
+              <%= button_to 'Comments', patient_comments_path(patient.id), method: :get, class: "btn btn-outline-dark" %>
+            </div>
+            <div class="row">
+              <% if patient.approved %>
+                <%= button_to 'Create New Ride', {action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-outline-dark" %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<!--=========================== APPOINTMENTS ============================-->
+<h3 class="container">Appointments</h3>
+<div class="container table-container table-responsive">
+  <table class="table border-dark">
+    <thead class="table-yellow">
+      <tr>
+        <th class="text-dark">Driver</th>
+        <th class="text-dark">Pick-up Date & Time</th>
+        <th class="text-dark">Pick-up Location</th>
+        <th class="text-dark">Destination</th>
+        <th class="text-dark">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @appointments.each do |a| %>
+        <% if Time.parse(a.datetime).past? %>
+          <% next %><% end %>
+          <tr>
+            <td>
+              <% if a.status.unassigned? %>
+                <strong style="color:red">Unassigned</strong>
+              <% else %>
+                <% d = Driver.find(a.driver_id) %>
+                  <%= "#{d.first_name} #{d.middle_init} #{d.last_name}" %>
+                <% end %>
+              </td>
+              <td>
+                <div class="container">
+                  <div class="row">
+                    <%= Time.parse(a.datetime).strftime("%a %b %d, %Y") %>
+                  </div>
+                  <div class="row">
+                    <%= Time.parse(a.datetime).strftime("%I:%M %p") %>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="row">
+                  <%= a.locations[0].name %>
+                </div>
+                <div class="row">
+                  <%= a.locations[0].addr1 %>
+                </div>
+                <div class="row">
+                  <%= a.locations[0].addr2 %>
+                </div>
+                <div class="row">
+                  <%= "#{a.locations[0].city}, #{a.locations[0].state}, #{a.locations[0].zip}" %>
+                </div>
+              </td>
+              <td>
+                <div class="row">
+                  <%= a.locations[1].name %>
+                </div>
+                <div class="row">
+                  <%= a.locations[1].addr1 %>
+                </div>
+                <div class="row">
+                  <%= a.locations[1].addr2 %>
+                </div>
+                <div class="row">
+                  <%= "#{a.locations[1].city}, #{a.locations[1].state}, #{a.locations[1].zip}" %>
+                </div>
+              </td>
+              <td>
+                <div class="row pb-2">
+                  <%= button_to 'Details', appointment_path(a), method: :get, class: "btn btn-outline-dark" %>
+                </div>
+                <div class="row pb-2">
+                  <% if a.status.unassigned? %>
+                    <%= button_to "Assign to Driver", assign_appointment_path(a), method: :get, class: "btn btn-outline-dark" %>
+                  <% else %>
+                    <%= button_to 'Unassign', assign_driver_path(a.driver_id), method: :post , data: { confirm: 'Are you sure?' }, params: {appointment_id: a.id}, class: "btn btn-outline-danger"%>
+                  <% end %>
+                </div>
+                <div class="row pb-2">
+                  <%= button_to 'Cancel Ride', appointment_path(a), method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger"%>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>

@@ -1,200 +1,252 @@
-<h1 style="text-align: center; padding-top: 2%;">New Ride</h1>
-<br><br>
-<div style="text-align: center;">
-  <select name='restrict_loc' id='restrict_loc' onchange='toggleView()'>
-    <option value=0>(Choose Option)</option>
-    <option value=1>I need a drive to a medical location</option>
-    <option value=2>I need a drive home from a medical location</option>
-  </select>
-</div>
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'appointment', 'data-turbolinks-track': 'reload' %>
 
-<% if !@preset.empty? %>
-  <% @presets = [@preset.first.addr1,@preset.first.addr2,@preset.first.city,@preset.first.state,@preset.first.zip,@preset.first.name]  %>
-<% else %>
-  <% @presets = ['','','','','','']  %>
+<section class="p-4 container">
+  <div class="row p-lg-5 bg-dark rounded">
+    <h1 class="text-center">
+      New Appointment
+    </h1>
+    <div class="row py-4">
+      <div class="col-md text-center">
+        <select name='restrict_loc' id='restrict_loc'>
+          <option value="0">(Choose Option)</option>
+          <option value="1">I need a drive to a medical location</option>
+          <option value="2">I need a drive home from a medical location</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="show-dest-restricted" style="display:none">
+      <%= form_with(model: @appointment, local: true) do |form| %>
+      <% if @appointment.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <%= pluralize(@appointment.errors.count, "error! Please fix the following issue:") %>
+          <ul>
+            <% @appointment.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="container">
+        <div class="row pb-4 text-center">
+          <%= form.label :dt, "Date and Time of Pick-Up (NOT Appointment Time!)" %>
+          <div class="row">
+            <div class="form-group col-md">
+              <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
+              <%= form.hidden_field :patient_id, :value => params[:patient_id]%>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <h2>Pick-Up Location</h2>
+            <div class="row py-2">
+              <div class="form-group col-md">
+                <%= form.fields_for :locations, @appointment.locations.build do |f| %>
+                <%= f.label :addr1, "Address" %>
+                <%= f.text_field :addr1, value: @preset.nil? ? '' : @preset.addr1, class: "form-control checklist-to" %>
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="form-group col-md">
+                <%= f.label :addr2, "Address (cont.)" %>
+                <%= f.text_field :addr2, placeholder: "(Optional)", value: @preset.nil? ? '' : @preset.addr2, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="form-group col-md">
+                <%= f.label :city %>
+                <%= f.text_field :city, value: @preset.nil? ? '' : @preset.city, class: "form-control checklist-to" %>
+              </div>
+              <div class="form-group col-md">
+                <%= f.label :state %>
+                <%= f.text_field :state, value: @preset.nil? ? '' : @preset.state, class: "form-control state-form checklist-to" %>
+              </div>
+              <div class="form-group col-md">
+                <%= f.label :zip %>
+                <%= f.number_field :zip, value: @preset.nil? ? '' : @preset.zip, class: "form-control zip-form checklist-to" %>
+              </div>
+            </div>
+
+            <div class="row py-2">
+              <div class="form-group col-md">
+                <%= f.label :name, "Address Nickname" %>
+                <%= f.text_field :name, placeholder: "(Optional)", value: @preset.nil? ? '' : @preset.name, class: "form-control" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="col">
+          <h2>Destination Location</h2>
+          <%= form.fields_for :locations, @appointment.locations.build do |f| %>
+          <%= f.hidden_field :name, :value => 'tmp' %>
+        <% end %>
+        <div class="container table-container table-responsive">
+          <% if @locations.any? %>
+
+            <table class="table">
+              <thead class="table-yellow">
+                <th class="text-dark"></th>
+                <th class="text-dark">Name</th>
+                <th class="text-dark">Address</th>
+              </thead>
+              <tbody>
+                <% @locations.each do |l| %>
+                  <tr>
+                    <td><input type='radio' name='loc-select-to' class='loc-select-to' value=<%= l.id.to_s %>></td>
+                    <td class="text-light"><%= l.name %></td>
+                    <td>
+                      <div class="container">
+                        <div class="row text-light">
+                          <%= "#{l.addr1} #{l.addr2}" %>
+                        </div>
+                        <div class="row text-light">
+                          <%= "#{l.city} #{l.state} #{l.zip}" %>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <h2 class="text-center">
+              Looks like there are no approved locations yet!
+            </h2>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center py-1">
+    <%= form.submit 'Schedule!', class: "btn btn-outline-light btn-xlarge wonder-btn", disabled: true, id: 'submit-to' %>
+  </div>
 <% end %>
-
-<div id="show-dest-restricted" class='new-appt-whole' style='display: none;'>
-  <%= form_with(model: @appointment, local: true) do |form| %>
-    <% if @appointment.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
-
-        <ul>
-        <% @appointment.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-  	<h3>Enter Date and Time</h3>
-    <h5>(Time for Pick-Up, NOT Appointment Time)</h5>
-    <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
-    <%= form.hidden_field :patient_id, :value => params[:patient_id]%>
-    <%= form.hidden_field :status, :value => 0 %>
-    <%= form.hidden_field :est_time, :value => 60 %>
-
-    <div style="padding-top: 1%; padding-bottom: 1%;">
-      <div class="appt-loc" id='new-appt-1'>
-      	<h3>Pick-Up Location</h3>
-      	<%= form.fields_for :location, @appointment.location.build do |f| %>
-      		<%= f.label :addr1, "Address" %>
-      		<%= f.text_field :addr1, value: @presets[0] %>
-      		<%= f.label :addr2, "Address (cont.)" %>
-      		<%= f.text_field :addr2, placeholder: "(Optional)", value: @presets[1] %>
-      		<%= f.label :city %>
-      		<%= f.text_field :city, value: @presets[2] %>
-      		<%= f.label :state %>
-      		<%= f.text_field :state, value: @presets[3] %>
-      		<%= f.label :zip %>
-      		<% if !@preset.empty? %>
-      		  <%= f.number_field :zip, value: @presets[4] %>
-      		<% else %>
-      		  <%= f.number_field :zip %>
-      		<% end %>
-          <%= f.label :name, "Address Nickname" %>
-      		<%= f.text_field :name, placeholder: "(Optional)", value: @presets[5] %>
-      	<% end %>
-      </div>
-      <div class='appt-loc' id='new-appt-4'>
-        <h3>Destination Location</h3>
-        <%= form.fields_for :location, @appointment.location.build do |f| %>
-          <%= f.hidden_field :name, :value => 'tmp' %>
-        <% end %>
-        <table class='appt-loc-selector'>
-          <thead>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Select</th>
-          </thead>
-          <tbody>
-            <% @patient.preset.where({ home: 0 }).each do |location| %>
-              <tr>
-                <td><%= location.name %></td>
-                <td>
-                  <%= location.addr1 + ' ' + location.addr2 %>
-                  <br>
-                  <%= location.city + ' ' + location.state + ' ' + location.zip.to_s %>
-                </td>
-                <td><input type='radio' name='loc_select' onChange='submitOn(1)' value=<%= location.id.to_s %> />
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class='appt-sub-btn'>
-  	   <%= form.submit 'Schedule!', class: "btn btn-primary big-btn", disabled: true, id: 'appt-submit-1' %>
-    </div>
-    <% end %>
 </div>
 
-<div id="show-pickup-restricted" class='new-appt-whole' style='display: none;'>
-  <%= form_with(model: @appointment, local: true) do |form| %>
-    <% if @appointment.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
-
-        <ul>
-        <% @appointment.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
+<div id="show-pickup-restricted" style="display:none">
+<%= form_with(model: @appointment, local: true) do |form| %>
+<% if @appointment.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <%= pluralize(@appointment.errors.count, "error! Please fix the following issue:") %>
+    <ul>
+      <% @appointment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="container">
+  <div class="row pb-4 text-center">
+    <%= form.label :dt, "Date and Time of Pick-Up (NOT Appointment Time!)" %>
+    <div class="row">
+      <div class="form-group col-md">
+        <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
+        <%= form.hidden_field :patient_id, :value => params[:patient_id] %>
       </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h2>Pick-Up Location</h2>
+      <%= form.fields_for :locations, @appointment.locations.build do |f| %>
+      <%= f.hidden_field :name, :value => 'tmp' %>
     <% end %>
-
-  	<h3>Enter Date and Time</h3>
-    <h5>(Time for Pick-Up, NOT Appointment Time)</h5>
-    <%= form.datetime_select :dt, {ampm: true, minute_step: 15} %>
-    <%= form.hidden_field :patient_id, :value => params[:patient_id]%>
-    <%= form.hidden_field :status, :value => 0 %>
-    <%= form.hidden_field :est_time, :value => 60 %>
-
-    <div style="padding-top: 1%; padding-bottom: 1%;">
-      <div class='appt-loc' id='new-appt-4'>
-        <%= form.fields_for :location, @appointment.location.build do |f| %>
-          <%= f.hidden_field :name, :value => 'tmp' %>
-        <% end %>
-        <h3>Pick-Up Location</h3>
-        <table class='appt-loc-selector'>
-          <thead>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Select</th>
+    <div class="container table-container table-responsive">
+      <% if @locations.any? %>
+        <table class="table">
+          <thead class="table-yellow">
+            <th class="text-dark"></th>
+            <th class="text-dark">Name</th>
+            <th class="text-dark">Address</th>
           </thead>
           <tbody>
-            <% @patient.preset.where({ home: 0 }).each do |location| %>
+            <% @locations.each do |l| %>
               <tr>
-                <td><%= location.name %></td>
+                <td><input type='radio' name='loc-select-from' class='loc-select-from' value=<%= l.id.to_s %>></td>
+                <td class="text-light"><%= l.name %></td>
                 <td>
-                  <%= location.addr1 + ' ' + location.addr2 %>
-                  <br>
-                  <%= location.city + ' ' + location.state + ' ' + location.zip.to_s %>
+                  <div class="container text-light">
+                    <div class="row">
+                      <%= "#{l.addr1} #{l.addr2}" %>
+                    </div>
+                    <div class="row">
+                      <%= "#{l.city} #{l.state} #{l.zip}" %>
+                    </div>
+                  </div>
                 </td>
-                <td><input type='radio' name='loc_select' onchange="submitOn(0)" value=<%= location.id.to_s %>> </input>
               </tr>
             <% end %>
           </tbody>
         </table>
-      </div>
-      <div class="appt-loc" id='new-appt-1'>
-      	<h3>Destination Location</h3>
-      	<%= form.fields_for :location, @appointment.location.build do |f| %>
-      		<%= f.label :addr1, "Address" %>
-      		<%= f.text_field :addr1, value: @presets[0] %>
-      		<%= f.label :addr2, "Address (cont.)" %>
-      		<%= f.text_field :addr2, value: @presets[1] %>
-      		<%= f.label :city %>
-      		<%= f.text_field :city, value: @presets[2] %>
-      		<%= f.label :state %>
-      		<%= f.text_field :state, value: @presets[3] %>
-      		<%= f.label :zip %>
-      		<% if !@preset.empty? %>
-      		  <%= f.number_field :zip, value: @presets[4] %>
-      		<% else %>
-      		  <%= f.number_field :zip %>
-      		<% end %>
-          <%= f.label :name, "Address Nickname" %>
-      		<%= f.text_field :name, placeholder: "(Optional)", value: @presets[5] %>
-      	<% end %>
+      <% else %>
+        <h2 class="text-center">
+          Looks like there are no approved locations yet!
+        </h2>
+      <% end %>
+    </div>
+  </div>
+  <div class="col">
+    <h2>Destination Location</h2>
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= form.fields_for :locations, @appointment.locations.build do |f| %>
+        <%= f.label :addr1, "Address" %>
+        <%= f.text_field :addr1, value: @preset.nil? ? '' : @preset.addr1, class: "form-control checklist-from" %>
       </div>
     </div>
-    <div class='appt-sub-btn'>
-  	   <%= form.submit 'Schedule!', class: "btn btn-primary big-btn", disabled: true, id: 'appt-submit-0' %>
+
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= f.label :addr2, "Address (cont.)" %>
+        <%= f.text_field :addr2, placeholder: "(Optional)", value: @preset.nil? ? '' : @preset.addr2, class: "form-control" %>
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= f.label :city %>
+        <%= f.text_field :city, value: @preset.nil? ? '' : @preset.city, class: "form-control checklist-from" %>
+      </div>
+      <div class="form-group col-md">
+        <%= f.label :state %>
+        <%= f.text_field :state, value: @preset.nil? ? '' : @preset.state, class: "form-control state-form checklist-from" %>
+      </div>
+      <div class="form-group col-md">
+        <%= f.label :zip %>
+        <%= f.number_field :zip, value: @preset.nil? ? '' : @preset.zip, class: "form-control zip-form checklist-from" %>
+      </div>
+    </div>
+
+    <div class="row py-2">
+      <div class="form-group col-md">
+        <%= f.label :name, "Address Nickname" %>
+        <%= f.text_field :name, placeholder: "(Optional)", value: @preset.nil? ? '' : @preset.name, class: "form-control" %>
+      </div>
     </div>
   <% end %>
 </div>
+</div>
+</div>
+<div class="text-center py-1">
+<%= form.submit 'Schedule!', class: "btn btn-outline-light btn-xlarge wonder-btn", disabled: true, id: 'submit-from' %>
+</div>
+<% end %>
+</div>
 
-<center>
-  <br>
-   <%= button_to "Clear Form", { action: "new"}, :params => {:patient_id => params[:patient_id], :type => "clear"}, method: :get, class: "btn btn-secondary sm-btn" %>
+<center class="py-2">
+<div class="row">
+<div class="col">
+<%= button_to 'Back', request.headers['HTTP_REFERER'], method: 'get', class: "btn btn-outline-light btn-lg" %>
+</div>
+<div class="col">
+<%= button_to "Clear Form", { action: "new"}, :params => {:patient_id => params[:patient_id], :type => "clear"}, method: :get, class: "btn btn-light btn-lg" %>
+</div>
+</div>
 </center>
-
-<p style='padding-left: 20px;'><%= link_to 'Back', root_url, class: "btn btn-secondary back-btn" %></p>
-
-<script>
-  function toggleView(){
-    var sel = document.getElementById('restrict_loc').value;
-      if (sel == 1){
-        document.getElementById('show-dest-restricted').style.display = 'block';
-        document.getElementById('show-pickup-restricted').style.display = 'none';
-      }
-      else if (sel == 2){
-        document.getElementById('show-dest-restricted').style.display = 'none';
-        document.getElementById('show-pickup-restricted').style.display = 'block';
-      }
-      else {
-        document.getElementById('show-dest-restricted').style.display = 'none';
-        document.getElementById('show-pickup-restricted').style.display = 'none';
-      }
-  }
-  function submitOn(num){
-    if (num === 0){
-      document.getElementById('appt-submit-0').disabled = false;
-    }
-    else{
-      document.getElementById('appt-submit-1').disabled = false;
-    }
-  }
-</script>
+</div>
+</section>

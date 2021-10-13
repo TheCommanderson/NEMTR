@@ -1,8 +1,24 @@
-# Deployment
-NEMTR deployment is still under construction.
+# README
 
-## Deployment Notes
-* The whenever gem interacts with the crontab on the server running NEMTR.  When deployed, the command `whenever --update-crontab` must be run to update the cronjobs with the listed jobs.  This ensures that rollover for schedules and database cleanup tasks run correctly.
-* The database is linked through an API call to Mongo Atlas found in the config file for the application.  This conveniently also allows for the database to be interacted with directly through the Mongo Atlas portal should the database ever break.
-* The appplication is linked to Google API through an specific API key, and should the API calls ever need to change a new key will likely need to be generated and implemented.
-* Datetimes are being stored as local times (CT)
+This README would normally document whatever steps are necessary to get the
+application up and running.
+
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...

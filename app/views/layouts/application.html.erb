@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ride 2 Health</title>
+    <title>Ride2health</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+Rails.application.credentials.gmap_geocode_api_kep , defer: true %>
-    <%= yield(:head_tags) %>
+    <%= stylesheet_pack_tag 'styles/application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= yield :head %>
   </head>
+
   <body>
-    <%= yield %>
-  </body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <%= link_to root_url, class: "navbar-brand" do %>
+        <%= image_pack_tag "media/images/logo.png", class: "img-responsive img-logo" %>
+      <% end %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item mx-2 mt-1">
+            <%= button_to 'Home', root_url, method: 'get', class:"btn btn-outline-light" %>
+          </li>
+          <%= yield :navbar %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container text-center centered-card">
+    <% flash.each do |k, v| %>
+      <%= content_tag :div, v, class: "alert alert-#{k}" %>
+    <% end %>
+  </div>
+  <%= yield %>
+</body>
 </html>

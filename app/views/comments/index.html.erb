@@ -1,0 +1,41 @@
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<div class="container table-container table-responsive pt-3">
+  <h3>
+    Comments
+  </h3>
+  <table class="table">
+    <thead class="table-blue">
+      <tr>
+        <th>Comment</th>
+        <th>Author</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @comments.each do |c| %>
+        <tr>
+          <td>
+            <div class="row">
+              <div class="col">
+                <%= "#{c.text}"%>
+              </div>
+            </td>
+            <td>
+              <div class="col">
+                <% author = User.find(c.author) %>
+                  <%= "#{author.first_name} #{author.middle_init} #{author.last_name}" %>
+                </div>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center row">
+    <%= button_to 'New Comment', new_patient_comment_path(params[:patient_id]), method: :get, class: "btn btn-outline-dark btn-xlarge wonder-btn" %>
+  </div>
+  <div class="text-center py-3">
+    <%= button_to 'Back', request.headers['HTTP_REFERER'], method: 'get', class: "btn btn-outline-dark btn-lg" %>
+  </div>

@@ -1,94 +1,54 @@
-<p style='padding-top: 30px;'>
-<%= form_with(model: @schedule, local: true, url: driver_schedule_path) do |form| %>
-  <table class="schedule" style="width: 70%;">
+<%= stylesheet_pack_tag 'styles/user', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<% content_for :navbar do %>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'My Schedule', driver_schedules_path(current_user), method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'My Profile', driver_path(current_user), method: "get", class:"btn btn-outline-light" %>
+  </li>
+  <li class="nav-item mx-2 mt-1">
+    <%= button_to 'Logout', logout_sessions_path, method: "delete", class:"btn btn-outline-light" %>
+  </li>
+<% end %>
+<div class="container table-container table-responsive">
+  <h3>
+    <%= "Edit Schedule for the Week of #{@days['Monday']}" %>
+  </h3>
+  <%= form_with(model: [:driver, @schedule], local: true) do |form| %>
+  <table class="table table-bordered border-dark">
+    <thead class="table-yellow">
       <tr>
-          <th>
-          Monday,
-          <br><%= @days_of_week[0] %>
-          </th>
-          <th>Tuesday,
-          <br><%= @days_of_week[1] %>
-          </th>
-          <th>Wednesday,
-          <br><%= @days_of_week[2] %>
-          </th>
-          <th>Thursday,
-          <br><%= @days_of_week[3] %>
-          </th>
-          <th>Friday,
-          <br><%= @days_of_week[4] %>
-          </th>
-          <th>Saturday,
-          <br><%= @days_of_week[5] %>
-          </th>
-          <th>Sunday,
-          <br><%= @days_of_week[6] %>
-          </th>
+        <th class="text-dark">Day</th>
+        <th class="text-dark">Edit Start Time</th>
+        <th class="text-dark">Edit End Time</th>
       </tr>
-      <tr>
-          <td id='M' style='visibility: hidden;'>
-          <%= form.time_select :Monday1, {minute_step: 15, ampm: true, default: {hour: @default_vals['Monday'][0], min: @default_vals['Monday'][1]}} %>
-          <br>to<br>
-          <%= form.time_select :Monday2, {minute_step: 15, ampm: true, default: {hour: @default_vals['Monday'][2], min: @default_vals['Monday'][3]}} %>
+    </thead>
 
-          <td id='T' style='visibility: hidden;'>
-          <%= form.time_select :Tuesday1, {minute_step: 15, ampm: true, default: {hour: @default_vals['Tuesday'][0], min: @default_vals['Tuesday'][1]}} %>
-          <br>to<br>
-          <%= form.time_select :Tuesday2, {minute_step: 15, ampm: true, default: {hour: @default_vals['Tuesday'][2], min: @default_vals['Tuesday'][3]}} %>
-
-          <td id='W' style='visibility: hidden;'>
-          <%= form.time_select :Wednesday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Wednesday'][0], min: @default_vals['Wednesday'][1]}} %>
-          <br>to<br>
-          <%= form.time_select :Wednesday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Wednesday'][2], min: @default_vals['Wednesday'][3]}} %>
-
-          <td id='R' style='visibility: hidden;'>
-          <%= form.time_select :Thursday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Thursday'][0], min: @default_vals['Thursday'][1]}} %>
-          <br>to<br>
-          <%= form.time_select :Thursday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Thursday'][2], min: @default_vals['Thursday'][3]}} %>
-
-          <td id='F' style='visibility: hidden;'>
-          <%= form.time_select :Friday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Friday'][0], min: @default_vals['Friday'][1]}} %>
-          <br>to<br>
-          <%= form.time_select :Friday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Friday'][2], min: @default_vals['Friday'][3]}} %>
-
-          <td id='S' style='visibility: hidden;'>
-          <%= form.time_select :Saturday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Saturday'][0], min: @default_vals['Saturday'][1]}} %>
-          <br>to<br>
-          <%= form.time_select :Saturday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Saturday'][2], min: @default_vals['Saturday'][3]}} %>
-
-          <td id='Su' style='visibility: hidden;'>
-          <%= form.time_select :Sunday1, {minute_step: 15, ampm:true, default: {hour: @default_vals['Sunday'][0], min: @default_vals['Sunday'][1]}} %>
-          <br>to<br>
-          <%= form.time_select :Sunday2, {minute_step: 15, ampm:true, default: {hour: @default_vals['Sunday'][2], min: @default_vals['Sunday'][3]}} %>
-      </tr>
-      <tr>
-          <td>Edit This Day <br> <input type="checkbox" id="check-M" onclick="toggleEdit('M')"/>
-          <td>Edit This Day <br> <input type="checkbox" id="check-T" onclick="toggleEdit('T')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-W" onclick="toggleEdit('W')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-R" onclick="toggleEdit('R')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-F" onclick="toggleEdit('F')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-S" onclick="toggleEdit('S')">
-          <td>Edit This Day <br> <input type="checkbox" id="check-Su" onclick="toggleEdit('Su')">
-
-      </tr>
+    <tbody>
+      <% @schedule.attributes.reject{|k, v| ["current", "_id"].include? k }.each do |k, v| %>
+        <tr>
+          <td>
+            <%= "#{@days[k]}" %>
+          </td>
+          <td>
+            Starting Time:
+            <%= form.time_select "#{k}1", {minute_step: 15, ampm: true, default:{hour: v[0..1], minute: v[2..3]}} %>
+          </td>
+          <td>
+            Ending Time:
+            <%= form.time_select "#{k}2", {minute_step: 15, ampm: true, default:{hour: v[5..6], minute: v[7..8]}} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
-
-  <div class="actions" style="padding-top: 20px;">
-    <%= form.submit "Submit Changes", class: "btn btn-primary big-btn" %>
+  <%= hidden_field_tag(:d_id, params[:driver_id]) %>
+  <div class="text-center py-4">
+    <%= form.submit "Submit",class:"btn btn-outline-dark btn-lg" %>
   </div>
 <% end %>
-
-
-<p style='padding-left: 20px; float: left;'><%= button_to 'Back', driver_schedules_url(params[:driver_id]), :method => 'get', class: "btn btn-secondary back-btn" %></p>
-
-<script>
-  function toggleEdit(_id){
-    var cell = document.getElementById(_id);
-    if(cell.style.visibility == 'visible'){
-      cell.style.visibility = 'hidden'
-    }
-    else{
-      cell.style.visibility = 'visible'
-    }
-  }
-</script>
+</div>
+<div class="text-center">
+<%= button_to 'Back', driver_schedules_path(current_user), method: "get", class:"btn btn-outline-dark btn-lg" %>
+</div>
