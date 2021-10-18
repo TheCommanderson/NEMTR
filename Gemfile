@@ -44,6 +44,7 @@ gem 'geocoder', '~> 1.6'
 gem 'jquery-rails', '~> 4.4'
 # Utilities
 gem 'hashie', '~> 4.1'
+gem 'passenger'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
