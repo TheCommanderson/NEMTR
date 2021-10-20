@@ -28,6 +28,16 @@
           <%= yield :navbar %>
         </ul>
       </div>
+      <% if logged_in? %>
+        <div class="px-3">
+          <div class="row">
+            <h2><%= "#{current_user.full_name}" %></h2>
+          </div>
+          <div class="row">
+            <p><%= "#{current_user.user_type}" %></p>
+          </div>
+        </div>
+      <% end %>
     </div>
   </nav>
   <div class="container text-center centered-card">

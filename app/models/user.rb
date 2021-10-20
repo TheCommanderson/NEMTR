@@ -20,4 +20,18 @@ class User
   def full_name
     "#{first_name} #{middle_init} #{last_name}"
   end
+
+  def user_type
+    if _type == 'Healthcareadmin'
+      'Healthcare Admin'
+    elsif _type == 'Sysadmin'
+      'System Admin'
+    elsif _type == 'Patient'
+      'User'
+    elsif _type == 'Volunteer'
+      'Dispatcher'
+    else
+      _type
+    end
+  end
 end

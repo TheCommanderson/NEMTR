@@ -214,7 +214,28 @@
             <%= button_to "Reset Password", password_user_path(patient.id), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
           </div>
           <div class="row pb-2">
+            <div class="col">
+              <% if patient.approved %>
+                <%= button_to "Unapprove", approve_patient_path(patient.id), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+              <% else %>
+                <%= button_to "Approve", approve_patient_path(patient.id), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
+              <% end %>
+            </div>
+            <div class="col">
+              <% if patient.approved %>
+                <%= button_to 'Approved Locations', patient_locations_path(patient.id), method: :get,class: "btn btn-outline-dark" %>
+              <% end %>
+            </div>
+          </div>
+          <div class="row pb-2">
             <%= button_to 'Comments', patient_comments_path(patient.id), method: :get, class: "btn btn-outline-dark" %>
+          </div>
+          <div class="row pb-2">
+            <div class="col">
+              <% if patient.approved %>
+                <%= button_to 'Appointments', appointments_patient_path(patient.id), method: :get,class: "btn btn-outline-dark" %>
+              <% end %>
+            </div>
           </div>
           <div class="row pb-2">
             <% if patient.approved %>
