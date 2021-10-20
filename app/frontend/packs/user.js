@@ -1,1 +1,1 @@
-import('./styles/user.scss')
+import('styles/user.scss')
