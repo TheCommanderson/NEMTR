@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :drivers do
     resources :schedules, only: %i[index show edit update]
     member do
+      get 'waiting'
       post 'approve'
       post 'assign'
     end
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
     collection do
       get 'about'
       get 'involved'
+      get 'waiting'
       delete 'logout'
     end
   end
