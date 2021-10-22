@@ -50,6 +50,8 @@
     </div>
     <% if params.has_key?(:is_home) %>
       <%= form.hidden_field :home, value: true %>
+    <% else %>
+      <%= form.hidden_field :preset, value: false %>
     <% end %>
     <div class="text-center py-4">
       <%= form.submit "Save Address", class: "btn btn-outline-light" %>
