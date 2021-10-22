@@ -101,6 +101,8 @@ class DriversController < UsersController
     redirect_to root_url
   end
 
+  def waiting; end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

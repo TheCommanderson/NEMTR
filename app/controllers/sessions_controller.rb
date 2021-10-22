@@ -42,6 +42,8 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
+  def waiting; end
+
   private
 
   def redirect_to_home
