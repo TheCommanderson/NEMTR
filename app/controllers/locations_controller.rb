@@ -46,7 +46,7 @@ class LocationsController < ApplicationController
     respond_to do |format|
       if @location.save
         flash[:info] = 'Location was successfully saved!'
-        format.html { redirect_to root_url }
+        format.html { redirect_to patient_locations_path(patient) }
         format.json { render :show, status: :created, location: @location }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -82,9 +82,15 @@ class LocationsController < ApplicationController
 
   # DELETE /locations/1 or /locations/1.json
   def destroy
+    patient = Patient.find(params[:patient_id])
+    @location = if params[:patient_id]
+                  patient.locations.find(params[:id])
+                else
+                  Location.find(params[:id])
+                end
     @location.destroy
     respond_to do |format|
-      format.html { redirect_to locations_url, notice: 'location was successfully destroyed.' }
+      format.html { redirect_to request.headers['HTTP_REFERER'], notice: 'location was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

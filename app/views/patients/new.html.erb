@@ -59,10 +59,10 @@
           </small>
         </div>
 
-        <p>I am a patient at</p>
-        <div class="row">
+        <div class="row text-center">
           <div class="form-group col-md">
-            <%= form.text_field :host_org, class: "form-control", placeholder: "XYZ Healthcare" %>
+            <%= form.label 'I am a patient at ' %>
+            <%= form.select :host_org, @host_orgs, class: "form-control" %>
           </div>
         </div>
         <div class="text-center py-4">

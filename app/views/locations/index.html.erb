@@ -14,6 +14,7 @@
         <tr>
           <th class="text-dark">Name</th>
           <th class="text-dark">Address</th>
+          <th class="text-dark">Actions</th>
         </tr>
       </thead>
 
@@ -38,6 +39,9 @@
                 <%= "#{l.city}, #{l.state}, #{l.zip}" %>
               </div>
             </td>
+            <td>
+              <%= button_to 'Remove', patient_location_path(@patient, l), method: :delete, class: "btn btn-outline-danger" %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -47,5 +51,5 @@
     <%= button_to 'Add Location', new_patient_location_path(@patient), method: 'get', class: "btn btn-outline-dark btn-lg" %>
   </div>
   <div class="text-center pb-3">
-    <%= button_to 'Back', request.headers['HTTP_REFERER'], method: 'get', class: "btn btn-outline-dark btn-lg" %>
+    <%= button_to 'Back', root_url, method: 'get', class: "btn btn-outline-dark btn-lg" %>
   </div>
