@@ -22,6 +22,7 @@ class PatientsController < UsersController
   # GET /patients/new
   def new
     @patient = Patient.new
+    @host_orgs = Sysadmin.all.map(&:host_orgs).reduce([], :concat)
   end
 
   # GET /patients/1/edit

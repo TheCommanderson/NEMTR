@@ -2,24 +2,10 @@
 
 class SessionsController < ApplicationController
   skip_before_action :authorized
+  before_action :redirect_to_home, only: %i[index new create about involved]
 
   # GET /sessions.json
-  def index
-    if logged_in?
-      case session[:login_type]
-      when 'D'
-        redirect_to drivers_url
-      when 'H'
-        redirect_to healthcareadmins_url
-      when 'P'
-        redirect_to patients_url
-      when 'S'
-        redirect_to sysadmins_url
-      when 'V'
-        redirect_to volunteers_url
-      end
-    end
-  end
+  def index; end
 
   # GET /sessions/new
   def new
@@ -54,5 +40,24 @@ class SessionsController < ApplicationController
     session.delete(:user_id)
     flash[:info] = 'Successfully logged out.'
     redirect_to root_url
+  end
+
+  private
+
+  def redirect_to_home
+    if logged_in?
+      case session[:login_type]
+      when 'D'
+        redirect_to drivers_url
+      when 'H'
+        redirect_to healthcareadmins_url
+      when 'P'
+        redirect_to patients_url
+      when 'S'
+        redirect_to sysadmins_url
+      when 'V'
+        redirect_to volunteers_url
+      end
+    end
   end
 end

@@ -68,7 +68,7 @@
               </div>
               <div class="form-group col-md">
                 <%= f.label :zip %>
-                <%= f.number_field :zip, value: @preset.nil? ? '' : @preset.zip, class: "form-control zip-form checklist-to" %>
+                <%= f.text_field :zip, value: @preset.nil? ? '' : @preset.zip, class: "form-control zip-form checklist-to" %>
               </div>
             </div>
 
@@ -218,7 +218,7 @@
       </div>
       <div class="form-group col-md">
         <%= f.label :zip %>
-        <%= f.number_field :zip, value: @preset.nil? ? '' : @preset.zip, class: "form-control zip-form checklist-from" %>
+        <%= f.text_field :zip, value: @preset.nil? ? '' : @preset.zip, class: "form-control zip-form checklist-from" %>
       </div>
     </div>
 

@@ -37,3 +37,8 @@
     </tbody>
   </table>
 </div>
+<div class="row py-3 text-center">
+  <div class="col-md">
+    <%= button_to 'Back', request.headers['HTTP_REFERER'], method: 'get', class: "btn btn-outline-dark btn-lg" %>
+  </div>
+</div>

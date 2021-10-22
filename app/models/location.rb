@@ -11,7 +11,7 @@ class Location
   field :addr2, type: String
   field :city, type: String
   field :state, type: String
-  field :zip, type: Integer
+  field :zip, type: String
   # Information retrieved by Geocoder
   field :address, type: String
   field :coordinates, type: Array

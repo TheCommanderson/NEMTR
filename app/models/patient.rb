@@ -12,7 +12,7 @@ class Patient < User
   # Each patient can save preset locations that they often use for future
   # reference
   embeds_many :locations, cascade_callbacks: true
-  accepts_nested_attributes_for :locations
+  accepts_nested_attributes_for :locations, allow_destroy: true
 
   # Belongs
   belongs_to :healthcareadmin, optional: true
