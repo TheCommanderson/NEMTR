@@ -73,4 +73,28 @@ class Driver < User
     schedules.build(first_schedule)
     schedules.build(second_schedule)
   end
+
+  # returns true if conflict exists, else returns false
+  def self.has_conflict(appt)
+    @driver_apps = Appointment.where(driver_id: id)
+    @driver_apps.each do |conflict|
+      # Check if the date is the same
+      appt_date = DateTime.strptime(appt.datetime, dt_format).strftime('%d%m%Y')
+      conflict_date = DateTime.strptime(conflict.datetime, dt_format).strftime('%d%m%Y')
+      next if appt_date != conflict_date
+
+      # Check if there are conflicts with other appointments
+      conflict_start_time = DateTime.strptime(conflict.datetime, dt_format).to_time.strftime('%H%M').to_i
+      conflict_end_time = (DateTime.strptime(conflict.datetime, dt_format).to_time + conflict.est_time.minutes).strftime('%H%M').to_i
+      if sign(start_time - conflict_start_time) != sign(start_time - conflict_end_time) # appt starts in the middle of conlficting appt
+        return true
+      elsif sign(end_time - conflict_start_time) != sign(end_time - conflict_end_time) # appt ends in the middle of conflicting appt
+        return true
+      elsif start_time <= conflict_start_time && end_time >= conflict_end_time # conflict is contained completely inside appt
+        return true
+        # NOTE: if appt is contained completely in the conflict then it will execute the first if statement
+      end
+    end
+    false
+  end
 end

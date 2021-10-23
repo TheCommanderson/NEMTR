@@ -27,14 +27,82 @@ class Appointment
   has_many :comments
 
   # Callbacks
-  # before_save :get_est_time
-  # before_update :get_est_time
+  before_save :get_est_time
   after_update :send_updates
 
   def self.clean_past_appointments
     Appointment.each do |appt|
       appt.destroy if Time.parse(appt.datetime).past?
     end
+  end
+
+  def self.check_appt_update(appt)
+    if appt.status == 0
+      logger.info "#{appt.id} is now unassigned, re-running matching algorithm."
+      MatchingEngine.matching_alg
+    else
+      driver = appt.driver_id
+      atts = { status: 0, driver_id: nil }
+      appt.update_attributes(atts)
+
+      cur = (getMonday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10] == getMonday(DateTime.now).to_s[0..10])
+      drivers = valid_drivers(appt, cur)
+      if drivers.include? driver
+        atts = { status: 1, driver_id: driver }
+      else
+        MatchingEngine.matching_alg
+      end
+    end
+  end
+
+  def self.valid_drivers(cur)
+    logger.info "checking valid drivers for #{id}"
+    appt_start_time = DateTime.strptime(datetime, dt_format).to_time.strftime('%H%M').to_i
+    appt_end_time = (DateTime.strptime(datetime, dt_format).to_time + est_time.minutes).strftime('%H%M').to_i
+    logger.info "appt start time: #{appt_start_time}, end time: #{appt_end_time}"
+    drivers = []
+
+    Driver.where(trained: true).each do |driver|
+      # Is this appointment on the driver blacklist?
+      blacklisted = false
+      driver.blacklist.each do |bl_appt|
+        if bl_appt == appt._id
+          blacklisted = true
+          break
+        end
+      end
+      if blacklisted
+        logger.info "#{driver.id} is blacklisted"
+        next
+      end
+
+      # Checking if the appointment falls within the range of thier schedule
+      driver_today_sch = driver.schedule.where(current: cur).first[DateTime.strptime(appt.datetime, dt_format).to_time.strftime('%A')]
+      driver_today_time_start = driver_today_sch[0..3].to_i
+      driver_today_time_end = driver_today_sch[5..8].to_i
+
+      if driver_today_time_start == driver_today_time_end
+        logger.info "#{driver.id} is not on call on this day."
+        next
+      end
+      if appt_start_time < driver_today_time_start
+        logger.info "Ride starts before #{driver.id} starts today."
+        next
+      elsif appt_end_time > driver_today_time_end
+        logger.info "ride ends after #{driver.id} ends today."
+        next
+      end
+
+      # Check if the driver has any conflicts with appointments
+      if driver.has_conflict(appt)
+        logger.info "#{driver.id} has a prior conflict."
+        next
+      end
+
+      logger.info "#{driver.id} is eligible for #{appt.id}"
+      drivers.push(driver)
+    end
+    drivers
   end
 
   # Calls the Google Maps API to retreive the estimated time for this ride.

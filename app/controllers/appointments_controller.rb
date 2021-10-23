@@ -78,7 +78,7 @@ class AppointmentsController < ApplicationController
   end
 
   def assign
-    @drivers = Driver.where(trained: true).select { |d| has_conflict(@appointment, d) }
+    @drivers = Driver.where(trained: true).select { |d| d.has_conflict(@appointment) }
   end
 
   private
