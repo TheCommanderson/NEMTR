@@ -40,6 +40,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
+        MatchingEngine.matching_alg
         # AdminMailer.with(patient: @patient).new_patient_email.deliver
         flash[:info] = 'Appointment was successfully booked!'
         format.html { redirect_to root_url }
@@ -56,6 +57,7 @@ class AppointmentsController < ApplicationController
     appt_params['datetime'] = "#{params[:appointment]['dt(1i)']}-#{params[:appointment]['dt(2i)']}-#{params[:appointment]['dt(3i)']} #{params[:appointment]['dt(4i)']}:#{params[:appointment]['dt(5i)']}"
     respond_to do |format|
       if @appointment.update(appt_params)
+        @appointment.check_appt_update
         flash[:info] = 'Successfully changed the date and time of appointment.'
         format.html { redirect_to @appointment }
         format.json { render :show, status: :ok, location: @appointment }

@@ -70,6 +70,7 @@ class SchedulesController < ApplicationController
         else
           flash[:info] = 'Schedule updated.'
         end
+        MatchingEngine.matching_alg
         format.html { redirect_to driver_schedules_path(current_user) }
         format.json { render :show, status: :ok, location: @schedule }
       else

@@ -53,6 +53,7 @@ class Driver < User
     end
   end
 
+  # helper to initialize new drvier schedules.
   def create_schedule
     first_schedule = { Monday: '0000 0000',
                        Tuesday: '0000 0000',
@@ -75,7 +76,7 @@ class Driver < User
   end
 
   # returns true if conflict exists, else returns false
-  def self.has_conflict(appt)
+  def has_conflict(appt)
     @driver_apps = Appointment.where(driver_id: id)
     @driver_apps.each do |conflict|
       # Check if the date is the same
