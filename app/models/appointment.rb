@@ -36,26 +36,23 @@ class Appointment
     end
   end
 
-  def self.check_appt_update(appt)
-    if appt.status == 0
-      logger.info "#{appt.id} is now unassigned, re-running matching algorithm."
+  def check_appt_update
+    if status == 0
+      logger.info "#{id} is now unassigned, re-running matching algorithm."
       MatchingEngine.matching_alg
     else
-      driver = appt.driver_id
-      atts = { status: 0, driver_id: nil }
-      appt.update_attributes(atts)
-
-      cur = (getMonday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10] == getMonday(DateTime.now).to_s[0..10])
-      drivers = valid_drivers(appt, cur)
-      if drivers.include? driver
-        atts = { status: 1, driver_id: driver }
-      else
+      cur = (getMonday(DateTime.strptime(datetime, dt_format)).to_s[0..10] == getMonday(DateTime.now).to_s[0..10])
+      drivers = valid_drivers(cur)
+      unless drivers.include? driver_id
+        atts = { status: 0, driver_id: nil }
+        update_attributes(atts)
+        logger.info "#{driver_id} now has a conflict, re-runnning matching algorithm"
         MatchingEngine.matching_alg
       end
     end
   end
 
-  def self.valid_drivers(cur)
+  def valid_drivers(cur)
     logger.info "checking valid drivers for #{id}"
     appt_start_time = DateTime.strptime(datetime, dt_format).to_time.strftime('%H%M').to_i
     appt_end_time = (DateTime.strptime(datetime, dt_format).to_time + est_time.minutes).strftime('%H%M').to_i
