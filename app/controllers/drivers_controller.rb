@@ -105,6 +105,20 @@ class DriversController < UsersController
 
   private
 
+  def is_on_call
+    cur_time = Time.now
+    day_of_week = cur_time.strftime('%A')
+    cur_time_int = cur_time.strftime('%H%M').to_i
+    driver = current_user
+    driver_today_sch = driver.schedule.where(current: true).first[day_of_week]
+    driver_today_time_start = driver_today_sch[0..3].to_i
+    driver_today_time_end = driver_today_sch[5..8].to_i
+    return false if driver_today_time_start == driver_today_time_end
+    return false if cur_time_int < driver_today_time_start || cur_time_int > driver_today_time_end
+
+    true
+ end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_driver
     @driver = Driver.find(params[:id])

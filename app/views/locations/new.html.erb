@@ -51,11 +51,14 @@
     <% if params.has_key?(:is_home) %>
       <%= form.hidden_field :home, value: true %>
     <% else %>
-      <%= form.hidden_field :preset, value: false %>
+      <%= form.hidden_field :preset, value: true %>
     <% end %>
     <div class="text-center py-4">
       <%= form.submit "Save Address", class: "btn btn-outline-light" %>
     </div>
   <% end %>
+  <div class="text-center pb-3">
+    <%= button_to 'Back', request.headers['HTTP_REFERER'], method: 'get', class: "btn btn-light" %>
+  </div>
 </div>
 </section>
