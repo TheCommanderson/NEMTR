@@ -108,9 +108,14 @@ class Appointment
       #{locations[1].coordinates[1]}&key=\
       #{Rails.application.credentials.google_maps_key}"
     response = HTTParty.get(url).parsed_response
-    est_time_min = response['routes'].first['legs'].first['duration']['value'] / 60
-    buffer_time = est_time_min * .1
-    self.est_time = (est_time_min + buffer_time).round
+    if response.nil?
+      self.est_time = 0
+      logger.warn "Google Maps API returned nothing for est time.  Request URL: #{url}"
+    else
+      est_time_min = response['routes'].first['legs'].first['duration']['value'] / 60
+      buffer_time = est_time_min * 0.1
+      self.est_time = (est_time_min + buffer_time).round
+    end
   end
 
   # Sends updates via email (and if enabled also sends text message) to the
