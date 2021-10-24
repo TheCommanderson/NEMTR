@@ -48,7 +48,7 @@ class DriversController < UsersController
   def update
     respond_to do |format|
       if @driver.update(driver_params)
-        flash[:info] = 'Car info was successfully updated!'
+        flash[:info] = 'Info was successfully updated!'
         format.html { redirect_to @driver }
         format.json { render :show, status: :ok, location: @driver }
       else

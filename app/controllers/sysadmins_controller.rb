@@ -47,7 +47,8 @@ class SysadminsController < UsersController
   def update
     respond_to do |format|
       if @sysadmin.update(sysadmin_params)
-        format.html { redirect_to @sysadmin, notice: 'sysadmin was successfully updated.' }
+        flash[:info] = 'Info was successfully updated!'
+        format.html { redirect_to @sysadmin }
         format.json { render :show, status: :ok, location: @sysadmin }
       else
         format.html { render :edit, status: :unprocessable_entity }

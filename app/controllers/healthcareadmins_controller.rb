@@ -44,6 +44,7 @@ class HealthcareadminsController < UsersController
   def update
     respond_to do |format|
       if @healthcareadmin.update(healthcareadmin_params)
+        flash[:info] = 'Info was successfully updated!'
         format.html { redirect_to @healthcareadmin }
         format.json { render :show, status: :ok, location: @healthcareadmin }
       else

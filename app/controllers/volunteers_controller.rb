@@ -45,7 +45,8 @@ class VolunteersController < UsersController
   def update
     respond_to do |format|
       if @volunteer.update(volunteer_params)
-        format.html { redirect_to @volunteer, notice: 'volunteer was successfully updated.' }
+        flash[:info] = 'Info was successfully updated!'
+        format.html { redirect_to @volunteer }
         format.json { render :show, status: :ok, location: @volunteer }
       else
         format.html { render :edit, status: :unprocessable_entity }
