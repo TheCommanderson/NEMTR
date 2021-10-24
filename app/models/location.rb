@@ -38,7 +38,7 @@ class Location
     logger.debug "The address is: #{addr}"
     logger.debug "The result is: #{result}"
     if result.first.nil?
-      logger.warn('Geocoder returned nothing')
+      logger.warn "Geocoder returned nothing for address: #{addr}"
     else
       self.coordinates = result.first.coordinates
       self.address = result.first.address
