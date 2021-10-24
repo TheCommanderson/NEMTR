@@ -40,7 +40,7 @@ class MatchingEngine
       # Assign the driver
       new_atts = { status: 1, driver_id: driver[:id] }
       appt.update_attributes(new_atts)
-      logger.info "#{appt.id} assigned to #{driver.id}""
+      logger.info "#{appt.id} assigned to #{driver.id}"
     end
   end
 end

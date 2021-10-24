@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/faker-ruby/faker.git
+  revision: e58b15f5e9e0044b43cd2229bb46877aa64c104c
+  branch: master
+  specs:
+    faker (2.19.0)
+      i18n (>= 1.6, < 2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -85,6 +93,11 @@ GEM
     enumerize (2.4.0)
       activesupport (>= 3.2)
     erubi (1.10.0)
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faraday (1.7.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -298,6 +311,8 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   enumerize (~> 2.4.0)
+  factory_bot_rails
+  faker!
   geocoder (~> 1.6)
   google-api-client
   hashie (~> 4.1)
