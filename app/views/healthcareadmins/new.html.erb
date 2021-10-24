@@ -71,10 +71,10 @@
             Don't share your password with anyone!
           </small>
         </div>
-        <p>I am a representative of</p>
-        <div class="row">
+        <div class="row text-center">
           <div class="form-group col-md">
-            <%= form.text_field :host_org, class: "form-control", placeholder: "XYZ Healthcare" %>
+            <%= form.label 'I am a representative of' %>
+            <%= form.select :host_org, all_host_orgs, class: "form-control" %>
           </div>
         </div>
         <div class="text-center py-4">
