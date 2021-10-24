@@ -53,28 +53,6 @@ class Driver < User
     end
   end
 
-  # helper to initialize new drvier schedules.
-  def create_schedule
-    first_schedule = { Monday: '0000 0000',
-                       Tuesday: '0000 0000',
-                       Wednesday: '0000 0000',
-                       Thursday: '0000 0000',
-                       Friday: '0000 0000',
-                       Saturday: '0000 0000',
-                       Sunday: '0000 0000',
-                       current: true }
-    second_schedule = { Monday: '0000 0000',
-                        Tuesday: '0000 0000',
-                        Wednesday: '0000 0000',
-                        Thursday: '0000 0000',
-                        Friday: '0000 0000',
-                        Saturday: '0000 0000',
-                        Sunday: '0000 0000',
-                        current: false }
-    schedules.build(first_schedule)
-    schedules.build(second_schedule)
-  end
-
   # returns true if conflict exists, else returns false
   def has_conflict(appt)
     @driver_apps = Appointment.where(driver_id: id)
@@ -97,5 +75,29 @@ class Driver < User
       end
     end
     false
+  end
+
+  private
+
+  # helper to initialize new drvier schedules.
+  def create_schedule
+    first_schedule = { Monday: '0000 0000',
+                       Tuesday: '0000 0000',
+                       Wednesday: '0000 0000',
+                       Thursday: '0000 0000',
+                       Friday: '0000 0000',
+                       Saturday: '0000 0000',
+                       Sunday: '0000 0000',
+                       current: true }
+    second_schedule = { Monday: '0000 0000',
+                        Tuesday: '0000 0000',
+                        Wednesday: '0000 0000',
+                        Thursday: '0000 0000',
+                        Friday: '0000 0000',
+                        Saturday: '0000 0000',
+                        Sunday: '0000 0000',
+                        current: false }
+    schedules.build(first_schedule)
+    schedules.build(second_schedule)
   end
 end
