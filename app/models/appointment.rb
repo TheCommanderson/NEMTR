@@ -4,8 +4,6 @@ class Appointment
   include Mongoid::Document
   extend Enumerize
 
-  BUFFER_TIME = 15
-
   # The datetime of the scheduled appointment
   field :datetime, type: String
   # The status of the appointment
@@ -110,7 +108,9 @@ class Appointment
       #{locations[1].coordinates[1]}&key=\
       #{Rails.application.credentials.google_maps_key}"
     response = HTTParty.get(url).parsed_response
-    self.est_time = ((response['routes'].first['legs'].first['duration']['value']) / 60).round + BUFFER_TIME
+    est_time_min = response['routes'].first['legs'].first['duration']['value'] / 60
+    buffer_time = est_time_min * .1
+    self.est_time = (est_time_min + buffer_time).round
   end
 
   # Sends updates via email (and if enabled also sends text message) to the
