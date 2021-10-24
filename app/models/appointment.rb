@@ -41,7 +41,7 @@ class Appointment
       logger.info "#{id} is now unassigned, re-running matching algorithm."
       MatchingEngine.matching_alg
     else
-      cur = (getMonday(DateTime.strptime(datetime, dt_format)).to_s[0..10] == getMonday(DateTime.now).to_s[0..10])
+      cur = (get_monday(DateTime.strptime(datetime, dt_format)).to_s[0..10] == get_monday(DateTime.now).to_s[0..10])
       drivers = valid_drivers(cur)
       unless drivers.include? driver_id
         atts = { status: 0, driver_id: nil }
