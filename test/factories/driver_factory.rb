@@ -12,5 +12,6 @@ FactoryBot.define do
     car_model { 'Corolla' }
     car_color { 'Green' }
     car_license_plate { 'ABC123' }
+    trained { true }
   end
 end
