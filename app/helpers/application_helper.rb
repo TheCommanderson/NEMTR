@@ -33,7 +33,7 @@ module ApplicationHelper
   end
 
   def all_host_orgs
-    Admin.all.map(&:host_orgs).compact.flatten.uniq
+    Sysadmin.all.map(&:host_orgs).compact.flatten.uniq
   end
 
   def build_gmap_url(_location_1, _location_2)
