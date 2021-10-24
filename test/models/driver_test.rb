@@ -6,12 +6,12 @@ class DriverTest < ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
 
   test 'new driver created' do
-    driver = build(:driver)
+    driver = build :driver
     assert_not_nil driver
   end
 
   test 'new driver has schedule' do
-    driver = build(:driver)
+    driver = build :driver
     first_schedule = { Monday: '0000 0000',
                        Tuesday: '0000 0000',
                        Wednesday: '0000 0000',

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :hca do
+  factory :hca, class: 'Healthcareadmin' do
     first_name { 'Roger' }
     middle_init { 'D' }
     last_name { 'Park' }

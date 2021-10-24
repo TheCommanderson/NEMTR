@@ -9,8 +9,8 @@ class SchedulesController < ApplicationController
     @driver = Driver.find(session[:user_id])
     @current_schedule = @driver.schedules.where(current: true).first
     @next_schedule = @driver.schedules.where(current: false).first
-    @this_monday = getMonday(DateTime.now)
-    @next_monday = getMonday(Time.current + 7.days).to_datetime
+    @this_monday = get_monday(DateTime.now)
+    @next_monday = get_monday(Time.current + 7.days).to_datetime
     @schedules = [
       { id: @current_schedule.id, sch: pretty_print_schedule(@current_schedule), days: getDatesOfWeek(@this_monday) },
       { id: @next_schedule.id, sch: pretty_print_schedule(@next_schedule), days: getDatesOfWeek(@next_monday) }
@@ -26,9 +26,9 @@ class SchedulesController < ApplicationController
   # GET /schedules/1/edit
   def edit
     @days = if @schedule.current
-              getDatesOfWeek(getMonday(DateTime.now))
+              getDatesOfWeek(get_monday(DateTime.now))
             else
-              getDatesOfWeek(getMonday(Time.current + 7.days).to_datetime)
+              getDatesOfWeek(get_monday(Time.current + 7.days).to_datetime)
             end
   end
 

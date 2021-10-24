@@ -14,14 +14,6 @@ module ApplicationHelper
     !current_user.nil?
   end
 
-  # Helper function to ensure user is authorized when they try to visit a page
-  def authorized
-    unless logged_in?
-      flash[:info] = 'Please log in.'
-      redirect_to root_url
-    end
-  end
-
   # Helper returns the sign of the number provided
   def sign(x)
     '++-'[x <=> 0]
@@ -33,7 +25,7 @@ module ApplicationHelper
   end
 
   # Helper gets the monday of the week provided (7 is sunday because we begin our week on monday >:( )
-  def getMonday(date)
+  def get_monday(date)
     wday = date.to_time.wday
     wday = 7 if wday == 0
     _monday = (date.to_time - (wday - 1).days).to_datetime

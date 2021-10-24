@@ -6,7 +6,7 @@ class HealthcareadminTest < ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
 
   test 'new healthcareadmin created' do
-    hca = build(:hca)
+    hca = build :hca
     assert_not_nil hca
   end
 end

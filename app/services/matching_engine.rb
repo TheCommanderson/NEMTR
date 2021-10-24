@@ -3,8 +3,8 @@
 class MatchingEngine
   def self.matching_alg
     logger.debug 'starting matching algorithm'
-    this_monday = getMonday(DateTime.now)
-    next_monday = getMonday((Time.now + 7.days).to_datetime)
+    this_monday = get_monday(DateTime.now)
+    next_monday = get_monday((Time.now + 7.days).to_datetime)
     logger.debug "This monday: #{this_monday}, Next monday: #{next_monday}"
     @matchable_apps = Appointment.where(status: 0)
     if @matchable_apps.empty?
@@ -16,7 +16,7 @@ class MatchingEngine
     @matchable_apps.each do |appt|
       logger.info "matching #{appt.id}"
       # Check if this appointment is within the next two weeks
-      appt_monday = getMonday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10]
+      appt_monday = get_monday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10]
       unless [this_monday.to_s[0..10], next_monday.to_s[0..10]].include? appt_monday
         logger.info "#{appt.id} is not within the next 2 weeks"
         next
