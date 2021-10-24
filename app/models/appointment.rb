@@ -108,7 +108,7 @@ class Appointment
       #{locations[0].coordinates[0]},#{locations[0].coordinates[1]}\
       &destination=#{locations[1].coordinates[0]},\
       #{locations[1].coordinates[1]}&key=\
-      #{Rails.application.credentials.gmap_geocode_api_kep}"
+      #{Rails.application.credentials.google_maps_key}"
     response = HTTParty.get(url).parsed_response
     self.est_time = ((response['routes'].first['legs'].first['duration']['value']) / 60).round + BUFFER_TIME
   end
