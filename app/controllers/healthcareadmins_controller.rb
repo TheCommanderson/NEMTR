@@ -44,7 +44,7 @@ class HealthcareadminsController < UsersController
   def update
     respond_to do |format|
       if @healthcareadmin.update(healthcareadmin_params)
-        format.html { redirect_to @healthcareadmin, notice: 'healthcareadmin was successfully updated.' }
+        format.html { redirect_to @healthcareadmin }
         format.json { render :show, status: :ok, location: @healthcareadmin }
       else
         format.html { render :edit, status: :unprocessable_entity }

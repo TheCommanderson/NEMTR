@@ -2,6 +2,8 @@
   <main>
     <section class="p-4 container centered-card">
       <div class="row p-lg-5 bg-dark rounded">
+        <h1 class="text-center">Sign Up</h1>
+        <small class="text-center">Dispatch Volunteer</small>
         <%= form_with(model: @volunteer, local: true) do |form| %>
         <% if @volunteer.errors.any? %>
           <div class="alert alert-danger" role="alert">
@@ -13,8 +15,6 @@
             </ul>
           </div>
         <% end %>
-        <h1 class="text-center">Sign Up</h1>
-        <small class="text-center">Dispatch Volunteer</small>
 
         <div class="row py-2">
           <div class="form-group col-md">
