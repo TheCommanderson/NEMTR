@@ -25,7 +25,7 @@ class Appointment
   has_many :comments
 
   # Callbacks
-  before_save :get_est_time
+  after_save :get_est_time
   after_update :send_updates
 
   def self.clean_past_appointments
