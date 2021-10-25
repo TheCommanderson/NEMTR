@@ -107,7 +107,7 @@
             </div>
             <div class="row">
               <% if patient.approved %>
-                <%= button_to 'Create New Ride', {action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-outline-dark" %>
+                <%= button_to 'Create New Ride', {action: :new, controller: :appointments}, params: {patient_id: patient.id}, method: :get,class: "btn btn-outline-dark" %>
               <% end %>
             </div>
           </td>

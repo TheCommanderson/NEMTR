@@ -40,6 +40,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
+        logger.debug 'inside save appt'
         MatchingEngine.matching_alg
         # AdminMailer.with(patient: @patient).new_patient_email.deliver
         flash[:info] = 'Appointment was successfully booked!'
