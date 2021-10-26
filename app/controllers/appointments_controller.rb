@@ -40,9 +40,8 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
-        logger.debug 'inside save appt'
         MatchingEngine.matching_alg
-        # AdminMailer.with(patient: @patient).new_patient_email.deliver
+        UserMailer.with(appt: @appointment).ride_created_email.deliver
         flash[:info] = 'Appointment was successfully booked!'
         format.html { redirect_to root_url }
       else
