@@ -1,0 +1,16 @@
+There was a recent issue in a Ride2Health ride
+==============================================
+
+Reporter Details:
+<%= @reporter.full_name %>
+Phone: <%= @reporter.phone %>
+Email: <%= @reporter.email %>
+
+Ride Details:
+Driver: <%= @driver.nil? ? 'Unassigned' : @driver.full_name %>
+Patient: <%= @patient.full_name %>
+
+Issue:
+<%= @issue %>
+
+Ride2Health Automated Messaging
