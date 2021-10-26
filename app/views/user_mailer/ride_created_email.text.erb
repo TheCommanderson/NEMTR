@@ -1,0 +1,14 @@
+Hi <%= @patient.first_name %>,
+
+This email is to confirm that you have a new ride scheduled for an upcoming appointment.
+
+Time and Date of Pickup: <%= @appointment.datetime %>
+Pickup Location: <%= @appointment.location[0].address %>
+Dropoff Location: <%= @appointment.location[1].address %>
+Estimated Time: <%= @appointment.est_time %> minutes
+
+REMINDER: The time and date displayed are for pickup, NOT the actual appointment time.
+To view the full details of this ride, visit Ride2Health.org
+
+Thanks!
+Ride2Health Automated Messaging
