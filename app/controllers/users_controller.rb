@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+
 class UsersController < ApplicationController
   skip_before_action :authorized, only: %i[create new]
-  before_action :set_user, only: %i[show edit update destroy password]
+  before_action :set_user, only: %i[show edit update destroy password reset]
 
   # GET /users or /users.json
   def index
@@ -56,6 +58,18 @@ class UsersController < ApplicationController
   end
 
   def password; end
+
+  def reset
+    password = SecureRandom.base64(15)
+    @user.update(password: password)
+    if @user.save
+      AdminMailer.with(password: password).password_reset_email.deliver
+      flash[:info] = "#{@user.first_name}'s new password is '#{password}'"
+    else
+      flash[:danger] = "#{@user.first_name}'s password could not be reset!"
+    end
+    redirect_to root_url
+  end
 
   private
 

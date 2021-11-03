@@ -27,6 +27,7 @@ class HealthcareadminsController < UsersController
     respond_to do |format|
       begin
         if @healthcareadmin.save
+          AdminMailer.with(admin: @healthcareadmin).new_healthcare_email.deliver
           format.html { redirect_to @healthcareadmin }
           format.json { render :show, status: :created, location: @healthcareadmin }
         else

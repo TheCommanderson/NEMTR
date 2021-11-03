@@ -28,6 +28,7 @@ class VolunteersController < UsersController
     respond_to do |format|
       begin
         if @volunteer.save
+          AdminMailer.with(volunteer: @volunteer).new_volunteer_email.deliver
           format.html { redirect_to @volunteer, notice: 'volunteer was successfully created.' }
           format.json { render :show, status: :created, location: @volunteer }
         else

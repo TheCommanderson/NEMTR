@@ -5,7 +5,7 @@ class AdminMailer < ApplicationMailer
 
   def new_patient_email
     @patient = params[:patient]
-    emails = User.where(host_org: @patient.host_org, _type: 'Healthcareadmin').collect(&:email).join(',')
+    emails = User.where(host_org: @patient.host_org, _type: 'Healthcareadmin').or(_type: 'Sysadmin').collect(&:email).join(',')
 
     mail(to: @admin.email, subject: 'New Ride2Health Patient')
   end
@@ -17,11 +17,16 @@ class AdminMailer < ApplicationMailer
     mail(to: emails, subject: 'New Ride2Health Driver')
   end
 
-  def new_admin_email
+  def new_volunteer_email
+    @volunteer = params[:volunteer]
+    emails = User.where(_type: 'Sysadmin').collect(&:email).join(',')
+  end
+
+  def new_healthcare_email
     @admin = params[:admin]
     emails = User.where(_type: 'Sysadmin').collect(&:email).join(',')
 
-    mail(to: emails, subject: 'New Ride2Health Admin')
+    mail(to: emails, subject: 'New Ride2Health Healthcare Account')
   end
 
   def short_cancel_email
