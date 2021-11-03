@@ -21,9 +21,6 @@
         </div>
       </div>
       <%= form.hidden_field :author, value: current_user.id %>
-      <% if params.has_key?(:is_report) %>
-        <%= form.hidden_field :report, value: true %>
-      <% end %>
       <%= form.hidden_field :patient_id, :value => params[:patient_id] %>
       <div class="text-center py-4">
         <%= form.submit "Submit Comment", class: "btn btn-outline-light" %>
@@ -50,9 +47,7 @@
       </div>
     </div>
     <%= form.hidden_field :author, value: current_user.id %>
-    <% if params.has_key?(:is_report) %>
-      <%= form.hidden_field :report, value: true %>
-    <% end %>
+    <%= form.hidden_field :report, value: true %>
     <%= form.hidden_field :appointment_id, :value => params[:appointment_id] %>
     <div class="text-center py-4">
       <%= form.submit "Submit Comment", class: "btn btn-outline-light" %>

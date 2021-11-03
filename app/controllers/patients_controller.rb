@@ -35,7 +35,7 @@ class PatientsController < UsersController
     respond_to do |format|
       begin
         if @patient.save
-          # AdminMailer.with(patient: @patient).new_patient_email.deliver
+          AdminMailer.with(patient: @patient).new_patient_email.deliver
           format.html { redirect_to @patient, notice: 'User was successfully created.' }
           format.json { render :show, status: :created, locations: @patient }
         else

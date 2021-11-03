@@ -30,11 +30,20 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     respond_to do |format|
       if @comment.save
+        if params[:comment][:appointment_id]
+          appointment = Appointment.find(params[:comment][:appointment_id])
+          driver = @appointment.driver_id if appointment.has_attribute?(:driver_id)
+          AdminMailer.with(
+            reporter: User.find(params[:comment][:author]),
+            driver: driver, patient: User.find(appointment.patient_id),
+            issue: params[:comment][:text]
+          ).issue_email.deliver
+        end
         flash[:info] = 'Thank you for the feedback.  If we need more info we may reach out directly.'
         format.html { redirect_to root_url }
       else
         format.html { render :new }
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -49,7 +58,7 @@ class CommentsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def comment_params
     params.require(:comment).permit(
-      :text, :author, :is_report, :patient_id, :appointment_id
+      :text, :author, :report, :patient_id, :appointment_id
     )
   end
 end
