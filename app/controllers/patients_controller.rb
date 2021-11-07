@@ -90,6 +90,11 @@ class PatientsController < UsersController
     @appointments = Appointment.where(patient_id: @patient.id).sort_by(&:datetime)
   end
 
+  def match
+    MatchingEngine.matching_alg
+    redirect_to root_url
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

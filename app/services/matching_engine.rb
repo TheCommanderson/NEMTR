@@ -8,7 +8,7 @@ class MatchingEngine
     this_monday = get_monday(DateTime.now)
     next_monday = get_monday((Time.now + 7.days).to_datetime)
     Rails.logger.debug "This monday: #{this_monday}, Next monday: #{next_monday}"
-    @matchable_apps = Appointment.where(status: 0)
+    @matchable_apps = Appointment.where(status: :unassigned)
     if @matchable_apps.empty?
       Rails.logger.warn 'no valid appointments to match, why did this start?'
       return
@@ -20,7 +20,7 @@ class MatchingEngine
       # Check if this appointment is within the next two weeks
       appt_monday = get_monday(DateTime.strptime(appt.datetime, dt_format)).to_s[0..10]
       unless [this_monday.to_s[0..10], next_monday.to_s[0..10]].include? appt_monday
-        Rails.logger.info "#{appt.id} is not within the next 2 weeks"
+        Rails.logger.info "#{appt.id} is not within the next 2 weeks.  Appt monday is: #{appt_monday}."
         next
       end
 
@@ -40,9 +40,10 @@ class MatchingEngine
       end
 
       # Assign the driver
-      new_atts = { status: 1, driver_id: driver[:id] }
+      new_atts = { status: :assigned, driver_id: driver[:id] }
       appt.update_attributes(new_atts)
       Rails.logger.info "#{appt.id} assigned to #{driver.id}"
+      UserMailer.with(appt: appt).ride_assigned_email.deliver
     end
   end
 end

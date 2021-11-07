@@ -92,8 +92,10 @@ class DriversController < UsersController
       if appointment.has_attribute?(:driver_id)
         if appointment.update({ status: :unassigned }) && appointment.unset(:driver_id)
           if Time.parse(appointment.datetime) < 1.hour.from_now
-            AdminMailer.with(driver: driver, patient: patient).short_cancel_email.deliver
+            patient = Patient.find(appointment.patient_id)
+            AdminMailer.with(driver: @driver, patient: patient).short_cancel_email.deliver
           end
+          @driver.push(blacklist: appointment.id)
           flash[:info] = 'Ride was unassigned.'
         else
           flash[:danger] = "Oops, that ride couldn't be unassigned."

@@ -3,6 +3,7 @@
 class Appointment
   include Mongoid::Document
   extend Enumerize
+  include ApplicationHelper
 
   # The datetime of the scheduled appointment
   field :datetime, type: String
@@ -54,14 +55,14 @@ class Appointment
     logger.info "checking valid drivers for #{id}"
     appt_start_time = DateTime.strptime(datetime, dt_format).to_time.strftime('%H%M').to_i
     appt_end_time = (DateTime.strptime(datetime, dt_format).to_time + est_time.minutes).strftime('%H%M').to_i
-    logger.info "appt start time: #{appt_start_time}, end time: #{appt_end_time}"
+    logger.info "appt date: #{datetime}, appt start time: #{appt_start_time}, end time: #{appt_end_time}"
     drivers = []
 
     Driver.where(trained: true).each do |driver|
       # Is this appointment on the driver blacklist?
       blacklisted = false
       driver.blacklist.each do |bl_appt|
-        if bl_appt == appt._id
+        if bl_appt == _id
           blacklisted = true
           break
         end
@@ -71,16 +72,15 @@ class Appointment
         next
       end
 
-      # Checking if the appointment falls within the range of thier schedule
-      driver_today_sch = driver.schedule.where(current: cur).first[DateTime.strptime(appt.datetime, dt_format).to_time.strftime('%A')]
+      # Checking if the appointment falls within the range of their schedule
+      driver_today_sch = driver.schedules.where(current: cur).first[DateTime.strptime(datetime, dt_format).to_time.strftime('%A')]
       driver_today_time_start = driver_today_sch[0..3].to_i
       driver_today_time_end = driver_today_sch[5..8].to_i
 
       if driver_today_time_start == driver_today_time_end
         logger.info "#{driver.id} is not on call on this day."
         next
-      end
-      if appt_start_time < driver_today_time_start
+      elsif appt_start_time < driver_today_time_start
         logger.info "Ride starts before #{driver.id} starts today."
         next
       elsif appt_end_time > driver_today_time_end
@@ -89,12 +89,12 @@ class Appointment
       end
 
       # Check if the driver has any conflicts with appointments
-      if driver.has_conflict(appt)
+      if driver.has_conflict(_id)
         logger.info "#{driver.id} has a prior conflict."
         next
       end
 
-      logger.info "#{driver.id} is eligible for #{appt.id}"
+      logger.info "#{driver.id} is eligible for #{_id}"
       drivers.push(driver)
     end
     drivers

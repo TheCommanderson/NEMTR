@@ -2,6 +2,7 @@
 
 class Driver < User
   include Mongoid::Document
+  include ApplicationHelper
 
   # Has the driver been trained?
   field :trained, type: Boolean, default: false
@@ -54,26 +55,39 @@ class Driver < User
   end
 
   # returns true if conflict exists, else returns false
-  def has_conflict(appt)
+  def has_conflict(appt_id)
+    appt = Appointment.find(appt_id)
+    logger.info "checking conflicts for #{_id}, appt: #{appt.id}"
+    logger.info "appt's datetime #{appt.datetime}"
     @driver_apps = Appointment.where(driver_id: id)
     @driver_apps.each do |conflict|
+      logger.info "checking if #{conflict.id} is a conflict"
       # Check if the date is the same
       appt_date = DateTime.strptime(appt.datetime, dt_format).strftime('%d%m%Y')
       conflict_date = DateTime.strptime(conflict.datetime, dt_format).strftime('%d%m%Y')
-      next if appt_date != conflict_date
+      if appt_date != conflict_date
+        logger.info 'different days'
+        next
+      end
 
       # Check if there are conflicts with other appointments
       conflict_start_time = DateTime.strptime(conflict.datetime, dt_format).to_time.strftime('%H%M').to_i
       conflict_end_time = (DateTime.strptime(conflict.datetime, dt_format).to_time + conflict.est_time.minutes).strftime('%H%M').to_i
-      if sign(start_time - conflict_start_time) != sign(start_time - conflict_end_time) # appt starts in the middle of conlficting appt
+      start_time = DateTime.strptime(appt.datetime, dt_format).to_time.strftime('%H%M').to_i
+      end_time = (DateTime.strptime(appt.datetime, dt_format).to_time + appt.est_time.minutes).strftime('%H%M').to_i
+      if sign(start_time - conflict_start_time) != sign(start_time - conflict_end_time)
+        logger.info 'appt starts in the middle of conlficting appt'
         return true
-      elsif sign(end_time - conflict_start_time) != sign(end_time - conflict_end_time) # appt ends in the middle of conflicting appt
+      elsif sign(end_time - conflict_start_time) != sign(end_time - conflict_end_time)
+        logger.info 'appt ends in the middle of conflicting appt'
         return true
-      elsif start_time <= conflict_start_time && end_time >= conflict_end_time # conflict is contained completely inside appt
+      elsif start_time <= conflict_start_time && end_time >= conflict_end_time
+        logger.info 'conflict is contained completely inside appt'
         return true
         # NOTE: if appt is contained completely in the conflict then it will execute the first if statement
       end
     end
+    logger.info 'no conflict'
     false
   end
 
