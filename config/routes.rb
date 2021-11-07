@@ -27,6 +27,9 @@ Rails.application.routes.draw do
       get 'appointments'
       post 'approve'
     end
+    collection do
+      get 'match'
+    end
   end
   resources :sessions, only: %i[index new create] do
     collection do
