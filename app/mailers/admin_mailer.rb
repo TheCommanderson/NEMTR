@@ -7,7 +7,7 @@ class AdminMailer < ApplicationMailer
     @patient = params[:patient]
     emails = User.where(host_org: @patient.host_org, _type: 'Healthcareadmin').or(_type: 'Sysadmin').collect(&:email).join(',')
 
-    mail(to: @admin.email, subject: 'New Ride2Health Patient')
+    mail(to: emails, subject: 'New Ride2Health Patient')
   end
 
   def new_driver_email
