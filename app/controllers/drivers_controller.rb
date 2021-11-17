@@ -85,6 +85,7 @@ class DriversController < UsersController
     if appointment.status.unassigned?
       if appointment.update({ status: :assigned, driver_id: params[:id] })
         flash[:info] = 'Ride was successfully assigned!'
+        UserMailer.with(appt: appointment).ride_assigned_email.deliver
       else
         flash[:danger] = "Oops, that ride couldn't be assigned."
       end
