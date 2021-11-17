@@ -32,7 +32,7 @@ class AdminMailer < ApplicationMailer
   def short_cancel_email
     @driver = params[:driver]
     @patient = params[:patient]
-    emails = User.where(_type: 'Sysadmin').collect(&:email).join(',')
+    emails = User.where(_type: 'Sysadmin').or(_type: 'Volunteer').collect(&:email).join(',')
 
     mail(to: emails, subject: 'Ride2Health Driver Canceled an imminent trip!')
   end
