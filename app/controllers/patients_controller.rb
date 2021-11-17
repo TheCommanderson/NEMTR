@@ -36,7 +36,8 @@ class PatientsController < UsersController
       begin
         if @patient.save
           AdminMailer.with(patient: @patient).new_patient_email.deliver
-          format.html { redirect_to @patient, notice: 'User was successfully created.' }
+          flash[:info] = "Thank you for signing up!  Once you are approved, you'll be able to start creating rides."
+          format.html { redirect_to root_url }
           format.json { render :show, status: :created, locations: @patient }
         else
           format.html { render :new }
