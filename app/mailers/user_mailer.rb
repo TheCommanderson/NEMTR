@@ -25,4 +25,5 @@ class UserMailer < ApplicationMailer
   def patient_approved_email
     @patient = params[:patient]
     mail(to: @patient.email, subject: 'Your Ride2Health Account was Approved')
+  end
 end
