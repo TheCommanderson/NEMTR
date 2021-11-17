@@ -78,6 +78,7 @@ class PatientsController < UsersController
     @patient.update_attribute(:approved, !@patient.approved)
     if @patient.approved && @patient.update_attribute(:healthcareadmin, current_user)
       flash[:info] = 'Approved!'
+      UserMailer.with(patient: @patient).patient_approved_email.deliver
     elsif !@patient.approved && @patient.unset(:healthcareadmin)
       flash[:info] = 'Patient unapproved successfully.'
     else
