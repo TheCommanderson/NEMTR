@@ -19,7 +19,11 @@ Rails.application.routes.draw do
       post 'assign'
     end
   end
-  resources :healthcareadmins
+  resources :healthcareadmins do
+    member do
+      post 'approve'
+    end
+  end
   resources :patients do
     resources :locations
     resources :comments

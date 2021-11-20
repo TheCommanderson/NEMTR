@@ -65,6 +65,19 @@ class HealthcareadminsController < UsersController
     end
   end
 
+  def approve
+    @healthcareadmin.update_attribute(:approved, !@healthcareadmin.approved)
+    if @healthcareadmin.approved && @healthcareadmin.update_attribute(:sysadmin, current_user)
+      flash[:info] = 'Approved!'
+      UserMailer.with(patient: @healthcareadmin).patient_approved_email.deliver
+    elsif !@healthcareadmin.approved && @healthcareadmin.unset(:sysadmin)
+      flash[:info] = 'Helathcare Administrator unapproved successfully.'
+    else
+      flash[:danger] = 'There was an error (un)approving this healthcare admin, please try again.'
+    end
+    redirect_to root_url
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
