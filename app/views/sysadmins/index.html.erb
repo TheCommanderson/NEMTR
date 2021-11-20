@@ -45,6 +45,66 @@
 </div>
 
 <!--=========================== DISPATCHERS ============================-->
+<h3 class="container">Healthcare Administrators</h3>
+<div class="container table-container table-responsive">
+<table class="table border-dark">
+  <thead class="table-blue">
+    <tr>
+      <th>Dispatcher</th>
+      <th>Approved by</th>
+      <th>Approved?</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @healthcareadmins.each do |h| %>
+      <tr>
+        <td scope="row">
+          <div class="container">
+            <div class="row">
+              <%= "#{h.first_name} #{h.middle_init} #{h.last_name}"%>
+            </div>
+            <div class="row">
+              <%= "#{h.email} | #{h.phone}"%>
+            </div>
+          </div>
+        </td>
+        <td>
+          <% if h.sysadmin %>
+            <%= "#{h.sysadmin.first_name} #{h.sysadmin.last_name}" %>
+          <% else %>
+            No Administrator is associated with this dispatcher yet.
+          <% end %>
+        </td>
+        <td>
+          <% if h.approved %>
+            <span style="color:green">True</span>
+          <% else %>
+            <span style="color:red">False</span>
+          <% end %>
+        </td>
+        <td>
+          <div class="row pb-2">
+            <% if h.approved %>
+              <%= button_to "Unapprove", approve_healthcareadmin_path(h.id), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+            <% else %>
+              <%= button_to "Approve", approve_healthcareadmin_path(h.id), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
+            <% end %>
+          </div>
+          <div class="row pb-2">
+            <%= button_to "Reset Password", reset_user_path(h.id), method: 'patch', data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
+          </div>
+          <div class="row pb-2">
+            <%= button_to 'Delete', healthcareadmin_path(h.id), method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-outline-danger" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<!--=========================== DISPATCHERS ============================-->
 <h3 class="container">Dispatchers</h3>
 <div class="container table-container table-responsive">
 <table class="table border-dark">
