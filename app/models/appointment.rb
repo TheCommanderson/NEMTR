@@ -102,6 +102,11 @@ class Appointment
 
   # Calls the Google Maps API to retreive the estimated time for this ride.
   def get_est_time
+    if locations[0].coordinates.nil? || locations[1].coordinates.nil?
+      logger.warn 'Coordinates did not exist for these locations, returning default est_time'
+      self.est_time = 15
+      return
+    end
     url = "https://maps.googleapis.com/maps/api/directions/json?origin=\
       #{locations[0].coordinates[0]},#{locations[0].coordinates[1]}\
       &destination=#{locations[1].coordinates[0]},\
