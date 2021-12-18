@@ -1,14 +1,5 @@
 <% content_for :head do %>
-  <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+Rails.application.credentials.google_maps_key, defer: true %>
   <%= javascript_pack_tag 'appointment', 'data-turbolinks-track': 'reload' %>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      initMap(<%=@appointment.locations[0][:coordinates]%>, <%=@appointment.locations[1][:coordinates]%>)
-    });
-    if (location.href.indexOf('re') == -1) {
-      location.href = location.href + '?re';
-    }
-  </script>
 <% end %>
 
 <section class="p-4 container">
@@ -128,7 +119,5 @@
             <%= button_to 'Back', root_url, method: 'get', class: "btn btn-outline-light btn-lg" %>
           </div>
         </div>
-        <div id="map"></div>
-        <div id="right-panel"></div>
       </div>
     </section>
