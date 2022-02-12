@@ -6,6 +6,7 @@ class UserMailer < ApplicationMailer
   def ride_assigned_email
     @appointment = params[:appt]
     @driver = User.find(@appointment.driver_id)
+    @patient = User.find(@appointment.patient_id)
     mail(to: @driver.email, subject: 'New Ride2Health Assignment')
   end
 

@@ -18,7 +18,9 @@
   <table class="table table-bordered border-dark">
     <thead class="table-blue">
       <tr>
-        <th>Actions</th>
+        <% if @driver == current_user %>
+          <th>Actions</th>
+        <% end %>
         <th>Monday</th>
         <th>Tuesday</th>
         <th>Wednesday</th>
@@ -32,9 +34,11 @@
     <tbody>
       <% @schedules.each do |s| %>
         <tr>
-          <td>
-            <%= button_to 'Edit', edit_driver_schedule_path(current_user, s[:id]), method: "get", class:"btn btn-outline-dark" %>
-          </td>
+          <% if @driver == current_user %>
+            <td>
+              <%= button_to 'Edit', edit_driver_schedule_path(current_user, s[:id]), method: "get", class:"btn btn-outline-dark" %>
+            </td>
+          <% end %>
           <td>
             <%= s[:days]['Monday'] %>
             <div>

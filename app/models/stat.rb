@@ -19,13 +19,12 @@ class Stat
   # THIS FUNCTION SHOULD COLLECT AT THE BEGINNING OF THE MONTH AND THEN UPDATE
   # AS NECESSARY WHENEVER A FIELD UPDATES
   def self.collect
-    s = Stat.where(current: true).first
+    s = Stat.where(month: (Time.current - 1.days).strftime('%B')).first
     s.patients = Patient.count
     s.drivers = Driver.count
-    s.current = false
     p = { patients: Patient.count, drivers: Driver.count, current: false }
     s.update_attributes(p)
-    new_p = { rides: 0, reports: 0, current: true, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
+    new_p = { rides: 0, reports: 0, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
     next_stat = Stat.new(new_p)
     next_stat.save
   end

@@ -30,7 +30,8 @@ class DriversController < UsersController
       begin
         if @driver.save
           AdminMailer.with(driver: @driver).new_driver_email.deliver
-          format.html { redirect_to @driver, notice: 'driver was successfully created.' }
+          flash[:info] = "Thank you for signing up!  Once you are approved, you'll be able to set your schedule and accept rides."
+          format.html { redirect_to root_url }
           format.json { render :show, status: :created, location: @driver }
         else
           format.html { render :new, status: :unprocessable_entity }

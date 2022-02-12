@@ -6,7 +6,7 @@ class SchedulesController < ApplicationController
 
   # GET /schedules or /schedules.json
   def index
-    @driver = Driver.find(session[:user_id])
+    @driver = Driver.find(params[:driver_id])
     @current_schedule = @driver.schedules.where(current: true).first
     @next_schedule = @driver.schedules.where(current: false).first
     @this_monday = get_monday(DateTime.now)
