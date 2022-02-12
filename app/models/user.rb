@@ -13,12 +13,15 @@ class User
 
   # validates :first_name, :last_name, :phone, :email, :password, presence: true
   validates_uniqueness_of :email, :phone
-  # validates_length_of :phone, is: 10
 
   has_secure_password
 
   def full_name
     "#{first_name} #{middle_init} #{last_name}"
+  end
+
+  def phone_number
+    "#{phone[1..3]}#{phone[6..8]}#{phone[10..13]}"
   end
 
   def user_type

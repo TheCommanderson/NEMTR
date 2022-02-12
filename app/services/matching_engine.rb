@@ -44,6 +44,7 @@ class MatchingEngine
       appt.update_attributes(new_atts)
       Rails.logger.info "#{appt.id} assigned to #{driver.id}"
       UserMailer.with(appt: appt).ride_assigned_email.deliver
+      TextmagicService.send_ride_confirmation(driver.phone_number, appt.datetime)
     end
   end
 end

@@ -293,17 +293,17 @@
             </div>
             <% if patient.approved %>
               <div class="col md-2">
-                <%= button_to 'Locations', patient_locations_path(patient.id), method: :get,class: "btn btn-outline-dark" %>
+                <%= button_to 'Locations', patient_locations_path(patient.id), method: :get, class: "btn btn-outline-dark" %>
               </div>
             <% end %>
           </div>
           <% if patient.approved %>
             <div class="row pb-2">
               <div class="col md-2">
-                <%= button_to 'Create New Ride', {action: :new, controller: :appointments, patient_id: patient.id}, method: :get,class: "btn btn-outline-dark" %>
+                <%= button_to 'Create New Ride', new_appointment_path, method: :get, params: {patient_id: patient.id}, class: "btn btn-outline-dark" %>
               </div>
               <div class="col md-2">
-                <%= button_to 'Appointments', appointments_patient_path(patient.id), method: :get,class: "btn btn-outline-dark" %>
+                <%= button_to 'Appointments', appointments_patient_path(patient.id), method: :get, class: "btn btn-outline-dark" %>
               </div>
             </div>
           <% end %>

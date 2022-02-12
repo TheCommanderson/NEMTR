@@ -36,7 +36,7 @@ class Appointment
   end
 
   def check_appt_update
-    if status == 0
+    if status.unassigned?
       logger.info "#{id} is now unassigned, re-running matching algorithm."
       MatchingEngine.matching_alg
     else
@@ -126,9 +126,6 @@ class Appointment
   # Sends updates via email (and if enabled also sends text message) to the
   # driver and the patient
   def send_updates
-    if status == 1
-      UserMailer.with(appt: self).ride_updated_email.deliver
-      UserMailer.with(appt: self).ride_assigned_email.deliver
-    end
+    UserMailer.with(appt: self).ride_updated_email.deliver if status.assigned?
   end
 end

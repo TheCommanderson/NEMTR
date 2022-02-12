@@ -87,6 +87,7 @@ class DriversController < UsersController
       if appointment.update({ status: :assigned, driver_id: params[:id] })
         flash[:info] = 'Ride was successfully assigned!'
         UserMailer.with(appt: appointment).ride_assigned_email.deliver
+        TextmagicService.send_ride_confirmation(@driver.phone_number, appointment.datetime)
       else
         flash[:danger] = "Oops, that ride couldn't be assigned."
       end
@@ -96,6 +97,7 @@ class DriversController < UsersController
           if Time.parse(appointment.datetime) < 1.hour.from_now
             patient = Patient.find(appointment.patient_id)
             AdminMailer.with(driver: @driver, patient: patient).short_cancel_email.deliver
+            TextmagicService.send_ride_cancelled(@driver.full_name, appointment.datetime)
           end
           @driver.push(blacklist: appointment.id)
           flash[:info] = 'Ride was unassigned.'

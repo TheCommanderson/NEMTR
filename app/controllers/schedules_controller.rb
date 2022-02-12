@@ -50,7 +50,7 @@ class SchedulesController < ApplicationController
   def update
     params[:driver_id] = params[:d_id]
     @schedule = Driver.find(params[:driver_id]).schedules.find(params[:id])
-    flash[:notice] = ''
+    flash[:info] = ''
     new_sch = {}
     days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
     days.each do |day|
