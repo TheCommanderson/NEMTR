@@ -214,6 +214,11 @@
           <div class="row pb-2">
             <%= button_to "Reset Password", reset_user_path(driver.id), method: 'patch', data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
           </div>
+          <% if driver.trained %>
+            <div class="row pb-2">
+              <%= button_to "View Driver Schedule", driver_schedules_path(driver.id), method: 'get', class: "btn btn-outline-dark" %>
+            </div>
+          <% end %>
           <div class="row pb-2">
             <%= button_to 'Delete', driver, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %>
           </div>

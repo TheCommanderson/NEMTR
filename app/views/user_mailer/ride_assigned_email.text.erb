@@ -2,6 +2,9 @@ Hi <%= @driver.first_name %>,
 
 You have been assigned a new ride!
 
+Patient Name: <%= @patient.full_name %>
+Patient Phone Number: <%= @patient.phone %>
+
 Time and Date of Pickup: <%= @appointment.datetime %>
 Pickup Location: <%= @appointment.locations[0].address %>
 Dropoff Location: <%= @appointment.locations[1].address %>
