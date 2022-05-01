@@ -31,10 +31,24 @@ class AppointmentsController < ApplicationController
     location_hash = { name: l.name, addr1: l.addr1, addr2: l.addr2, city: l.city, state: l.state, zip: l.zip, preset: l.preset }
     appt_params = appointment_params
     appt_params['datetime'] = "#{params[:appointment]['dt(1i)']}-#{params[:appointment]['dt(2i)']}-#{params[:appointment]['dt(3i)']} #{params[:appointment]['dt(4i)']}:#{params[:appointment]['dt(5i)']}"
-    if Time.parse(appt_params['datetime']).past?
+
+    ride_time = Time.parse(appt_params['datetime'])
+    if ride_time.past?
       flash[:info] = 'Oops!  You tried to book a ride in the past!  Please retry with a date in the future.'
       redirect_to new_appointment_path(patient_id: patient.id)
     end
+    if ride_time.saturday? || ride_time.sunday?
+      flash[:info] = 'Oops!  Cannot schedule a weekend ride.'
+      redirect_to new_appointment_path(patient_id: patient.id)
+    end
+    if ride_time.between(
+      Time.local(ride_time.year, ride_time.month, ride_time.day, 8),
+      Time.local(ride_time.year, ride_time.month, ride_time.day, 4, 45)
+    )
+      flash[:info] = 'Oops!  Can only schedule a ride between 8AM and 4:45PM.'
+      redirect_to new_appointment_path(patient_id: patient.id)
+    end
+
     if appt_params[:locations_attributes]['0'][:name] == 'tmp'
       appt_params[:locations_attributes]['0'].merge! location_hash
     else
