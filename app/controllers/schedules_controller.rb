@@ -100,11 +100,19 @@ class SchedulesController < ApplicationController
         @sch[name] = 'None'
       else
         ampm1 = 'AM'
-        if val[0..1].to_i > 12
-          h1 = val[0..1].to_i % 12
+        if val[0..1].to_i >= 12
+          h1 = if val[0..1] == '12'
+                 12
+               else
+                 val[0..1].to_i % 12
+               end
           ampm1 = 'PM'
         else
-          h1 = val[0..1].to_i
+          h1 = if val[0..1] == '00'
+                 12
+               else
+                 val[0..1].to_i
+               end
         end
         ampm2 = 'AM'
         if val[5..6].to_i > 12
