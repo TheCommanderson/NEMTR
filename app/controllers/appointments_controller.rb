@@ -35,18 +35,18 @@ class AppointmentsController < ApplicationController
     ride_time = Time.parse(appt_params['datetime'])
     if ride_time.past?
       flash[:info] = 'Oops!  You tried to book a ride in the past!  Please retry with a date in the future.'
-      redirect_to new_appointment_path(patient_id: patient.id)
+      redirect_to new_appointment_path(patient_id: patient.id) and return
     end
     if ride_time.saturday? || ride_time.sunday?
       flash[:info] = 'Oops!  Cannot schedule a weekend ride.'
-      redirect_to new_appointment_path(patient_id: patient.id)
+      redirect_to new_appointment_path(patient_id: patient.id) and return
     end
-    if ride_time.between?(
+    unless ride_time.between?(
       Time.local(ride_time.year, ride_time.month, ride_time.day, 8),
-      Time.local(ride_time.year, ride_time.month, ride_time.day, 4, 45)
+      Time.local(ride_time.year, ride_time.month, ride_time.day, 16, 45)
     )
       flash[:info] = 'Oops!  Can only schedule a ride between 8AM and 4:45PM.'
-      redirect_to new_appointment_path(patient_id: patient.id)
+      redirect_to new_appointment_path(patient_id: patient.id) and return
     end
 
     if appt_params[:locations_attributes]['0'][:name] == 'tmp'
