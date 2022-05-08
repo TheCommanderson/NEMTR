@@ -30,8 +30,14 @@ class Appointment
   after_update :send_updates
 
   def self.clean_past_appointments
+    s = Stat.where(month: (Time.current - 1.days).strftime('%B')).first
+    ride_count = 0
     Appointment.each do |appt|
-      appt.destroy if Time.parse(appt.datetime).past?
+      if Time.parse(appt.datetime).past?
+        appt.destroy
+        ride_count += 1
+      end
+      s.update_attribute(:rides, s.rides + ride_count)
     end
   end
 

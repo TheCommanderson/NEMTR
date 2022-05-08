@@ -38,6 +38,8 @@ class CommentsController < ApplicationController
             driver: driver, patient: User.find(appointment.patient_id),
             issue: params[:comment][:text]
           ).issue_email.deliver
+          s = Stat.where(month: (Time.current - 1.days).strftime('%B')).first
+          s.update_attribute(:reports, s.reports + 1)
         end
         flash[:info] = 'Thank you for the feedback.  If we need more info we may reach out directly.'
         format.html { redirect_to root_url }

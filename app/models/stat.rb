@@ -10,7 +10,7 @@ class Stat
   field :reported_appointments, type: Array, default: true
   # Month and Year
   field :month, type: String
-  field :year, type: Integer
+  field :year, type: String
   # Number of drivers, patients and volunteers
   field :drivers, type: Integer
   field :patients, type: Integer
@@ -19,12 +19,32 @@ class Stat
   # THIS FUNCTION SHOULD COLLECT AT THE BEGINNING OF THE MONTH AND THEN UPDATE
   # AS NECESSARY WHENEVER A FIELD UPDATES
   def self.collect
-    s = Stat.where(month: (Time.current - 1.days).strftime('%B')).first
-    s.patients = Patient.count
-    s.drivers = Driver.count
-    p = { patients: Patient.count, drivers: Driver.count, current: false }
-    s.update_attributes(p)
-    new_p = { rides: 0, reports: 0, date: Date.today.strftime('%B %Y'), drivers: 0, patients: 0 }
+    begin
+      s = Stat.where(month: (Time.current - 1.days).strftime('%B'), year: (Time.current - 1.days).strftime('%Y')).first
+      p = { patients: Patient.count, drivers: Driver.count, volunteers: Volunteer.count }
+      s.update_attributes(p)
+    rescue StandardError
+      new_current_p = {
+        rides: 0,
+        reports: 0,
+        month: Date.today.strftime('%B'),
+        year: Date.today.strftime('%Y'),
+        drivers: Driver.count,
+        patients: Patient.count,
+        volunteers: Volunteer.count
+      }
+      s = Stat.new(new_current_p)
+      s.save
+    end
+    new_p = {
+      rides: 0,
+      reports: 0,
+      month: Date.today.strftime('%B'),
+      year: Date.today.strftime('%Y'),
+      drivers: 0,
+      patients: 0,
+      volunteers: 0
+    }
     next_stat = Stat.new(new_p)
     next_stat.save
   end
