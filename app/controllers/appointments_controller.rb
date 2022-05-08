@@ -41,7 +41,7 @@ class AppointmentsController < ApplicationController
       flash[:info] = 'Oops!  Cannot schedule a weekend ride.'
       redirect_to new_appointment_path(patient_id: patient.id)
     end
-    if ride_time.between(
+    if ride_time.between?(
       Time.local(ride_time.year, ride_time.month, ride_time.day, 8),
       Time.local(ride_time.year, ride_time.month, ride_time.day, 4, 45)
     )
@@ -98,7 +98,7 @@ class AppointmentsController < ApplicationController
   end
 
   def assign
-    @drivers = Driver.where(trained: true).select { |d| d.has_conflict(@appointment) }
+    @drivers = Driver.where(trained: true).reject { |d| d.has_conflict(@appointment) }
   end
 
   private
