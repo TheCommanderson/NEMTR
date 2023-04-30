@@ -2,6 +2,8 @@
 
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: %i[show edit update destroy assign]
+  before_action :approved_patient
+
   def index; end
 
   # GET /appointments/1 or /appointments/1.json

@@ -2,7 +2,9 @@
 
 class PatientsController < UsersController
   before_action :set_patient, only: %i[show edit update destroy approve appointments]
+  before_action :approved_patient, only: %i[show edit update destroy approve appointments]
   skip_before_action :authorized, only: %i[new create]
+  skip_before_action :approved_patient, only: %i[new create]
 
   # GET /patients
   def pending; end

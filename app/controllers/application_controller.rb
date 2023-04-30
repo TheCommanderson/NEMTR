@@ -19,6 +19,24 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def approved_patient
+    if session[:login_type] == 'P'
+      unless current_user.approved?
+        flash[:info] = "Sorry, you haven't been approved yet.  Please contact an Admin."
+        redirect_to root_url
+      end
+    end
+  end
+
+  def approved_healthcareadmin
+    if session[:login_type] == 'H'
+      unless current_user.approved?
+        flash[:info] = "Sorry, you haven't been approved yet.  Please contact an Admin."
+        redirect_to waiting_healthcareadmins_url
+      end
+    end
+  end
+
   # ===================== RESCUE =================== #
   def handle_standard_error(e)
     logger.error("encountered error: #{e}")

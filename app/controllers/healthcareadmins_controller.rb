@@ -3,6 +3,8 @@
 class HealthcareadminsController < UsersController
   skip_before_action :authorized, only: %i[create new]
   before_action :set_healthcareadmin, only: %i[show edit update destroy approve]
+  before_action :approved_healthcareadmin
+  skip_before_action :approved_healthcareadmin, only: %i[create new waiting]
 
   # GET /healthcareadmins or /healthcareadmins.json
   def index
@@ -78,6 +80,8 @@ class HealthcareadminsController < UsersController
     redirect_to root_url
   end
 
+  def waiting; end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -88,7 +92,7 @@ class HealthcareadminsController < UsersController
   # Only allow a list of trusted parameters through.
   def healthcareadmin_params
     params.require(:healthcareadmin).permit(
-      :first_name, :middle_init, :last_name, :phone, :email, :password, :host_org
+      :first_name, :middle_init, :last_name, :phone, :email, :password, :host_org, :approved
     )
   end
 end

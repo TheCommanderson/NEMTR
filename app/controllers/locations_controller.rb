@@ -2,6 +2,7 @@
 
 class LocationsController < ApplicationController
   before_action :set_location, only: %i[show]
+  before_action :approved_patient
 
   # GET /locations or /locations.json
   def index

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
     member do
       post 'approve'
     end
+    collection do
+      get 'waiting'
+    end
   end
   resources :patients do
     resources :locations
