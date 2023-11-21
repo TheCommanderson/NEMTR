@@ -91,6 +91,7 @@ class AppointmentsController < ApplicationController
   # DELETE /appointments/1
   # DELETE /appointments/1.json
   def destroy
+    AdminMailer.with(appt: @appointment, patient: @patient).ride_cancel_email.deliver
     @appointment.destroy
     respond_to do |format|
       flash[:danger] = 'Ride was successfully cancelled.'

@@ -37,6 +37,18 @@ class AdminMailer < ApplicationMailer
     mail(to: emails, subject: 'Ride2Health Driver Canceled an imminent trip!')
   end
 
+  def ride_cancel_email
+    @patient = params[:patient]
+    @appointment = params[:appt]
+    @driver = Driver.find(@appointment.driver_id)
+    
+    emails = User.where(_type: 'Sysadmin').or(_type: 'Volunteer').collect(&:email).join(',')
+    mail(to: emails, subject: 'Ride2Health Trip Cancelled!')
+
+    if @driver.present? mail(to: @driver.email, subject: 'A Ride2Health Trip Assigned to You Was Cancelled!')
+    mail(to: @patient.email, subject: 'Your Ride2Health Trip Was Cancelled!')
+  end
+
   def issue_email
     @reporter = params[:reporter]
     @driver = params[:driver]

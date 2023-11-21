@@ -1,0 +1,16 @@
+An upcoming Ride2Health ride has been cancelled
+===============================================
+
+<%= @patient.full_name %>'s ride was cancelled.
+
+<%= @driver.nil? ? 
+    'No driver was assigned at time of cancellation.' : 
+    "#{@driver.full_name} was assigned to this ride."
+    %>
+
+Cancelled Ride's Details:
+  Time and Date of Pickup: <%= @appointment.datetime %>
+  Pickup Location: <%= @appointment.locations[0].address %>
+  Dropoff Location: <%= @appointment.locations[1].address %>
+
+Ride2Health Automated Messaging
