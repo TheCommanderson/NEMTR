@@ -43,10 +43,10 @@ class AdminMailer < ApplicationMailer
     @driver = Driver.find(@appointment.driver_id)
     
     emails = User.where(_type: 'Sysadmin').or(_type: 'Volunteer').collect(&:email).join(',')
-    mail(to: emails, subject: 'Ride2Health Trip Cancelled!')
+    mail(to: emails, subject: 'Ride2Health Trip Cancelled!').deliver
 
     if @driver.present? 
-      mail(to: @driver.email, subject: 'A Ride2Health Trip Assigned to You Was Cancelled!')
+      mail(to: @driver.email, subject: 'A Ride2Health Trip Assigned to You Was Cancelled!').deliver
     end
     mail(to: @patient.email, subject: 'Your Ride2Health Trip Was Cancelled!')
   end
