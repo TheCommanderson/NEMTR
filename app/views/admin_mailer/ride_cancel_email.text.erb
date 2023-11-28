@@ -4,9 +4,9 @@ An upcoming Ride2Health ride has been cancelled
 <%= @patient.full_name %>'s ride was cancelled.
 
 <% if @driver.nil? %>
-  No driver was assigned at the time of cancellation.
+No driver was assigned at the time of cancellation.
 <% else %>
-  <%= @driver.full_name %> was assigned to this ride.
+<%= @driver.full_name %> was assigned to this ride.
 <% end %>
 
 Cancelled Ride's Details:
