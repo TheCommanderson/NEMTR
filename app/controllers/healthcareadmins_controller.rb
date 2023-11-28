@@ -73,7 +73,7 @@ class HealthcareadminsController < UsersController
       flash[:info] = 'Approved!'
       UserMailer.with(patient: @healthcareadmin).patient_approved_email.deliver
     elsif !@healthcareadmin.approved && @healthcareadmin.unset(:sysadmin)
-      flash[:info] = 'Helathcare Administrator unapproved successfully.'
+      flash[:info] = 'Healthcare Administrator unapproved successfully.'
     else
       flash[:danger] = 'There was an error (un)approving this healthcare admin, please try again.'
     end

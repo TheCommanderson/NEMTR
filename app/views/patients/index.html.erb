@@ -32,77 +32,78 @@
       <tbody>
         <% @appointments.each do |a| %>
           <% if Time.parse(a.datetime).past? %>
-            <% next %><% end %>
-            <tr>
-              <td>
-                <% if a.status.unassigned? %>
-                  <strong style="color:red">Unassigned</strong>
-                <% else %>
-                  <% d = Driver.find(a.driver_id) %>
-                    <%= "#{d.first_name} #{d.middle_init} #{d.last_name}" %>
-                  <% end %>
-                </td>
-                <td>
-                  <div class="container">
-                    <div class="row">
-                      <%= Time.parse(a.datetime).strftime("%a %b %d, %Y") %>
-                    </div>
-                    <div class="row">
-                      <%= Time.parse(a.datetime).strftime("%I:%M %p") %>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="row">
-                    <%= a.locations[0].name %>
-                  </div>
-                  <div class="row">
-                    <%= a.locations[0].addr1 %>
-                  </div>
-                  <div class="row">
-                    <%= a.locations[0].addr2 %>
-                  </div>
-                  <div class="row">
-                    <%= "#{a.locations[0].city}, #{a.locations[0].state}, #{a.locations[0].zip}" %>
-                  </div>
-                </td>
-                <td>
-                  <div class="row">
-                    <%= a.locations[1].name %>
-                  </div>
-                  <div class="row">
-                    <%= a.locations[1].addr1 %>
-                  </div>
-                  <div class="row">
-                    <%= a.locations[1].addr2 %>
-                  </div>
-                  <div class="row">
-                    <%= "#{a.locations[1].city}, #{a.locations[1].state}, #{a.locations[1].zip}" %>
-                  </div>
-                </td>
-                <td>
-                  <div class="row pb-2">
-                    <%= button_to 'Details', appointment_path(a), method: :get, class: "btn btn-outline-dark" %>
-                  </div>
-                  <div class="row pb-2">
-                    <%= button_to 'Update Date/Time', edit_appointment_path(a), method: :get, class: "btn btn-outline-dark" %>
-                  </div>
-                  <div class="row pb-2">
-                    <%= button_to 'Update Pick-up Location', edit_appointment_location_path(a, a.locations[0]), params: {pickup: true}, method: :get, class: "btn btn-outline-dark" %>
-                  </div>
-                  <div class="row pb-2">
-                    <%= button_to 'Update Destination', edit_appointment_location_path(a, a.locations[1]), params: {destination: true}, method: :get, class: "btn btn-outline-dark" %>
-                  </div>
-                  <div class="row pb-2">
-                    <%= button_to 'Cancel Ride', appointment_path(a), method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger"%>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
-      <div class="text-center">
-        <%= button_to 'New Ride', new_appointment_path, params: {patient_id: current_user.id}, method: :get, class: "btn btn-outline-dark btn-xlarge wonder-btn" %>
-      </div>
-    </div>
+            <% next %>
+          <% end %>
+          <tr>
+            <td>
+              <% if a.status.unassigned? %>
+                <strong style="color:red">Unassigned</strong>
+              <% else %>
+                <% d = Driver.find(a.driver_id) %>
+                <%= "#{d.first_name} #{d.middle_init} #{d.last_name}" %>
+              <% end %>
+            </td>
+            <td>
+              <div class="container">
+                <div class="row">
+                  <%= Time.parse(a.datetime).strftime("%a %b %d, %Y") %>
+                </div>
+                <div class="row">
+                  <%= Time.parse(a.datetime).strftime("%I:%M %p") %>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <%= a.locations[0].name %>
+              </div>
+              <div class="row">
+                <%= a.locations[0].addr1 %>
+              </div>
+              <div class="row">
+                <%= a.locations[0].addr2 %>
+              </div>
+              <div class="row">
+                <%= "#{a.locations[0].city}, #{a.locations[0].state}, #{a.locations[0].zip}" %>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <%= a.locations[1].name %>
+              </div>
+              <div class="row">
+                <%= a.locations[1].addr1 %>
+              </div>
+              <div class="row">
+                <%= a.locations[1].addr2 %>
+              </div>
+              <div class="row">
+                <%= "#{a.locations[1].city}, #{a.locations[1].state}, #{a.locations[1].zip}" %>
+              </div>
+            </td>
+            <td>
+              <div class="row pb-2">
+                <%= button_to 'Details', appointment_path(a), method: :get, class: "btn btn-outline-dark" %>
+              </div>
+              <div class="row pb-2">
+                <%= button_to 'Update Date/Time', edit_appointment_path(a), method: :get, class: "btn btn-outline-dark" %>
+              </div>
+              <div class="row pb-2">
+                <%= button_to 'Update Pick-up Location', edit_appointment_location_path(a, a.locations[0]), params: {pickup: true}, method: :get, class: "btn btn-outline-dark" %>
+              </div>
+              <div class="row pb-2">
+                <%= button_to 'Update Destination', edit_appointment_location_path(a, a.locations[1]), params: {destination: true}, method: :get, class: "btn btn-outline-dark" %>
+              </div>
+              <div class="row pb-2">
+                <%= button_to 'Cancel Ride', appointment_path(a), method: :delete , data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger"%>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <div class="text-center">
+    <%= button_to 'New Ride', new_appointment_path, params: {patient_id: current_user.id}, method: :get, class: "btn btn-outline-dark btn-xlarge wonder-btn" %>
+  </div>
+</div>
