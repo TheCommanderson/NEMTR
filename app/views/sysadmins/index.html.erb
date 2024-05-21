@@ -277,7 +277,7 @@
         <td>
           <div class="row pb-2">
             <div class="col md-2">
-              <%= button_to "Reset Password", reset_user_path(patient.id), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
+              <%= button_to "Reset Password", reset_user_path(patient.id), method: :patch, data: { confirm: "Are you sure?" }, class: "btn btn-outline-dark" %>
             </div>
             <div class="col md-2">
               <% if patient.approved %>
