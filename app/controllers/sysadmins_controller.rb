@@ -8,7 +8,7 @@ class SysadminsController < UsersController
   def index
     @patients = Patient.all.sort_by { |p| [p.approved.to_s, p.first_name] }
     @drivers = Driver.all.sort_by { |d| [d.trained.to_s, d.first_name] }
-    @appointments = Appointment.all.sort_by { |a| [a.status, a.datetime] }
+    @appointments = Appointment.all.sort_by { |a| [a.status, Time.parse(a.datetime)] }
     @volunteers = Volunteer.all.sort_by { |v| [v.approved.to_s, v.first_name] }
     @healthcareadmins = Healthcareadmin.all.sort_by { |h| [h.approved.to_s, h.first_name] }
     @sysadmin = Sysadmin.find(current_user.id)

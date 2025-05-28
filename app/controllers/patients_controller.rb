@@ -11,7 +11,7 @@ class PatientsController < UsersController
 
   # GET /patients.json
   def index
-    @appointments = Appointment.where(patient_id: current_user.id).sort_by(&:datetime)
+    @appointments = Appointment.where(patient_id: current_user.id).sort_by{|a| Time.parse(a.datetime)}
     @drivers = Driver.all
   end
 
@@ -91,7 +91,7 @@ class PatientsController < UsersController
   end
 
   def appointments
-    @appointments = Appointment.where(patient_id: @patient.id).sort_by(&:datetime)
+    @appointments = Appointment.where(patient_id: @patient.id).sort_by{|a| Time.parse(a.datetime)}
   end
 
   def match
