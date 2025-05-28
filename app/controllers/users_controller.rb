@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     password = SecureRandom.base64(15)
     @user.update(password: password)
     if @user.save
-      AdminMailer.with(password: password).password_reset_email.deliver
+      AdminMailer.with(password: password, user_email: @user.email).password_reset_email.deliver
       flash[:info] = "#{@user.first_name}'s new password is '#{password}'"
     else
       flash[:danger] = "#{@user.first_name}'s password could not be reset!"
