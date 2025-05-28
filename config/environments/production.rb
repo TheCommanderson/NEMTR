@@ -66,11 +66,11 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    address: 'smtp.office365.com',
+    address: 'mail.smtp2go.com',
     port: 587,
     user_name: Rails.application.credentials.email_username,
     password: Rails.application.credentials.email_password,
-    authentication: 'login',
+    authentication: 'plain',
     enable_starttls_auto: true,
     open_timeout: 5,
     read_timeout: 5
