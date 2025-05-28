@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserMailer < ApplicationMailer
-  default from: 'ride2health@uwbv.org'
+  default from: 'noreply@ride2health.org'
 
   def ride_assigned_email
     @appointment = params[:appt]

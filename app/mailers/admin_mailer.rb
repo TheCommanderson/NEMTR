@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AdminMailer < ApplicationMailer
-  default from: 'ride2health@uwbv.org'
+  default from: 'noreply@ride2health.org'
 
   def new_patient_email
     @patient = params[:patient]
