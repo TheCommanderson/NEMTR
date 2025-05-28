@@ -67,10 +67,11 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
     address: 'mail.smtp2go.com',
-    port: 587,
+    port: 2525,
+    domain: 'ride2health.org',
     user_name: Rails.application.credentials.email_username,
     password: Rails.application.credentials.email_password,
-    authentication: 'plain',
+    authentication: 'login',
     enable_starttls_auto: true,
     open_timeout: 5,
     read_timeout: 5
