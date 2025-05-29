@@ -9,9 +9,26 @@
   </li>
 <% end %>
 
+<!-- Bootstrap Tabs Navigation -->
+<div class="container pt-4">
+  <ul class="nav nav-tabs" id="volunteerTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="drivers-tab" data-bs-toggle="tab" data-bs-target="#drivers" type="button" role="tab" aria-controls="drivers" aria-selected="true">Drivers</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="false">Users</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="appointments-tab" data-bs-toggle="tab" data-bs-target="#appointments" type="button" role="tab" aria-controls="appointments" aria-selected="false">Appointments</button>
+    </li>
+  </ul>
+  
+  <!-- Tab Content Container -->
+  <div class="tab-content" id="volunteerTabsContent">
+
 <!--=========================== DRIVERS ============================-->
-<h3 class="container pt-3">Drivers</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade show active" id="drivers" role="tabpanel" aria-labelledby="drivers-tab">
+<div class="container table-container table-responsive pt-3">
   <table class="table">
     <thead class="table-blue">
       <tr>
@@ -52,10 +69,11 @@
     </tbody>
   </table>
 </div>
+</div>
 
 <!--=========================== USERS ============================-->
-<h3 class="container">Users</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+<div class="container table-container table-responsive pt-3">
   <table class="table border-dark">
     <thead class="table-red">
       <tr>
@@ -116,10 +134,11 @@
     </tbody>
   </table>
 </div>
+</div>
 
 <!--=========================== APPOINTMENTS ============================-->
-<h3 class="container">Appointments</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">
+<div class="container table-container table-responsive pt-3">
   <table class="table border-dark">
     <thead class="table-yellow">
       <tr>
@@ -202,3 +221,5 @@
         </tbody>
       </table>
     </div>
+</div>
+</div>

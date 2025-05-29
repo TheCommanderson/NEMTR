@@ -9,9 +9,35 @@
   </li>
 <% end %>
 
+<!-- Bootstrap Tabs Navigation -->
+<div class="container pt-4">
+  <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="orgs-tab" data-bs-toggle="tab" data-bs-target="#orgs" type="button" role="tab" aria-controls="orgs" aria-selected="true">Healthcare Organizations</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="admins-tab" data-bs-toggle="tab" data-bs-target="#admins" type="button" role="tab" aria-controls="admins" aria-selected="false">Healthcare Administrators</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="dispatchers-tab" data-bs-toggle="tab" data-bs-target="#dispatchers" type="button" role="tab" aria-controls="dispatchers" aria-selected="false">Dispatchers</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="drivers-tab" data-bs-toggle="tab" data-bs-target="#drivers" type="button" role="tab" aria-controls="drivers" aria-selected="false">Drivers</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="false">Users</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="appointments-tab" data-bs-toggle="tab" data-bs-target="#appointments" type="button" role="tab" aria-controls="appointments" aria-selected="false">Appointments</button>
+    </li>
+  </ul>
+  
+  <!-- Tab Content Container -->
+  <div class="tab-content" id="adminTabsContent">
+
 <!--=========================== ORGS ============================-->
-<h3 class="pt-4 container">Healthcare Organizations</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade show active" id="orgs" role="tabpanel" aria-labelledby="orgs-tab">
+<div class="container table-container table-responsive pt-3">
   <%= form_with(url: host_sysadmin_path(@sysadmin.id), method: 'patch', local: true) do |f| %>
   <div class="row pb-3">
     <div class="col">
@@ -43,10 +69,11 @@
   </tbody>
 </table>
 </div>
+</div>
 
 <!--=========================== HEALTHCARE ADMINS ============================-->
-<h3 class="container">Healthcare Administrators</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade" id="admins" role="tabpanel" aria-labelledby="admins-tab">
+<div class="container table-container table-responsive pt-3">
 <table class="table border-dark">
   <thead class="table-blue">
     <tr>
@@ -103,10 +130,11 @@
   </tbody>
 </table>
 </div>
+</div>
 
 <!--=========================== DISPATCHERS ============================-->
-<h3 class="container">Dispatchers</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade" id="dispatchers" role="tabpanel" aria-labelledby="dispatchers-tab">
+<div class="container table-container table-responsive pt-3">
 <table class="table border-dark">
   <thead class="table-yellow">
     <tr>
@@ -163,10 +191,11 @@
   </tbody>
 </table>
 </div>
+</div>
 
 <!--=========================== DRIVERS ============================-->
-<h3 class="container">Drivers</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade" id="drivers" role="tabpanel" aria-labelledby="drivers-tab">
+<div class="container table-container table-responsive pt-3">
 <table class="table border-dark">
   <thead class="table-red">
     <tr>
@@ -228,10 +257,11 @@
   </tbody>
 </table>
 </div>
+</div>
 
 <!--=========================== USERS ============================-->
-<h3 class="container">Users</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+<div class="container table-container table-responsive pt-3">
 <table class="table border-dark">
   <thead class="table-blue">
     <tr>
@@ -316,10 +346,11 @@
   </tbody>
 </table>
 </div>
+</div>
 
 <!--=========================== APPOINTMENTS ============================-->
-<h3 class="container">Appointments</h3>
-<div class="container table-container table-responsive">
+<div class="tab-pane fade" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">
+<div class="container table-container table-responsive pt-3">
 <table class="table border-dark">
   <thead class="table-yellow">
     <tr>
@@ -402,3 +433,5 @@
       </tbody>
     </table>
   </div>
+</div>
+</div>
